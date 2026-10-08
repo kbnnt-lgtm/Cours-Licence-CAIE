@@ -1698,6 +1698,379 @@ window.COURS = {
       "couleur": "#0c8599",
       "chapitres": [
         {
+          "id": "cours-courant-continu",
+          "titre": "Le courant continu : résistance et associations",
+          "type": "Cours",
+          "date": "2026-10-08",
+          "source": "Notes de cours « Harmonisation scientifique et technique : courant continu » (cahier de Kyk's)",
+          "resume": "La résistance d'un fil dépend de son matériau, de sa longueur, de sa section et de sa température. Une bobine et un condensateur réagissent aux variations du courant ou de la tension. En convention récepteur, la flèche de tension est opposée à celle du courant. En série les résistances s'ajoutent ; en parallèle, ce sont leurs inverses qui s'ajoutent.",
+          "sections": [
+            {
+              "titre": "Résistance d'un conducteur",
+              "html": "<p>La résistance d'un fil conducteur se calcule avec :</p>\n<p><code>R = ρ · L / S</code></p>\n<table><thead><tr><th>Symbole</th><th>Grandeur</th><th>Unité</th></tr></thead><tbody>\n<tr><td>R</td><td>résistance</td><td>ohm (Ω)</td></tr>\n<tr><td>ρ (rhô)</td><td>résistivité du matériau</td><td>Ω·m (ou Ω·mm²/m)</td></tr>\n<tr><td>L</td><td>longueur du fil</td><td>mètre (m)</td></tr>\n<tr><td>S</td><td>section du fil</td><td>m² (ou mm²)</td></tr></tbody></table>\n<p>Plus le fil est <b>long</b>, plus sa résistance est grande. Plus il est <b>gros</b> (grande section), plus elle est petite.</p>\n<div class=\"exemple\"><b>Exemple :</b> un fil de cuivre (ρ ≈ 0,017 Ω·mm²/m) de 100 m et de section 1,5 mm² a une résistance R = 0,017 × 100 / 1,5 ≈ <b>1,13 Ω</b>.</div>\n<div class=\"attention\"><b>Dans le cahier :</b> ρ est entouré avec l'unité Ω. En fait, c'est <b>R</b> qui s'exprime en Ω. La résistivité ρ s'exprime en <b>Ω·m</b>, ou en Ω·mm²/m quand la section est en mm² et la longueur en m. Il faut garder des unités cohérentes.</div>"
+            },
+            {
+              "titre": "Influence de la température",
+              "html": "<p>La résistance d'un conducteur dépend aussi de sa température :</p>\n<p><code>Rθ = R0 · (1 + α · θ)</code></p>\n<ul><li>R0 : résistance à 0 °C ;</li><li>θ : température en °C ;</li><li>α : coefficient de température du matériau (en °C⁻¹).</li></ul>\n<p>Pour les métaux, α est positif : <b>quand la température monte, la résistance augmente</b>, et quand elle baisse, la résistance diminue.</p>\n<div class=\"exemple\"><b>Exemple :</b> le cuivre a α ≈ 0,004 °C⁻¹. Un fil de R0 = 10 Ω à 0 °C vaut à 50 °C : R = 10 × (1 + 0,004 × 50) = <b>12 Ω</b>.</div>\n<div class=\"attention\">Ce n'est pas vrai pour tous les matériaux : certains composants (thermistances CTN, semi-conducteurs, carbone) voient au contraire leur résistance <b>diminuer</b> quand ils chauffent.</div>"
+            },
+            {
+              "titre": "Bobine et condensateur",
+              "html": "<p>Une bobine (inductance L, en henrys H) et un condensateur (capacité C, en farads F) ne réagissent qu'aux <b>variations</b> :</p>\n<ul><li>bobine : <code>u = L · di/dt</code>. La tension dépend de la vitesse de variation du courant ;</li>\n<li>condensateur : <code>i = C · du/dt</code>. Le courant dépend de la vitesse de variation de la tension.</li></ul>\n<p>En régime continu établi (rien ne varie), une bobine se comporte comme un <b>fil</b> et un condensateur comme un <b>interrupteur ouvert</b>.</p>\n<div class=\"attention\"><b>Dans le cahier :</b> il est écrit « L = di/dt » et « C = du/dt ». Il manque la tension et le courant : les bonnes relations sont <b>u = L · di/dt</b> et <b>i = C · du/dt</b>.</div>"
+            },
+            {
+              "titre": "Convention récepteur",
+              "html": "<p>Sur un <b>récepteur</b> (une résistance par exemple), on dessine la flèche de tension U <b>dans le sens inverse</b> de la flèche du courant I. On peut alors écrire la loi d'Ohm avec un signe + : <code>U = R · I</code>.</p>\n<p>Sur un <b>générateur</b>, les flèches de U et de I sont dans le <b>même sens</b> (convention générateur).</p>"
+            },
+            {
+              "titre": "Associations de résistances",
+              "html": "<p><b>En série</b> (les résistances sont traversées par le même courant), les résistances s'ajoutent :</p>\n<p><code>Req = R1 + R2 + … + Rn</code></p>\n<p><b>En parallèle</b> (les résistances ont la même tension à leurs bornes), ce sont les inverses qui s'ajoutent :</p>\n<p><code>1/Req = 1/R1 + 1/R2 + … + 1/Rn</code></p>\n<p>L'inverse d'une résistance s'appelle la <b>conductance</b> : <code>G = 1/R</code>, en siemens (S). En parallèle, les conductances s'ajoutent.</p>\n<p><b>Cas de deux résistances en parallèle : « produit sur somme »</b></p>\n<p><code>1/Req = 1/R1 + 1/R2 = R2/(R1·R2) + R1/(R1·R2) = (R1 + R2)/(R1·R2)</code>, donc <code>Req = (R1 · R2) / (R1 + R2)</code>.</p>\n<div class=\"exemple\"><b>Exemples :</b> 6 Ω et 3 Ω en parallèle : Req = 6 × 3 / (6 + 3) = 18 / 9 = <b>2 Ω</b>.<br>Deux résistances égales R en parallèle : Req = R/2. Trois résistances égales : Req = R/3.</div>\n<div class=\"attention\"><b>À retenir :</b> en parallèle, Req est toujours <b>plus petite</b> que la plus petite des résistances. La formule « produit sur somme » ne marche que pour <b>deux</b> résistances : pour trois ou plus, utilise les inverses, ou regroupe deux par deux.</div>\n<div class=\"attention\"><b>Dans le cahier :</b> « Y = 1/R, admittance ». Pour une résistance en continu, 1/R s'appelle la <b>conductance</b> G. Le mot admittance (Y = 1/Z) s'utilise en alternatif, avec les impédances.</div>"
+            }
+          ],
+          "pointsCles": [
+            "R = ρ · L / S : la résistance augmente avec la longueur et diminue avec la section.",
+            "Pour les métaux, la résistance augmente avec la température : Rθ = R0(1 + αθ).",
+            "Bobine : u = L·di/dt ; condensateur : i = C·du/dt.",
+            "Convention récepteur : flèches de U et de I en sens opposés, U = R·I.",
+            "Série : Req = R1 + R2 + … ; parallèle : 1/Req = 1/R1 + 1/R2 + …",
+            "Deux résistances en parallèle : Req = R1·R2 / (R1 + R2) (produit sur somme)."
+          ],
+          "definitions": [
+            {
+              "terme": "Résistivité ρ",
+              "def": "Caractéristique d'un matériau qui indique s'il conduit bien ou mal le courant, en Ω·m."
+            },
+            {
+              "terme": "Conductance G",
+              "def": "Inverse de la résistance, G = 1/R, en siemens (S)."
+            },
+            {
+              "terme": "Convention récepteur",
+              "def": "Façon d'orienter un dipôle : la flèche de tension est opposée à la flèche de courant."
+            },
+            {
+              "terme": "Résistance équivalente",
+              "def": "Résistance unique qui, mise à la place d'un groupe de résistances, donne le même courant sous la même tension."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Formule de la résistance d'un fil ?",
+              "r": "R = ρ · L / S (résistivité × longueur / section)."
+            },
+            {
+              "q": "Unité de la résistivité ρ ?",
+              "r": "Ω·m (ou Ω·mm²/m si la section est en mm²)."
+            },
+            {
+              "q": "Comment varie la résistance d'un métal quand il chauffe ?",
+              "r": "Elle augmente : Rθ = R0(1 + αθ) avec α > 0."
+            },
+            {
+              "q": "Relation tension-courant d'une bobine ?",
+              "r": "u = L · di/dt."
+            },
+            {
+              "q": "Relation tension-courant d'un condensateur ?",
+              "r": "i = C · du/dt."
+            },
+            {
+              "q": "Req de deux résistances en parallèle ?",
+              "r": "Req = R1·R2 / (R1 + R2)."
+            },
+            {
+              "q": "Req de résistances en série ?",
+              "r": "La somme : Req = R1 + R2 + …"
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Si on double la longueur d'un fil, sa résistance…",
+              "choix": [
+                "double",
+                "est divisée par 2",
+                "ne change pas",
+                "est multipliée par 4"
+              ],
+              "bonne": 0,
+              "explication": "R = ρ·L/S est proportionnelle à la longueur L."
+            },
+            {
+              "q": "Si on double la section d'un fil, sa résistance…",
+              "choix": [
+                "est divisée par 2",
+                "double",
+                "ne change pas",
+                "est divisée par 4"
+              ],
+              "bonne": 0,
+              "explication": "R = ρ·L/S est inversement proportionnelle à la section S."
+            },
+            {
+              "q": "R1 = 6 Ω et R2 = 3 Ω en parallèle donnent…",
+              "choix": [
+                "2 Ω",
+                "9 Ω",
+                "4,5 Ω",
+                "18 Ω"
+              ],
+              "bonne": 0,
+              "explication": "Produit sur somme : 6 × 3 / (6 + 3) = 18 / 9 = 2 Ω."
+            },
+            {
+              "q": "R1 = 6 Ω et R2 = 3 Ω en série donnent…",
+              "choix": [
+                "9 Ω",
+                "2 Ω",
+                "18 Ω",
+                "3 Ω"
+              ],
+              "bonne": 0,
+              "explication": "En série les résistances s'ajoutent : 6 + 3 = 9 Ω."
+            },
+            {
+              "q": "En régime continu établi, un condensateur se comporte comme…",
+              "choix": [
+                "un interrupteur ouvert",
+                "un fil",
+                "une résistance nulle",
+                "un générateur"
+              ],
+              "bonne": 0,
+              "explication": "i = C·du/dt : si la tension ne varie plus, le courant est nul."
+            },
+            {
+              "q": "Un fil de cuivre de 10 Ω à 0 °C (α = 0,004 °C⁻¹) vaut à 50 °C…",
+              "choix": [
+                "12 Ω",
+                "10,2 Ω",
+                "8 Ω",
+                "14 Ω"
+              ],
+              "bonne": 0,
+              "explication": "R = 10 × (1 + 0,004 × 50) = 10 × 1,2 = 12 Ω."
+            },
+            {
+              "q": "Sur un récepteur, en convention récepteur, la flèche de tension est…",
+              "choix": [
+                "opposée à celle du courant",
+                "dans le même sens que le courant",
+                "perpendiculaire au courant",
+                "inutile"
+              ],
+              "bonne": 0,
+              "explication": "C'est la définition de la convention récepteur ; on écrit alors U = R·I."
+            }
+          ]
+        },
+        {
+          "id": "courant-alternatif-monophase",
+          "titre": "Courant alternatif monophasé",
+          "type": "Cours",
+          "date": "2026-10-08",
+          "source": "Fiche de cours « Courant alternatif monophasé » du prof, avec les notes de Kyk's",
+          "resume": "En courant alternatif, la tension et le courant varient comme une sinusoïde. On les décrit par une valeur efficace, une fréquence et un déphasage. Pour calculer, on les représente par des vecteurs (Fresnel) ou des nombres complexes. Chaque récepteur a une impédance Z, et on distingue trois puissances : active P, réactive Q et apparente S.",
+          "sections": [
+            {
+              "titre": "La tension sinusoïdale",
+              "html": "<p>L'expression instantanée d'une tension alternative sinusoïdale s'écrit :</p>\n<p><code>u(t) = Û · sin(ωt + φ) = U√2 · sin(ωt + φ)</code></p>\n<table><thead><tr><th>Symbole</th><th>Nom</th><th>Unité</th></tr></thead><tbody>\n<tr><td>Û = U√2</td><td>valeur maximale (amplitude)</td><td>V</td></tr>\n<tr><td>U</td><td>valeur efficace (celle que mesure le voltmètre)</td><td>V</td></tr>\n<tr><td>ω = 2πf = 2π/T</td><td>pulsation (vitesse angulaire)</td><td>rad/s</td></tr>\n<tr><td>f = 1/T</td><td>fréquence</td><td>Hz</td></tr>\n<tr><td>T</td><td>période</td><td>s</td></tr>\n<tr><td>ωt + φ</td><td>phase à l'instant t</td><td>rad</td></tr>\n<tr><td>φ</td><td>phase à l'origine (à t = 0)</td><td>rad</td></tr></tbody></table>\n<div class=\"exemple\"><b>Sur le réseau EDF :</b> f = 50 Hz, donc T = 1/50 = 0,02 s = <b>20 ms</b>, et ω = 2π × 50 ≈ 314 rad/s. Une prise à 230 V efficace monte jusqu'à Û = 230 × √2 ≈ 325 V.</div>\n<div class=\"exemple\"><b>Radians et degrés :</b> π rad = 180°. Donc π/3 = 60°, π/6 = 30°, π/2 = 90°. Pour convertir : degrés = radians × 180 / π.</div>"
+            },
+            {
+              "titre": "Représentation de Fresnel",
+              "html": "<p>Toute grandeur sinusoïdale (tension ou courant) est représentée par un <b>vecteur</b> :</p>\n<ul><li>de <b>longueur</b> égale à sa <b>valeur efficace</b> ;</li><li>d'<b>angle</b> égal à sa <b>phase à l'origine φ</b>, compté à partir de l'axe horizontal (origine des phases), dans le sens trigonométrique (inverse des aiguilles d'une montre).</li></ul>\n<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 360 200\" role=\"img\" aria-label=\"Vecteur de Fresnel : un vecteur U de longueur égale à la valeur efficace, faisant un angle φ avec l'axe horizontal, origine des phases. Les angles se comptent dans le sens trigonométrique, inverse des aiguilles d'une montre.\" style=\"width:100%;min-width:300px;max-width:360px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M30 160H330\"/><path d=\"M322 155L330 160L322 165\"/><path d=\"M110 160A80 80 0 0 0 99 120\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2.5\" fill=\"var(--accent)\"><path d=\"M30 160L240 50\"/><path d=\"M229 51L240 50L234 60Z\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><text x=\"118\" y=\"146\">φ</text><text x=\"200\" y=\"182\">origine des phases</text><text x=\"222\" y=\"40\" fill=\"var(--accent)\">U</text><text x=\"165\" y=\"128\" fill=\"var(--accent)\">longueur = U</text></g>\n</svg></div>\n<table><thead><tr><th>Grandeur sinusoïdale</th><th>Vecteur de Fresnel</th></tr></thead><tbody>\n<tr><td>u(t) = U√2 · sin(ωt + φ)</td><td>vecteur U</td></tr><tr><td>valeur efficace U</td><td>norme ‖U‖ = U</td></tr><tr><td>phase à l'origine φ</td><td>angle φ</td></tr></tbody></table>\n<p><b>Additionner deux courants</b> revient à additionner leurs vecteurs : on les met bout à bout, chacun avec <b>son propre angle</b>, et on mesure le vecteur résultat (longueur avec l'échelle, angle au rapporteur).</p>\n<p><b>Quelle grandeur prendre comme origine des phases ?</b> (note de cours)</p>\n<ul><li>Montage <b>en série</b> : le courant I est le même partout, on le prend comme origine.</li><li>Montage <b>en parallèle</b> : la tension U est la même partout, on la prend comme origine.</li></ul>"
+            },
+            {
+              "titre": "Représentation complexe",
+              "html": "<p>À toute grandeur sinusoïdale, on associe un nombre complexe noté <b>Z</b> (lettre soulignée sur la fiche), qu'on peut écrire de deux façons :</p>\n<ul><li><b>forme algébrique</b> (cartésienne) : <code>Z = x + jy</code>, avec x la partie réelle et y la partie imaginaire ;</li>\n<li><b>forme polaire</b> (trigonométrique) : <code>Z = [Z ; θ]</code>, avec Z le module et θ l'argument.</li></ul>\n<p><b>Passage de l'une à l'autre :</b></p>\n<p><code>x = Z · cos θ</code> et <code>y = Z · sin θ</code><br><code>Z = √(x² + y²)</code> et <code>θ = arctan(y / x)</code></p>\n<div class=\"attention\"><b>Deux remarques sur la fiche :</b> dans la ligne « Z cos φ + j Z sin φ », l'angle noté φ est le même que l'argument θ. Et <code>θ = arctan(y/x)</code> n'est vrai que si x &gt; 0 : si x &lt; 0, il faut ajouter 180° au résultat de la calculatrice. Voir le chapitre « Nombres complexes en monophasé ».</div>"
+            },
+            {
+              "titre": "Loi d'Ohm et impédances",
+              "html": "<p>Pour un récepteur d'impédance Z, avec <code>u(t) = U√2 · sin ωt</code> et <code>i(t) = I√2 · sin(ωt − φ)</code> :</p>\n<p><b>En valeurs efficaces :</b> <code>U = Z · I</code>. Z est l'<b>impédance</b> du récepteur, en ohms (Ω). φ est le déphasage du courant par rapport à la tension.</p>\n<table><thead><tr><th>Dipôle</th><th>Impédance Z (Ω)</th><th>Tension efficace</th><th>Déphasage φ (de I vers U)</th></tr></thead><tbody>\n<tr><td>Résistance R</td><td>Z = R</td><td>U = R · I</td><td>0 (en phase)</td></tr>\n<tr><td>Inductance L (bobine)</td><td>Z = Lω</td><td>U = Lω · I</td><td>+π/2 (le courant est en retard de 90°)</td></tr>\n<tr><td>Condensateur C</td><td>Z = 1/(Cω)</td><td>U = I/(Cω)</td><td>−π/2 (le courant est en avance de 90°)</td></tr></tbody></table>\n<div class=\"exemple\"><b>Exemple :</b> une bobine de L = 0,1 H sur le réseau 50 Hz a une impédance Z = Lω = 0,1 × 314 ≈ 31,4 Ω. Sous 230 V, elle laisse passer I = U / Z = 230 / 31,4 ≈ 7,3 A.</div>\n<div class=\"attention\"><b>À retenir :</b> plus la fréquence augmente, plus l'impédance d'une bobine augmente (Lω), et plus celle d'un condensateur diminue (1/Cω).</div>"
+            },
+            {
+              "titre": "Les puissances et le facteur de puissance",
+              "html": "<ul><li><b>Puissance active</b> : <code>P = U · I · cos φ</code>, en watts (W). C'est la puissance réellement transformée (chaleur, travail).</li>\n<li><b>Puissance réactive</b> : <code>Q = U · I · sin φ</code>, en voltampères réactifs (var). Elle sert à magnétiser les bobines, sans travail utile.</li>\n<li><b>Puissance apparente</b> : <code>S = √(P² + Q²) = U · I</code>, en voltampères (VA).</li></ul>\n<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 320 170\" role=\"img\" aria-label=\"Triangle des puissances : P sur le côté horizontal, Q sur le côté vertical, S sur l'hypoténuse, l'angle φ entre P et S.\" style=\"width:100%;min-width:280px;max-width:320px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M30 140H250V40Z\"/><path d=\"M238 140V128H250\"/><path d=\"M90 140A60 60 0 0 0 85 116\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><text x=\"130\" y=\"160\">P (W)</text><text x=\"258\" y=\"95\">Q (var)</text><text x=\"110\" y=\"80\">S (VA)</text><text x=\"96\" y=\"134\">φ</text></g>\n</svg></div>\n<p><b>cos φ</b> s'appelle le <b>facteur de puissance</b>. Un cos φ faible entraîne :</p>\n<ul><li>une augmentation du courant en ligne, donc des pertes ;</li><li>une consommation plus importante d'énergie réactive.</li></ul>\n<p><b>Pour relever le facteur de puissance</b>, on branche un condensateur C <b>en parallèle</b> avec la charge :</p>\n<p><code>C = P · (tan φ − tan φ') / (U² · ω)</code></p>\n<p>avec φ le déphasage avant, et φ' le déphasage voulu après.</p>\n<div class=\"exemple\"><b>Exemple :</b> un moteur absorbe P = 2 000 W sous 230 V, 50 Hz, avec cos φ = 0,7. On veut cos φ' = 0,95.<br>tan φ = tan(arccos 0,7) ≈ 1,020 et tan φ' = tan(arccos 0,95) ≈ 0,329.<br>C = 2 000 × (1,020 − 0,329) / (230² × 314) ≈ 8,3 × 10⁻⁵ F ≈ <b>83 µF</b>.</div>"
+            },
+            {
+              "titre": "Exercice du cahier : somme de deux courants (Fresnel)",
+              "html": "<p>Le cahier (partie A) part de deux courants de déphasages <b>−π/3 = −60°</b> et <b>−π/6 = −30°</b>, d'amplitudes 7√2 A et 9√2 A, soit des valeurs efficaces de <b>7 A</b> et <b>9 A</b>. L'échelle choisie est 1 cm = 2 A.</p>\n<p><b>Méthode juste pour I = I1 + I2 :</b></p>\n<ol><li>Tracer I1 : longueur 7 A, soit 3,5 cm, à −60° (sous l'axe horizontal).</li>\n<li>Au bout de I1, tracer I2 : longueur 9 A, soit 4,5 cm, à −30°, c'est-à-dire en gardant son angle par rapport à l'horizontale.</li>\n<li>Le vecteur qui va de l'origine au bout de I2 est I. On mesure environ 7,7 cm, soit <b>I ≈ 15,5 A</b>, à environ <b>−43°</b>.</li></ol>\n<div class=\"exemple\"><b>Vérification par les complexes :</b><br>I1 = 7 cos(−60°) + j · 7 sin(−60°) = 3,50 − 6,06 j<br>I2 = 9 cos(−30°) + j · 9 sin(−30°) = 7,79 − 4,50 j<br>I = 11,29 − 10,56 j, donc |I| = √(11,29² + 10,56²) ≈ <b>15,5 A</b> et φ = arctan(−10,56 / 11,29) ≈ <b>−43°</b>.</div>\n<div class=\"attention\"><b>Deux points à corriger dans le cahier :</b><br>\n1. Les vecteurs de Fresnel ont pour longueur la <b>valeur efficace</b> (7 A et 9 A). 9,89 A et 12,72 A sont les amplitudes Î (et 9√2 = 12,73, pas 12,72).<br>\n2. Sur le dessin, I2 fait un angle de 90° avec I1. Or −30° − (−60°) = <b>30°</b> : les deux vecteurs ne sont écartés que de 30°. Le résultat « 16 A » vient de cet angle de 90°.</div>\n<p><small>L'énoncé de la partie A n'est pas sur la photo : si la question demandait autre chose que I1 + I2, la méthode reste la même.</small></p>"
+            }
+          ],
+          "pointsCles": [
+            "u(t) = U√2 · sin(ωt + φ) : U est la valeur efficace, Û = U√2 l'amplitude.",
+            "ω = 2πf = 2π/T ; à 50 Hz, T = 20 ms et ω ≈ 314 rad/s.",
+            "Vecteur de Fresnel : longueur = valeur efficace, angle = phase à l'origine.",
+            "Origine des phases : le courant en série, la tension en parallèle.",
+            "Loi d'Ohm en alternatif : U = Z · I, avec Z = R, Lω ou 1/(Cω).",
+            "P = U·I·cos φ (W), Q = U·I·sin φ (var), S = U·I = √(P² + Q²) (VA).",
+            "Un condensateur en parallèle relève le cos φ : C = P(tan φ − tan φ') / (U²ω)."
+          ],
+          "definitions": [
+            {
+              "terme": "Valeur efficace",
+              "def": "Valeur U telle que u(t) = U√2 · sin(ωt + φ) ; c'est elle que mesure un voltmètre ou un ampèremètre."
+            },
+            {
+              "terme": "Pulsation ω",
+              "def": "Vitesse angulaire de la sinusoïde, en rad/s : ω = 2πf."
+            },
+            {
+              "terme": "Phase à l'origine φ",
+              "def": "Angle de la sinusoïde à l'instant t = 0, en radians."
+            },
+            {
+              "terme": "Impédance Z",
+              "def": "Rapport U / I en valeurs efficaces pour un récepteur en alternatif, en ohms."
+            },
+            {
+              "terme": "Facteur de puissance",
+              "def": "cos φ = P / S : plus il est proche de 1, moins il y a de pertes en ligne."
+            },
+            {
+              "terme": "Puissance réactive Q",
+              "def": "Q = U·I·sin φ, en var : puissance échangée par les bobines et condensateurs, sans travail utile."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Quel lien entre amplitude Û et valeur efficace U ?",
+              "r": "Û = U√2 (et donc U = Û / √2)."
+            },
+            {
+              "q": "À 50 Hz, combien vaut la période T ?",
+              "r": "T = 1 / 50 = 0,02 s = 20 ms."
+            },
+            {
+              "q": "Quelle est la longueur d'un vecteur de Fresnel ?",
+              "r": "La valeur efficace de la grandeur."
+            },
+            {
+              "q": "Impédance d'une bobine L ?",
+              "r": "Z = Lω, et le courant est en retard de 90° sur la tension."
+            },
+            {
+              "q": "Impédance d'un condensateur C ?",
+              "r": "Z = 1/(Cω), et le courant est en avance de 90° sur la tension."
+            },
+            {
+              "q": "Formule de la puissance active ?",
+              "r": "P = U · I · cos φ, en watts."
+            },
+            {
+              "q": "Formule de la puissance apparente ?",
+              "r": "S = U · I = √(P² + Q²), en VA."
+            },
+            {
+              "q": "Comment relever un facteur de puissance trop faible ?",
+              "r": "On branche un condensateur en parallèle : C = P(tan φ − tan φ') / (U²ω)."
+            },
+            {
+              "q": "Quelle origine des phases en série ? En parallèle ?",
+              "r": "En série : le courant. En parallèle : la tension."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Une tension a une valeur efficace de 230 V. Son amplitude vaut environ…",
+              "choix": [
+                "325 V",
+                "163 V",
+                "230 V",
+                "460 V"
+              ],
+              "bonne": 0,
+              "explication": "Û = U√2 = 230 × 1,414 ≈ 325 V."
+            },
+            {
+              "q": "À la fréquence f = 50 Hz, la pulsation ω vaut environ…",
+              "choix": [
+                "314 rad/s",
+                "50 rad/s",
+                "157 rad/s",
+                "20 rad/s"
+              ],
+              "bonne": 0,
+              "explication": "ω = 2πf = 2 × 3,14 × 50 ≈ 314 rad/s."
+            },
+            {
+              "q": "π/3 radians correspondent à…",
+              "choix": [
+                "60°",
+                "30°",
+                "45°",
+                "90°"
+              ],
+              "bonne": 0,
+              "explication": "π rad = 180°, donc π/3 = 180/3 = 60°."
+            },
+            {
+              "q": "Pour une résistance pure, le déphasage entre U et I vaut…",
+              "choix": [
+                "0",
+                "π/2",
+                "−π/2",
+                "π"
+              ],
+              "bonne": 0,
+              "explication": "Une résistance ne déphase pas : courant et tension sont en phase."
+            },
+            {
+              "q": "Quand la fréquence augmente, l'impédance d'un condensateur…",
+              "choix": [
+                "diminue",
+                "augmente",
+                "ne change pas",
+                "s'annule toujours"
+              ],
+              "bonne": 0,
+              "explication": "Z = 1/(Cω) : si ω augmente, Z diminue."
+            },
+            {
+              "q": "U = 230 V, I = 10 A, cos φ = 0,8. La puissance active vaut…",
+              "choix": [
+                "1 840 W",
+                "2 300 W",
+                "1 380 W",
+                "2 875 W"
+              ],
+              "bonne": 0,
+              "explication": "P = U·I·cos φ = 230 × 10 × 0,8 = 1 840 W."
+            },
+            {
+              "q": "P = 3 kW et Q = 4 kvar. La puissance apparente S vaut…",
+              "choix": [
+                "5 kVA",
+                "7 kVA",
+                "1 kVA",
+                "12 kVA"
+              ],
+              "bonne": 0,
+              "explication": "S = √(P² + Q²) = √(9 + 16) = √25 = 5 kVA."
+            },
+            {
+              "q": "Pour relever le facteur de puissance, on ajoute…",
+              "choix": [
+                "un condensateur en parallèle",
+                "une bobine en série",
+                "une résistance en parallèle",
+                "un condensateur en série"
+              ],
+              "bonne": 0,
+              "explication": "Le condensateur en parallèle fournit l'énergie réactive que consomment les bobines : le courant en ligne baisse."
+            },
+            {
+              "q": "Dans un montage en parallèle, on prend comme origine des phases…",
+              "choix": [
+                "la tension",
+                "le courant",
+                "la puissance",
+                "la fréquence"
+              ],
+              "bonne": 0,
+              "explication": "En parallèle, tous les dipôles ont la même tension : c'est la référence commune."
+            }
+          ]
+        },
+        {
           "id": "complexes-monophase",
           "titre": "Nombres complexes en monophasé",
           "date": "2026-10-07",
@@ -1873,32 +2246,570 @@ window.COURS = {
           ]
         },
         {
-          "id": "exercices-courant-continu",
-          "titre": "Exercices : courant continu, lois des nœuds et des mailles",
+          "id": "exercices-regime-continu",
+          "titre": "Exercices : circuits en régime continu (feuille 1 à 14)",
           "type": "Exercices",
           "date": "2026-10-08",
-          "source": "Notes de cours de Maélyss Simon (correction faite en classe), proposées via l'appli et complétées",
-          "resume": "Pour trouver les courants dans un circuit à plusieurs générateurs, on utilise les deux lois de Kirchhoff. La loi des nœuds : à un nœud, la somme des courants qui arrivent est égale à la somme des courants qui repartent. La loi des mailles : en faisant le tour d'une boucle fermée, la somme des tensions est nulle. On obtient un système d'équations qu'on résout pour trouver I1, I2 et I3.",
+          "source": "Feuille d'exercices du prof (photos envoyées par Kyk's)",
+          "resume": "Cette feuille fait pratiquer les outils de base des circuits en courant continu. On applique la loi des nœuds et la loi des mailles, puis les ponts diviseurs de tension et de courant, en vérifiant à chaque fois s'ils ont le droit d'être utilisés. On calcule des résistances équivalentes et on lit la valeur d'une résistance ou d'un générateur sur sa caractéristique U = f(I). Enfin, on raisonne sans calcul sur la luminosité de lampes.",
           "sections": [
             {
-              "titre": "Méthode : les lois de Kirchhoff",
-              "html": "<p>Vocabulaire d'abord :</p>\n<ul><li>un <b>nœud</b> est un point où se rejoignent au moins trois fils (ici A et B) ;</li>\n<li>une <b>branche</b> est une portion de circuit entre deux nœuds (ici, il y en a trois) ;</li>\n<li>une <b>maille</b> est une boucle fermée qu'on peut parcourir en revenant au point de départ.</li></ul>\n<p><b>Loi des nœuds :</b> à un nœud, <code>somme des courants qui arrivent = somme des courants qui repartent</code>. Le courant ne se perd pas et ne s'accumule pas.</p>\n<p><b>Loi des mailles :</b> sur une maille, <code>somme des tensions = 0</code>. On choisit un sens de parcours, puis on compte <b>+</b> une tension dont la flèche va dans le sens du parcours, et <b>−</b> une tension dont la flèche va dans l'autre sens.</p>\n<p><b>Loi d'Ohm</b> pour chaque résistance : <code>U = R × I</code>, en convention récepteur (la flèche de tension est opposée à la flèche de courant).</p>\n<p><b>Les étapes vues en classe :</b></p>\n<ol><li>Placer les courants (sens choisi au hasard) et les tensions sur le schéma.</li>\n<li>Écrire la loi des nœuds.</li>\n<li>Écrire une loi des mailles par maille indépendante (ici 2 mailles).</li>\n<li>Séparer les termes connus (les E) des inconnues (les I), puis faire l'application numérique.</li>\n<li>Résoudre le système et vérifier.</li></ol>\n<div class=\"attention\"><b>Le sens des courants se choisit au départ.</b> Si un résultat est <b>négatif</b>, ce n'est pas une erreur : le courant circule simplement dans le sens inverse de la flèche dessinée.</div>"
+              "titre": "Rappels : lois de Kirchhoff, diviseurs, associations de résistances, caractéristiques",
+              "html": "\n<p><b>Loi des nœuds :</b> à un nœud, <code>somme des courants qui arrivent = somme des courants qui repartent</code>. On lit le sens sur la flèche ; un courant négatif circule simplement dans l'autre sens.</p>\n<p><b>Loi des mailles :</b> on choisit un sens de parcours. Une tension dont la flèche va dans le sens du parcours compte <b>+</b>, une flèche dans l'autre sens compte <b>−</b>. La somme fait 0. Rappel : la pointe de la flèche indique le point dont on prend le potentiel en premier (flèche de B vers A pour <code>U_AB = V_A − V_B</code>).</p>\n<p><b>Loi d'Ohm</b> (convention récepteur) : <code>U = R·I</code>.</p>\n<p><b>Associations :</b></p>\n<ul><li>série : <code>Req = R1 + R2 + …</code> (même courant) ;</li>\n<li>parallèle : <code>1/Req = 1/R1 + 1/R2 + …</code>, soit pour deux résistances <code>R1 // R2 = R1·R2 / (R1 + R2)</code> (même tension) ; deux résistances égales en parallèle donnent R/2.</li></ul>\n<p><b>Pont diviseur de tension</b> (résistances en série, <b>même courant</b>) : <code>U1 = U·R1 / (R1 + R2)</code>.</p>\n<p><b>Pont diviseur de courant</b> (deux résistances en parallèle) : <code>I1 = I·R2 / (R1 + R2)</code> : c'est <b>l'autre</b> résistance qui est au numérateur.</p>\n<p><b>Caractéristique U = f(I)</b> : pour une résistance, c'est une droite qui passe par l'origine et dont la pente vaut R. Pour un générateur réel, c'est une droite descendante <code>U = E − r·I</code>.</p>\n<div class=\"attention\"><b>Condition du pont diviseur de tension :</b> les deux résistances doivent être parcourues par le <b>même courant</b>. Si une autre branche prend du courant au point milieu, la formule simple ne marche plus.</div>"
             },
             {
-              "titre": "Exercice : circuit à deux générateurs",
-              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 230\" role=\"img\" aria-label=\"Circuit à deux générateurs : trois branches en parallèle entre les nœuds A et B. Branche 1 : R1 et E1, courant I1 vers le haut. Branche 2 : R2 et E2, courant I2 vers le haut. Branche 3 : R3, courant I3 vers le bas.\" style=\"width:100%;min-width:340px;max-width:400px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\">\n<path d=\"M70 40H330M70 200H330\"/>\n<path d=\"M70 40V68M70 112V146M70 156V200\"/><path d=\"M200 40V68M200 112V146M200 156V200\"/><path d=\"M330 40V98M330 142V200\"/>\n</g>\n<g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"60\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"190\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"320\" y=\"98\" width=\"20\" height=\"44\"/></g>\n<g stroke=\"var(--ink)\" stroke-width=\"2.5\"><path d=\"M54 146H86M184 146H216\"/><path d=\"M62 156H78M192 156H208\" stroke-width=\"4\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"200\" cy=\"40\" r=\"4\"/><circle cx=\"200\" cy=\"200\" r=\"4\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\">\n<path d=\"M70 58V46\" /><path d=\"M65 50L70 42L75 50Z\"/>\n<path d=\"M200 58V46\"/><path d=\"M195 50L200 42L205 50Z\"/>\n<path d=\"M330 52V84\"/><path d=\"M325 78L330 86L335 78Z\"/>\n</g>\n<g fill=\"var(--ink)\" stroke=\"none\">\n<text x=\"196\" y=\"30\">A</text><text x=\"196\" y=\"222\">B</text>\n<text x=\"88\" y=\"95\">R1 = 2 Ω</text><text x=\"218\" y=\"95\">R2 = 5 Ω</text><text x=\"346\" y=\"125\">R3</text><text x=\"346\" y=\"141\">= 10 Ω</text>\n<text x=\"90\" y=\"155\">E1 = 20 V</text><text x=\"220\" y=\"155\">E2 = 70 V</text>\n<text x=\"78\" y=\"56\" fill=\"var(--accent)\">I1</text><text x=\"208\" y=\"56\" fill=\"var(--accent)\">I2</text><text x=\"340\" y=\"70\" fill=\"var(--accent)\">I3</text>\n</g></svg></div>\n<p>Trois branches sont branchées entre les nœuds A et B :</p>\n<ul><li>branche 1 : générateur <b>E1 = 20 V</b> et résistance <b>R1 = 2 Ω</b>, courant I1 (vers A) ;</li>\n<li>branche 2 : générateur <b>E2 = 70 V</b> et résistance <b>R2 = 5 Ω</b>, courant I2 (vers A) ;</li>\n<li>branche 3 : résistance <b>R3 = 10 Ω</b>, courant I3 (qui part de A).</li></ul>\n<p><b>Question :</b> calculer I1, I2 et I3.</p>\n<p><small>Valeurs relevées sur la correction du cahier.</small></p>"
+              "titre": "Exercice 1 : loi des nœuds",
+              "html": "\n<p><b>Énoncé :</b> sur chaque schéma, trouver I4. On écrit « ce qui arrive = ce qui repart » en lisant les flèches de la feuille.</p>\n<ul>\n<li><b>Nœud A</b> : I1 = 2 A et I4 arrivent, I2 = 1 A repart. <code>2 + I4 = 1</code> donc <b>I4 = −1 A</b>.</li>\n<li><b>Nœud B</b> : I1 = 2 A et I2 = 1 A arrivent, I3 = 4 A et I4 repartent. <code>2 + 1 = 4 + I4</code> donc <b>I4 = −1 A</b>.</li>\n<li><b>Nœud C</b> : les quatre flèches pointent vers le nœud. <code>2 + 1 + 2 + I4 = 0</code> donc <b>I4 = −5 A</b>.</li>\n<li><b>Nœud D</b> : I1 = 3 A et I3 = 4 A arrivent, I2 = −1 A et I4 repartent. <code>3 + 4 = −1 + I4</code> donc <b>I4 = 8 A</b>.</li>\n<li><b>Nœuds E et F</b> : on appelle I le courant dans le fil de E vers F.<br>En E : I1 = 2 A arrive, I0 = 5 A et I repartent. <code>2 = 5 + I</code> donc <b>I = −3 A</b> (le courant va en réalité de F vers E).<br>En F : I et I3 = 4 A arrivent, I2 = −3 A et I4 repartent. <code>−3 + 4 = −3 + I4</code> donc <b>I4 = 4 A</b>.</li>\n</ul>\n<div class=\"exemple\"><b>Vérification :</b> les réponses écrites au crayon sur la feuille (−1, −1, −5, 8 et 4) sont justes. Un résultat négatif n'est pas une erreur : le courant circule dans le sens contraire de la flèche.</div>"
             },
             {
-              "titre": "Correction pas à pas",
-              "html": "<p><b>1. Loi des nœuds en A.</b> I1 et I2 arrivent en A, I3 en repart :</p>\n<p><code>I1 + I2 = I3</code></p>\n<div class=\"attention\"><b>Petite erreur dans le cahier :</b> il est écrit « I1 + I2 + I3 = 0 ». Cette écriture n'est juste que si les trois flèches pointent vers A. Ici I3 repart de A, donc c'est <b>I3 = I1 + I2</b>, ce que la suite de la correction utilise bien.</div>\n<p><b>2. Maille 1</b> (branches 1 et 2) :</p>\n<p><code>E1 − R1·I1 + R2·I2 − E2 = 0</code></p>\n<p>On sépare le connu de l'inconnu : <code>E1 − E2 = R1·I1 − R2·I2</code></p>\n<p>Application numérique : <code>20 − 70 = 2·I1 − 5·I2</code>, soit <b><code>−50 = 2·I1 − 5·I2</code></b>.</p>\n<p><b>3. Maille 2</b> (branches 2 et 3) :</p>\n<p><code>E2 − R2·I2 − R3·I3 = 0</code>, soit <code>E2 = R2·I2 + R3·I3</code></p>\n<div class=\"attention\"><b>Signe à surveiller :</b> le cahier écrit d'abord « E2 − R2·I2 + R3·I3 = 0 ». Le bon signe devant R3·I3 est <b>−</b>, comme dans la ligne suivante du cahier (E2 = R2·I2 + R3·I3).</div>\n<p>On remplace I3 par I1 + I2 : <code>70 = 5·I2 + 10·(I1 + I2)</code>, soit <b><code>70 = 10·I1 + 15·I2</code></b>.</p>\n<p><b>4. Résolution du système</b> (la correction du cahier s'arrête avant, voici la suite) :</p>\n<p><code>2·I1 − 5·I2 = −50</code>  (a)<br><code>10·I1 + 15·I2 = 70</code>  (b)</p>\n<p>On multiplie (a) par 5 : <code>10·I1 − 25·I2 = −250</code>. On soustrait à (b) : <code>40·I2 = 320</code>, donc <b>I2 = 8 A</b>.</p>\n<p>Dans (a) : <code>2·I1 = −50 + 5 × 8 = −10</code>, donc <b>I1 = −5 A</b>.</p>\n<p>Enfin <code>I3 = I1 + I2 = −5 + 8</code>, donc <b>I3 = 3 A</b>.</p>\n<div class=\"exemple\"><b>Vérification :</b> la tension entre A et B est la même pour les trois branches.<br>\nBranche 3 : <code>U_AB = R3·I3 = 10 × 3 = 30 V</code>.<br>\nBranche 2 : <code>U_AB = E2 − R2·I2 = 70 − 5 × 8 = 30 V</code>.<br>\nBranche 1 : <code>U_AB = E1 − R1·I1 = 20 − 2 × (−5) = 30 V</code>. Les trois donnent 30 V : c'est juste.</div>\n<p><b>Interprétation :</b> I1 est négatif, donc le courant traverse la branche 1 dans l'autre sens, de A vers B. Le générateur E1 (20 V) reçoit du courant au lieu d'en fournir : il fonctionne en <b>récepteur</b>, comme une batterie qu'on recharge. C'est E2 (70 V), plus puissant, qui alimente le circuit.</p>"
+              "titre": "Exercice 2 : loi des mailles",
+              "html": "\n<p><b>Énoncé :</b> calculer U2 dans trois mailles. Pour chaque maille, on fait le tour et on compte + les flèches dans le sens du parcours, − les autres.</p>\n<p><b>Maille 1</b> (D1 à gauche, D2 en haut, D3 en bas, fil à droite). D'après la feuille : U1 = 7 V fléchée vers le bas, U2 fléchée vers la gauche, U3 = 4 V fléchée vers la droite.<br>\nOn tourne dans le sens inverse des aiguilles d'une montre (on descend à gauche, on va à droite en bas, on monte à droite, on revient à gauche en haut) : les trois flèches sont dans le sens du parcours.<br>\n<code>U1 + U3 + U2 = 0</code> donc <code>U2 = −7 − 4</code>, soit <b>U2 = −11 V</b>.</p>\n<p><b>Maille 2</b> (D2 en haut fléchée vers la droite, D3 à droite U3 = −1 V fléchée vers le haut, D4 en bas U4 = 2 V fléchée vers la gauche, D1 à gauche U1 = 7 V fléchée vers le bas).<br>\nSens des aiguilles d'une montre : <code>U2 − U3 + U4 − U1 = 0</code> donc <code>U2 = U1 + U3 − U4 = 7 + (−1) − 2</code>, soit <b>U2 = 4 V</b>.</p>\n<p><b>Maille 3</b> (en haut D4 avec U4 = 2 V et D3 avec U3 = −2 V, toutes deux fléchées vers la droite ; D2 à droite fléchée vers le haut ; D1 en bas U1 = 3 V fléchée vers la gauche ; D5 à gauche U5 = 1 V fléchée vers le bas).<br>\nSens des aiguilles d'une montre : <code>U4 + U3 − U2 + U1 − U5 = 0</code> donc <code>U2 = 2 + (−2) + 3 − 1</code>, soit <b>U2 = 2 V</b>.</p>\n<div class=\"attention\"><b>Annotations au crayon :</b> « 4 V » (maille 2) est juste ; « 2 » (maille 3) est juste, il manque seulement l'unité : <b>2 V</b>. Pour la maille 1, l'annotation se lit « U2 = 11 V » : la valeur 11 est bonne, mais <b>le signe est faux</b>. Avec la flèche dessinée vers la gauche, U2 = <b>−11 V</b>. (Si le petit trait au crayon est un signe moins, alors la réponse est juste.)</div>\n<div class=\"exemple\"><b>Astuce de vérification :</b> donne un potentiel 0 V à un coin et avance de proche en proche. Maille 1 : si le coin en haut à gauche est à 0 V, le bas gauche est à 7 V, le bas droit à 11 V, donc le haut droit aussi ; U2 (pointe à gauche) = 0 − 11 = −11 V.</div>"
+            },
+            {
+              "titre": "Exercice 3 a, b, c : étude de quelques circuits",
+              "html": "\n<p><b>a) Déterminer I et I1.</b> Montage : le générateur E en série avec R3, qui alimente R1 // R2. I sort de la borne + de E (la flèche de E pointe vers la gauche, I monte dans le fil de gauche), donc I est positif.</p>\n<ol><li>Résistance équivalente : <code>Req = R3 + R1·R2/(R1 + R2)</code>.</li>\n<li>Loi d'Ohm : <code>I = E / Req</code>, soit <b><code>I = E·(R1 + R2) / (R1·R2 + R1·R3 + R2·R3)</code></b>.</li>\n<li>Diviseur de courant entre R1 et R2 : <code>I1 = I·R2/(R1 + R2)</code>, soit <b><code>I1 = E·R2 / (R1·R2 + R1·R3 + R2·R3)</code></b>.</li></ol>\n<p><b>b) Déterminer I et U.</b> Montage : le générateur E seul (sans résistance en série) alimente deux branches en parallèle : (R1 + R3) et R2. U est la tension aux bornes de R3.</p>\n<ol><li>Les deux branches sont directement sous la tension E.</li>\n<li>Branche du haut : R1 et R3 sont en série, parcourues par le même courant. Diviseur de tension : <b><code>U = E·R3 / (R1 + R3)</code></b>.</li>\n<li><code>Req = R2·(R1 + R3)/(R1 + R2 + R3)</code>, donc <b><code>I = E·(R1 + R2 + R3) / (R2·(R1 + R3))</code></b>. On peut aussi écrire <code>I = E/R2 + E/(R1 + R3)</code>.</li></ol>\n<p><b>c) Déterminer I, U, I1 et I2.</b> E en série avec R ; puis 20R vers la masse ; puis 2R en série ; puis 4R (courant I1) // 12R (courant I2). U est la tension aux bornes de 4R et 12R.</p>\n<ol><li>On réduit depuis la droite : <code>4R // 12R = 48R²/16R = 3R</code> ; <code>2R + 3R = 5R</code> ; <code>5R // 20R = 100R²/25R = 4R</code> ; <code>Req = R + 4R = 5R</code>.</li>\n<li><b><code>I = E/(5R)</code></b>.</li>\n<li>Tension aux bornes de 20R : <code>E − R·I = 4E/5</code>. Courant dans 2R : <code>(4E/5)/(5R) = 4E/(25R)</code>.</li>\n<li><b><code>U = 3R × 4E/(25R) = 12E/25</code></b> (soit 0,48·E).</li>\n<li><b><code>I1 = U/(4R) = 3E/(25R)</code></b> et <b><code>I2 = U/(12R) = E/(25R)</code></b>.</li></ol>\n<div class=\"exemple\"><b>Vérification :</b> I1 + I2 = 4E/(25R), c'est bien le courant dans 2R. Courant dans 20R : (4E/5)/(20R) = E/(25R). Total : 4E/(25R) + E/(25R) = 5E/(25R) = E/(5R) = I.</div>\n<div class=\"attention\"><b>Dans le cahier :</b>\n<ul><li>3a : « I = E × 1/(R2 + R1 + R3) » n'est pas juste : R1 et R2 sont <b>en parallèle</b>, pas en série. Il faut <code>Req = R3 + R1·R2/(R1 + R2)</code>.</li>\n<li>3a : « I1 = E × 1/(R1 + R2) » n'est pas juste non plus : on applique le diviseur de courant, <code>I1 = I·R2/(R1 + R2)</code>, ce qui donne <code>E·R2/(R1·R2 + R1·R3 + R2·R3)</code>.</li>\n<li>L'encadré « I = U × 1/(R1 + R2) ; U = I × (R1 + R2) » ne vaut que pour R1 et R2 en série ; ce n'est pas le cas en 3a.</li>\n<li>3b : « U = E × R3/(R1 + R3) » est <b>juste</b>. Attention, le schéma recopié dans le cahier ajoute une résistance R3 en série avec E : elle n'existe pas sur la feuille (avec elle, la réponse changerait). La valeur de I n'est pas encore écrite.</li>\n<li>3c : sur le schéma du cahier, la résistance verticale est écrite de façon peu lisible ; sur la feuille c'est bien <b>20R</b>.</li></ul></div>"
+            },
+            {
+              "titre": "Exercice 3 d : peut-on utiliser le pont diviseur ?",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 440 210\" role=\"img\" aria-label=\"Exercice 3d. À gauche : E1 en série avec R1, branché sur R2 (tension U2 vers le haut). À droite : E2 en série avec R4, branché sur R3 (tension U3 vers le haut). Les deux parties ne sont reliées que par le fil du haut ; les fils du bas ne se rejoignent pas.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\">\n<path d=\"M60 30H380\"/><path d=\"M60 30V50M60 90V112M60 148V180H160V120M160 70V30\"/>\n<path d=\"M280 30V70M280 120V180H380V148M380 112V90M380 50V30\"/>\n<circle cx=\"60\" cy=\"130\" r=\"18\"/><path d=\"M60 112V148\"/><circle cx=\"380\" cy=\"130\" r=\"18\"/><path d=\"M380 112V148\"/>\n</g>\n<g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"50\" y=\"50\" width=\"20\" height=\"40\"/><rect x=\"150\" y=\"70\" width=\"20\" height=\"50\"/><rect x=\"270\" y=\"70\" width=\"20\" height=\"50\"/><rect x=\"370\" y=\"50\" width=\"20\" height=\"40\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\">\n<path d=\"M30 150V115\"/><path d=\"M25 120L30 110L35 120Z\"/><path d=\"M410 150V115\"/><path d=\"M405 120L410 110L415 120Z\"/>\n<path d=\"M190 120V75\"/><path d=\"M185 80L190 70L195 80Z\"/><path d=\"M250 120V75\"/><path d=\"M245 80L250 70L255 80Z\"/>\n</g>\n<g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"160\" cy=\"30\" r=\"3.5\"/><circle cx=\"280\" cy=\"30\" r=\"3.5\"/>\n<text x=\"78\" y=\"75\">R1</text><text x=\"8\" y=\"135\">E1</text><text x=\"120\" y=\"100\">R2</text><text x=\"198\" y=\"100\">U2</text>\n<text x=\"222\" y=\"100\">U3</text><text x=\"296\" y=\"100\">R3</text><text x=\"345\" y=\"75\">R4</text><text x=\"414\" y=\"135\">E2</text>\n<text x=\"170\" y=\"200\">pas de fil ici</text></g></svg></div>\n<p><b>Énoncé :</b> déterminer U2 et U3 en fonction de E1, E2, R1, R2, R3 et R4.</p>\n<p><b>Lecture du schéma :</b> les parties gauche et droite sont reliées <b>seulement par le fil du haut</b>. Les fils du bas ne se rejoignent pas (lecture faite sur la photo).</p>\n<ol><li>Le fil du haut est un chemin unique entre les deux parties, sans retour possible. D'après la loi des nœuds appliquée à chaque moitié, le courant qui part par ce fil devrait revenir par un autre fil, qui n'existe pas : <b>le courant dans ce fil est nul</b>.</li>\n<li>Donc à gauche, R1 et R2 sont parcourues par le <b>même courant</b> <code>E1/(R1 + R2)</code> : on peut utiliser le pont diviseur. <b><code>U2 = E1·R2 / (R1 + R2)</code></b>.</li>\n<li>De même à droite : <b><code>U3 = E2·R3 / (R3 + R4)</code></b>.</li></ol>\n<p><b>Réponse à la question :</b> <b>oui</b>, ici on peut utiliser le pont diviseur de tension, justement parce que le fil qui relie les deux moitiés ne transporte aucun courant. S'il y avait aussi un fil en bas, les deux générateurs débiteraient l'un dans l'autre et il faudrait écrire les lois de Kirchhoff (U2 et U3 seraient alors égales).</p>"
+            },
+            {
+              "titre": "Exercice 4 : ponts diviseurs de tension",
+              "html": "\n<p><b>Énoncé :</b> exprimer U1 (aux bornes de R1) et U2 (aux bornes de R2) en fonction de e et des résistances, pour les quatre montages.</p>\n<p><b>Montage 1</b> (e directement sur R1 + R2) : même courant <code>e/(R1 + R2)</code>.<br>\n<b><code>U1 = e·R1/(R1 + R2)</code></b> et <b><code>U2 = e·R2/(R1 + R2)</code></b>.</p>\n<p><b>Montage 2</b> (une résistance R est ajoutée en parallèle sur le générateur idéal) : la tension aux bornes de (R1 + R2) reste e. R prend du courant en plus, mais ne change rien pour R1 et R2.<br>\n<b>Mêmes résultats qu'au montage 1.</b></p>\n<p><b>Montage 3</b> (résistance interne r en série) : r, R1 et R2 sont en série, même courant <code>e/(r + R1 + R2)</code>.<br>\n<b><code>U1 = e·R1/(r + R1 + R2)</code></b> et <b><code>U2 = e·R2/(r + R1 + R2)</code></b>.</p>\n<p><b>Montage 4</b> (r en série, puis R en parallèle sur R1 + R2) : r et R1 ne sont plus parcourues par le même courant, on procède en deux étapes.</p>\n<ol><li><code>Rp = R // (R1 + R2) = R·(R1 + R2)/(R + R1 + R2)</code>.</li>\n<li>Diviseur entre r et Rp : <code>U = e·Rp/(r + Rp)</code> (tension aux bornes de R).</li>\n<li>Diviseur entre R1 et R2 : <code>U1 = U·R1/(R1 + R2)</code>.</li></ol>\n<p>Résultat : <b><code>U1 = e·R·R1 / (r·(R + R1 + R2) + R·(R1 + R2))</code></b> et <b><code>U2 = e·R·R2 / (r·(R + R1 + R2) + R·(R1 + R2))</code></b>.</p>\n<div class=\"exemple\"><b>Vérification :</b> si R devient très grande (R débranchée), on retrouve le montage 3. Si r = 0, on retrouve le montage 1.</div>"
+            },
+            {
+              "titre": "Exercice 5 : montage potentiométrique",
+              "html": "\n<p><b>Lecture du schéma :</b> le potentiomètre de résistance totale R est branché sur E. On note <b>α</b> (entre 0 et 1) la position du curseur : la partie de R comprise entre le curseur et le fil du bas vaut <code>α·R</code>, celle du haut vaut <code>(1 − α)·R</code>. Us est prise entre le curseur et le fil du bas.</p>\n<p><b>À vide</b> (rien n'est branché sur Us) : les deux morceaux sont en série, même courant : pont diviseur.<br>\n<code>Us = E·αR/((1 − α)R + αR)</code>, soit <b><code>Us = α·E</code></b>.</p>\n<p><b>Courbe à vide :</b> une droite qui part de 0 (α = 0) et monte jusqu'à E (α = 1). Us est proportionnelle à la position du curseur : c'est ce qu'on attend d'un potentiomètre.</p>\n<p><b>En charge</b> (Rs branchée sur Us) : Rs est en parallèle sur la partie basse αR.</p>\n<ol><li><code>αR // Rs = αR·Rs/(αR + Rs)</code>.</li>\n<li>Pont diviseur entre (1 − α)R et cette résistance, puis simplification :</li></ol>\n<p><b><code>Us = α·E·Rs / (Rs + α(1 − α)·R)</code></b></p>\n<p><b>Courbe en charge :</b> elle passe toujours par 0 (α = 0) et par E (α = 1), mais entre les deux elle est <b>en dessous de la droite</b> à vide : la courbe n'est plus une droite, elle est « creusée », surtout vers le milieu. Plus Rs est petite devant R, plus l'écart est grand. Si Rs est très grande devant R, on retrouve presque la droite à vide.</p>\n<div class=\"exemple\"><b>Exemple chiffré :</b> Rs = R et α = 0,5 : <code>Us = 0,5·E·R/(R + 0,25·R) = 0,4·E</code> au lieu de 0,5·E à vide.</div>\n<div class=\"attention\"><b>Ce qui a changé :</b> la charge Rs prend du courant au point milieu, donc les deux morceaux du potentiomètre ne sont plus parcourus par le même courant. La formule simple <code>Us = α·E</code> ne marche plus.</div>"
+            },
+            {
+              "titre": "Exercice 6 : pont de Wheatstone",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 440 230\" role=\"img\" aria-label=\"Pont de Wheatstone. Entre un nœud gauche G et un nœud droit D : branche du haut R1 puis R2 avec le point milieu M ; branche du bas R4 puis R3 avec le point milieu N ; branche du générateur E, flèche de E vers la gauche. La tension U est fléchée de N vers M.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\">\n<path d=\"M40 40H100M160 40H280M340 40H400\"/><path d=\"M40 130H100M160 130H280M340 130H400\"/>\n<path d=\"M40 40V190H202M238 190H400V40\"/><circle cx=\"220\" cy=\"190\" r=\"18\"/><path d=\"M202 190H238\"/>\n</g>\n<g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"100\" y=\"30\" width=\"60\" height=\"20\"/><rect x=\"280\" y=\"30\" width=\"60\" height=\"20\"/><rect x=\"100\" y=\"120\" width=\"60\" height=\"20\"/><rect x=\"280\" y=\"120\" width=\"60\" height=\"20\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\"><path d=\"M220 122V58\"/><path d=\"M215 62L220 52L225 62Z\"/><path d=\"M260 220H185\"/><path d=\"M190 215L180 220L190 225Z\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"40\" cy=\"130\" r=\"3.5\"/><circle cx=\"400\" cy=\"130\" r=\"3.5\"/><circle cx=\"220\" cy=\"40\" r=\"3.5\"/><circle cx=\"220\" cy=\"130\" r=\"3.5\"/>\n<text x=\"120\" y=\"70\">R1</text><text x=\"300\" y=\"70\">R2</text><text x=\"120\" y=\"160\">R4</text><text x=\"300\" y=\"160\">R3</text>\n<text x=\"226\" y=\"32\">M</text><text x=\"226\" y=\"148\">N</text><text x=\"230\" y=\"95\">U</text><text x=\"20\" y=\"125\">G</text><text x=\"408\" y=\"125\">D</text><text x=\"268\" y=\"224\">E</text></g></svg></div>\n<p><b>Lecture du schéma :</b> deux branches entre G et D : R1 puis R2 en haut (point milieu M), R4 puis R3 en bas (point milieu N). E est branché entre G et D, sa flèche pointe vers la gauche : G est le côté +, <code>V_G − V_D = E</code>. U est fléchée de N vers M : <code>U = V_M − V_N</code>. On suppose qu'aucun courant ne passe entre M et N (mesure au voltmètre).</p>\n<ol><li>Branche du haut : R1 et R2 en série (même courant). On prend D comme référence 0 V : <code>V_M = E·R2/(R1 + R2)</code>.</li>\n<li>Branche du bas : <code>V_N = E·R3/(R3 + R4)</code>.</li>\n<li><code>U = E·(R2/(R1 + R2) − R3/(R3 + R4))</code>, soit <b><code>U = E·(R2·R4 − R1·R3) / ((R1 + R2)(R3 + R4))</code></b>.</li></ol>\n<p><b>Condition d'équilibre (U = 0) :</b> le numérateur doit être nul : <b><code>R1·R3 = R2·R4</code></b> (les produits des résistances opposées sont égaux), ce qui s'écrit aussi <code>R1/R2 = R4/R3</code>.</p>\n<div class=\"exemple\"><b>Vérification :</b> R1 = R2 = R3 = R4 donne V_M = V_N = E/2 donc U = 0, et on a bien R1·R3 = R2·R4.<br><b>Utilité :</b> si R4 est inconnue, on règle les autres jusqu'à U = 0, puis <code>R4 = R1·R3/R2</code>.</div>"
+            },
+            {
+              "titre": "Exercice 7 : pont diviseur de courant",
+              "html": "\n<p><b>Énoncé :</b> exprimer I1 et I2 en fonction de I, puis en fonction de e, pour les quatre montages.</p>\n<p><b>Montage 1</b> (e sur R1 // R2) :<br>\n<code>I1 = I·R2/(R1 + R2)</code> et <code>I2 = I·R1/(R1 + R2)</code>.<br>\nChaque résistance est sous la tension e : <b><code>I1 = e/R1</code></b>, <b><code>I2 = e/R2</code></b>, et <code>I = e·(R1 + R2)/(R1·R2)</code>.</p>\n<p><b>Montage 2</b> (e sur R1 // R2 // R3) : on note <code>S = R1·R2 + R2·R3 + R1·R3</code>, donc <code>Req = R1·R2·R3/S</code>.<br>\n<code>I1 = I·Req/R1 = I·R2·R3/S</code> et <code>I2 = I·R1·R3/S</code>.<br>\nEn fonction de e : <b><code>I1 = e/R1</code></b>, <b><code>I2 = e/R2</code></b>.</p>\n<p><b>Montage 3</b> (r en série, puis R1 // R2) : mêmes formules en fonction de I. Mais maintenant <code>I = e/(r + R1·R2/(R1 + R2)) = e·(R1 + R2)/(R1·R2 + r·R1 + r·R2)</code>.<br>\n<b><code>I1 = e·R2/(R1·R2 + r·R1 + r·R2)</code></b> et <b><code>I2 = e·R1/(R1·R2 + r·R1 + r·R2)</code></b>.</p>\n<p><b>Montage 4</b> (r en série, puis R1 // R2 // R3) : <code>I = e·S/(R1·R2·R3 + r·S)</code>.<br>\n<b><code>I1 = e·R2·R3/(R1·R2·R3 + r·S)</code></b> et <b><code>I2 = e·R1·R3/(R1·R2·R3 + r·S)</code></b>.</p>\n<div class=\"attention\"><b>Piège :</b> dans le diviseur de courant à deux branches, c'est l'<b>autre</b> résistance qui est au numérateur (<code>I1 = I·R2/(R1 + R2)</code>). Le courant passe plus facilement par la plus petite résistance.</div>\n<div class=\"exemple\"><b>Vérification :</b> avec r = 0, les montages 3 et 4 redonnent I1 = e/R1.</div>"
+            },
+            {
+              "titre": "Exercice 8 : résistances équivalentes",
+              "html": "\n<p>On réduit pas à pas, en partant du morceau le plus « intérieur ».</p>\n<ol>\n<li>R1 et R2 en série : <b><code>Req = R1 + R2</code></b>.</li>\n<li>R1 // R2 : <b><code>Req = R1·R2/(R1 + R2)</code></b>.</li>\n<li>R // R : <b><code>Req = R/2</code></b>.</li>\n<li>Trois résistances en parallèle, notées R1, R1 et R3 sur la feuille : <code>1/Req = 2/R1 + 1/R3</code>, donc <b><code>Req = R1·R3/(R1 + 2·R3)</code></b>. <small>(Le deuxième « R1 » est peut-être un R2 ; dans ce cas <code>Req = R1·R2·R3/(R1·R2 + R2·R3 + R1·R3)</code>.)</small></li>\n<li>Montage en « échelle » : R1 (haut) et R4 (bas) mènent aux bornes de R2 ; R3 et la deuxième R4 forment une boucle à droite. Entre les deux bouts de R2 on a donc R2 // (R3 + R4).<br>\n<b><code>Req = R1 + R4 + R2·(R3 + R4)/(R2 + R3 + R4)</code></b>.</li>\n<li>R1 en série avec trois branches en parallèle : (R2 + R2), R4 et R4. <code>R4 // R4 = R4/2</code> ; <code>2R2 // (R4/2) = 2·R2·R4/(4·R2 + R4)</code>.<br>\n<b><code>Req = R1 + 2·R2·R4/(4·R2 + R4)</code></b>.</li>\n<li>(R // R) en parallèle avec (R + R) : <code>R/2 // 2R = R²/(5R/2)</code>, donc <b><code>Req = 2R/5</code></b>.</li>\n<li>Montage chiffré : <code>10 Ω // 15 Ω = 150/25 = 6 Ω</code> ; en série avec 6 Ω : 12 Ω ; en parallèle avec 12 Ω : 6 Ω ; en série avec 4 Ω : <b><code>Req = 10 Ω</code></b>.</li>\n</ol>\n<div class=\"exemple\"><b>Vérification :</b> une association parallèle est toujours plus petite que la plus petite des résistances (6 Ω &lt; 10 Ω) ; une association série est plus grande que la plus grande.</div>"
+            },
+            {
+              "titre": "Exercice 9 : 6 résistances de 200 Ω",
+              "html": "\n<ul>\n<li><b>1,2 kΩ</b> : les six en série. <code>6 × 200 = 1 200 Ω</code>.</li>\n<li><b>300 Ω</b> : deux branches de trois résistances en série, mises en parallèle. <code>600 Ω // 600 Ω = 300 Ω</code>.<br><small>Autre solution : trois paires en parallèle (100 Ω chacune) mises en série : <code>3 × 100 = 300 Ω</code>.</small></li>\n<li><b>150 Ω</b> : quatre résistances en parallèle (<code>200/4 = 50 Ω</code>) en série avec deux résistances en parallèle (<code>200/2 = 100 Ω</code>) : <code>50 + 100 = 150 Ω</code>.<br><small>Avec quatre résistances seulement : 200 Ω // (3 × 200 Ω) = 200·600/800 = 150 Ω.</small></li>\n</ul>"
+            },
+            {
+              "titre": "Exercices 10 et 11 : caractéristique d'une résistance",
+              "html": "\n<p><b>Méthode :</b> on place les points (I en abscisse, U en ordonnée). Ils doivent être à peu près alignés sur une droite passant par l'origine. On trace la droite qui passe au plus près des points, puis <code>R = pente = ΔU/ΔI</code> (I en ampères !).</p>\n<p><b>Exercice 10</b></p>\n<table><thead><tr><th>U (V)</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th><th>30</th></tr></thead>\n<tbody><tr><td>I (mA)</td><td>2,2</td><td>4,5</td><td>7,0</td><td>9,0</td><td>11,4</td><td>13,7</td></tr>\n<tr><td>U/I (kΩ)</td><td>2,27</td><td>2,22</td><td>2,14</td><td>2,22</td><td>2,19</td><td>2,19</td></tr></tbody></table>\n<p>Pente lue sur un point éloigné de la droite : <code>30 V / 13,7 mA = 2 190 Ω</code>. La régression (droite passant par l'origine) donne 2 194 Ω.<br><b>R ≈ 2,2 kΩ</b>.</p>\n<p><b>Exercice 11</b></p>\n<table><thead><tr><th>U (V)</th><th>3,24</th><th>4,09</th><th>5,35</th><th>5,97</th><th>7,19</th><th>9,46</th></tr></thead>\n<tbody><tr><td>I (mA)</td><td>0,5</td><td>0,7</td><td>1</td><td>1,1</td><td>1,4</td><td>1,8</td></tr>\n<tr><td>U/I (kΩ)</td><td>6,48</td><td>5,84</td><td>5,35</td><td>5,43</td><td>5,14</td><td>5,26</td></tr></tbody></table>\n<p>Pente sur le dernier point : <code>9,46 V / 1,8 mA ≈ 5 260 Ω</code>. La régression passant par l'origine donne 5 337 Ω.<br><b>R ≈ 5,3 kΩ</b>.</p>\n<div class=\"attention\"><b>Points dispersés :</b> à l'exercice 11, les premiers points (0,5 mA ; 3,24 V) et (0,7 mA ; 4,09 V) donnent un rapport U/I plus grand que les autres (6,48 et 5,84 kΩ) : ils sont au-dessus de la droite, sans doute à cause de la précision de mesure sur les petits courants. On ne calcule donc pas R avec un seul point mal placé : on trace la droite moyenne et on lit sa pente sur deux points éloignés <b>de la droite</b>.</div>"
+            },
+            {
+              "titre": "Exercice 12 : caractéristique d'un générateur",
+              "html": "\n<table><thead><tr><th>I (mA)</th><th>0</th><th>5</th><th>10</th><th>15</th><th>20</th><th>25</th><th>30</th></tr></thead>\n<tbody><tr><td>U (V)</td><td>24</td><td>23,5</td><td>23</td><td>22,5</td><td>22</td><td>21,5</td><td>21</td></tr></tbody></table>\n<ol><li>Les points sont parfaitement alignés sur une droite qui <b>descend</b> : <code>U = E − r·I</code>.</li>\n<li>Pour I = 0 : <b><code>E = 24 V</code></b> (tension à vide).</li>\n<li>Pente : <code>(21 − 24) V / (30 − 0) mA = −3 V / 0,030 A = −100 Ω</code>, donc <b><code>r = 100 Ω</code></b>.</li></ol>\n<p><b>Équation :</b> <b><code>U = 24 − 100·I</code></b> (I en ampères). <b>Modèle :</b> une source de tension idéale E = 24 V en série avec une résistance r = 100 Ω.</p>\n<div class=\"exemple\"><b>Vérification :</b> I = 15 mA donne <code>24 − 100 × 0,015 = 22,5 V</code>, comme dans le tableau.</div>"
+            },
+            {
+              "titre": "Exercice 13 : association série et parallèle (graphique)",
+              "html": "\n<p>R1 = 1 kΩ et R2 = 2 kΩ, U de 0 à 10 V. Caractéristiques U = f(I) : deux droites passant par l'origine, de pentes 1 kΩ et 2 kΩ (à 10 V : I1 = 10 mA et I2 = 5 mA).</p>\n<p><b>En série :</b> les deux résistances ont le <b>même courant</b> et les tensions s'ajoutent. Graphiquement, pour chaque valeur de I, on <b>additionne les ordonnées</b> (U1 + U2).<br>\nPente : <b><code>R1 + R2 = 3 kΩ</code></b>. Vérification : à 10 V, <code>I = 10/3 000 ≈ 3,33 mA</code>.</p>\n<p><b>En parallèle :</b> les deux résistances ont la <b>même tension</b> et les courants s'ajoutent. Graphiquement, pour chaque valeur de U, on <b>additionne les abscisses</b> (I1 + I2).<br>\nPente : <b><code>R1 // R2 = 2/3 kΩ ≈ 667 Ω</code></b>. Vérification : à 10 V, <code>I = 10 + 5 = 15 mA</code> et <code>10 V / 15 mA ≈ 667 Ω</code>.</p>\n<div class=\"attention\">La droite série est <b>au-dessus</b> des deux autres (plus raide), la droite parallèle <b>en dessous</b> (moins raide). Si on trace I = f(U) au lieu de U = f(I), c'est l'inverse.</div>"
+            },
+            {
+              "titre": "Exercice 14 : luminosité de lampes",
+              "html": "\n<p>Les lampes sont identiques et se comportent comme des résistances égales (on la note RL). Plus le courant est grand, plus la lampe brille.</p>\n<ol>\n<li><b>E, A1, R, A2 en série</b> : un seul courant dans toute la boucle. <b>A1 et A2 brillent pareil.</b></li>\n<li><b>E1, A1, E2, A2 en série</b> : là encore un seul courant, donc <b>A1 et A2 brillent pareil</b>. D'après les flèches de la feuille (E1 vers le haut à gauche, E2 vers le bas à droite), les deux générateurs poussent le courant dans le même sens de rotation : <code>I = (E1 + E2)/(2·RL)</code>.</li>\n<li><b>A1 et A2 en parallèle sur E</b> : même tension E, même résistance, donc même courant <code>E/RL</code>. <b>A1 et A2 brillent pareil.</b></li>\n<li><b>A1 seule sur E, et A2 + A3 en série sur E</b> : A1 reçoit <code>E/RL</code> ; A2 et A3 reçoivent <code>E/(2·RL)</code>. <b>A1 brille plus que A2 et A3, qui brillent pareil entre elles.</b></li>\n<li><b>A5 et A1 en série avec (A2 // A3 // A4)</b> : tout le courant I passe dans A5 et A1, puis se partage en trois. <code>Req = RL + RL/3 + RL = 7·RL/3</code>, <code>I = 3E/(7·RL)</code>, et chacune de A2, A3, A4 reçoit <code>I/3 = E/(7·RL)</code>. <b>A1 et A5 brillent pareil et plus fort ; A2, A3 et A4 brillent pareil mais plus faiblement.</b></li>\n</ol>\n<div class=\"attention\"><b>Idée reçue :</b> le courant ne « s'use » pas en traversant une lampe. Dans une boucle en série, la première et la dernière lampe brillent exactement autant.</div>"
             }
           ],
           "pointsCles": [
-            "Loi des nœuds : somme des courants qui arrivent = somme des courants qui repartent.",
-            "Loi des mailles : sur une boucle fermée, la somme des tensions (avec leurs signes) est nulle.",
-            "On écrit autant d'équations que d'inconnues : 1 loi des nœuds + 2 lois des mailles pour 3 courants.",
-            "Un courant négatif circule dans le sens inverse de la flèche choisie.",
-            "Vérification : la tension U_AB doit être la même dans toutes les branches en parallèle."
+            "Loi des nœuds : ce qui arrive à un nœud est égal à ce qui en repart ; un courant négatif circule dans l'autre sens.",
+            "Loi des mailles : en faisant le tour d'une boucle, la somme des tensions (+ dans le sens du parcours, − sinon) est nulle.",
+            "Le pont diviseur de tension ne s'applique qu'à des résistances parcourues par le même courant.",
+            "Diviseur de courant à deux branches : I1 = I·R2/(R1 + R2), l'autre résistance au numérateur.",
+            "Série : les résistances s'ajoutent ; parallèle : les inverses s'ajoutent (R1 // R2 = R1·R2/(R1 + R2)).",
+            "Pont de Wheatstone équilibré (U = 0) quand R1·R3 = R2·R4.",
+            "Une résistance a une caractéristique U = f(I) droite passant par l'origine, de pente R ; un générateur réel suit U = E − r·I.",
+            "Dans une boucle en série, toutes les lampes identiques brillent autant."
+          ],
+          "definitions": [
+            {
+              "terme": "Nœud",
+              "def": "Point du circuit où se rejoignent au moins trois fils."
+            },
+            {
+              "terme": "Maille",
+              "def": "Boucle fermée du circuit que l'on peut parcourir en revenant au point de départ."
+            },
+            {
+              "terme": "Pont diviseur de tension",
+              "def": "Deux résistances en série parcourues par le même courant : U1 = U·R1/(R1 + R2)."
+            },
+            {
+              "terme": "Pont diviseur de courant",
+              "def": "Deux résistances en parallèle se partagent le courant : I1 = I·R2/(R1 + R2)."
+            },
+            {
+              "terme": "Résistance équivalente",
+              "def": "Résistance unique qui, placée à la place d'un groupe de résistances, ferait passer le même courant sous la même tension."
+            },
+            {
+              "terme": "Caractéristique",
+              "def": "Courbe U = f(I) d'un dipôle, obtenue en mesurant la tension pour plusieurs courants."
+            },
+            {
+              "terme": "Pont de Wheatstone",
+              "def": "Deux ponts diviseurs en parallèle ; la tension entre leurs points milieux est nulle quand R1·R3 = R2·R4."
+            },
+            {
+              "terme": "Montage à vide / en charge",
+              "def": "À vide, rien n'est branché sur la sortie ; en charge, une résistance de charge Rs prend du courant en sortie."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Exercice 1, nœud D : I1 = 3 A et I3 = 4 A arrivent, I2 = −1 A et I4 repartent. I4 ?",
+              "r": "3 + 4 = −1 + I4, donc I4 = 8 A."
+            },
+            {
+              "q": "Exercice 2, maille 1 : U1 = 7 V et U3 = 4 V, toutes les flèches dans le même sens de rotation. U2 ?",
+              "r": "U1 + U3 + U2 = 0, donc U2 = −11 V."
+            },
+            {
+              "q": "Quand a-t-on le droit d'utiliser le pont diviseur de tension ?",
+              "r": "Quand les résistances sont en série et parcourues par le même courant (aucune branche ne prend de courant au point milieu)."
+            },
+            {
+              "q": "Formule du diviseur de courant pour I1 (R1 // R2) ?",
+              "r": "I1 = I·R2/(R1 + R2) : l'autre résistance au numérateur."
+            },
+            {
+              "q": "Exercice 3c : que vaut la résistance équivalente vue par E ?",
+              "r": "5R, donc I = E/(5R) et U = 12E/25."
+            },
+            {
+              "q": "Exercice 3d : pourquoi peut-on utiliser le diviseur ?",
+              "r": "Les deux moitiés ne sont reliées que par un seul fil : aucun courant n'y passe, donc U2 = E1·R2/(R1 + R2) et U3 = E2·R3/(R3 + R4)."
+            },
+            {
+              "q": "Potentiomètre à vide : Us en fonction de α ?",
+              "r": "Us = α·E, une droite de 0 à E."
+            },
+            {
+              "q": "Potentiomètre en charge : Us ?",
+              "r": "Us = α·E·Rs/(Rs + α(1 − α)·R), une courbe sous la droite à vide."
+            },
+            {
+              "q": "Condition d'équilibre du pont de Wheatstone ?",
+              "r": "R1·R3 = R2·R4 (produits des résistances opposées égaux)."
+            },
+            {
+              "q": "Exercice 12 : E et r du générateur ?",
+              "r": "E = 24 V (tension pour I = 0) et r = 3 V / 30 mA = 100 Ω."
+            },
+            {
+              "q": "Comment obtenir 300 Ω avec six résistances de 200 Ω ?",
+              "r": "Deux branches de trois résistances en série (600 Ω chacune) mises en parallèle."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Nœud C : I1 = 2 A, I2 = 1 A, I3 = 2 A et I4 sont tous fléchés vers le nœud. Que vaut I4 ?",
+              "choix": [
+                "1 A",
+                "5 A",
+                "−5 A",
+                "−1 A"
+              ],
+              "bonne": 2,
+              "explication": "Tout arrive au nœud, donc la somme est nulle : 2 + 1 + 2 + I4 = 0, I4 = −5 A."
+            },
+            {
+              "q": "Maille 2 de l'exercice 2 : U1 = 7 V, U3 = −1 V, U4 = 2 V. Que vaut U2 ?",
+              "choix": [
+                "8 V",
+                "10 V",
+                "−4 V",
+                "4 V"
+              ],
+              "bonne": 3,
+              "explication": "U2 − U3 + U4 − U1 = 0, donc U2 = 7 − 1 − 2 = 4 V."
+            },
+            {
+              "q": "Exercice 3a : E en série avec R3, qui alimente R1 // R2. Que vaut I ?",
+              "choix": [
+                "E/(R1 + R2 + R3)",
+                "E·(R1 + R2)/(R1R2 + R1R3 + R2R3)",
+                "E·R2/(R1 + R2)",
+                "E/(R1 + R2)"
+              ],
+              "bonne": 1,
+              "explication": "Req = R3 + R1R2/(R1 + R2) ; I = E/Req donne E·(R1 + R2)/(R1R2 + R1R3 + R2R3)."
+            },
+            {
+              "q": "Exercice 3c : que vaut U ?",
+              "choix": [
+                "4E/5",
+                "3E/5",
+                "12E/25",
+                "E/2"
+              ],
+              "bonne": 2,
+              "explication": "Req = 5R, I = E/(5R), tension sur 20R = 4E/5, puis diviseur 3R/5R : U = 12E/25."
+            },
+            {
+              "q": "Montage 3 de l'exercice 4 (r, R1, R2 en série sur e). Que vaut U2 ?",
+              "choix": [
+                "e·R1/(r + R1 + R2)",
+                "e·R2/(r + R1 + R2)",
+                "e·R2/(R1 + R2)",
+                "e·r/(r + R1 + R2)"
+              ],
+              "bonne": 1,
+              "explication": "Les trois résistances sont en série avec le même courant e/(r + R1 + R2)."
+            },
+            {
+              "q": "Potentiomètre en charge (Rs = R, α = 0,5). Que vaut Us ?",
+              "choix": [
+                "0,25·E",
+                "0,6·E",
+                "0,4·E",
+                "0,5·E"
+              ],
+              "bonne": 2,
+              "explication": "Us = α·E·Rs/(Rs + α(1 − α)R) = 0,5E·R/(1,25R) = 0,4·E."
+            },
+            {
+              "q": "Pont de Wheatstone : à quelle condition U = 0 ?",
+              "choix": [
+                "R1·R2 = R3·R4",
+                "R1/R3 = R2/R4",
+                "R1 + R3 = R2 + R4",
+                "R1·R3 = R2·R4"
+              ],
+              "bonne": 3,
+              "explication": "U = E·(R2R4 − R1R3)/((R1 + R2)(R3 + R4)) est nulle quand R1·R3 = R2·R4."
+            },
+            {
+              "q": "Résistance équivalente du montage 4 Ω + [12 Ω // ((10 Ω // 15 Ω) + 6 Ω)] ?",
+              "choix": [
+                "8 Ω",
+                "10 Ω",
+                "16 Ω",
+                "47 Ω"
+              ],
+              "bonne": 1,
+              "explication": "10 // 15 = 6 ; 6 + 6 = 12 ; 12 // 12 = 6 ; 6 + 4 = 10 Ω."
+            },
+            {
+              "q": "Générateur : U = 24 V à vide et 21 V pour 30 mA. Que vaut r ?",
+              "choix": [
+                "700 Ω",
+                "0,1 Ω",
+                "100 Ω",
+                "800 Ω"
+              ],
+              "bonne": 2,
+              "explication": "r = (24 − 21) V / 0,030 A = 100 Ω."
+            },
+            {
+              "q": "R1 = 1 kΩ et R2 = 2 kΩ en parallèle : pente de la caractéristique U = f(I) ?",
+              "choix": [
+                "3 kΩ",
+                "500 Ω",
+                "1,5 kΩ",
+                "Environ 667 Ω"
+              ],
+              "bonne": 3,
+              "explication": "R1 // R2 = 1 × 2/(1 + 2) = 2/3 kΩ ≈ 667 Ω."
+            },
+            {
+              "q": "Dernier montage de l'exercice 14 : quelles lampes brillent le plus ?",
+              "choix": [
+                "Toutes pareil",
+                "A1 et A5",
+                "A2, A3 et A4",
+                "A5 seulement"
+              ],
+              "bonne": 1,
+              "explication": "A1 et A5 sont traversées par tout le courant I ; A2, A3 et A4 n'en reçoivent qu'un tiers chacune."
+            }
+          ]
+        },
+        {
+          "id": "exercices-resistances-equivalentes",
+          "titre": "Exercices : résistances équivalentes",
+          "type": "Exercices",
+          "date": "2026-10-08",
+          "source": "Feuille d'exercices du prof (photos envoyées par Kyk's)",
+          "resume": "On apprend à remplacer un ensemble de résistances par une seule résistance équivalente Req. En série, les résistances s'additionnent ; en parallèle, ce sont leurs inverses qui s'additionnent. Pour un montage compliqué, on repère les nœuds, on simplifie un petit groupe à la fois (Req1, Req2…) et on recommence. On s'en sert aussi à l'envers, pour retrouver une résistance inconnue à partir de RAB.",
+          "sections": [
+            {
+              "titre": "Méthode : série, parallèle, et comment simplifier pas à pas",
+              "html": "<p><b>Deux résistances sont en série</b> quand elles sont l'une après l'autre, sans aucun nœud entre elles où le courant pourrait partir ailleurs. Elles sont traversées par le <b>même courant</b>. On additionne :</p>\n<p><code>Req = R1 + R2 + R3 + …</code></p>\n<p><b>Deux résistances sont en parallèle</b> (notation <code>//</code>) quand elles sont branchées entre les <b>deux mêmes nœuds</b>. Elles ont la <b>même tension</b>. On additionne les inverses :</p>\n<p><code>1/Req = 1/R1 + 1/R2 + 1/R3 + …</code>, donc <code>Req = 1 / (1/R1 + 1/R2 + 1/R3 + …)</code></p>\n<p>Pour <b>deux</b> résistances seulement, on a le raccourci « produit sur somme » : <code>R1 // R2 = R1·R2 / (R1 + R2)</code>.</p>\n<p><b>La méthode pour un montage compliqué :</b></p>\n<ol><li>Repérer et nommer tous les nœuds (A, B, C, D…). Deux points reliés par un simple fil sont le <b>même nœud</b>, même s'ils sont loin sur le dessin.</li>\n<li>Pour chaque résistance, noter entre quels nœuds elle est branchée.</li>\n<li>Chercher un groupe simple (deux résistances entre les mêmes nœuds, ou une suite sans dérivation), le remplacer par sa résistance équivalente (Req1, Req2…).</li>\n<li>Recommencer sur le schéma simplifié jusqu'à n'avoir plus qu'une seule résistance entre A et B.</li></ol>\n<div class=\"attention\"><b>Deux pièges très fréquents :</b>\n<ul><li>Ne jamais mélanger dans une même somme des inverses (1/R) et des résistances (R) : <code>1/R1 + R4</code> n'a pas de sens, ce ne sont pas les mêmes unités (Ω⁻¹ et Ω).</li>\n<li>Le « produit sur somme » ne marche que pour <b>deux</b> résistances. Pour trois, <code>R1·R2·R3 / (R1 + R2 + R3)</code> est faux (ce n'est même pas en ohms : Ω³ divisé par Ω donne Ω²).</li></ul></div>\n<div class=\"exemple\"><b>Contrôles rapides :</b> une association en série est toujours <b>plus grande</b> que la plus grande des résistances ; une association en parallèle est toujours <b>plus petite</b> que la plus petite des résistances. Et n résistances identiques R en parallèle donnent <code>R/n</code> (deux résistances de 20 kΩ en parallèle donnent 10 kΩ).</div>"
+            },
+            {
+              "titre": "Exercice 1 : association de 5 résistances",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 160\" role=\"img\" aria-label=\"Schéma 1 : entre A et B, R1, R2 et R3 sont en parallèle entre deux nœuds ; ce bloc est suivi de R4 puis de R5 en série jusqu'à B.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M18 90H90 M130 90H200 M240 90H280 M320 90H382 M60 40V140 M160 40V140 M60 40H90 M130 40H160 M60 140H90 M130 140H160\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"90\" y=\"32\" width=\"40\" height=\"16\"/><rect x=\"90\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"90\" y=\"132\" width=\"40\" height=\"16\"/><rect x=\"200\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"280\" y=\"82\" width=\"40\" height=\"16\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"60\" cy=\"90\" r=\"3.5\"/><circle cx=\"160\" cy=\"90\" r=\"3.5\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><circle cx=\"18\" cy=\"90\" r=\"4\"/><circle cx=\"382\" cy=\"90\" r=\"4\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"110\" y=\"27\" text-anchor=\"middle\">R1</text><text x=\"110\" y=\"77\" text-anchor=\"middle\">R2</text><text x=\"110\" y=\"127\" text-anchor=\"middle\">R3</text><text x=\"220\" y=\"77\" text-anchor=\"middle\">R4</text><text x=\"300\" y=\"77\" text-anchor=\"middle\">R5</text><text x=\"14\" y=\"84\" text-anchor=\"middle\">A</text><text x=\"386\" y=\"84\" text-anchor=\"middle\">B</text></g></svg></div><p><b>Énoncé :</b> donner l'expression littérale de la résistance équivalente au dipôle A-B (il n'est pas nécessaire de simplifier).</p>\n<p><b>Structure :</b> R1, R2 et R3 sont branchées entre les deux mêmes nœuds : elles sont <b>en parallèle</b>. Ce bloc est ensuite suivi de R4 puis de R5, sans dérivation : bloc, R4 et R5 sont <b>en série</b>. En résumé : <code>Req = (R1 // R2 // R3) + R4 + R5</code>.</p>\n<p><b>Étape 1 : le bloc parallèle.</b></p>\n<p><code>1/Req1 = 1/R1 + 1/R2 + 1/R3</code>, donc <code>Req1 = 1 / (1/R1 + 1/R2 + 1/R3)</code></p>\n<p><b>Étape 2 : la série.</b> On ajoute R4 et R5 <b>après</b> avoir inversé :</p>\n<p><b><code>Req = 1 / (1/R1 + 1/R2 + 1/R3) + R4 + R5</code></b></p>\n<p><small>Forme équivalente (en réduisant au même dénominateur) : <code>Req = R1·R2·R3 / (R1·R2 + R1·R3 + R2·R3) + R4 + R5</code>.</small></p>\n<div class=\"attention\"><b>À propos des réponses écrites sur la feuille :</b>\n<ul><li>« 1/Req = 1/R1 + 1/R2 + 1/R3 + R4 + R5 » mélange des inverses et des résistances : c'est faux. Seul le bloc parallèle s'écrit avec des inverses, et c'est <b>1/Req1</b> (le bloc), pas 1/Req (tout le dipôle).</li>\n<li>« Req = R1×R2×R3 / (R1 + R2 + R3) + R4 + R5 » : la bonne idée est là (bloc parallèle puis + R4 + R5), mais le produit sur somme ne marche que pour deux résistances. Pour trois, le dénominateur est <code>R1·R2 + R1·R3 + R2·R3</code>.</li>\n<li>La dernière proposition « 1 / (1/R1 + 1/R2 + 1/R3 + R4 + R5) » met R4 et R5 sous la barre de fraction : elles seraient « inversées » avec le reste. R4 et R5 doivent rester <b>en dehors</b> : <code>1 / (1/R1 + 1/R2 + 1/R3) + R4 + R5</code>. L'idée « on inverse » est la bonne, il faut juste inverser seulement le bloc parallèle.</li></ul></div>\n<div class=\"exemple\"><b>Vérification avec des valeurs simples :</b> si toutes les résistances valent 30 Ω, le bloc vaut 30/3 = 10 Ω et <code>Req = 10 + 30 + 30 = 70 Ω</code>. La formule correcte donne bien 1/(3/30) + 60 = 70 Ω, alors que « produit sur somme » à trois donnerait 27 000/90 = 300 Ω pour le bloc, ce qui est impossible (plus grand que chaque résistance du parallèle).</div>"
+            },
+            {
+              "titre": "Exercice 2 : association de 6 résistances",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 210\" role=\"img\" aria-label=\"Schéma 2 : entre A et B, deux branches en parallèle. Branche du haut : R1, R2 et R3 en parallèle, puis R5 et R6 en série. Branche du bas : R4 seule, reliée directement de A à B.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M18 90H90 M130 90H190 M230 90H260 M300 90H382 M60 40V190 M160 40V140 M60 40H90 M130 40H160 M60 140H90 M130 140H160 M60 190H160 M200 190H340V90\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"90\" y=\"32\" width=\"40\" height=\"16\"/><rect x=\"90\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"90\" y=\"132\" width=\"40\" height=\"16\"/><rect x=\"190\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"260\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"160\" y=\"182\" width=\"40\" height=\"16\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"60\" cy=\"90\" r=\"3.5\"/><circle cx=\"160\" cy=\"90\" r=\"3.5\"/><circle cx=\"340\" cy=\"90\" r=\"3.5\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><circle cx=\"18\" cy=\"90\" r=\"4\"/><circle cx=\"382\" cy=\"90\" r=\"4\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"110\" y=\"27\" text-anchor=\"middle\">R1</text><text x=\"110\" y=\"77\" text-anchor=\"middle\">R2</text><text x=\"110\" y=\"127\" text-anchor=\"middle\">R3</text><text x=\"210\" y=\"77\" text-anchor=\"middle\">R5</text><text x=\"280\" y=\"77\" text-anchor=\"middle\">R6</text><text x=\"180\" y=\"177\" text-anchor=\"middle\">R4</text><text x=\"14\" y=\"84\" text-anchor=\"middle\">A</text><text x=\"386\" y=\"84\" text-anchor=\"middle\">B</text></g></svg></div><p><b>Énoncé :</b> donner l'expression littérale de la résistance équivalente au dipôle (il n'est pas nécessaire de simplifier).</p>\n<p><b>Structure :</b> entre les deux bornes, il y a <b>deux branches en parallèle</b> :</p>\n<ul><li>la branche du haut : R1, R2 et R3 en parallèle, puis R5 et R6 en série avec ce bloc ;</li>\n<li>la branche du bas : R4 seule, qui relie directement les deux bornes.</li></ul>\n<p>En résumé : <code>Req = [(R1 // R2 // R3) + R5 + R6] // R4</code>.</p>\n<p><b>Étape 1 : la branche du haut</b> (c'est exactement le montage de l'exercice 1) :</p>\n<p><code>Req1 = 1 / (1/R1 + 1/R2 + 1/R3) + R5 + R6</code></p>\n<p><b>Étape 2 : Req1 en parallèle avec R4</b> (deux résistances, donc produit sur somme autorisé) :</p>\n<p><b><code>Req = Req1·R4 / (Req1 + R4)</code></b>, avec <code>Req1 = 1 / (1/R1 + 1/R2 + 1/R3) + R5 + R6</code></p>\n<div class=\"attention\"><b>À propos des réponses écrites sur la feuille :</b>\n<ul><li>La réponse finale entourée « Req = Req1 × R4 / (Req1 + R4) » est <b>juste</b>, et le regroupement « Req1 » tracé sur le schéma (R1, R2, R3, R5, R6) est le bon. Bravo.</li>\n<li>Les essais intermédiaires reprennent les deux erreurs de l'exercice 1 : « 1/R1 + 1/R2 + 1/R3 + R5 + R6 » mélange inverses et résistances, et « R1×R2×R3 / (R1 + R2 + R3) » n'est pas valable pour trois résistances. Ils sont d'ailleurs barrés : il suffit de garder <code>Req1 = 1/(1/R1 + 1/R2 + 1/R3) + R5 + R6</code>.</li>\n<li>Diviser par R4 (« … / R4 ») ne représente pas une mise en parallèle : il faut bien le produit sur somme (ou la somme des inverses).</li></ul></div>\n<div class=\"exemple\"><b>Vérification avec des valeurs simples :</b> si toutes valent 30 Ω, Req1 = 10 + 30 + 30 = 70 Ω, puis <code>Req = 70 × 30 / (70 + 30) = 21 Ω</code>. C'est bien plus petit que R4 = 30 Ω, comme toute association en parallèle.</div>"
+            },
+            {
+              "titre": "Exercice 3 : association série-parallèle (nœuds A, B, C, D)",
+              "html": "<p><b>Énoncé :</b> le dipôle A-B est dessiné « en échelle » : une longue ligne verticale à gauche, reliée à A, d'où partent R6, R4 et R2 ; une colonne à droite R1, C, R3, D, R5 qui monte jusqu'à B.</p>\n<p><b>a)</b> Redessiner le schéma avec seulement quatre nœuds A, B, C, D, résistances à l'horizontale.</p>\n<p><b>b)</b> Avec <code>R1 = R2 = R4 = R6 = 20 kΩ</code> et <code>R3 = R5 = 10 kΩ</code>, calculer la résistance équivalente (le calcul se fait de tête).</p>\n<p><b>a) Repérage des nœuds.</b> Toute la ligne de gauche est un simple fil relié à la borne A (en bas) : c'est donc <b>un seul nœud A</b>. Chaque résistance est alors entre deux nœuds :</p>\n<table><thead><tr><th>Résistance</th><th>Entre</th></tr></thead><tbody>\n<tr><td>R1</td><td>A et C</td></tr><tr><td>R2</td><td>A et C</td></tr><tr><td>R3</td><td>C et D</td></tr>\n<tr><td>R4</td><td>A et D</td></tr><tr><td>R5</td><td>D et B</td></tr><tr><td>R6</td><td>A et B</td></tr></tbody></table>\n<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 225\" role=\"img\" aria-label=\"Schéma redessiné : de A à C, R1 et R2 en parallèle ; de C à D, R3 ; de D à B, R5. R4 relie A à D. R6 relie A à B.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M18 90H80 M120 90H180 M220 90H280 M320 90H382 M50 40V205 M150 40V90 M50 40H80 M120 40H150 M50 150H130 M170 150H250V90 M50 205H200 M240 205H350V90\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"80\" y=\"32\" width=\"40\" height=\"16\"/><rect x=\"80\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"180\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"280\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"130\" y=\"142\" width=\"40\" height=\"16\"/><rect x=\"200\" y=\"197\" width=\"40\" height=\"16\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"50\" cy=\"90\" r=\"3.5\"/><circle cx=\"150\" cy=\"90\" r=\"3.5\"/><circle cx=\"250\" cy=\"90\" r=\"3.5\"/><circle cx=\"350\" cy=\"90\" r=\"3.5\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><circle cx=\"18\" cy=\"90\" r=\"4\"/><circle cx=\"382\" cy=\"90\" r=\"4\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"100\" y=\"27\" text-anchor=\"middle\">R2</text><text x=\"100\" y=\"77\" text-anchor=\"middle\">R1</text><text x=\"200\" y=\"77\" text-anchor=\"middle\">R3</text><text x=\"300\" y=\"77\" text-anchor=\"middle\">R5</text><text x=\"150\" y=\"137\" text-anchor=\"middle\">R4</text><text x=\"220\" y=\"192\" text-anchor=\"middle\">R6</text><text x=\"14\" y=\"84\" text-anchor=\"middle\">A</text><text x=\"386\" y=\"84\" text-anchor=\"middle\">B</text><text x=\"150\" y=\"110\" text-anchor=\"middle\">C</text><text x=\"264\" y=\"110\" text-anchor=\"middle\">D</text></g></svg></div><p><b>b) Simplification pas à pas</b> (on part du fond, à gauche) :</p>\n<ol><li>R1 et R2 sont entre A et C : en parallèle. <code>Req1 = R1·R2 / (R1 + R2) = 20 × 20 / 40 = 10 kΩ</code>.</li>\n<li>Req1 (A vers C) puis R3 (C vers D) : en série. <code>Req2 = Req1 + R3 = 10 + 10 = 20 kΩ</code> (entre A et D).</li>\n<li>Req2 et R4 sont toutes deux entre A et D : en parallèle. <code>Req3 = Req2·R4 / (Req2 + R4) = 20 × 20 / 40 = 10 kΩ</code>.</li>\n<li>Req3 (A vers D) puis R5 (D vers B) : en série. <code>Req4 = Req3 + R5 = 10 + 10 = 20 kΩ</code> (entre A et B).</li>\n<li>Req4 et R6 sont toutes deux entre A et B : en parallèle. <code>Req = Req4·R6 / (Req4 + R6) = 20 × 20 / 40 = 10 kΩ</code>.</li></ol>\n<p>Expression littérale complète : <code>Req = { [ (R1 // R2) + R3 ] // R4 + R5 } // R6</code></p>\n<p><b>Résultat : Req = 10 kΩ.</b></p>\n<div class=\"exemple\"><b>Pourquoi c'est facile de tête :</b> à chaque étape on retombe sur deux résistances égales de 20 kΩ en parallèle, qui donnent 20/2 = 10 kΩ, et 10 + 10 = 20 kΩ en série. Le résultat 10 kΩ est bien plus petit que R6 = 20 kΩ, ce qui est logique puisque R6 est en parallèle avec le reste.</div>\n<div class=\"attention\"><b>À propos des réponses écrites sur la feuille :</b>\n<ul><li>Le schéma redessiné est bon (R1 // R2 entre A et C, R3 de C à D, R5 de D à B, R4 de A à D, R6 de A à B), et le résultat <b>10 kΩ</b> est <b>juste</b>. Petit point de dessin : le fil qui part de R4 doit arriver <b>en D seulement</b> ; sur la feuille il semble passer par la verticale qui descend de C, ce qui court-circuiterait R3. <small>(Lecture incertaine sur la photo.)</small></li>\n<li>La formule écrite « Req = (R1×R2/(R1+R2) + R3) <b>+</b> (Req1×R4/(Req1+R4) + R5) <b>+</b> (Req2×R6/(Req2+R6)) » additionne les trois parenthèses : c'est faux, car ces blocs ne sont pas en série, ils sont <b>emboîtés</b>. Chaque parenthèse est une étape qui sert dans la suivante. Il faut écrire trois lignes séparées : <code>Req1 = R1·R2/(R1+R2) + R3</code>, puis <code>Req2 = Req1·R4/(Req1+R4) + R5</code>, puis <code>Req = Req2·R6/(Req2+R6)</code>. Avec le « + » entre parenthèses, on trouverait 20 + 20 + 10 = 50 kΩ au lieu de 10 kΩ.</li></ul></div>"
+            },
+            {
+              "titre": "Exercice 4 : calcul d'une résistance dans une association série-parallèle",
+              "html": "<p><b>Énoncé :</b> le dipôle A-B contient 5 résistances. Sur le dessin, R1 va de A à C, R2 de C au point situé avant R3, puis R3 va jusqu'à B. Un fil passe au-dessus de R1 et R2 et relie directement A à ce point. R4 part de C et va vers le bas, R5 descend du point situé avant R3, et le fil du bas est relié à B.</p>\n<p>Valeurs : <code>R1 = 55 Ω</code>, <code>R2 = 22 Ω</code>, <code>R3 = ?</code>, <code>R4 = 100 Ω</code>, <code>R5 = 100 Ω</code>, <code>RAB = 8,43 Ω</code>.</p>\n<p><small>Lecture de la feuille : l'unité de RAB est bien Ω (« 8,43Ω »), comme pour les autres résistances.</small></p>\n<p><b>a) Repérage des nœuds.</b> Le fil du haut relie A au point situé avant R3 : ce point est donc <b>le nœud A</b> (c'est ce qui est noté à la main sur la feuille, à juste titre). De même, le fil du bas est relié à B : c'est <b>le nœud B</b>. On obtient :</p>\n<table><thead><tr><th>Résistance</th><th>Entre</th></tr></thead><tbody>\n<tr><td>R1</td><td>A et C</td></tr><tr><td>R2</td><td>C et A</td></tr><tr><td>R4</td><td>C et B</td></tr>\n<tr><td>R3</td><td>A et B</td></tr><tr><td>R5</td><td>A et B</td></tr></tbody></table>\n<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 225\" role=\"img\" aria-label=\"Schéma redessiné : entre A et B, trois branches en parallèle. Branche 1 : R1 et R2 en parallèle entre A et C, puis R4 de C à B. Branche 2 : R3 seule. Branche 3 : R5 seule.\" style=\"width:100%;min-width:300px;max-width:440px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M18 90H80 M120 90H190 M230 90H382 M50 40V205 M150 40V90 M50 40H80 M120 40H150 M50 150H150 M190 150H330 M50 205H150 M190 205H330 M330 90V205\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"80\" y=\"32\" width=\"40\" height=\"16\"/><rect x=\"80\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"190\" y=\"82\" width=\"40\" height=\"16\"/><rect x=\"150\" y=\"142\" width=\"40\" height=\"16\"/><rect x=\"150\" y=\"197\" width=\"40\" height=\"16\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"50\" cy=\"90\" r=\"3.5\"/><circle cx=\"150\" cy=\"90\" r=\"3.5\"/><circle cx=\"330\" cy=\"90\" r=\"3.5\"/><circle cx=\"330\" cy=\"150\" r=\"3.5\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><circle cx=\"18\" cy=\"90\" r=\"4\"/><circle cx=\"382\" cy=\"90\" r=\"4\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"100\" y=\"27\" text-anchor=\"middle\">R1</text><text x=\"100\" y=\"77\" text-anchor=\"middle\">R2</text><text x=\"210\" y=\"77\" text-anchor=\"middle\">R4</text><text x=\"170\" y=\"137\" text-anchor=\"middle\">R3</text><text x=\"170\" y=\"192\" text-anchor=\"middle\">R5</text><text x=\"14\" y=\"84\" text-anchor=\"middle\">A</text><text x=\"386\" y=\"84\" text-anchor=\"middle\">B</text><text x=\"150\" y=\"110\" text-anchor=\"middle\">C</text></g></svg></div><p>Donc : R1 et R2 sont en parallèle entre A et C ; ce bloc est en série avec R4 (de C à B) ; et cette branche est en parallèle avec R3 et avec R5, qui sont chacune directement entre A et B.</p>\n<p><b>b) Expression littérale.</b></p>\n<p>Branche 1 : <code>Req1 = R1·R2 / (R1 + R2) + R4</code></p>\n<p>Trois branches en parallèle entre A et B :</p>\n<p><b><code>1/RAB = 1/Req1 + 1/R3 + 1/R5</code></b>, soit <code>RAB = 1 / ( 1/(R1·R2/(R1+R2) + R4) + 1/R3 + 1/R5 )</code></p>\n<p><b>Application numérique pour Req1 :</b></p>\n<p><code>R1 // R2 = 55 × 22 / (55 + 22) = 1210 / 77 ≈ 15,71 Ω</code></p>\n<p><code>Req1 = 15,71 + 100 ≈ 115,71 Ω</code></p>\n<p><b>En déduire R3 :</b> on isole 1/R3 dans la relation des parallèles :</p>\n<p><code>1/R3 = 1/RAB − 1/Req1 − 1/R5</code></p>\n<p><code>1/R3 = 1/8,43 − 1/115,71 − 1/100 ≈ 0,11862 − 0,00864 − 0,01000 ≈ 0,09998 S</code></p>\n<p><code>R3 = 1 / 0,09998 ≈ 10,0 Ω</code></p>\n<p><b>Résultat : R3 = 10 Ω.</b></p>\n<div class=\"exemple\"><b>Vérification :</b> avec R3 = 10 Ω, <code>1/RAB = 1/115,71 + 1/10 + 1/100 ≈ 0,00864 + 0,1 + 0,01 = 0,11864</code>, donc <code>RAB ≈ 8,43 Ω</code>. C'est bien la valeur de l'énoncé. Et RAB = 8,43 Ω est plus petite que la plus petite branche (R3 = 10 Ω), comme il se doit en parallèle.</div>\n<div class=\"attention\"><b>À propos des réponses écrites sur la feuille :</b>\n<ul><li>Le schéma redessiné est <b>juste</b> (R1 // R2, puis R4 jusqu'à B ; R3 et R5 chacune entre A et B), et la valeur entourée <b>10 Ω</b> est la bonne.</li>\n<li>« Req = (R1×R2/(R1+R2) + R4) <b>+</b> (Req1×R3/(Req1+R3)) <b>+</b> (Req2×R5/(Req2+R5)) » additionne des blocs qui sont en réalité <b>en parallèle</b> : c'est faux. La première parenthèse est bien Req1, mais ensuite on ne rajoute rien en série : <code>Req2 = Req1·R3/(Req1+R3)</code>, puis <code>RAB = Req2·R5/(Req2+R5)</code>. (Petite faute de frappe aussi : « 5s » au lieu de R5.)</li>\n<li>« 1/R1 + 1/R2 + R4, le tout divisé par R5 » mélange encore des inverses et des résistances, et diviser par R5 ne correspond à aucune association.</li>\n<li>« R3 = RAB − Req1 » serait valable si R3 était <b>en série</b> avec Req1. Ici R3 est en <b>parallèle</b>, donc on soustrait les <b>inverses</b> : <code>1/R3 = 1/RAB − 1/Req1 − 1/R5</code>. D'ailleurs RAB − Req1 = 8,43 − 115,71 serait négatif, ce qui est impossible pour une résistance.</li></ul></div>"
+            }
+          ],
+          "pointsCles": [
+            "En série (même courant) : Req = R1 + R2 + …",
+            "En parallèle (mêmes deux nœuds) : 1/Req = 1/R1 + 1/R2 + …",
+            "Le « produit sur somme » R1·R2/(R1 + R2) ne marche que pour deux résistances.",
+            "On ne mélange jamais des 1/R et des R dans une même somme.",
+            "Deux points reliés par un simple fil forment un seul et même nœud.",
+            "On simplifie pas à pas en écrivant une ligne par étape (Req1, Req2…), sans additionner des blocs emboîtés.",
+            "Une association en parallèle est toujours plus petite que sa plus petite résistance.",
+            "Pour retrouver une résistance en parallèle, on soustrait les inverses : 1/R3 = 1/RAB − 1/Req1 − 1/R5."
+          ],
+          "definitions": [
+            {
+              "terme": "Résistance équivalente (Req)",
+              "def": "Résistance unique qui, placée entre les mêmes bornes, se comporte exactement comme l'ensemble de résistances qu'elle remplace."
+            },
+            {
+              "terme": "Association en série",
+              "def": "Résistances placées l'une après l'autre sans dérivation entre elles ; elles sont traversées par le même courant."
+            },
+            {
+              "terme": "Association en parallèle (//)",
+              "def": "Résistances branchées entre les deux mêmes nœuds ; elles ont la même tension à leurs bornes."
+            },
+            {
+              "terme": "Nœud",
+              "def": "Point du circuit où se rejoignent au moins trois conducteurs ; tous les points reliés par un simple fil forment le même nœud."
+            },
+            {
+              "terme": "Conductance",
+              "def": "Inverse d'une résistance, G = 1/R, en siemens (S). En parallèle, les conductances s'additionnent."
+            },
+            {
+              "terme": "Produit sur somme",
+              "def": "Raccourci pour deux résistances en parallèle : R1 // R2 = R1·R2 / (R1 + R2)."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Formule de deux résistances en série ?",
+              "r": "Req = R1 + R2."
+            },
+            {
+              "q": "Formule de trois résistances en parallèle ?",
+              "r": "1/Req = 1/R1 + 1/R2 + 1/R3, donc Req = 1 / (1/R1 + 1/R2 + 1/R3)."
+            },
+            {
+              "q": "Quand peut-on utiliser « produit sur somme » ?",
+              "r": "Seulement pour deux résistances en parallèle : R1·R2 / (R1 + R2)."
+            },
+            {
+              "q": "Que valent deux résistances de 20 kΩ en parallèle ?",
+              "r": "10 kΩ (n résistances identiques R en parallèle donnent R/n)."
+            },
+            {
+              "q": "Exercice 1 : Req de (R1 // R2 // R3) + R4 + R5 ?",
+              "r": "Req = 1 / (1/R1 + 1/R2 + 1/R3) + R4 + R5."
+            },
+            {
+              "q": "Exercice 2 : Req du montage à 6 résistances ?",
+              "r": "Req = Req1·R4 / (Req1 + R4) avec Req1 = 1/(1/R1 + 1/R2 + 1/R3) + R5 + R6."
+            },
+            {
+              "q": "Exercice 3 : résistance équivalente du dipôle A-B ?",
+              "r": "Req = 10 kΩ, avec Req = {[(R1 // R2) + R3] // R4 + R5} // R6."
+            },
+            {
+              "q": "Exercice 4 : valeur de R3 ?",
+              "r": "R3 = 10 Ω, grâce à 1/R3 = 1/RAB − 1/Req1 − 1/R5 avec Req1 ≈ 115,71 Ω."
+            },
+            {
+              "q": "Comment savoir si deux résistances sont en parallèle ?",
+              "r": "Elles sont branchées entre les deux mêmes nœuds."
+            },
+            {
+              "q": "Pourquoi « 1/R1 + R4 » est-il faux ?",
+              "r": "On additionne un inverse de résistance (en Ω⁻¹) et une résistance (en Ω) : ce ne sont pas les mêmes unités."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "R1, R2 et R3 en parallèle, suivies de R4 et R5 en série. Quelle expression est juste ?",
+              "choix": [
+                "Req = 1/(1/R1 + 1/R2 + 1/R3) + R4 + R5",
+                "Req = 1/(1/R1 + 1/R2 + 1/R3 + R4 + R5)",
+                "Req = R1·R2·R3/(R1 + R2 + R3) + R4 + R5",
+                "1/Req = 1/R1 + 1/R2 + 1/R3 + R4 + R5"
+              ],
+              "bonne": 0,
+              "explication": "On calcule d'abord le bloc parallèle avec les inverses, puis on ajoute R4 et R5 en série, en dehors de la fraction."
+            },
+            {
+              "q": "Pour combien de résistances le « produit sur somme » est-il valable ?",
+              "choix": [
+                "Exactement deux",
+                "Deux ou trois",
+                "Autant qu'on veut",
+                "Seulement des résistances égales"
+              ],
+              "bonne": 0,
+              "explication": "R1·R2/(R1 + R2) vient de 1/R1 + 1/R2 réduit au même dénominateur ; pour trois résistances, le dénominateur devient R1·R2 + R1·R3 + R2·R3."
+            },
+            {
+              "q": "Deux résistances de 20 kΩ en parallèle valent :",
+              "choix": [
+                "10 kΩ",
+                "40 kΩ",
+                "20 kΩ",
+                "400 kΩ"
+              ],
+              "bonne": 0,
+              "explication": "20 × 20 / (20 + 20) = 400/40 = 10 kΩ."
+            },
+            {
+              "q": "Une association de résistances en parallèle est toujours :",
+              "choix": [
+                "plus petite que la plus petite résistance",
+                "plus grande que la plus grande résistance",
+                "égale à la moyenne des résistances",
+                "comprise entre la plus petite et la plus grande"
+              ],
+              "bonne": 0,
+              "explication": "Ajouter un chemin en parallèle facilite le passage du courant, donc fait baisser la résistance totale."
+            },
+            {
+              "q": "Dans l'exercice 3 (R1 = R2 = R4 = R6 = 20 kΩ, R3 = R5 = 10 kΩ), que vaut Req ?",
+              "choix": [
+                "10 kΩ",
+                "50 kΩ",
+                "20 kΩ",
+                "5 kΩ"
+              ],
+              "bonne": 0,
+              "explication": "20//20 = 10, +10 = 20, //20 = 10, +10 = 20, //20 = 10 kΩ. 50 kΩ est ce qu'on obtient en additionnant à tort les trois étapes."
+            },
+            {
+              "q": "Dans l'exercice 3, entre quels nœuds est branchée R4 ?",
+              "choix": [
+                "A et D",
+                "C et D",
+                "D et B",
+                "A et C"
+              ],
+              "bonne": 0,
+              "explication": "Toute la ligne verticale de gauche est le nœud A ; R4 relie cette ligne au nœud D."
+            },
+            {
+              "q": "Dans l'exercice 4, R3 est :",
+              "choix": [
+                "en parallèle avec R5 et avec la branche (R1 // R2) + R4",
+                "en série avec la branche (R1 // R2) + R4",
+                "en série avec R5",
+                "en parallèle avec R1 seulement"
+              ],
+              "bonne": 0,
+              "explication": "Le fil du haut ramène le début de R3 au nœud A, et sa fin est B : R3 est directement entre A et B, comme R5."
+            },
+            {
+              "q": "Dans l'exercice 4, comment obtient-on R3 ?",
+              "choix": [
+                "1/R3 = 1/RAB − 1/Req1 − 1/R5",
+                "R3 = RAB − Req1",
+                "R3 = RAB − Req1 − R5",
+                "1/R3 = 1/RAB + 1/Req1 + 1/R5"
+              ],
+              "bonne": 0,
+              "explication": "R3 est en parallèle : on isole son inverse dans 1/RAB = 1/Req1 + 1/R3 + 1/R5."
+            },
+            {
+              "q": "Dans l'exercice 4, que vaut Req1 = (R1 // R2) + R4 ?",
+              "choix": [
+                "environ 115,7 Ω",
+                "177 Ω",
+                "environ 15,7 Ω",
+                "122 Ω"
+              ],
+              "bonne": 0,
+              "explication": "55 × 22 / 77 ≈ 15,71 Ω, puis + 100 Ω ≈ 115,71 Ω."
+            },
+            {
+              "q": "Montage à 6 résistances : Req1 = (R1 // R2 // R3) + R5 + R6 est en parallèle avec R4. Alors :",
+              "choix": [
+                "Req = Req1·R4 / (Req1 + R4)",
+                "Req = Req1 + R4",
+                "Req = Req1 / R4",
+                "Req = (Req1 + R4) / (Req1·R4)"
+              ],
+              "bonne": 0,
+              "explication": "Deux résistances en parallèle : produit sur somme."
+            }
+          ]
+        },
+        {
+          "id": "devoirs-lois-kirchhoff",
+          "titre": "Devoirs : lois de Kirchhoff (exercices 1 à 10)",
+          "type": "Exercices",
+          "date": "2026-10-08",
+          "source": "Devoir « Lois de Kirchhoff » du prof ; correction de l'exercice 2 faite en classe d'après le cahier de Maélyss Simon (proposé via l'appli)",
+          "resume": "Ce chapitre corrige les dix exercices du devoir sur les lois de Kirchhoff. On apprend à compter les branches, les nœuds et les mailles pour savoir combien d'équations écrire, puis à poser et résoudre le système. On utilise aussi la formule de Millman pour les circuits à deux nœuds et le théorème de superposition, qui consiste à faire agir une source à la fois puis à additionner. Chaque résultat est vérifié par un bilan aux nœuds ou par une tension calculée de deux façons.",
+          "sections": [
+            {
+              "titre": "Méthode : Kirchhoff et théorème de superposition",
+              "html": "\n<p><b>Vocabulaire.</b> Un <b>nœud</b> est un point où se rejoignent au moins trois fils. Une <b>branche</b> est une portion de circuit entre deux nœuds voisins : tous ses éléments sont parcourus par le <b>même courant</b>. Une <b>maille</b> est une boucle fermée.</p>\n<p><b>Combien d'équations ?</b> Avec b branches (donc b courants inconnus) et n nœuds :</p>\n<ul><li><code>n − 1</code> équations de nœuds indépendantes ;</li>\n<li><code>m = b − n + 1</code> équations de mailles indépendantes.</li></ul>\n<p>Au total <code>(n − 1) + (b − n + 1) = b</code> équations pour b inconnues : le système se résout.</p>\n<p><b>Les étapes de Kirchhoff :</b></p>\n<ol><li>Placer un courant fléché dans chaque branche (sens choisi librement).</li>\n<li>Flécher la tension de chaque résistance en <b>convention récepteur</b> : flèche de tension opposée à la flèche de courant, et <code>U = R·I</code>.</li>\n<li>Écrire la loi des nœuds : <code>somme des courants qui arrivent = somme des courants qui repartent</code>.</li>\n<li>Écrire la loi des mailles : on fait le tour de la boucle, on compte <b>+</b> une tension dont la flèche va dans le sens du parcours et <b>−</b> sinon, la somme vaut 0.</li>\n<li>Résoudre le système, puis <b>vérifier</b> (bilan au nœud, ou même tension calculée par deux chemins).</li></ol>\n<p><b>Astuce pour deux nœuds (Millman).</b> Quand toutes les branches sont entre les deux mêmes nœuds A et B, la tension commune vaut :</p>\n<p><code>U_AB = (somme des E_k / R_k) / (somme des 1 / R_k)</code></p>\n<p>(une branche sans générateur compte 0 au numérateur, mais compte au dénominateur). C'est simplement la loi des nœuds écrite avec <code>I_k = (E_k − U_AB) / R_k</code>.</p>\n<p><b>Théorème de superposition</b> (circuit linéaire : résistances et sources) : le courant dans une branche est la <b>somme</b> des courants créés par chaque source agissant <b>seule</b>.</p>\n<ul><li>On <b>éteint</b> une source de tension en la remplaçant par un <b>fil</b> (court-circuit).</li>\n<li>On <b>éteint</b> une source de courant en la remplaçant par un <b>interrupteur ouvert</b> (circuit ouvert).</li>\n<li>On calcule chaque contribution avec son signe (même flèche de référence à chaque fois), puis on additionne.</li></ul>\n<div class=\"attention\"><b>Résultat négatif :</b> ce n'est pas une erreur. Le courant circule simplement dans le sens opposé à la flèche choisie au départ.</div>\n<div class=\"attention\"><b>Piège :</b> on ne peut pas calculer chaque courant avec <code>I = E / R</code> dans sa branche toute seule. Les branches sont reliées entre elles : la tension aux bornes de chaque résistance n'est pas égale à la f.é.m. du générateur de sa branche.</div>\n"
+            },
+            {
+              "titre": "Exercice 1 : nombre d'équations, puis calcul de I3",
+              "html": "\n<p><b>Montage (figure 1).</b> Un générateur E1 (flèche vers le haut) en série avec R1 alimente deux résistances en parallèle : R2 // R3. Le bas du circuit est relié à la masse. I3 est le courant qui descend dans R3.</p>\n<p><b>Partie I : nombre minimal d'équations de mailles.</b></p>\n<ul><li>a. Nombre de branches : <b>b = 3</b> (branche E1 + R1, branche R2, branche R3).</li>\n<li>b. Les trois courants sont inconnus : <b>b<sub>inc</sub> = 3</b>.</li>\n<li>c. Nombre de nœuds : <b>n = 2</b> (le point haut où se rejoignent R1, R2 et R3, et le fil du bas, qui ne forme qu'un seul nœud même s'il est long).</li>\n<li>d. <code>m = b − n + 1 = 3 − 2 + 1</code>, soit <b>m = 2 équations de mailles</b>. Avec 1 équation de nœud, on a bien 3 équations pour 3 inconnues.</li></ul>\n<p><b>Partie II : application des lois de Kirchhoff.</b></p>\n<p>a et b. On choisit I1 qui monte dans E1 puis traverse R1 vers le nœud haut, I2 qui descend dans R2, I3 qui descend dans R3. En convention récepteur : U1 = R1·I1, U2 = R2·I2, U3 = R3·I3, chaque flèche de tension étant opposée au courant.</p>\n<p>d. <b>Nœud haut</b> : <code>I1 = I2 + I3</code></p>\n<p><b>Maille 1</b> (E1, R1, R2) : <code>E1 − R1·I1 − R2·I2 = 0</code></p>\n<p><b>Maille 2</b> (R2, R3) : <code>R2·I2 − R3·I3 = 0</code></p>\n<div class=\"attention\">La feuille demande « n équations de nœuds ». Avec 2 nœuds, les deux équations disent la même chose (I1 = I2 + I3 en haut, I2 + I3 = I1 en bas) : une seule est <b>utile</b>. On retient donc toujours <b>n − 1</b> équations de nœuds.</div>\n<p>e et f. De la maille 2 : <code>I2 = R3·I3 / R2</code>. Donc <code>I1 = I3·(R2 + R3) / R2</code>. On remplace dans la maille 1 :</p>\n<p><code>E1 = R1·I3·(R2 + R3)/R2 + R3·I3</code>, d'où :</p>\n<p><b><code>I3 = E·R2 / (R1·R2 + R1·R3 + R2·R3)</code></b></p>\n<p>g. Application numérique avec R1 = R2 = R3 = 1 Ω et E = 9 V : <code>I3 = 9 × 1 / (1 + 1 + 1) = 9 / 3</code>, soit <b>I3 = 3 A</b>.</p>\n<p>On trouve aussi <b>I2 = 3 A</b> et <b>I1 = 6 A</b>. Tensions (c) : U1 = 1 × 6 = 6 V, U2 = U3 = 1 × 3 = 3 V.</p>\n<div class=\"exemple\"><b>Vérification.</b> Nœud : 6 = 3 + 3, juste. Maille 1 : 9 − 6 − 3 = 0, juste. Autre méthode : Req = R1 + (R2 // R3) = 1 + 0,5 = 1,5 Ω, donc I1 = 9 / 1,5 = 6 A, qui se partage en deux moitiés égales de 3 A.</div>\n<p><small>Lecture de la feuille : la f.é.m. s'appelle E1 sur le schéma et E dans les questions f et g ; c'est la même.</small></p>\n"
+            },
+            {
+              "titre": "Exercice 2 : deux générateurs, trois branches",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 230\" role=\"img\" aria-label=\"Circuit à deux générateurs : trois branches en parallèle entre les nœuds A et B. Branche 1 : R1 et E1, courant I1 vers le haut. Branche 2 : R2 et E2, courant I2 vers le haut. Branche 3 : R3, courant I3 vers le bas.\" style=\"width:100%;min-width:340px;max-width:400px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\">\n<path d=\"M70 40H330M70 200H330\"/>\n<path d=\"M70 40V68M70 112V146M70 156V200\"/><path d=\"M200 40V68M200 112V146M200 156V200\"/><path d=\"M330 40V98M330 142V200\"/>\n</g>\n<g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"60\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"190\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"320\" y=\"98\" width=\"20\" height=\"44\"/></g>\n<g stroke=\"var(--ink)\" stroke-width=\"2.5\"><path d=\"M54 146H86M184 146H216\"/><path d=\"M62 156H78M192 156H208\" stroke-width=\"4\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"200\" cy=\"40\" r=\"4\"/><circle cx=\"200\" cy=\"200\" r=\"4\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\">\n<path d=\"M70 58V46\" /><path d=\"M65 50L70 42L75 50Z\"/>\n<path d=\"M200 58V46\"/><path d=\"M195 50L200 42L205 50Z\"/>\n<path d=\"M330 52V84\"/><path d=\"M325 78L330 86L335 78Z\"/>\n</g>\n<g fill=\"var(--ink)\" stroke=\"none\">\n<text x=\"196\" y=\"30\">A</text><text x=\"196\" y=\"222\">B</text>\n<text x=\"88\" y=\"95\">R1 = 2 Ω</text><text x=\"218\" y=\"95\">R2 = 5 Ω</text><text x=\"346\" y=\"125\">R3</text><text x=\"346\" y=\"141\">= 10 Ω</text>\n<text x=\"90\" y=\"155\">E1 = 20 V</text><text x=\"220\" y=\"155\">E2 = 70 V</text>\n<text x=\"78\" y=\"56\" fill=\"var(--accent)\">I1</text><text x=\"208\" y=\"56\" fill=\"var(--accent)\">I2</text><text x=\"340\" y=\"70\" fill=\"var(--accent)\">I3</text>\n</g></svg></div>\n<p><b>Données relues sur la feuille :</b> R1 = 2 Ω ; R2 = 5 Ω ; R3 = 10 Ω ; E1 = 20 V ; E2 = 70 V. Les deux générateurs ont leur borne + (grande plaque) en haut, du côté de A. I1 et I2 montent vers A, I3 descend dans R3 (flèches tracées au crayon sur la feuille).</p>\n<p><b>Question :</b> déterminer les intensités des courants dans les trois branches.</p>\n<p><b>1. Nœud A :</b> <code>I1 + I2 = I3</code></p>\n<p><b>2. Maille 1</b> (branches 1 et 3) : <code>E1 − R1·I1 − R3·I3 = 0</code>, soit <code>20 = 2·I1 + 10·I3</code></p>\n<p><b>3. Maille 2</b> (branches 2 et 3) : <code>E2 − R2·I2 − R3·I3 = 0</code>, soit <code>70 = 5·I2 + 10·I3</code></p>\n<p><b>4. Résolution.</b> Avec la tension commune U_AB = 20 − 2·I1 = 70 − 5·I2 = 10·I3. Par Millman :</p>\n<p><code>U_AB = (20/2 + 70/5) / (1/2 + 1/5 + 1/10) = (10 + 14) / 0,8 = 24 / 0,8 = 30 V</code></p>\n<p>Donc <code>I1 = (20 − 30)/2</code>, <code>I2 = (70 − 30)/5</code>, <code>I3 = 30/10</code> :</p>\n<p><b>I1 = −5 A ; I2 = 8 A ; I3 = 3 A.</b></p>\n<p>I1 est négatif : le courant <b>descend</b> réellement dans la branche de E1. Le générateur E2 (70 V) est plus fort et « recharge » E1.</p>\n<div class=\"exemple\"><b>Vérification.</b> Nœud A : −5 + 8 = 3, juste. Tension commune : 20 − 2 × (−5) = 30 V ; 70 − 5 × 8 = 30 V ; 10 × 3 = 30 V. Les trois branches donnent bien la même tension U_AB = 30 V.<br>\n<b>Contrôle par superposition</b> (non demandé) : E1 seule donne I1 = 3,75 A, I2 = −2,5 A, I3 = 1,25 A ; E2 seule donne I1 = −8,75 A, I2 = 10,5 A, I3 = 1,75 A. Sommes : −5 A, 8 A, 3 A. Même résultat.</div>\n<div class=\"attention\"><b>Erreur dans les annotations au crayon.</b> En haut de la feuille, il est écrit I1 = 20/2 = 10 A, I2 = 70/5 = 14 A et I3 = 90/10 = 9 A. C'est une idée naturelle, mais elle ne marche pas ici : <code>I = U / R</code> s'applique avec la tension <b>aux bornes de la résistance</b>, pas avec la f.é.m. du générateur de la branche. Les trois branches sont reliées entre A et B : la tension aux bornes de R1 n'est pas 20 V, elle vaut 20 − 30 = −10 V, car le point A est imposé à 30 V par l'ensemble du circuit. De même, I3 ne vaut pas (20 + 70)/10 : les deux générateurs sont en parallèle, pas en série. On le voit d'ailleurs tout de suite : 10 + 14 ≠ 9, la loi des nœuds n'est pas respectée. La bonne méthode est le système de Kirchhoff (ou Millman) ci-dessus.</div>\n<div class=\"attention\"><b>À propos de la correction du cahier</b> (même circuit, mêmes valeurs) : la loi des nœuds y est écrite « I1 + I2 + I3 = 0 », ce qui ne serait juste que si les trois flèches entraient en A. Avec I3 qui sort de A, il faut <b>I3 = I1 + I2</b>, relation que la suite du cahier utilise bien. La maille 2 y est d'abord écrite « E2 − R2·I2 + R3·I3 = 0 » : le bon signe devant R3·I3 est <b>−</b>. Le résultat final du cahier (−5 A, 8 A, 3 A) est juste.</div>\n<p><small>La correction faite en classe (cahier de Maélyss Simon, proposée via l'appli) trouve le même résultat : I1 = −5 A, I2 = 8 A, I3 = 3 A. Ses pages sont dans la section Photos.</small></p>"
+            },
+            {
+              "titre": "Exercice 3 : trois générateurs en parallèle sur R4",
+              "html": "\n<p><b>Montage.</b> Quatre branches sont branchées entre les nœuds A (en haut) et B (en bas) : E1 en série avec R1, E2 en série avec R2, E3 en série avec R3 (borne + de chaque générateur vers A, d'après les grandes plaques), et la résistance R4 parcourue par I de A vers B. U_AB est fléchée de B vers A.</p>\n<p><b>Données relues :</b> E1 = 5 V ; E2 = 20 V ; E3 = 4 V ; R1 = R2 = 2 Ω ; R3 = 1 Ω.</p>\n<p><b>1. Expression de U_AB.</b> Dans chaque branche à générateur, on note I_k le courant qui monte vers A : <code>I_k = (E_k − U_AB) / R_k</code>. Dans R4 : <code>I = U_AB / R4</code>. Loi des nœuds en A : <code>I1 + I2 + I3 = I</code>. En remplaçant et en isolant U_AB :</p>\n<p><b><code>U_AB = (E1/R1 + E2/R2 + E3/R3) / (1/R1 + 1/R2 + 1/R3 + 1/R4)</code></b></p>\n<div class=\"attention\"><b>Donnée manquante :</b> la feuille ne donne <b>pas la valeur de R4</b>. On ne peut donc pas donner un nombre unique pour U_AB et I. Voici ce qu'on peut calculer, et la formule à utiliser dès que R4 est connue.</div>\n<p><b>2. Application numérique.</b> Numérateur : <code>5/2 + 20/2 + 4/1 = 2,5 + 10 + 4 = 16,5 A</code>. Somme des conductances des trois générateurs : <code>1/2 + 1/2 + 1 = 2 S</code>.</p>\n<ul><li>Sans R4 (A et B à vide) : <code>U_AB = 16,5 / 2</code> = <b>8,25 V</b>.</li>\n<li>Avec R4 : <code>U_AB = 16,5 / (2 + 1/R4)</code>.</li></ul>\n<p><b>3. Calcul de I.</b> <code>I = U_AB / R4 = 16,5 / (2·R4 + 1)</code>, ce qui s'écrit aussi <b><code>I = 8,25 / (0,5 + R4)</code></b> (R4 en ohms). Les trois générateurs se comportent comme un seul générateur de 8,25 V avec une résistance interne de 0,5 Ω (R1 // R2 // R3).</p>\n<div class=\"exemple\"><b>Exemple de vérification</b> avec une valeur choisie, R4 = 1 Ω (valeur supposée, pas sur la feuille) : U_AB = 16,5 / 3 = 5,5 V et I = 5,5 A. Courants : I1 = (5 − 5,5)/2 = −0,25 A ; I2 = (20 − 5,5)/2 = 7,25 A ; I3 = (4 − 5,5)/1 = −1,5 A. Bilan en A : −0,25 + 7,25 − 1,5 = 5,5 A = I, juste.</div>\n"
+            },
+            {
+              "titre": "Exercice 4 : un générateur, R2 // R3",
+              "html": "\n<p><b>Montage.</b> E en série avec R1 (borne + vers le haut), puis deux branches entre A et B : R2, et R3 parcourue par I de A vers B.</p>\n<p><b>Données relues :</b> E = 10 V ; R1 = R2 = 2 Ω ; R3 = 3 Ω.</p>\n<p><b>Kirchhoff.</b> On note I1 le courant dans E et R1 (vers A) et I2 le courant dans R2 (de A vers B).</p>\n<ul><li>Nœud A : <code>I1 = I2 + I</code></li>\n<li>Maille (E, R1, R2) : <code>E − R1·I1 − R2·I2 = 0</code></li>\n<li>Maille (R2, R3) : <code>R2·I2 − R3·I = 0</code></li></ul>\n<p>C'est exactement le montage de l'exercice 1, avec I à la place de I3. D'où :</p>\n<p><code>I = E·R2 / (R1·R2 + R1·R3 + R2·R3) = 10 × 2 / (4 + 6 + 6) = 20 / 16</code></p>\n<p><b>I = 1,25 A</b></p>\n<p>Puis U_AB = R3·I = 3 × 1,25 = 3,75 V ; I2 = 3,75 / 2 = 1,875 A ; I1 = (10 − 3,75)/2 = 3,125 A.</p>\n<div class=\"exemple\"><b>Vérification.</b> Nœud A : 1,875 + 1,25 = 3,125 A, juste. Maille : 10 − 2 × 3,125 − 2 × 1,875 = 10 − 6,25 − 3,75 = 0, juste. Autre chemin : R2 // R3 = 6/5 = 1,2 Ω ; Req = 3,2 Ω ; I1 = 10 / 3,2 = 3,125 A ; diviseur de courant I = 3,125 × 2/5 = 1,25 A.</div>\n"
+            },
+            {
+              "titre": "Exercice 5 : deux générateurs, courant i3",
+              "html": "\n<p><b>Montage.</b> E1 à gauche, R1 en haut à gauche jusqu'au nœud A ; R2 en haut à droite de A jusqu'à E2 à droite ; R3 entre A et B, parcourue par i3 de A vers B. Les flèches de E1 et E2 montent : leur borne + est en haut.</p>\n<p><b>Données relues :</b> R1 = 15 Ω ; R2 = 10 Ω ; R3 = 3 Ω ; E1 = 10 V ; E2 = 5 V.</p>\n<p><b>1. Expression de i3.</b> On note i1 (de E1 vers A dans R1) et i2 (de E2 vers A dans R2).</p>\n<ul><li>Nœud A : <code>i1 + i2 = i3</code></li>\n<li>Maille gauche : <code>E1 − R1·i1 − R3·i3 = 0</code></li>\n<li>Maille droite : <code>E2 − R2·i2 − R3·i3 = 0</code></li></ul>\n<p>On tire <code>i1 = (E1 − R3·i3)/R1</code> et <code>i2 = (E2 − R3·i3)/R2</code>, on remplace dans la loi des nœuds et on isole i3 :</p>\n<p><b><code>i3 = (R2·E1 + R1·E2) / (R1·R2 + R1·R3 + R2·R3)</code></b></p>\n<p><b>2. Application numérique :</b> <code>i3 = (10 × 10 + 15 × 5) / (150 + 45 + 30) = 175 / 225 = 7/9</code></p>\n<p><b>i3 = 7/9 A ≈ 0,778 A</b>, donc U_AB = 3 × 7/9 = 7/3 V ≈ 2,33 V.</p>\n<p>Puis i1 = (10 − 7/3)/15 = 23/45 A ≈ 0,511 A et i2 = (5 − 7/3)/10 = 4/15 A ≈ 0,267 A.</p>\n<div class=\"exemple\"><b>Vérification.</b> Nœud A : 23/45 + 12/45 = 35/45 = 7/9 A, juste. Par superposition : E1 seule donne 4/9 A dans R3, E2 seule donne 1/3 A = 3/9 A ; total 7/9 A. Même résultat.</div>\n"
+            },
+            {
+              "titre": "Exercice 6 : courant I3 dans R3, deux montages",
+              "html": "\n<p><b>Données relues :</b> R1 = R2 = R3 = R4 = 1 kΩ ; I0 = 100 mA ; E = 12 V.</p>\n<p><small>Lecture : sur la feuille, le signe entre R2 et R3 ressemble à « ≠ » ; c'est en fait un « = » abîmé par l'indice 2. Toutes les résistances valent 1 kΩ. Le montage 1 utilise une source de courant notée Is, dont la valeur n'est pas écrite : on prend Is = I0 = 100 mA, seule valeur de courant donnée.</small></p>\n<p><b>Montage 1.</b> La source de courant Is (flèche vers le haut) injecte son courant dans le nœud haut T. Entre T et la masse M : R1. Entre T et le nœud N : R2. Entre N et M : R3. Entre N et la borne + de E (flèche vers le haut, borne − à la masse) : R4. On cherche I3, le courant qui descend dans R3.</p>\n<p>Loi des nœuds avec les potentiels (V_M = 0) :</p>\n<ul><li>en T : <code>Is = V_T/R1 + (V_T − V_N)/R2</code></li>\n<li>en N : <code>(V_T − V_N)/R2 + (E − V_N)/R4 = V_N/R3</code></li></ul>\n<p>Avec 1 kΩ partout et Is = 0,1 A : V_T = 62,4 V et V_N = 24,8 V, donc <b>I3 = V_N / R3 = 24,8 mA</b>.</p>\n<p><b>Par superposition</b> (pratique ici) :</p>\n<ul><li>Is seule (E remplacée par un fil) : Is se partage entre R1 (1 kΩ) et R2 + (R3 // R4) = 1,5 kΩ. Dans R2 passe <code>Is × 1 / 2,5 = 0,4·Is</code>, qui se partage en deux moitiés égales entre R3 et R4 : <code>I3' = 0,2·Is = 20 mA</code>.</li>\n<li>E seule (Is remplacée par un circuit ouvert) : E voit R4 + R3 // (R2 + R1) = 1 + 2/3 = 5/3 kΩ, donc 7,2 mA dans R4 ; la tension en N vaut 7,2 mA × 2/3 kΩ = 4,8 V, donc <code>I3'' = 4,8 mA</code>.</li>\n<li>Somme : <code>I3 = Is/5 + E/(2,5 kΩ) = 20 + 4,8 = 24,8 mA</code>. Même résultat.</li></ul>\n<p><b>Montage 2</b> (même schéma que l'exercice 9). Trois branches entre le fil du haut et le fil du bas : la source de courant I0 (vers le haut), le générateur E (borne + en haut) en série avec R1, parcouru par I1 vers le haut, et la branche R2 + R3 parcourue par I2. Ici I3 = I2, et U est la tension aux bornes de R3.</p>\n<ul><li>Nœud haut : <code>I2 = I0 + I1</code></li>\n<li>Maille (E, R1, R2, R3) : <code>E − R1·I1 − (R2 + R3)·I2 = 0</code></li></ul>\n<p>On remplace I1 = I2 − I0 : <code>E + R1·I0 = (R1 + R2 + R3)·I2</code>, d'où <b><code>I2 = (E + R1·I0) / (R1 + R2 + R3)</code></b>.</p>\n<p>AN : <code>I2 = (12 + 1000 × 0,1) / 3000 = 112 / 3000</code>, soit <b>I3 = I2 ≈ 37,3 mA</b> (exactement 14/375 A). Puis I1 = 37,33 − 100 = <b>−62,7 mA</b> et U = R3·I2 ≈ <b>37,3 V</b>.</p>\n<div class=\"exemple\"><b>Vérification</b> (montage 2) : tension entre les fils haut et bas calculée par deux chemins. Branche E, R1 : 12 − 1000 × (−0,0627) ≈ 74,7 V. Branche R2 + R3 : 2000 × 0,0373 ≈ 74,7 V. Les deux chemins donnent la même valeur (exactement 224/3 V).</div>\n<div class=\"attention\">I1 est négatif : la source de courant impose 100 mA, mais la branche R2 + R3 n'en prend que 37,3 mA ; le reste (62,7 mA) redescend par la branche E, R1.</div>\n"
+            },
+            {
+              "titre": "Exercice 7 : superposition, calcul de v0 et i0",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 460 225\" role=\"img\" aria-label=\"Circuit de l'exercice 7. Nœud a : borne + de la source 10 V. Entre a et b : 60 Ω. Entre a et d, par le fil du haut : 45 Ω, parcourue par i0 de a vers d. Entre b et c : source de courant 2 A dont la flèche va de c vers b. Entre c et d : 5 Ω. Entre b et la masse g : 20 Ω, avec v0 mesurée + en bas et − en haut. Entre c et g : 5 Ω. Entre d et g : 10 Ω. La borne − de la source 10 V est reliée à g.\" style=\"width:100%;min-width:320px;max-width:460px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M40 40H200M240 40H400\"/><path d=\"M40 40V134M40 166V200H400\"/><path d=\"M40 100H80M120 100H206M234 100H320M360 100H400\"/><path d=\"M160 100V130M160 170V200M280 100V130M280 170V200M400 40V130M400 170V200\"/><circle cx=\"40\" cy=\"150\" r=\"16\"/><circle cx=\"220\" cy=\"100\" r=\"14\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"200\" y=\"32\" width=\"40\" height=\"16\"/><rect x=\"80\" y=\"92\" width=\"40\" height=\"16\"/><rect x=\"320\" y=\"92\" width=\"40\" height=\"16\"/><rect x=\"152\" y=\"130\" width=\"16\" height=\"40\"/><rect x=\"272\" y=\"130\" width=\"16\" height=\"40\"/><rect x=\"392\" y=\"130\" width=\"16\" height=\"40\"/></g><g fill=\"var(--ink)\"><circle cx=\"40\" cy=\"100\" r=\"3.5\"/><circle cx=\"160\" cy=\"100\" r=\"3.5\"/><circle cx=\"280\" cy=\"100\" r=\"3.5\"/><circle cx=\"400\" cy=\"100\" r=\"3.5\"/><circle cx=\"160\" cy=\"200\" r=\"3.5\"/><circle cx=\"280\" cy=\"200\" r=\"3.5\"/></g><g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\"><path d=\"M228 100H214\"/><path d=\"M216 95L208 100L216 105Z\"/><path d=\"M300 26H336\"/><path d=\"M332 21L340 26L332 31Z\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"36\" y=\"146\">+</text><text x=\"37\" y=\"162\">−</text><text x=\"4\" y=\"190\">10 V</text><text x=\"200\" y=\"24\">45 Ω</text><text x=\"84\" y=\"88\">60 Ω</text><text x=\"324\" y=\"88\">5 Ω</text><text x=\"208\" y=\"128\">2 A</text><text x=\"174\" y=\"155\">20 Ω</text><text x=\"294\" y=\"155\">5 Ω</text><text x=\"414\" y=\"155\">10 Ω</text><text x=\"140\" y=\"124\">−</text><text x=\"138\" y=\"190\">+</text><text x=\"116\" y=\"157\">v0</text><text x=\"344\" y=\"22\" fill=\"var(--accent)\">i0</text><text x=\"28\" y=\"94\">a</text><text x=\"164\" y=\"94\">b</text><text x=\"284\" y=\"94\">c</text><text x=\"404\" y=\"94\">d</text><text x=\"284\" y=\"216\">g</text></g></svg></div>\n<p><b>Lecture du schéma</b> (voir la figure ; noms des nœuds a, b, c, d, g ajoutés pour la correction) : source 10 V entre g (−) et a (+) ; 60 Ω entre a et b ; 45 Ω entre a et d (fil du haut), parcourue par i0 de a vers d ; source de courant 2 A entre b et c, flèche de c vers b ; 5 Ω entre c et d ; 20 Ω entre b et g ; 5 Ω entre c et g ; 10 Ω entre d et g. La tension v0 est mesurée aux bornes de 20 Ω, avec le <b>+ en bas</b> : <code>v0 = V_g − V_b = −V_b</code> (on prend V_g = 0).</p>\n<p><b>Étape 1 : la source 10 V seule</b> (la source 2 A devient un circuit ouvert).</p>\n<ul><li>Côté gauche : 60 Ω et 20 Ω en série sous 10 V. <code>V_b = 10 × 20/80 = 2,5 V</code>, donc <code>v0' = −2,5 V</code>.</li>\n<li>Côté droit : 45 Ω en série avec 10 Ω // (5 Ω + 5 Ω) = 10 // 10 = 5 Ω. Donc <code>i0' = 10 / (45 + 5) = 0,2 A</code>.</li></ul>\n<p><b>Étape 2 : la source 2 A seule</b> (la source 10 V devient un fil : a est relié à g).</p>\n<ul><li>Le courant 2 A arrive en b. Depuis b, il ne peut aller vers g que par 60 Ω (via a) ou 20 Ω : 60 // 20 = 15 Ω, donc <code>V_b = 2 × 15 = 30 V</code> et <code>v0'' = −30 V</code>.</li>\n<li>Le courant 2 A est pris au nœud c. Il revient de g vers c par 5 Ω (vertical) et par le chemin 5 Ω en série avec (45 // 10). 45 // 10 = 90/11 Ω ; ce chemin vaut 5 + 90/11 = 145/11 Ω. Résolution des nœuds : V_c = −7,25 V et V_d = −4,5 V. Donc <code>i0'' = (0 − V_d)/45 = 4,5/45 = 0,1 A</code>.</li></ul>\n<p><b>Étape 3 : somme.</b></p>\n<p><code>v0 = v0' + v0'' = −2,5 − 30</code> soit <b>v0 = −32,5 V</b></p>\n<p><code>i0 = i0' + i0'' = 0,2 + 0,1</code> soit <b>i0 = 0,3 A</b></p>\n<div class=\"exemple\"><b>Comparaison avec Kirchhoff</b> (les deux sources ensemble, méthode des nœuds avec V_a = 10 V) :<br>\nnœud b : <code>(10 − V_b)/60 + 2 = V_b/20</code><br>\nnœud c : <code>V_c/5 + (V_c − V_d)/5 + 2 = 0</code><br>\nnœud d : <code>(10 − V_d)/45 + (V_c − V_d)/5 = V_d/10</code><br>\nSolution : V_b = 32,5 V ; V_c = −6,75 V ; V_d = −3,5 V. Donc v0 = −32,5 V et i0 = (10 + 3,5)/45 = 0,3 A. Exactement le même résultat que par superposition.<br>\nBilan au nœud d : arrivent 0,3 A (par 45 Ω) et (−6,75 + 3,5)/5 = −0,65 A (par 5 Ω) ; part −3,5/10 = −0,35 A (par 10 Ω). 0,3 − 0,65 = −0,35, juste.</div>\n<div class=\"attention\">v0 est négative parce que la flèche de la feuille met le <b>+ en bas</b> de la résistance de 20 Ω, alors que le point b est en réalité plus haut en potentiel (32,5 V). Ne pas oublier ce signe.</div>\n"
+            },
+            {
+              "titre": "Exercice 8 : trois générateurs, réseau à deux nœuds",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 295\" role=\"img\" aria-label=\"Circuit de l'exercice 8. Le nœud A est relié à trois branches. Branche 1 : R1 puis E1 jusqu'au nœud C, E1 orientée vers A. Branche 2 : R2 puis E2 jusqu'au nœud C, E2 orientée vers A. Branche 3 : la résistance R de A vers B. Entre C et B : E3 (orientée vers C) en série avec R3. Courants choisis : I1 et I2 montent vers A, I descend dans R.\" style=\"width:100%;min-width:300px;max-width:400px;font-family:var(--f-mono);font-size:13px\"><g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\"><path d=\"M40 40H300\"/><path d=\"M40 40V60M40 100V124M40 156V180H130V156M130 124V100M130 60V40\"/><path d=\"M85 180V199M85 231V260H110M170 260H300V170M300 130V40\"/><circle cx=\"40\" cy=\"140\" r=\"16\"/><circle cx=\"130\" cy=\"140\" r=\"16\"/><circle cx=\"85\" cy=\"215\" r=\"16\"/><path d=\"M40 124V156M130 124V156M85 199V231\"/></g><g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"32\" y=\"60\" width=\"16\" height=\"40\"/><rect x=\"122\" y=\"60\" width=\"16\" height=\"40\"/><rect x=\"110\" y=\"252\" width=\"60\" height=\"16\"/><rect x=\"292\" y=\"130\" width=\"16\" height=\"40\"/></g><g fill=\"var(--ink)\"><circle cx=\"220\" cy=\"40\" r=\"4\"/><circle cx=\"220\" cy=\"260\" r=\"4\"/><circle cx=\"85\" cy=\"180\" r=\"3.5\"/></g><g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\"><path d=\"M14 158V126\"/><path d=\"M9 130L14 122L19 130Z\"/><path d=\"M104 158V126\"/><path d=\"M99 130L104 122L109 130Z\"/><path d=\"M59 233V201\"/><path d=\"M54 205L59 197L64 205Z\"/><path d=\"M40 56V46\"/><path d=\"M35 50L40 42L45 50Z\"/><path d=\"M130 56V46\"/><path d=\"M125 50L130 42L135 50Z\"/><path d=\"M300 60V84\"/><path d=\"M295 80L300 88L305 80Z\"/></g><g fill=\"var(--ink)\" stroke=\"none\"><text x=\"215\" y=\"30\">A</text><text x=\"215\" y=\"284\">B</text><text x=\"92\" y=\"196\">C</text><text x=\"54\" y=\"84\">R1</text><text x=\"144\" y=\"84\">R2</text><text x=\"126\" y=\"246\">R3</text><text x=\"314\" y=\"155\">R = 5 Ω</text><text x=\"0\" y=\"176\">E1</text><text x=\"150\" y=\"146\">E2</text><text x=\"30\" y=\"250\">E3</text><text x=\"48\" y=\"56\" fill=\"var(--accent)\">I1</text><text x=\"138\" y=\"56\" fill=\"var(--accent)\">I2</text><text x=\"310\" y=\"78\" fill=\"var(--accent)\">I</text></g></svg></div>\n<p><b>Lecture du schéma.</b> Branche 1 : de C vers A, E1 (flèche vers A) puis R1. Branche 2 : de C vers A, E2 (flèche vers A) puis R2. Les branches 1 et 2 se rejoignent en bas au point C. De C, E3 (flèche vers C) puis R3 mènent au nœud B. Enfin R relie A à B. Les nœuds vrais sont A et C ; B et R3, E3 sont dans la même branche que R.</p>\n<p><b>Données relues :</b> E1 = 3 V ; E2 = 1 V ; E3 = 2 V ; R1 = R2 = R3 = 2 Ω ; R = 5 Ω.</p>\n<p><b>Inconnues :</b> I1 (monte dans la branche 1 vers A), I2 (monte dans la branche 2 vers A), I (descend dans R de A vers B, puis traverse R3 et E3 de B vers C : c'est aussi le courant de R3).</p>\n<ul><li>Nœud A : <code>I1 + I2 = I</code></li>\n<li>Maille (branche 1, branche 2) : <code>E1 − R1·I1 = E2 − R2·I2</code>, soit <code>3 − 2·I1 = 1 − 2·I2</code></li>\n<li>Maille (branche 1, R, R3, E3) : <code>E1 − R1·I1 = R·I + R3·I − E3</code>, soit <code>3 − 2·I1 = 5·I + 2·I − 2</code></li></ul>\n<p><b>Résolution.</b> La 2e équation donne <code>I1 = I2 + 1</code>. Alors <code>I = 2·I2 + 1</code> et la 3e équation devient <code>3 − 2·I2 − 2 = 7·(2·I2 + 1) − 2</code>, soit <code>1 − 2·I2 = 14·I2 + 5</code>, d'où <code>I2 = −0,25 A</code>.</p>\n<p><b>I1 = 0,75 A (dans R1) ; I2 = −0,25 A (dans R2) ; I3 = I = 0,5 A (dans R3, et aussi dans R).</b></p>\n<p>Le signe moins de I2 veut dire que, dans R2, le courant descend de A vers C : E2 (1 V) est le plus faible et reçoit du courant.</p>\n<div class=\"exemple\"><b>Vérification.</b> Nœud A : 0,75 − 0,25 = 0,5 A, juste. Tension V_A − V_C : par la branche 1 : 3 − 2 × 0,75 = 1,5 V ; par la branche 2 : 1 − 2 × (−0,25) = 1,5 V ; par R, R3, E3 : 5 × 0,5 + 2 × 0,5 − 2 = 1,5 V. Les trois chemins donnent 1,5 V. Et U_AB = R·I = 2,5 V.</div>\n<p><small>Lecture : sur la feuille, les flèches de E1, E2 et E3 sont des flèches de tension dessinées à côté des cercles (convention générateur, la flèche pointe vers la borne +).</small></p>\n"
+            },
+            {
+              "titre": "Exercice 9 : source de courant et générateur de tension",
+              "html": "\n<p><b>Montage</b> (même schéma que le montage 2 de l'exercice 6). Trois branches entre le fil du haut et le fil du bas : la source de courant I0 (vers le haut) ; le générateur E (borne + en haut) en série avec R1, parcouru par I1 vers le haut ; la branche R2 puis R3, parcourue par I2. U est la tension aux bornes de R3, fléchée vers le haut (convention récepteur avec I2 qui descend dans R3).</p>\n<p><b>Données relues :</b> R1 = R3 = 50 Ω ; R2 = 20 Ω ; I0 = 10 mA ; E = 2 V.</p>\n<p><b>Kirchhoff.</b></p>\n<ul><li>Nœud haut : <code>I2 = I0 + I1</code></li>\n<li>Maille (E, R1, R2, R3) : <code>E − R1·I1 − R2·I2 − R3·I2 = 0</code></li></ul>\n<p>On remplace <code>I1 = I2 − I0</code> : <code>E − R1·I2 + R1·I0 − (R2 + R3)·I2 = 0</code>, d'où :</p>\n<p><b><code>I2 = (E + R1·I0) / (R1 + R2 + R3)</code></b></p>\n<p>AN : <code>I2 = (2 + 50 × 0,01) / (50 + 20 + 50) = 2,5 / 120</code></p>\n<p><b>I2 = 1/48 A ≈ 20,8 mA</b></p>\n<p><code>U = R3·I2 = 50 × 2,5/120 = 125/120</code> soit <b>U ≈ 1,04 V</b> (exactement 25/24 V).</p>\n<p>Et <code>I1 = I2 − I0 = 20,83 − 10 = 10,83 mA</code>.</p>\n<div class=\"exemple\"><b>Vérification.</b> Tension entre les fils haut et bas : par la branche E, R1 : 2 − 50 × 0,01083 ≈ 1,458 V ; par R2 + R3 : 70 × 0,02083 ≈ 1,458 V (exactement 35/24 V). Même valeur, donc les équations sont respectées.</div>\n<div class=\"exemple\"><b>Contrôle par superposition</b> : E seule (I0 ouverte) : I2' = 2/120 = 16,67 mA. I0 seule (E remplacée par un fil) : I0 se partage entre R1 (50 Ω) et R2 + R3 (70 Ω), donc I2'' = 10 × 50/120 = 4,17 mA. Somme : 20,83 mA, juste.</div>\n"
+            },
+            {
+              "titre": "Exercice 10 : courant dans R, Kirchhoff puis superposition",
+              "html": "\n<p><b>Montage.</b> Quatre branches en parallèle entre le fil du haut (nœud A) et le fil du bas (nœud B) : E1 en série avec 2R, E2 en série avec 3R, E3 en série avec 6R (les trois flèches vers le haut, donc borne + vers A ; courants I1, I2, I3 vers le haut), et la résistance R parcourue par I vers le bas.</p>\n<p><b>Données relues :</b> E1 = 15 V ; E2 = 10 V ; E3 = 5 V. La valeur de R n'est pas donnée : le résultat s'exprime en fonction de R.</p>\n<p><b>1. Lois de Kirchhoff.</b> On note U = U_AB.</p>\n<ul><li>Nœud A : <code>I1 + I2 + I3 = I</code></li>\n<li>Maille (branche 1, R) : <code>15 − 2R·I1 = R·I</code></li>\n<li>Maille (branche 2, R) : <code>10 − 3R·I2 = R·I</code></li>\n<li>Maille (branche 3, R) : <code>5 − 6R·I3 = R·I</code></li></ul>\n<p>On isole : <code>I1 = (15 − U)/(2R)</code>, <code>I2 = (10 − U)/(3R)</code>, <code>I3 = (5 − U)/(6R)</code>, avec <code>U = R·I</code>. On multiplie la loi des nœuds par 6R :</p>\n<p><code>3·(15 − U) + 2·(10 − U) + (5 − U) = 6·U</code>, soit <code>70 − 6·U = 6·U</code>, donc <code>U = 70/12 = 35/6 V ≈ 5,83 V</code>.</p>\n<p><b>I = U / R = 35 / (6R) ≈ 5,83 / R</b> (en ampères si R est en ohms).</p>\n<p>Courants des générateurs : I1 = 55/(12R), I2 = 25/(18R), I3 = −5/(36R) (E3 reçoit du courant).</p>\n<p><b>2. Théorème de superposition.</b> On garde une source, les deux autres sont remplacées par des fils.</p>\n<ul><li><b>E1 seule :</b> 2R en série avec 3R // 6R // R. Or 1/(3R) + 1/(6R) + 1/R = 9/(6R), donc ce groupe vaut 2R/3. Tension aux bornes de R : <code>15 × (2R/3)/(2R + 2R/3) = 15 × 1/4 = 3,75 V</code>, donc <code>I' = 3,75/R</code>.</li>\n<li><b>E2 seule :</b> 3R en série avec 2R // 6R // R = 3R/5. Tension : <code>10 × (3R/5)/(3R + 3R/5) = 10 × 1/6 = 5/3 V</code>, donc <code>I'' = (5/3)/R ≈ 1,667/R</code>.</li>\n<li><b>E3 seule :</b> 6R en série avec 2R // 3R // R. On a 2R // 3R = 6R/5, puis (6R/5) // R = 6R/11. Tension : <code>5 × (6R/11)/(6R + 6R/11) = 5 × 1/12 = 5/12 V</code>, donc <code>I''' = (5/12)/R ≈ 0,417/R</code>.</li></ul>\n<p><b>Somme :</b> <code>I = (3,75 + 5/3 + 5/12)/R = (45 + 20 + 5)/(12R) = 70/(12R)</code>, soit <b>I = 35/(6R)</b>. Même résultat qu'avec Kirchhoff.</p>\n<div class=\"exemple\"><b>Vérification.</b> Avec U = 35/6 V : 3·(15 − 35/6) + 2·(10 − 35/6) + (5 − 35/6) = 27,5 + 8,33 − 0,83 = 35 = 6 × 35/6, juste. Exemple chiffré avec R = 1 Ω (valeur supposée) : I ≈ 5,83 A.</div>\n"
+            }
+          ],
+          "pointsCles": [
+            "Avec b branches et n nœuds, on écrit n − 1 équations de nœuds et m = b − n + 1 équations de mailles.",
+            "Loi des nœuds : la somme des courants qui arrivent est égale à la somme des courants qui repartent.",
+            "Loi des mailles : sur une boucle fermée, la somme des tensions comptées avec leur signe est nulle.",
+            "I = U / R utilise la tension aux bornes de la résistance, pas la f.é.m. du générateur de la branche.",
+            "Pour deux nœuds : U_AB = (somme des E/R) / (somme des 1/R), puis chaque courant s'en déduit.",
+            "Superposition : on éteint les autres sources (tension → fil, courant → circuit ouvert) et on additionne les contributions avec leur signe.",
+            "Un courant négatif circule dans le sens opposé à la flèche choisie : ce n'est pas une erreur.",
+            "Toujours vérifier : bilan au nœud, ou même tension trouvée par plusieurs chemins."
           ],
           "definitions": [
             {
@@ -1907,79 +2818,196 @@ window.COURS = {
             },
             {
               "terme": "Branche",
-              "def": "Portion de circuit comprise entre deux nœuds, parcourue par un seul courant."
+              "def": "Portion de circuit entre deux nœuds voisins, parcourue par un seul et même courant."
             },
             {
               "terme": "Maille",
-              "def": "Boucle fermée du circuit, parcourue en revenant au point de départ."
+              "def": "Boucle fermée du circuit qu'on parcourt en revenant au point de départ."
             },
             {
-              "terme": "Loi des mailles",
-              "def": "Sur une maille, la somme algébrique des tensions est nulle."
+              "terme": "Convention récepteur",
+              "def": "Pour une résistance, la flèche de tension est opposée à la flèche de courant, et U = R·I."
+            },
+            {
+              "terme": "Théorème de Millman",
+              "def": "Pour des branches toutes entre deux nœuds A et B : U_AB = (somme des E_k/R_k) / (somme des 1/R_k)."
+            },
+            {
+              "terme": "Théorème de superposition",
+              "def": "Dans un circuit linéaire, un courant (ou une tension) est la somme des effets de chaque source agissant seule."
+            },
+            {
+              "terme": "Éteindre une source",
+              "def": "Remplacer une source de tension par un fil, ou une source de courant par un circuit ouvert."
             }
           ],
           "flashcards": [
             {
-              "q": "Que dit la loi des nœuds ?",
-              "r": "La somme des courants qui arrivent à un nœud est égale à la somme des courants qui en repartent."
+              "q": "Combien d'équations de mailles faut-il avec b branches et n nœuds ?",
+              "r": "m = b − n + 1."
             },
             {
-              "q": "Que dit la loi des mailles ?",
-              "r": "En parcourant une boucle fermée, la somme des tensions (comptées + ou − selon le sens de parcours) est nulle."
+              "q": "Combien d'équations de nœuds indépendantes avec n nœuds ?",
+              "r": "n − 1 (la dernière se déduit des autres)."
             },
             {
-              "q": "Que signifie un courant calculé négatif ?",
-              "r": "Le courant circule dans le sens inverse de la flèche qu'on avait choisie au départ."
+              "q": "Exercice 1 : combien de branches, de nœuds et de mailles ?",
+              "r": "b = 3, n = 2, donc m = 3 − 2 + 1 = 2."
             },
             {
-              "q": "Exercice du cours : que valent I1, I2 et I3 ?",
-              "r": "I1 = −5 A, I2 = 8 A, I3 = 3 A (et U_AB = 30 V)."
+              "q": "Exercice 2 : valeurs de I1, I2, I3 ?",
+              "r": "I1 = −5 A, I2 = 8 A, I3 = 3 A, avec U_AB = 30 V."
+            },
+            {
+              "q": "Pourquoi I1 = 20/2 = 10 A est faux dans l'exercice 2 ?",
+              "r": "La tension aux bornes de R1 n'est pas 20 V : A est à 30 V, donc U_R1 = 20 − 30 = −10 V."
+            },
+            {
+              "q": "Comment éteint-on une source de tension pour la superposition ?",
+              "r": "On la remplace par un fil (court-circuit)."
+            },
+            {
+              "q": "Comment éteint-on une source de courant pour la superposition ?",
+              "r": "On la remplace par un circuit ouvert."
+            },
+            {
+              "q": "Formule de Millman pour deux nœuds ?",
+              "r": "U_AB = (somme des E_k/R_k) / (somme des 1/R_k)."
+            },
+            {
+              "q": "Exercice 7 : valeurs de v0 et i0 ?",
+              "r": "v0 = −2,5 − 30 = −32,5 V et i0 = 0,2 + 0,1 = 0,3 A."
+            },
+            {
+              "q": "Exercice 10 : courant I dans R ?",
+              "r": "I = 35/(6R), soit environ 5,83/R."
+            },
+            {
+              "q": "Exercice 9 : I2 et U ?",
+              "r": "I2 = 2,5/120 A ≈ 20,8 mA et U = 50·I2 ≈ 1,04 V."
             }
           ],
           "quiz": [
             {
-              "q": "En A, I1 et I2 arrivent et I3 repart. Quelle relation est juste ?",
+              "q": "Un circuit a 3 branches et 2 nœuds. Combien d'équations de mailles faut-il ?",
               "choix": [
-                "I3 = I1 + I2",
-                "I1 + I2 + I3 = 0",
-                "I1 = I2 + I3",
-                "I3 = I1 − I2"
+                "2",
+                "3",
+                "1",
+                "4"
               ],
               "bonne": 0,
-              "explication": "Loi des nœuds : ce qui arrive (I1 + I2) est égal à ce qui repart (I3)."
+              "explication": "m = b − n + 1 = 3 − 2 + 1 = 2."
             },
             {
-              "q": "Avec E1 = 20 V et E2 = 70 V, la maille 1 donne E1 − E2 = 2·I1 − 5·I2. Combien vaut le membre de gauche ?",
-              "choix": [
-                "−50 V",
-                "50 V",
-                "90 V",
-                "−90 V"
-              ],
-              "bonne": 0,
-              "explication": "E1 − E2 = 20 − 70 = −50 V."
-            },
-            {
-              "q": "On trouve I1 = −5 A. Qu'est-ce que ça veut dire ?",
-              "choix": [
-                "Le courant circule dans le sens inverse de la flèche",
-                "Le calcul est faux",
-                "Le courant est nul",
-                "La résistance est négative"
-              ],
-              "bonne": 0,
-              "explication": "Le sens des flèches est choisi au départ. Un résultat négatif indique juste que le vrai sens est l'inverse."
-            },
-            {
-              "q": "Avec I3 = 3 A dans R3 = 10 Ω, que vaut la tension U_AB ?",
+              "q": "Exercice 2 : quelle est la tension commune U_AB ?",
               "choix": [
                 "30 V",
-                "3,3 V",
-                "13 V",
-                "0,3 V"
+                "90 V",
+                "45 V",
+                "20 V"
               ],
               "bonne": 0,
-              "explication": "Loi d'Ohm : U = R × I = 10 × 3 = 30 V."
+              "explication": "Millman : (20/2 + 70/5)/(1/2 + 1/5 + 1/10) = 24/0,8 = 30 V."
+            },
+            {
+              "q": "Exercice 2 : que vaut I1 (flèche vers A) ?",
+              "choix": [
+                "−5 A",
+                "10 A",
+                "5 A",
+                "−10 A"
+              ],
+              "bonne": 0,
+              "explication": "I1 = (20 − 30)/2 = −5 A : le courant descend réellement dans la branche de E1."
+            },
+            {
+              "q": "Pour appliquer la superposition, que devient une source de tension éteinte ?",
+              "choix": [
+                "Un fil (court-circuit)",
+                "Un circuit ouvert",
+                "Une résistance de 1 Ω",
+                "Elle reste en place"
+              ],
+              "bonne": 0,
+              "explication": "Une source de tension éteinte impose 0 V : on la remplace par un fil."
+            },
+            {
+              "q": "Pour appliquer la superposition, que devient une source de courant éteinte ?",
+              "choix": [
+                "Un circuit ouvert",
+                "Un fil (court-circuit)",
+                "Une résistance nulle",
+                "Une source de 1 A"
+              ],
+              "bonne": 0,
+              "explication": "Une source de courant éteinte impose 0 A : on ouvre la branche."
+            },
+            {
+              "q": "Exercice 4 (E = 10 V, R1 = R2 = 2 Ω, R3 = 3 Ω) : que vaut I ?",
+              "choix": [
+                "1,25 A",
+                "3,33 A",
+                "2,5 A",
+                "1,875 A"
+              ],
+              "bonne": 0,
+              "explication": "I = E·R2/(R1R2 + R1R3 + R2R3) = 20/16 = 1,25 A."
+            },
+            {
+              "q": "Exercice 5 : que vaut i3 ?",
+              "choix": [
+                "7/9 A ≈ 0,78 A",
+                "15/18 A ≈ 0,83 A",
+                "5/3 A ≈ 1,67 A",
+                "1/3 A ≈ 0,33 A"
+              ],
+              "bonne": 0,
+              "explication": "i3 = (R2E1 + R1E2)/(R1R2 + R1R3 + R2R3) = 175/225 = 7/9 A."
+            },
+            {
+              "q": "Exercice 7 : que vaut v0 (+ en bas de la 20 Ω) ?",
+              "choix": [
+                "−32,5 V",
+                "32,5 V",
+                "−2,5 V",
+                "−30 V"
+              ],
+              "bonne": 0,
+              "explication": "Superposition : −2,5 V (source 10 V seule) + (−30 V) (source 2 A seule) = −32,5 V."
+            },
+            {
+              "q": "Exercice 8 : quel courant traverse R3 ?",
+              "choix": [
+                "0,5 A",
+                "0,75 A",
+                "−0,25 A",
+                "1 A"
+              ],
+              "bonne": 0,
+              "explication": "R3 est dans la même branche que R : I = I1 + I2 = 0,75 − 0,25 = 0,5 A."
+            },
+            {
+              "q": "Exercice 10 : quelle est la contribution de E1 seule à la tension aux bornes de R ?",
+              "choix": [
+                "3,75 V",
+                "7,5 V",
+                "5 V",
+                "15 V"
+              ],
+              "bonne": 0,
+              "explication": "2R en série avec 3R // 6R // R = 2R/3 : 15 × (2R/3)/(8R/3) = 15/4 = 3,75 V."
+            },
+            {
+              "q": "Dans la formule I = U/R, que représente U ?",
+              "choix": [
+                "La tension aux bornes de cette résistance",
+                "La f.é.m. du générateur de la branche",
+                "La somme des f.é.m. du circuit",
+                "La tension du générateur le plus fort"
+              ],
+              "bonne": 0,
+              "explication": "La loi d'Ohm relie le courant d'une résistance à la tension à ses propres bornes."
             }
           ]
         }
