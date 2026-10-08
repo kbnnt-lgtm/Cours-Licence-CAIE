@@ -1871,6 +1871,117 @@ window.COURS = {
               "explication": "arctan(−2 / −2) = 45°, mais a < 0 et b < 0 : le vecteur est en bas à gauche, donc 45° − 180° = −135°."
             }
           ]
+        },
+        {
+          "id": "exercices-courant-continu",
+          "titre": "Exercices : courant continu, lois des nœuds et des mailles",
+          "type": "Exercices",
+          "date": "2026-10-08",
+          "source": "Notes de cours de Maélyss Simon (correction faite en classe), proposées via l'appli et complétées",
+          "resume": "Pour trouver les courants dans un circuit à plusieurs générateurs, on utilise les deux lois de Kirchhoff. La loi des nœuds : à un nœud, la somme des courants qui arrivent est égale à la somme des courants qui repartent. La loi des mailles : en faisant le tour d'une boucle fermée, la somme des tensions est nulle. On obtient un système d'équations qu'on résout pour trouver I1, I2 et I3.",
+          "sections": [
+            {
+              "titre": "Méthode : les lois de Kirchhoff",
+              "html": "<p>Vocabulaire d'abord :</p>\n<ul><li>un <b>nœud</b> est un point où se rejoignent au moins trois fils (ici A et B) ;</li>\n<li>une <b>branche</b> est une portion de circuit entre deux nœuds (ici, il y en a trois) ;</li>\n<li>une <b>maille</b> est une boucle fermée qu'on peut parcourir en revenant au point de départ.</li></ul>\n<p><b>Loi des nœuds :</b> à un nœud, <code>somme des courants qui arrivent = somme des courants qui repartent</code>. Le courant ne se perd pas et ne s'accumule pas.</p>\n<p><b>Loi des mailles :</b> sur une maille, <code>somme des tensions = 0</code>. On choisit un sens de parcours, puis on compte <b>+</b> une tension dont la flèche va dans le sens du parcours, et <b>−</b> une tension dont la flèche va dans l'autre sens.</p>\n<p><b>Loi d'Ohm</b> pour chaque résistance : <code>U = R × I</code>, en convention récepteur (la flèche de tension est opposée à la flèche de courant).</p>\n<p><b>Les étapes vues en classe :</b></p>\n<ol><li>Placer les courants (sens choisi au hasard) et les tensions sur le schéma.</li>\n<li>Écrire la loi des nœuds.</li>\n<li>Écrire une loi des mailles par maille indépendante (ici 2 mailles).</li>\n<li>Séparer les termes connus (les E) des inconnues (les I), puis faire l'application numérique.</li>\n<li>Résoudre le système et vérifier.</li></ol>\n<div class=\"attention\"><b>Le sens des courants se choisit au départ.</b> Si un résultat est <b>négatif</b>, ce n'est pas une erreur : le courant circule simplement dans le sens inverse de la flèche dessinée.</div>"
+            },
+            {
+              "titre": "Exercice : circuit à deux générateurs",
+              "html": "<div style=\"overflow-x:auto\"><svg viewBox=\"0 0 400 230\" role=\"img\" aria-label=\"Circuit à deux générateurs : trois branches en parallèle entre les nœuds A et B. Branche 1 : R1 et E1, courant I1 vers le haut. Branche 2 : R2 et E2, courant I2 vers le haut. Branche 3 : R3, courant I3 vers le bas.\" style=\"width:100%;min-width:340px;max-width:400px;font-family:var(--f-mono);font-size:13px\">\n<g stroke=\"var(--ink)\" stroke-width=\"1.5\" fill=\"none\">\n<path d=\"M70 40H330M70 200H330\"/>\n<path d=\"M70 40V68M70 112V146M70 156V200\"/><path d=\"M200 40V68M200 112V146M200 156V200\"/><path d=\"M330 40V98M330 142V200\"/>\n</g>\n<g fill=\"var(--surface)\" stroke=\"var(--ink)\" stroke-width=\"1.5\"><rect x=\"60\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"190\" y=\"68\" width=\"20\" height=\"44\"/><rect x=\"320\" y=\"98\" width=\"20\" height=\"44\"/></g>\n<g stroke=\"var(--ink)\" stroke-width=\"2.5\"><path d=\"M54 146H86M184 146H216\"/><path d=\"M62 156H78M192 156H208\" stroke-width=\"4\"/></g>\n<g fill=\"var(--ink)\" stroke=\"none\"><circle cx=\"200\" cy=\"40\" r=\"4\"/><circle cx=\"200\" cy=\"200\" r=\"4\"/></g>\n<g stroke=\"var(--accent)\" stroke-width=\"2\" fill=\"var(--accent)\">\n<path d=\"M70 58V46\" /><path d=\"M65 50L70 42L75 50Z\"/>\n<path d=\"M200 58V46\"/><path d=\"M195 50L200 42L205 50Z\"/>\n<path d=\"M330 52V84\"/><path d=\"M325 78L330 86L335 78Z\"/>\n</g>\n<g fill=\"var(--ink)\" stroke=\"none\">\n<text x=\"196\" y=\"30\">A</text><text x=\"196\" y=\"222\">B</text>\n<text x=\"88\" y=\"95\">R1 = 2 Ω</text><text x=\"218\" y=\"95\">R2 = 5 Ω</text><text x=\"346\" y=\"125\">R3</text><text x=\"346\" y=\"141\">= 10 Ω</text>\n<text x=\"90\" y=\"155\">E1 = 20 V</text><text x=\"220\" y=\"155\">E2 = 70 V</text>\n<text x=\"78\" y=\"56\" fill=\"var(--accent)\">I1</text><text x=\"208\" y=\"56\" fill=\"var(--accent)\">I2</text><text x=\"340\" y=\"70\" fill=\"var(--accent)\">I3</text>\n</g></svg></div>\n<p>Trois branches sont branchées entre les nœuds A et B :</p>\n<ul><li>branche 1 : générateur <b>E1 = 20 V</b> et résistance <b>R1 = 2 Ω</b>, courant I1 (vers A) ;</li>\n<li>branche 2 : générateur <b>E2 = 70 V</b> et résistance <b>R2 = 5 Ω</b>, courant I2 (vers A) ;</li>\n<li>branche 3 : résistance <b>R3 = 10 Ω</b>, courant I3 (qui part de A).</li></ul>\n<p><b>Question :</b> calculer I1, I2 et I3.</p>\n<p><small>Valeurs relevées sur la correction du cahier.</small></p>"
+            },
+            {
+              "titre": "Correction pas à pas",
+              "html": "<p><b>1. Loi des nœuds en A.</b> I1 et I2 arrivent en A, I3 en repart :</p>\n<p><code>I1 + I2 = I3</code></p>\n<div class=\"attention\"><b>Petite erreur dans le cahier :</b> il est écrit « I1 + I2 + I3 = 0 ». Cette écriture n'est juste que si les trois flèches pointent vers A. Ici I3 repart de A, donc c'est <b>I3 = I1 + I2</b>, ce que la suite de la correction utilise bien.</div>\n<p><b>2. Maille 1</b> (branches 1 et 2) :</p>\n<p><code>E1 − R1·I1 + R2·I2 − E2 = 0</code></p>\n<p>On sépare le connu de l'inconnu : <code>E1 − E2 = R1·I1 − R2·I2</code></p>\n<p>Application numérique : <code>20 − 70 = 2·I1 − 5·I2</code>, soit <b><code>−50 = 2·I1 − 5·I2</code></b>.</p>\n<p><b>3. Maille 2</b> (branches 2 et 3) :</p>\n<p><code>E2 − R2·I2 − R3·I3 = 0</code>, soit <code>E2 = R2·I2 + R3·I3</code></p>\n<div class=\"attention\"><b>Signe à surveiller :</b> le cahier écrit d'abord « E2 − R2·I2 + R3·I3 = 0 ». Le bon signe devant R3·I3 est <b>−</b>, comme dans la ligne suivante du cahier (E2 = R2·I2 + R3·I3).</div>\n<p>On remplace I3 par I1 + I2 : <code>70 = 5·I2 + 10·(I1 + I2)</code>, soit <b><code>70 = 10·I1 + 15·I2</code></b>.</p>\n<p><b>4. Résolution du système</b> (la correction du cahier s'arrête avant, voici la suite) :</p>\n<p><code>2·I1 − 5·I2 = −50</code>  (a)<br><code>10·I1 + 15·I2 = 70</code>  (b)</p>\n<p>On multiplie (a) par 5 : <code>10·I1 − 25·I2 = −250</code>. On soustrait à (b) : <code>40·I2 = 320</code>, donc <b>I2 = 8 A</b>.</p>\n<p>Dans (a) : <code>2·I1 = −50 + 5 × 8 = −10</code>, donc <b>I1 = −5 A</b>.</p>\n<p>Enfin <code>I3 = I1 + I2 = −5 + 8</code>, donc <b>I3 = 3 A</b>.</p>\n<div class=\"exemple\"><b>Vérification :</b> la tension entre A et B est la même pour les trois branches.<br>\nBranche 3 : <code>U_AB = R3·I3 = 10 × 3 = 30 V</code>.<br>\nBranche 2 : <code>U_AB = E2 − R2·I2 = 70 − 5 × 8 = 30 V</code>.<br>\nBranche 1 : <code>U_AB = E1 − R1·I1 = 20 − 2 × (−5) = 30 V</code>. Les trois donnent 30 V : c'est juste.</div>\n<p><b>Interprétation :</b> I1 est négatif, donc le courant traverse la branche 1 dans l'autre sens, de A vers B. Le générateur E1 (20 V) reçoit du courant au lieu d'en fournir : il fonctionne en <b>récepteur</b>, comme une batterie qu'on recharge. C'est E2 (70 V), plus puissant, qui alimente le circuit.</p>"
+            }
+          ],
+          "pointsCles": [
+            "Loi des nœuds : somme des courants qui arrivent = somme des courants qui repartent.",
+            "Loi des mailles : sur une boucle fermée, la somme des tensions (avec leurs signes) est nulle.",
+            "On écrit autant d'équations que d'inconnues : 1 loi des nœuds + 2 lois des mailles pour 3 courants.",
+            "Un courant négatif circule dans le sens inverse de la flèche choisie.",
+            "Vérification : la tension U_AB doit être la même dans toutes les branches en parallèle."
+          ],
+          "definitions": [
+            {
+              "terme": "Nœud",
+              "def": "Point du circuit où se rejoignent au moins trois conducteurs."
+            },
+            {
+              "terme": "Branche",
+              "def": "Portion de circuit comprise entre deux nœuds, parcourue par un seul courant."
+            },
+            {
+              "terme": "Maille",
+              "def": "Boucle fermée du circuit, parcourue en revenant au point de départ."
+            },
+            {
+              "terme": "Loi des mailles",
+              "def": "Sur une maille, la somme algébrique des tensions est nulle."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Que dit la loi des nœuds ?",
+              "r": "La somme des courants qui arrivent à un nœud est égale à la somme des courants qui en repartent."
+            },
+            {
+              "q": "Que dit la loi des mailles ?",
+              "r": "En parcourant une boucle fermée, la somme des tensions (comptées + ou − selon le sens de parcours) est nulle."
+            },
+            {
+              "q": "Que signifie un courant calculé négatif ?",
+              "r": "Le courant circule dans le sens inverse de la flèche qu'on avait choisie au départ."
+            },
+            {
+              "q": "Exercice du cours : que valent I1, I2 et I3 ?",
+              "r": "I1 = −5 A, I2 = 8 A, I3 = 3 A (et U_AB = 30 V)."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "En A, I1 et I2 arrivent et I3 repart. Quelle relation est juste ?",
+              "choix": [
+                "I3 = I1 + I2",
+                "I1 + I2 + I3 = 0",
+                "I1 = I2 + I3",
+                "I3 = I1 − I2"
+              ],
+              "bonne": 0,
+              "explication": "Loi des nœuds : ce qui arrive (I1 + I2) est égal à ce qui repart (I3)."
+            },
+            {
+              "q": "Avec E1 = 20 V et E2 = 70 V, la maille 1 donne E1 − E2 = 2·I1 − 5·I2. Combien vaut le membre de gauche ?",
+              "choix": [
+                "−50 V",
+                "50 V",
+                "90 V",
+                "−90 V"
+              ],
+              "bonne": 0,
+              "explication": "E1 − E2 = 20 − 70 = −50 V."
+            },
+            {
+              "q": "On trouve I1 = −5 A. Qu'est-ce que ça veut dire ?",
+              "choix": [
+                "Le courant circule dans le sens inverse de la flèche",
+                "Le calcul est faux",
+                "Le courant est nul",
+                "La résistance est négative"
+              ],
+              "bonne": 0,
+              "explication": "Le sens des flèches est choisi au départ. Un résultat négatif indique juste que le vrai sens est l'inverse."
+            },
+            {
+              "q": "Avec I3 = 3 A dans R3 = 10 Ω, que vaut la tension U_AB ?",
+              "choix": [
+                "30 V",
+                "3,3 V",
+                "13 V",
+                "0,3 V"
+              ],
+              "bonne": 0,
+              "explication": "Loi d'Ohm : U = R × I = 10 × 3 = 30 V."
+            }
+          ]
         }
       ]
     },
@@ -1932,5 +2043,11 @@ window.COURS = {
         }
       ]
     }
+  ],
+  "ecartees": [
+    "CRr2Qk03YAIScyP8iCTK"
+  ],
+  "integrees": [
+    "pxgPOCAkPxgmJHEaNEYc"
   ]
 };
