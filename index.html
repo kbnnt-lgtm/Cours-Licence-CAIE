@@ -1304,7 +1304,8 @@ function mergeStats(a, b){
   s.hist.sort((x,y) => x.d - y.d); s.hist = s.hist.slice(-60);
   return s;
 }
-async function loadContribs(){ try{ CONTRIBS = await CLOUD.contributions(); }catch(e){} }
+// Les ajouts déjà intégrés au cours par Claude (ids dans COURS.integrees) ne sont plus affichés à part.
+async function loadContribs(){ try{ const done = new Set((window.COURS && COURS.integrees) || []); CONTRIBS = (await CLOUD.contributions()).filter(k => !done.has(k.id)); }catch(e){} }
 async function loadAnnonces(){
   try{
     ANNONCES = await CLOUD.annonces();
