@@ -264,6 +264,10 @@ textarea.input{min-height:120px;resize:vertical;font-family:var(--f-body)}
 .dm{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:14px 16px;display:grid;gap:8px}
 .dm-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .dm-head b{flex:1;min-width:0}
+.dm-who{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--sunken)}
+.dm-who .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#2b5bd7);color:#fff;font-weight:700;flex:none}
+.dm-who small{display:block;color:var(--muted)}
+.dm-acts{display:flex;gap:8px;flex-wrap:wrap}
 .dm p{margin:0;font-family:var(--f-body);white-space:pre-wrap}
 .dm .minis{display:flex;gap:6px;flex-wrap:wrap}
 .dm .minis button{padding:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:none}
@@ -541,7 +545,7 @@ const pctColor = p => p >= 80 ? "var(--ok)" : p >= 55 ? "var(--warn)" : "var(--b
 /* ---------- Toast ---------- */
 let toastT;
 function toast(html, ms = 5000){ const t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); }
-$("#toast").addEventListener("click", e => { const g = e.target.closest("[data-go]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } });
+$("#toast").addEventListener("click", e => { const g = e.target.closest("[data-go]"), n = e.target.closest("[data-nav]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } else if(n){ $("#toast").hidden = true; nav(n.dataset.nav); } });
 
 /* ---------- Sommaire ---------- */
 function renderSide(){
@@ -857,18 +861,23 @@ function bindAccount(){
   };
   $("#lgReset").onclick = async () => { const e = $("#lgMail").value.trim(); if(!e) return msg("Écris ton e-mail, puis appuie de nouveau sur « Mot de passe oublié »."); try{ await CLOUD.resetPassword(e); msg("Un e-mail pour changer ton mot de passe vient d'être envoyé.", "ok"); }catch(err){ msg(err.message); } };
 }
-const STATUT = {en_attente: ["En attente", "warn"], validee: ["Validée", "ok"], refusee: ["Refusée", "bad"]};
-const TYPE_LBL = {correction: "Correction", ajout: "Ajout de contenu", photo: "Photos", cours: "Nouveau cours"};
+const STATUT = {en_attente: ["En attente", "warn"], validee: ["Acceptée et publiée", "ok"], a_integrer: ["Acceptée, intégration par Claude", "ok"], integree: ["Intégrée au cours", "ok"], refusee: ["Refusée", "bad"]};
+// Motifs proposés dans le formulaire (l'ordre compte). « ajout » reste pour les anciennes demandes.
+const MOTIFS = {cours: "Ajouter un cours", erreur: "Signaler une erreur", correction: "Modifier / compléter", photo: "Ajouter une photo", autre: "Autre"};
+const TYPE_LBL = {...MOTIFS, ajout: "Ajout de contenu"};
+const INTEGREES = new Set((window.COURS && COURS.integrees) || []);
 function dmCard(d, admin){
-  const st = STATUT[d.statut] || ["?", ""];
+  const st = STATUT[d.statut === "a_integrer" && INTEGREES.has(d.id) ? "integree" : d.statut] || ["?", ""];
+  const mat = SUBJ.find(m => m.id === d.matiere);
   return `<div class="dm" data-dm="${esc(d.id)}">
+    ${admin ? `<div class="dm-who"><span class="av">${esc((d.auteur||d.email||"?").trim().charAt(0).toUpperCase())}</span><div><b>${esc(d.auteur || "Sans nom")}</b><small>${esc(d.email || "")} · ${fmtDate(CLOUD.ms(d.cree))}</small></div></div>` : ""}
     <div class="dm-head"><b>${esc(d.titre || TYPE_LBL[d.type] || "Demande")}</b><span class="badge">${esc(TYPE_LBL[d.type]||d.type)}</span><span class="badge ${st[1]}">${st[0]}</span></div>
-    <div class="muted" style="font-size:13px">${d.chapitreTitre ? esc(d.chapitreTitre) + " · " : ""}${admin ? "par " + esc(d.auteur) + " (" + esc(d.email) + ") · " : ""}${fmtDate(CLOUD.ms(d.cree))}</div>
+    <div class="muted" style="font-size:13px">${esc(mat ? mat.nom : "Nouvelle matière")}${d.chapitreTitre ? " › " + esc(d.chapitreTitre) : ""}${admin ? "" : " · " + fmtDate(CLOUD.ms(d.cree))}</div>
     ${d.texte ? `<p>${esc(d.texte)}</p>` : ""}
     ${(d.minis||[]).length ? `<div class="minis">${d.minis.map((m,i) => `<button data-dphoto="${esc(d.id)}:${i}" aria-label="Agrandir la photo ${i+1}"><img src="${m}" alt=""></button>`).join("")}</div>` : ""}
     ${d.commentaire ? `<div class="msg info"><b>Réponse de l'admin :</b> ${esc(d.commentaire)}</div>` : ""}
     ${admin && d.statut === "en_attente" ? `<div class="field"><label for="cm-${esc(d.id)}">Réponse (facultatif)</label><input class="input" id="cm-${esc(d.id)}" placeholder="Merci, c'est corrigé !"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-ok="${esc(d.id)}">Valider et publier</button><button class="btn danger" data-ko="${esc(d.id)}">Refuser</button><button class="btn" data-copy="${esc(d.id)}">Copier pour Claude</button></div>` : ""}
+      <div class="dm-acts"><button class="btn primary" data-claude="${esc(d.id)}">Accepter et faire intégrer par Claude</button><button class="btn" data-ok="${esc(d.id)}">Accepter et publier tel quel</button><button class="btn danger" data-ko="${esc(d.id)}">Refuser</button></div>` : ""}
     ${admin && d.statut !== "en_attente" ? `<div><button class="link" data-del="${esc(d.id)}">Supprimer cette demande</button></div>` : ""}
   </div>`;
 }
@@ -894,13 +903,13 @@ function openForm(pre){
     $("#toLogin")?.addEventListener("click", () => { closeAll(); nav("moi"); });
     return;
   }
-  const type = pre.type || "correction";
+  const type = MOTIFS[pre.type] ? pre.type : "correction";
   body.innerHTML = `<form class="form" id="dmForm" novalidate>
-    <div class="field"><label>Type de demande</label><div class="seg" role="radiogroup">${Object.entries(TYPE_LBL).map(([k,v]) => `<button type="button" class="pill" data-type="${k}" aria-pressed="${k===type}">${v}</button>`).join("")}</div></div>
+    <div class="field"><label>Motif de la demande</label><div class="seg" role="radiogroup">${Object.entries(MOTIFS).map(([k,v]) => `<button type="button" class="pill" data-type="${k}" aria-pressed="${k===type}">${v}</button>`).join("")}</div></div>
     <div class="field"><label for="dmMat">Matière</label><select class="input" id="dmMat">${SUBJ.map(m => `<option value="${esc(m.id)}" ${m.id===pre.matiere?"selected":""}>${esc(m.nom)}</option>`).join("")}<option value="autre">Autre / nouvelle matière</option></select></div>
     <div class="field" id="dmChapF"><label for="dmChap">Chapitre</label><select class="input" id="dmChap"></select></div>
-    <div class="field"><label for="dmTitre">Titre court</label><input class="input" id="dmTitre" maxlength="120" placeholder="Ex. : erreur dans la table de vérité du NON-OU"></div>
-    <div class="field"><label for="dmTexte">Détail</label><textarea class="input" id="dmTexte" maxlength="5000" placeholder="Explique ce qu'il faut corriger ou ajouter. Pour un nouveau cours, donne la matière, la date et le contenu."></textarea></div>
+    <div class="field"><label for="dmTitre">En quelques mots</label><input class="input" id="dmTitre" maxlength="120" placeholder="Ex. : erreur dans la table de vérité du NON-OU"></div>
+    <div class="field"><label for="dmTexte">Description : quoi, où, et pourquoi</label><textarea class="input" id="dmTexte" maxlength="5000" rows="6" placeholder="Décris ce qu'il faut ajouter ou corriger, comme si tu l'expliquais à Claude qui va l'intégrer. Ex. : « Dans la table du NON-OU, la ligne 1-0 doit donner 0 et pas 1 (vu en cours le 8/10). » Pour un nouveau cours : date, titre et contenu (ou photos)."></textarea></div>
     <div class="field"><label>Photos (jusqu'à 8)</label>
       <label class="drop" id="dmDrop" for="dmFiles">${ICON.photo}<span><b>Prendre ou choisir des photos</b><br><small>Elles sont réduites automatiquement avant l'envoi.</small></span></label>
       <input type="file" id="dmFiles" accept="image/*" multiple hidden>
@@ -929,7 +938,7 @@ function openForm(pre){
     const m = SUBJ.find(s => s.id === $("#dmMat").value), cid = m ? $("#dmChap").value : "", x = m && cid ? byKey(m.id+"."+cid) : null;
     const d = {type: t, matiere: m ? m.id : "autre", chapitre: cid, chapitreTitre: x ? x.c.titre : (m ? m.nom + " (nouveau chapitre)" : "Nouvelle matière"), titre: $("#dmTitre").value.trim(), texte: $("#dmTexte").value.trim()};
     const say = (s, k="err") => $("#dmMsg").innerHTML = `<div class="msg ${k}">${esc(s)}</div>`;
-    if(!d.titre) return say("Donne un titre court à ta demande.");
+    if(!d.titre) return say("Résume ta demande en quelques mots.");
     if(!d.texte && !PH.length) return say("Écris le détail ou ajoute au moins une photo.");
     $("#dmSend").disabled = true; say("Envoi en cours…", "info");
     try{ await CLOUD.submitDemande(d, PH); PH = []; $("#formBody").innerHTML = `<div class="msg ok"><b>Demande envoyée.</b> L'admin la verra dans son espace. Tu peux suivre sa validation dans « Mon espace ».</div><div class="qz-foot"><button class="btn primary" id="fmOk">Fermer</button></div>`; $("#fmOk").onclick = () => { closeAll(); if(route === "moi") renderMe(); }; }
@@ -977,13 +986,13 @@ async function renderAdmin(){
     const ds = ADM_TAB === "attente" ? all.filter(d => d.statut === "en_attente") : all;
     box.innerHTML = ds.length ? `<div style="display:grid;gap:12px">${ds.map(d => dmCard(d, true)).join("")}</div>` : `<p class="msg ok">${ADM_TAB === "attente" ? "Rien à valider. Tout est à jour." : "Aucune demande pour l'instant."}</p>`;
     box.onclick = async e => {
-      const ok = e.target.closest("[data-ok]"), ko = e.target.closest("[data-ko]"), cp = e.target.closest("[data-copy]"), del = e.target.closest("[data-del]");
-      const id = (ok||ko||cp||del)?.dataset.ok || (ok||ko||cp||del)?.dataset.ko || (ok||ko||cp||del)?.dataset.copy || (ok||ko||cp||del)?.dataset.del; if(!id) return;
+      const ok = e.target.closest("[data-ok]"), cl = e.target.closest("[data-claude]"), ko = e.target.closest("[data-ko]"), del = e.target.closest("[data-del]");
+      const el = ok || cl || ko || del; const id = el && (el.dataset.ok || el.dataset.claude || el.dataset.ko || el.dataset.del); if(!id) return;
       const d = all.find(x => x.id === id);
-      if(cp){ const t = `Demande de ${d.auteur} (${TYPE_LBL[d.type]}) sur « ${d.chapitreTitre} » : ${d.titre}\n${d.texte}${d.nbPhotos ? `\n(${d.nbPhotos} photo(s) dans l'espace admin)` : ""}`; try{ await navigator.clipboard.writeText(t); toast("Copié. Colle-le dans le projet Claude pour l'intégrer au cours officiel."); }catch(_){ toast("Copie impossible ici : sélectionne le texte à la main."); } return; }
       if(del){ if(!del.dataset.c){ del.dataset.c = 1; del.textContent = "Confirmer la suppression"; return; } await CLOUD.deleteDemande(d); renderAdmin(); return; }
-      const btn = ok || ko; btn.disabled = true;
-      try{ await CLOUD.decide(d, !!ok, ($("#cm-"+id)||{}).value || ""); toast(ok ? "Validée et publiée pour tout le monde." : "Demande refusée."); await loadContribs(); renderAdmin(); }
+      const btn = el; btn.disabled = true;
+      const mode = ok ? "publier" : cl ? "claude" : "refuser";
+      try{ await CLOUD.decide(d, mode, ($("#cm-"+id)||{}).value || ""); toast({publier: "Acceptée et publiée pour tout le monde.", claude: "Acceptée : Claude va l'intégrer au cours.", refuser: "Demande refusée."}[mode]); await loadContribs(); renderAdmin(); }
       catch(err){ btn.disabled = false; toast(esc(err.message)); }
     };
   }catch(err){ box.innerHTML = `<div class="msg err">${esc(err.message)}</div>`; }
@@ -1305,7 +1314,7 @@ function mergeStats(a, b){
   return s;
 }
 // Les ajouts déjà intégrés au cours par Claude (ids dans COURS.integrees) ne sont plus affichés à part.
-async function loadContribs(){ try{ const done = new Set((window.COURS && COURS.integrees) || []); CONTRIBS = (await CLOUD.contributions()).filter(k => !done.has(k.id)); }catch(e){} }
+async function loadContribs(){ try{ const done = new Set((window.COURS && COURS.integrees) || []); CONTRIBS = (await CLOUD.contributions()).filter(k => !done.has(k.id) && !k.claude); }catch(e){} }
 async function loadAnnonces(){
   try{
     ANNONCES = await CLOUD.annonces();
@@ -1333,7 +1342,13 @@ async function startCloud(){
         const qb = {...(mine.quizBest||{})}; Object.entries(store.get("quizBest", {})).forEach(([k,v]) => qb[k] = Math.max(v, qb[k] ?? 0)); store.set("quizBest", qb);
       }catch(e){}
       syncReady = true; scheduleSync();
-      if(u.admin){ try{ ADMIN_DMS = await CLOUD.allDemandes(); }catch(e){} }
+      if(u.admin){ try{ ADMIN_DMS = await CLOUD.allDemandes();
+        const vu = store.get("dmSeen", 0), nv = ADMIN_DMS.filter(d => d.statut === "en_attente" && CLOUD.ms(d.cree) > vu);
+        if(nv.length){ const t = nv.length > 1 ? `${nv.length} nouvelles demandes à valider` : `Nouvelle demande de ${nv[0].auteur || "quelqu'un"} : ${nv[0].titre || TYPE_LBL[nv[0].type] || ""}`;
+          toast(`${ICON.bell}<span>${esc(t)}</span><button data-nav="admin">Voir</button>`, 10000);
+          try{ if(store.get("notif", false) && Notification.permission === "granted") new Notification("Cours Licence CAIE", {body: t}); }catch(e){}
+          store.set("dmSeen", Math.max(...nv.map(d => CLOUD.ms(d.cree)))); }
+      }catch(e){} }
     } else ADMIN_DMS = [];
     render();
   });

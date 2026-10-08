@@ -68,14 +68,16 @@ window.CLOUD = {
   myDemandes: wrap(async () => { need(); return (await list(query(collection(db, "demandes"), where("uid", "==", user.uid)))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
   allDemandes: wrap(async () => { needAdmin(); return (await list(collection(db, "demandes"))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
   demandePhoto: wrap(async (id, i) => { const s = await getDoc(doc(db, "demandes", id, "photos", String(i))); return s.exists() ? s.data().data : null; }),
-  decide: wrap(async (dm, ok, commentaire) => {
+  // mode : "publier" (affiché tel quel sous le chapitre), "claude" (Claude l'intègre au cours), "refuser"
+  decide: wrap(async (dm, mode, commentaire) => {
     needAdmin();
+    const ok = mode === "publier" || mode === "claude", claude = mode === "claude";
     const b = writeBatch(db);
-    b.update(doc(db, "demandes", dm.id), { statut: ok ? "validee" : "refusee", commentaire: commentaire || "", decide: serverTimestamp() });
+    b.update(doc(db, "demandes", dm.id), { statut: claude ? "a_integrer" : ok ? "validee" : "refusee", commentaire: commentaire || "", decide: serverTimestamp() });
     if (ok) {
       const cref = doc(db, "contributions", dm.id);
-      b.set(cref, { type: dm.type, matiere: dm.matiere, chapitre: dm.chapitre, chapitreTitre: dm.chapitreTitre || "", titre: dm.titre, texte: dm.texte, auteur: dm.auteur, nbPhotos: dm.nbPhotos || 0, minis: dm.minis || [], cree: serverTimestamp() });
-      b.set(doc(collection(db, "annonces")), { texte: annonceTexte(dm), lien: dm.matiere && dm.chapitre ? dm.matiere + "." + dm.chapitre : "", cree: serverTimestamp() });
+      b.set(cref, { type: dm.type, matiere: dm.matiere, chapitre: dm.chapitre, chapitreTitre: dm.chapitreTitre || "", titre: dm.titre, texte: dm.texte, auteur: dm.auteur, nbPhotos: dm.nbPhotos || 0, minis: dm.minis || [], claude, commentaire: commentaire || "", cree: serverTimestamp() });
+      if (!claude) b.set(doc(collection(db, "annonces")), { texte: annonceTexte(dm), lien: dm.matiere && dm.chapitre ? dm.matiere + "." + dm.chapitre : "", cree: serverTimestamp() });
     }
     await b.commit();
     if (ok) for (let i = 0; i < (dm.nbPhotos || 0); i++) {
@@ -99,7 +101,7 @@ window.CLOUD = {
 function annonceTexte(dm) {
   const ou = dm.chapitreTitre ? ` dans « ${dm.chapitreTitre} »` : "";
   if (dm.type === "photo") return `Nouvelles photos ajoutées${ou}`;
-  if (dm.type === "ajout") return `Nouveau contenu ajouté${ou} : ${dm.titre || "ajout de la classe"}`;
+  if (dm.type === "ajout" || dm.type === "cours") return `Nouveau contenu ajouté${ou} : ${dm.titre || "ajout de la classe"}`;
   return `Correction ajoutée${ou} : ${dm.titre || "modification"}`;
 }
 window.dispatchEvent(new Event("cloud-ready"));
