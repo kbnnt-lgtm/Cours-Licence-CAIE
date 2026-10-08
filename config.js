@@ -1,2 +1,13 @@
-// Configuration Firebase (comptes, demandes). Vide tant que le projet Firebase n est pas créé.
-window.CLOUD_CONFIG = null;
+// Configuration des comptes en ligne (Firebase). Ce bloc n'est pas secret :
+// la sécurité vient des règles Firestore (firebase/firestore.rules).
+window.CLOUD_CONFIG = {
+  firebase: {
+    apiKey: "AIzaSyB87d1Nt-0ZpUPc3ahprm-7Er7P7Wfs--M",
+    authDomain: "cours-caie.firebaseapp.com",
+    projectId: "cours-caie",
+    storageBucket: "cours-caie.firebasestorage.app",
+    messagingSenderId: "42179703665",
+    appId: "1:42179703665:web:7deccbbcdb874234ac7cd0"
+  },
+  admins: ["kylianbonnet5986@gmail.com"]
+};
