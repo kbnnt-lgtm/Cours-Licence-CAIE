@@ -9,5 +9,7 @@ window.CLOUD_CONFIG = {
     messagingSenderId: "42179703665",
     appId: "1:42179703665:web:7deccbbcdb874234ac7cd0"
   },
-  admins: ["kylianbonnet5986@gmail.com"]
+  admins: ["kylianbonnet5986@gmail.com"],
+  // Clé publique des notifications push (Cloud Messaging › Certificats Web Push)
+  vapidKey: "BMMYHA3Vg-Av8aQcSxqghLL6XO-8Hv5ggf-_tD7u3PXXrESKK8f5ZNB8zxDbwICRTGA_iQuBf2UJIS-kAvgVdJc"
 };
