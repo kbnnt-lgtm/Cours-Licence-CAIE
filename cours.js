@@ -4442,7 +4442,7 @@ window.COURS = {
             },
             {
               "titre": "Pratiquer en dehors du cours",
-              "html": "<p>Pour une langue, la <b>répétition régulière</b> est indispensable. L'appli conseillée est <b>Duolingo</b> :</p><ul><li>des exercices courts et répétitifs, idéals pour pratiquer chaque jour ;</li><li>ludique, donc facile à tenir dans la durée ;</li><li><b>gratuite</b>. Une version payante sans publicité existe, à environ <b>89 € par an</b>, mais elle n'est pas nécessaire.</li></ul><div class=\"exemple\"><b>Astuce :</b> quelques minutes par jour valent mieux qu'une longue séance de temps en temps.</div>"
+              "html": "<p>Pour une langue, la <b>répétition régulière</b> est indispensable. L'appli conseillée est <b>Duolingo</b> :</p><ul><li>des exercices courts et répétitifs, idéals pour pratiquer chaque jour ;</li><li>ludique, donc facile à tenir dans la durée ;</li><li><b>gratuite</b>. Une version payante sans publicité existe, à environ <b>89 € par an</b>, mais elle n'est pas nécessaire.</li></ul><div class=\"exemple\"><b>Astuce :</b> quelques minutes par jour valent mieux qu'une longue séance de temps en temps.</div><p><b>Les ressources du prof sur Moodle.</b> Des liens pour travailler l’anglais sont déposés sur Moodle, dans le module d’anglais (accès par l’ENF).</p>\n<p><b>Apprendre avec la musique.</b> L’un de ces liens mène à une appli, sur téléphone ou sur ordinateur :</p>\n<ul><li>tu choisis ton style de musique (pop, rock, rap, country…) ;</li><li>tu choisis un niveau parmi <b>4</b> ;</li><li>tu complètes les paroles de la chanson pendant l’écoute ; au niveau avancé, tu tapes <b>100 %</b> des paroles.</li></ul>\n<div class=\"attention\"><b>À savoir :</b> la grammaire et le vocabulaire des chansons sont moins rigoureux qu’en cours, mais c’est très bon pour la <b>compréhension orale</b>.</div>\n<p><b>Les jeux vidéo.</b> Jouer en anglais, ou avec des joueurs anglophones, fait aussi apprendre du vocabulaire.</p>\n<p class=\"muted\" style=\"font-size:13px\">Le nom de l’appli de musique n’est pas donné dans le cours : c’est probablement LyricsTraining, mais vérifie le lien sur Moodle.</p>"
             }
           ],
           "pointsCles": [
@@ -4451,7 +4451,10 @@ window.COURS = {
             "À deux : environ 3 à 4 minutes au total.",
             "L'enregistrement est supprimé après l'évaluation, sauf si tu veux le garder ; il n'est jamais publié.",
             "Écrire au professeur en anglais, sans IA.",
-            "Pratiquer hors cours : Duolingo (gratuit, répétitif et ludique), un peu chaque jour."
+            "Pratiquer hors cours : Duolingo (gratuit, répétitif et ludique), un peu chaque jour.",
+            "Ressources du prof : liens sur Moodle (module d’anglais, via l’ENF).",
+            "Appli musique : compléter les paroles en écoutant, 4 niveaux ; bon pour la compréhension.",
+            "Jouer à des jeux vidéo en anglais aide à apprendre du vocabulaire."
           ],
           "definitions": [],
           "flashcards": [
@@ -4478,6 +4481,14 @@ window.COURS = {
             {
               "q": "Quelle appli est conseillée pour pratiquer l'anglais hors cours ?",
               "r": "Duolingo : gratuite, répétitive et ludique, à utiliser un peu chaque jour."
+            },
+            {
+              "q": "Où trouver les liens de ressources du prof d’anglais ?",
+              "r": "Sur Moodle, dans le module d’anglais (accès par l’ENF)."
+            },
+            {
+              "q": "Comment fonctionne l’appli de musique conseillée ?",
+              "r": "On choisit un style et un niveau (4 niveaux), puis on complète les paroles en écoutant ; au niveau avancé, on tape 100 % des paroles."
             }
           ],
           "quiz": [
@@ -4535,6 +4546,17 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "La répétition est indispensable en langue ; l'appli est ludique et gratuite (version sans pub payante en option)."
+            },
+            {
+              "q": "Qu’apporte surtout l’appli où l’on complète les paroles de chansons ?",
+              "choix": [
+                "La compréhension orale",
+                "Une grammaire parfaite",
+                "La note de l’oral",
+                "La prononciation écrite"
+              ],
+              "bonne": 0,
+              "explication": "Les chansons sont moins rigoureuses en grammaire, mais très bonnes pour la compréhension."
             }
           ]
         }
