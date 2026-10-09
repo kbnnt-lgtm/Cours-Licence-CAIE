@@ -45,6 +45,24 @@ if (!st) {
   process.exit(0);
 }
 
+// 3 bis. Inscriptions validées par l'admin (inscrits/{uid}). À la mise en place, tous les comptes
+// existants (la classe) sont validés d'office.
+if (!st.inscritsInit) {
+  let n = 0, page;
+  do {
+    page = await admin.auth().listUsers(1000, page && page.pageToken);
+    for (const u of page.users) {
+      const r = db.doc("inscrits/" + u.uid);
+      if (!(await r.get()).exists) { await r.set({ statut: "valide", nom: u.displayName || "", email: u.email || "", quand: now, auto: true }); n++; }
+      await db.doc("attente/" + u.uid).delete().catch(() => {});
+    }
+  } while (page.pageToken);
+  st.inscritsInit = true;
+  await ref.set({ inscritsInit: true }, { merge: true });
+  console.log(`Inscriptions : ${n} compte(s) existant(s) validé(s) d'office.`);
+}
+const valides = new Set((await db.collection("inscrits").where("statut", "==", "valide").get()).docs.map(d => d.id));
+
 // 4. Abonnés
 const bannis = new Set((await db.collection("bannis").get()).docs.map(d => d.id));
 const subs = (await db.collection("push").get()).docs.map(d => d.data()).filter(p => p.token && !(p.uid && bannis.has(p.uid)));
@@ -69,7 +87,8 @@ async function envoyer(tokens, title, body, hash) {
     console.log(`« ${title} » : ${r.successCount} envoyée(s), ${r.failureCount} échec(s).`);
   }
 }
-const tous = subs.map(p => p.token);
+// « Tout le monde » = les comptes validés (et l'admin) ; pas les abonnements anonymes ni en attente
+const tous = subs.filter(p => p.uid && (valides.has(p.uid) || adminUids.has(p.uid))).map(p => p.token);
 
 // 5. Nouveaux cours
 const deja = new Set(st.chapitres || []);
@@ -128,11 +147,18 @@ if (heure >= 18 && heure < 23 && rappel !== demain && fs.existsSync("planning.js
   rappel = demain;
 }
 
+// 7 ter. Nouvelles inscriptions à valider (pour l'admin)
+const insT = st.insT || now;
+const att = st.insT ? (await db.collection("attente").where("cree", ">", st.insT).get()).docs.map(d => d.data()) : [];
+if (att.length === 1) await envoyer(adm, "Inscription à valider", `${att[0].nom || "Quelqu'un"} (${att[0].email || "sans e-mail"}) a créé un compte.`, "admin");
+else if (att.length > 1) await envoyer(adm, `${att.length} inscriptions à valider`, att.map(a => a.nom || a.email).slice(0, 3).join(", "), "admin");
+const insT2 = att.length ? att.reduce((m, a) => (ms(a.cree) > ms(m) ? a.cree : m), insT) : insT;
+
 // 8. Nettoyage et nouvel état
 for (const t of morts) await db.collection("push").doc(t).delete().catch(() => {});
 for (const p of (await db.collection("push").get()).docs) if (p.data().uid && bannis.has(p.data().uid)) await p.ref.delete();
 await ref.set({ chapitres: chaps.map(c => c.key), annT: ann.length ? ann.reduce((m, a) => (ms(a.cree) > ms(m) ? a.cree : m), st.annT) : st.annT,
   dmT: dms.length ? dms.reduce((m, d) => (ms(d.cree) > ms(m) ? d.cree : m), st.dmT) : st.dmT,
-  decT: decs.length ? decs.reduce((m, d) => (ms(d.decide) > ms(m) ? d.decide : m), st.decT) : st.decT, rappel });
+  decT: decs.length ? decs.reduce((m, d) => (ms(d.decide) > ms(m) ? d.decide : m), st.decT) : st.decT, rappel, insT: insT2, inscritsInit: true });
 console.log("Terminé.");
 process.exit(0);

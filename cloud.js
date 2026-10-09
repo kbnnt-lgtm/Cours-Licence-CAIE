@@ -118,6 +118,18 @@ window.CLOUD = {
   bannis: wrap(async () => { needAdmin(); return list(collection(db, "bannis")); }),
   exclure: wrap(async u => { needAdmin(); await setDoc(doc(db, "bannis", u.id), { nom: u.nom || "", email: u.email || "", quand: serverTimestamp() }); }),
   reintegrer: wrap(async uid => { needAdmin(); await deleteDoc(doc(db, "bannis", uid)); }),
+  // Inscription : chaque nouveau compte attend la validation de l'admin (inscrits/{uid}).
+  // Renvoie "valide", "refuse", "attente" ou "erreur". En attente : la fiche attente/{uid} est (re)créée pour l'admin.
+  monStatut: async () => {
+    if (!user) return null; if (user.admin) return "valide";
+    try { const s = await getDoc(doc(db, "inscrits", user.uid)); if (s.exists()) return s.data().statut === "valide" ? "valide" : s.data().statut === "refuse" ? "refuse" : "attente"; }
+    catch (e) { return "erreur"; }
+    try { await setDoc(doc(db, "attente", user.uid), { nom: String(user.nom || "").slice(0, 80), email: user.email || "", cree: serverTimestamp() }); } catch (e) {}
+    return "attente";
+  },
+  attente: wrap(async () => { needAdmin(); return (await list(collection(db, "attente"))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
+  inscrits: wrap(async () => { needAdmin(); return list(collection(db, "inscrits")); }),
+  inscription: wrap(async (u, ok) => { needAdmin(); const b = writeBatch(db); b.set(doc(db, "inscrits", u.id), { statut: ok ? "valide" : "refuse", nom: u.nom || "", email: u.email || "", quand: serverTimestamp() }); b.delete(doc(db, "attente", u.id)); await b.commit(); }),
   suisExclu: async () => { if (!user || user.admin) return false; try { return (await getDoc(doc(db, "bannis", user.uid))).exists(); } catch (e) { return false; } },
 
   // Notifications push (même appli fermée) : jeton FCM enregistré dans push/{jeton},

@@ -244,6 +244,16 @@ textarea.input{min-height:120px;resize:vertical;font-family:var(--f-body)}
 .previews figure{margin:0;position:relative}
 .previews img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
 .previews button{position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:14px;line-height:1}
+/* Écran d'accès : compte obligatoire et validé par l'admin (site en ligne) */
+#mur{position:fixed;inset:0;z-index:9000;background:var(--bg);overflow-y:auto;display:flex;justify-content:center;align-items:flex-start;padding:max(6vh,24px) 16px 40px}
+#mur[hidden]{display:none}
+body.mur-on{overflow:hidden}
+body.mur-on > :not(#mur):not(#toast){visibility:hidden}
+body.mur-on #toast{z-index:9500}
+.mur-in{width:100%;max-width:440px}
+.mur-in .brand{margin:0 0 18px;pointer-events:none}
+.mur-in h1{font-size:26px;margin:0 0 8px}
+.mur-in .box h2{display:none}
 .msg{padding:10px 14px;border-radius:8px;font-size:14px}
 .msg.ok{background:var(--ok-soft);color:var(--ok)} .msg.err{background:var(--bad-soft);color:var(--bad)} .msg.info{background:var(--accent-soft);color:var(--ink)}
 
@@ -547,6 +557,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 @media print{.ia-fab,.ia-panel{display:none!important}}
 </style>
 
+<div id="mur" hidden role="dialog" aria-modal="true" aria-labelledby="murT"><div class="mur-in" id="murIn"></div></div>
 <header class="top">
   <button class="icon-btn menu-btn" id="menuBtn" aria-label="Ouvrir le sommaire"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <button class="brand" data-nav="" aria-label="Accueil"><span class="logo">CAIE</span><b>Mes cours</b></button>
@@ -702,7 +713,7 @@ const pctColor = p => p >= 80 ? "var(--ok)" : p >= 55 ? "var(--warn)" : "var(--b
 /* ---------- Toast ---------- */
 let toastT;
 function toast(html, ms = 5000){ const t = $("#toast"); t.innerHTML = `<span class="toast-msg">${html}</span><button class="toast-x" aria-label="Fermer">✕</button>`; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); }
-$("#toast").addEventListener("click", e => { if(e.target.closest(".toast-x")){ $("#toast").hidden = true; return; } const g = e.target.closest("[data-go]"), n = e.target.closest("[data-nav]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } else if(n){ $("#toast").hidden = true; nav(n.dataset.nav); } });
+$("#toast").addEventListener("click", e => { if(e.target.closest(".toast-x")){ $("#toast").hidden = true; return; } if(e.target.closest("[data-insc]")){ $("#toast").hidden = true; ADM_TAB = "inscriptions"; nav("admin"); return; } const g = e.target.closest("[data-go]"), n = e.target.closest("[data-nav]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } else if(n){ $("#toast").hidden = true; nav(n.dataset.nav); } });
 
 /* ---------- Sommaire ---------- */
 function renderSide(){
@@ -1217,12 +1228,29 @@ async function renderAdmin(){
   current = null;
   if(!CLOUD_USER || !CLOUD_USER.admin){ $("#view").innerHTML = `<h1>Espace admin</h1><p class="msg info">Cet espace est réservé à l'administrateur. Connecte-toi dans « Mon espace ».</p>`; return; }
   $("#view").innerHTML = `<div class="eyebrow">Administration</div><h1>Espace admin</h1>
-    <div class="tabs">${[["attente","À valider"],["toutes","Toutes les demandes"],["stats","Statistiques"],["classe","La classe"],["annonce","Annonce"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
+    <div class="tabs">${[["attente","À valider"],["inscriptions","Inscriptions"],["toutes","Toutes les demandes"],["stats","Statistiques"],["classe","La classe"],["annonce","Annonce"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
     <div id="admBody"><p class="muted">Chargement…</p></div>`;
   $("#view").querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { ADM_TAB = b.dataset.tab; renderAdmin(); });
   const box = $("#admBody");
   try{
     if(ADM_TAB === "stats") return await renderAdminStats(box);
+    if(ADM_TAB === "inscriptions"){
+      const [att, ins] = await Promise.all([CLOUD.attente(), CLOUD.inscrits()]);
+      const refus = ins.filter(i => i.statut === "refuse"), nOk = ins.filter(i => i.statut === "valide").length;
+      const ligne = (u, acts) => `<li style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px"><b>${esc(u.nom || "Sans nom")}</b> <span class="muted">${esc(u.email || "")}</span><br><small class="muted">${esc(fmtDate(CLOUD.ms(u.cree || u.quand)))}</small></span>${acts}</li>`;
+      box.innerHTML = `<p class="muted" style="margin:0 0 12px">Personne n'a accès au site sans compte validé ici. ${nOk} compte${nOk > 1 ? "s" : ""} validé${nOk > 1 ? "s" : ""}.</p>
+        <div class="box"><h2>En attente de validation</h2>${att.length ? `<ul class="list">${att.map(u => ligne(u, `<button class="btn primary" data-insok="${esc(u.id)}">Valider</button><button class="btn danger" data-insko="${esc(u.id)}">Refuser</button>`)).join("")}</ul>` : `<p class="muted" style="margin:0">Aucune inscription en attente.</p>`}</div>
+        ${refus.length ? `<div class="box"><h2>Inscriptions refusées</h2><ul class="list">${refus.map(u => ligne(u, `<button class="btn" data-insok="${esc(u.id)}">Valider quand même</button>`)).join("")}</ul></div>` : ""}`;
+      box.onclick = async e => {
+        const b = e.target.closest("[data-insok],[data-insko]"); if(!b) return;
+        const id = b.dataset.insok || b.dataset.insko, ok = !!b.dataset.insok, u = att.find(x => x.id === id) || refus.find(x => x.id === id);
+        if(!ok && !b.dataset.c){ b.dataset.c = 1; b.textContent = "Confirmer le refus"; return; }
+        b.disabled = true;
+        try{ await CLOUD.inscription(u, ok); toast(ok ? `${esc(u.nom || u.email)} a maintenant accès au site.` : `Inscription de ${esc(u.nom || u.email)} refusée.`); }catch(err){ toast(esc(err.message)); }
+        renderAdmin();
+      };
+      return;
+    }
     if(ADM_TAB === "classe"){
       const [us0, bans] = await Promise.all([CLOUD.users(), CLOUD.bannis().catch(() => [])]);
       const BAN = new Set(bans.map(b => b.id)), us = us0.filter(u => !BAN.has(u.id) && u.email !== CLOUD_USER.email);
@@ -2040,6 +2068,28 @@ $("#iaIn").addEventListener("input", e => { const t = e.target; t.style.height =
 
 /* ---------- En ligne : comptes, synchronisation, contributions, annonces ---------- */
 let CLOUD_ON = false, CLOUD_FAIL = false, CLOUD_USER = null, CONTRIBS = [];
+// Accès au site en ligne : il faut un compte validé par l'admin. (Pas dans l'Artifact ni la version hors ligne.)
+const MUR = !!(window.CLOUD_CONFIG && window.CLOUD_CONFIG.firebase) && (location.href.startsWith(ONLINE_URL) || /^(127\.0\.0\.1|localhost)$/.test(location.hostname));
+let INSCR = null; // statut de l'inscription : null (déconnecté ou en cours), "attente", "refuse", "valide", "erreur"
+function renderMur(){
+  if(!MUR) return;
+  const ouvert = CLOUD_ON && CLOUD_USER && INSCR === "valide";
+  $("#mur").hidden = !!ouvert; document.body.classList.toggle("mur-on", !ouvert);
+  if(ouvert) return;
+  const tete = `<div class="brand"><span class="logo">CAIE</span><b>Mes cours</b></div>`;
+  let h;
+  if(CLOUD_FAIL) h = `<h1 id="murT">Connexion impossible</h1><p class="muted">Le site a besoin d'internet pour vérifier ton compte.</p><button class="btn primary" id="murRe">Réessayer</button>`;
+  else if(!CLOUD_ON || (CLOUD_USER && INSCR === null)) h = `<h1 id="murT">Cours Licence CAIE</h1><p class="muted">Chargement…</p>`;
+  else if(!CLOUD_USER) h = `<h1 id="murT">Cours Licence CAIE</h1><p class="muted" style="margin:0 0 16px">Ce site est réservé à la classe. Connecte-toi ou crée ton compte : l'administrateur valide chaque inscription.</p>${accountBox()}`;
+  else if(INSCR === "refuse") h = `<h1 id="murT">Inscription refusée</h1><p class="muted">L'administrateur n'a pas validé l'inscription de <b>${esc(CLOUD_USER.email || "")}</b>. Si c'est une erreur, contacte-le.</p><button class="btn" id="murOut">Se déconnecter</button>`;
+  else if(INSCR === "erreur") h = `<h1 id="murT">Vérification impossible</h1><p class="muted">Impossible de vérifier ton inscription pour le moment.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="murCheck">Réessayer</button><button class="btn" id="murOut">Se déconnecter</button></div>`;
+  else h = `<h1 id="murT">Inscription en attente</h1><div class="box"><p style="margin:0 0 8px">Merci <b>${esc(CLOUD_USER.nom || "")}</b> ! Ton compte <b>${esc(CLOUD_USER.email || "")}</b> a bien été créé.</p><p class="muted" style="margin:0">L'administrateur doit valider ton inscription avant que tu aies accès aux cours. Reviens un peu plus tard, ou appuie sur « Vérifier ».</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="murCheck">Vérifier</button><button class="btn" id="murOut">Se déconnecter</button></div>`;
+  $("#murIn").innerHTML = tete + h;
+  $("#murRe")?.addEventListener("click", () => location.reload());
+  $("#murOut")?.addEventListener("click", () => CLOUD.signOut());
+  $("#murCheck")?.addEventListener("click", async e => { e.target.disabled = true; const avant = INSCR; INSCR = await CLOUD.monStatut(); if(INSCR === "valide") return location.reload(); renderMur(); if(INSCR === avant) toast("Pas encore validée. Réessaie plus tard."); });
+  if(!CLOUD_USER) bindAccount();
+}
 let syncT = null, syncReady = false;
 function scheduleSync(){ if(!CLOUD_USER || !syncReady) return; clearTimeout(syncT); syncT = setTimeout(() => CLOUD.saveMine({stats: stats(), done: store.get("done", {}), quizBest: store.get("quizBest", {})}).catch(()=>{}), 1500); }
 // Fusionne les stats du compte et celles de l'appareil (on garde le maximum de chaque compteur)
@@ -2068,16 +2118,19 @@ async function startCloud(){
     const src = document.querySelector('script[src="config.js"]') ? "cloud.js" : null; if(!src) return;
     await import(new URL(src, location.href).href);
     CLOUD_ON = true;
-  }catch(e){ CLOUD_FAIL = true; return; }
+  }catch(e){ CLOUD_FAIL = true; renderMur(); return; }
   CLOUD.onPush((n, link) => toast(`${ICON.bell}<span>${esc(n.title ? n.title + " : " + (n.body || "") : n.body || "")}</span>${link && link.includes("#") ? (h => `<button ${byKey(h) ? "data-go" : "data-nav"}="${esc(h)}">Voir</button>`)(link.split("#")[1]) : ""}`, 10000));
   await Promise.all([loadContribs(), loadAnnonces()]);
   if(route === "" || route === "photos" || byKey(route)) render();
   CLOUD.onUser(async u => {
-    CLOUD_USER = u; syncReady = false;
+    CLOUD_USER = u; syncReady = false; INSCR = null; renderMur();
     if(u && await CLOUD.suisExclu()){
       CLOUD_USER = null; try{ await CLOUD.desactiverPush(); await CLOUD.signOut(); }catch(e){}
-      toast("Ton compte a été retiré de la classe par l'administrateur. Contacte-le si c'est une erreur.", 12000); render(); return;
+      toast("Ton compte a été retiré de la classe par l'administrateur. Contacte-le si c'est une erreur.", 12000); render(); renderMur(); return;
     }
+    if(u){ const st = await CLOUD.monStatut(); if(CLOUD_USER !== u) return; INSCR = st; }
+    renderMur();
+    if(u && INSCR !== "valide") return;
     if(u){
       try{
         const mine = await CLOUD.loadMine() || {};
@@ -2086,6 +2139,7 @@ async function startCloud(){
         const qb = {...(mine.quizBest||{})}; Object.entries(store.get("quizBest", {})).forEach(([k,v]) => qb[k] = Math.max(v, qb[k] ?? 0)); store.set("quizBest", qb);
       }catch(e){}
       syncReady = true; scheduleSync();
+      if(u.admin) CLOUD.attente().then(a => { if(a.length) toast(`${ICON.bell}<span>${a.length > 1 ? a.length + " inscriptions à valider" : "Inscription à valider : " + esc(a[0].nom || a[0].email || "")}</span><button data-insc>Voir</button>`, 12000); }).catch(() => {});
       if(u.admin){ try{ ADMIN_DMS = await CLOUD.allDemandes();
         const vu = store.get("dmSeen", 0), nv = ADMIN_DMS.filter(d => d.statut === "en_attente" && CLOUD.ms(d.cree) > vu);
         if(nv.length){ const t = nv.length > 1 ? `${nv.length} nouvelles demandes à valider` : `Nouvelle demande de ${nv[0].auteur || "quelqu'un"} : ${nv[0].titre || TYPE_LBL[nv[0].type] || ""}`;
@@ -2101,7 +2155,7 @@ async function startCloud(){
 /* ---------- Démarrage ---------- */
 const start = (location.hash||"").slice(1);
 route = start in VIEWS || byKey(start) ? start : (start === "quiz" ? "" : "");
-render();
+render(); renderMur();
 if(start === "quiz") openQuiz(null);
 announceNew();
 exStartTick();
