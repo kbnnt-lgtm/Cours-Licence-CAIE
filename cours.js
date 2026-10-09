@@ -4441,6 +4441,10 @@ window.COURS = {
               "html": "<p>L'oral est enregistré pour la notation. Après l'évaluation, l'enregistrement est <b>supprimé</b>, sauf si tu demandes à le garder. Il n'est <b>jamais publié</b>.</p>"
             },
             {
+              "titre": "Les règles en cours",
+              "html": "<ul><li><b>Aucune question n’est bête</b> : toutes les questions sont importantes.</li><li><b>Écoute avant de demander de répéter</b>. Si tu as fait l’effort et que tu n’as pas compris, le prof reformule, écrit au tableau ou mime. En revanche, il n’aime pas répéter parce qu’on bavardait ou qu’on était sur son téléphone.</li><li><b>On parle anglais</b> : avec le prof, et aussi entre élèves pendant le cours.</li><li><b>On ne traduit pas pour son voisin</b>. Le prof explique un mot en anglais plutôt que de le traduire, et tu dois essayer de faire pareil.</li><li>Téléphone, ordinateur ou tablette sont autorisés <b>comme dictionnaire</b>. Mais taper sa question dans un traducteur et lire la traduction, c’est non : formule toi-même.</li></ul><div class=\"exemple\"><b>L’effort compte plus que la perfection :</b> une phrase imparfaite que tu as construite toi-même vaut mieux qu’une traduction parfaite lue à voix haute.</div>"
+            },
+            {
               "titre": "Écrire au professeur",
               "html": "<ul><li>Les messages au professeur s'écrivent <b>en anglais</b>.</li><li><b>Sans IA</b> : rédige tes messages toi-même.</li></ul>"
             },
@@ -4451,6 +4455,10 @@ window.COURS = {
             {
               "titre": "Séries, films et actualités en anglais",
               "html": "<p>Avec une plateforme de streaming (Netflix, Prime Video, Canal+…), regarde en <b>version originale</b> en faisant évoluer les sous-titres :</p><ol><li>son anglais + sous-titres <b>français</b> (c’est un bon début) ;</li><li>son anglais + sous-titres <b>anglais</b> ;</li><li>son anglais <b>sans sous-titres</b>.</li></ol><p>Sans sous-titres, c’est plus difficile selon l’accent et le dialecte, mais c’est un très bon entraînement.</p><p><b>Actualités :</b> lis ou écoute les infos internationales en anglais, par exemple sur l’appli ou le site de la <b>BBC</b>. Il existe aussi de bons sites en anglais américain, canadien ou australien.</p>"
+            },
+            {
+              "titre": "Dictionnaires conseillés",
+              "html": "<ul><li><b>DeepL</b> : préféré à Google Traduction. Bien pour <b>un ou deux mots</b>, pas pour des expressions.</li><li><b>WordReference</b> et <b>Reverso</b> : dictionnaires français ↔ anglais, site et appli.</li><li><b>Merriam-Webster</b> (dictionnaire américain) : pour aller plus loin, avec des <b>définitions et des synonymes en anglais</b> plutôt qu’une traduction. On y trouve aussi l’étymologie, le mot du jour et des jeux de mots. Il explique l’anglais britannique comme l’anglais américain.</li></ul>"
             },
             {
               "titre": "Sites pour la grammaire et le vocabulaire",
@@ -4479,7 +4487,10 @@ window.COURS = {
             "Séries en VO : sous-titres français, puis anglais, puis aucun.",
             "anglaisfacile.com : test de niveau puis activités ciblées (anglais général).",
             "Sur l’ENF : les nombres en anglais et la prononciation de l’alphabet ; en cours, on épelle en anglais.",
-            "TOEIC possible : aide du prof, et inscription via le CNAM à tarif préférentiel."
+            "TOEIC possible : aide du prof, et inscription via le CNAM à tarif préférentiel.",
+            "En cours : aucune question n’est bête, on parle anglais (même entre élèves), on ne traduit pas pour son voisin.",
+            "Téléphone OK comme dictionnaire, mais pas pour lire une traduction toute faite.",
+            "Dictionnaires : DeepL (1-2 mots), WordReference et Reverso (FR↔EN), Merriam-Webster (définitions en anglais)."
           ],
           "definitions": [],
           "flashcards": [
@@ -4534,6 +4545,22 @@ window.COURS = {
             {
               "q": "Où passer le TOEIC à tarif préférentiel ?",
               "r": "Avec les sessions organisées par le CNAM (l’examen reste payant)."
+            },
+            {
+              "q": "En cours d’anglais, peut-on utiliser son téléphone ?",
+              "r": "Oui, comme dictionnaire. Mais pas pour taper sa question dans un traducteur et lire la traduction."
+            },
+            {
+              "q": "Pour quoi DeepL est-il adapté ?",
+              "r": "Pour traduire un ou deux mots, pas des expressions. Le prof le préfère à Google Traduction."
+            },
+            {
+              "q": "Quel dictionnaire donne des définitions et des synonymes en anglais ?",
+              "r": "Merriam-Webster (dictionnaire américain), avec aussi l’étymologie et le mot du jour."
+            },
+            {
+              "q": "Quelle langue parle-t-on entre élèves pendant le cours d’anglais ?",
+              "r": "L’anglais, et on ne traduit pas pour son voisin."
             }
           ],
           "quiz": [
@@ -4635,6 +4662,39 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "On épelle en anglais : d’où le document sur la prononciation de l’alphabet."
+            },
+            {
+              "q": "Quel usage du téléphone est accepté en cours d’anglais ?",
+              "choix": [
+                "Chercher un mot dans un dictionnaire",
+                "Lire une traduction de sa question faite par un traducteur",
+                "Traduire le cours pour son voisin",
+                "Aucun usage"
+              ],
+              "bonne": 0,
+              "explication": "Le téléphone sert de dictionnaire ; la question, tu la formules toi-même en anglais."
+            },
+            {
+              "q": "Quel outil le prof conseille-t-il pour traduire un ou deux mots ?",
+              "choix": [
+                "DeepL",
+                "Google Traduction pour des phrases entières",
+                "Merriam-Webster en français",
+                "Aucun"
+              ],
+              "bonne": 0,
+              "explication": "DeepL est préféré à Google Traduction, pour des mots isolés (pas des expressions)."
+            },
+            {
+              "q": "Que faire si tu ne comprends pas une explication malgré ton attention ?",
+              "choix": [
+                "Demander : le prof reformule, écrit ou mime",
+                "Demander à ton voisin de traduire",
+                "Ne rien dire",
+                "Chercher la traduction et la lire"
+              ],
+              "bonne": 0,
+              "explication": "Aucune question n’est bête : si tu as fait l’effort, le prof réexplique autrement."
             }
           ]
         }
