@@ -1,14 +1,40 @@
-// Assistant IA des cours (bulle « Une question ? »). Chargé à la première ouverture
-// de la bulle. Passe par Firebase AI Logic (API Gemini Developer, offre gratuite) :
-// pas de clé secrète dans la page, la clé publique de config.js suffit.
+// Assistant IA des cours (bulle « Une question ? »). Chargé à la première ouverture de la bulle.
+// Deux voies vers Gemini (offre gratuite) :
+//  - CLOUD_CONFIG.ia.cleGemini présente : appel direct à l'API Gemini avec une clé dédiée, restreinte
+//    au site (référents HTTP) et à la seule API Gemini dans Google Cloud ;
+//  - sinon Firebase AI Logic, avec la clé publique de config.js.
 // Expose window.IA.chat(contexte) → { send(texte, onMorceau) }.
-const V = "12.4.0";
-const B = (window.FIREBASE_SDK_BASE_IA || `https://www.gstatic.com/firebasejs/${V}/`);
-const [{ initializeApp, getApps }, AI] = await Promise.all([import(B + "firebase-app.js"), import(B + "firebase-ai.js")]);
 const cfg = window.CLOUD_CONFIG;
-const app = getApps().find(a => a.name === "ia") || initializeApp(cfg.firebase, "ia");
-const ai = AI.getAI(app, { backend: new AI.GoogleAIBackend() });
+const CLE = cfg.ia && cfg.ia.cleGemini;
 const MODELES = (cfg.ia && cfg.ia.modeles) || ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash"];
+let AI = null, ai = null;
+if (!CLE) {
+  const V = "12.4.0";
+  const B = (window.FIREBASE_SDK_BASE_IA || `https://www.gstatic.com/firebasejs/${V}/`);
+  const [{ initializeApp, getApps }, M] = await Promise.all([import(B + "firebase-app.js"), import(B + "firebase-ai.js")]);
+  AI = M;
+  const app = getApps().find(a => a.name === "ia") || initializeApp(cfg.firebase, "ia");
+  ai = AI.getAI(app, { backend: new AI.GoogleAIBackend() });
+}
+// Appel direct (flux SSE) : renvoie le texte complet, appelle onMorceau au fil de l'eau
+async function direct(modele, systeme, hist, texte, onMorceau) {
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modele}:streamGenerateContent?alt=sse&key=${encodeURIComponent(CLE)}`, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ systemInstruction: { parts: [{ text: systeme }] }, contents: [...hist, { role: "user", parts: [{ text: texte }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } })
+  });
+  if (!r.ok) { let m = r.status + ""; try { const j = await r.json(); m += " " + (j.error && (j.error.status + " " + j.error.message)); } catch (e) {} throw new Error(m); }
+  const lec = r.body.getReader(), dec = new TextDecoder(); let tampon = "", tout = "";
+  for (;;) {
+    const { done, value } = await lec.read(); if (done) break;
+    tampon += dec.decode(value, { stream: true });
+    let i; while ((i = tampon.indexOf("\n")) >= 0) {
+      const l = tampon.slice(0, i).trim(); tampon = tampon.slice(i + 1);
+      if (!l.startsWith("data:")) continue;
+      try { const j = JSON.parse(l.slice(5)); const t = (((j.candidates || [])[0] || {}).content || {}).parts; if (t) { tout += t.map(p => p.text || "").join(""); onMorceau && onMorceau(tout); } } catch (e) {}
+    }
+  }
+  return tout;
+}
 
 const consignes = ctx => `Tu es l'assistant de révision d'une classe de Licence CAIE (alternance, électrotechnique, automatismes, informatique industrielle, anglais…).
 Un étudiant lit le chapitre « ${ctx.titre} » (matière : ${ctx.matiere}) et te pose des questions.
@@ -30,7 +56,7 @@ ${ctx.texte}
 let ok = 0; // indice du premier modèle qui a répondu
 function erreur(e) {
   const m = String((e && (e.message || e.code)) || e);
-  if (/api-not-enabled|genai config not found|not been used|SERVICE_DISABLED|firebasevertexai|PERMISSION_DENIED|403/i.test(m)) return "L'assistant n'est pas encore activé côté Firebase. L'administrateur doit l'activer (Firebase › AI Logic).";
+  if (/api-not-enabled|genai config not found|API_KEY|API key not valid|SERVICE_BLOCKED|referer|not been used|SERVICE_DISABLED|firebasevertexai|PERMISSION_DENIED|403/i.test(m)) return "L'assistant n'est pas encore activé côté Firebase. L'administrateur doit l'activer (Firebase › AI Logic).";
   if (/429|quota|RESOURCE_EXHAUSTED/i.test(m)) return "Beaucoup de questions en ce moment, la limite gratuite est atteinte. Réessaie dans une minute.";
   if (/network|fetch|Failed to fetch/i.test(m)) return "Pas de connexion. Vérifie ton réseau et réessaie.";
   return "L'assistant ne répond pas pour l'instant. Réessaie dans un moment.";
@@ -42,11 +68,14 @@ function chat(ctx) {
       let lastErr;
       for (let i = ok; i < MODELES.length; i++) {
         try {
-          const model = AI.getGenerativeModel(ai, { model: MODELES[i], systemInstruction: consignes(ctx), generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } });
-          const s = model.startChat({ history: hist.slice() });
-          const r = await s.sendMessageStream(texte);
           let tout = "";
-          for await (const c of r.stream) { const t = c.text(); if (t) { tout += t; onMorceau && onMorceau(tout); } }
+          if (CLE) tout = await direct(MODELES[i], consignes(ctx), hist, texte, onMorceau);
+          else {
+            const model = AI.getGenerativeModel(ai, { model: MODELES[i], systemInstruction: consignes(ctx), generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } });
+            const s = model.startChat({ history: hist.slice() });
+            const r = await s.sendMessageStream(texte);
+            for await (const c of r.stream) { const t = c.text(); if (t) { tout += t; onMorceau && onMorceau(tout); } }
+          }
           hist.push({ role: "user", parts: [{ text: texte }] }, { role: "model", parts: [{ text: tout }] });
           ok = i; return tout;
         } catch (e) {
