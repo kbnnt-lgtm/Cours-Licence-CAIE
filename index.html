@@ -283,6 +283,11 @@ textarea.input{min-height:120px;resize:vertical;font-family:var(--f-body)}
 .dm .minis img{display:block;width:70px;height:70px;object-fit:cover}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 16px}
 table.data{border-collapse:collapse;width:100%;font-size:14px}
+.stat-row.four{grid-template-columns:repeat(4,minmax(0,1fr));margin:8px 0}
+@media (max-width:600px){ .stat-row.four{grid-template-columns:1fr 1fr} .stat-row.four .stat:last-child{grid-column:auto} }
+.adm-hist{height:110px} .adm-hist i{max-width:none}
+.adm-x{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-top:4px}
+.adm-note{font-size:12.5px;margin:8px 0 0}
 table.data th,table.data td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
 table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
@@ -1210,17 +1215,24 @@ async function renderAdmin(){
   current = null;
   if(!CLOUD_USER || !CLOUD_USER.admin){ $("#view").innerHTML = `<h1>Espace admin</h1><p class="msg info">Cet espace est réservé à l'administrateur. Connecte-toi dans « Mon espace ».</p>`; return; }
   $("#view").innerHTML = `<div class="eyebrow">Administration</div><h1>Espace admin</h1>
-    <div class="tabs">${[["attente","À valider"],["toutes","Toutes les demandes"],["classe","La classe"],["annonce","Annonce"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
+    <div class="tabs">${[["attente","À valider"],["toutes","Toutes les demandes"],["stats","Statistiques"],["classe","La classe"],["annonce","Annonce"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
     <div id="admBody"><p class="muted">Chargement…</p></div>`;
   $("#view").querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { ADM_TAB = b.dataset.tab; renderAdmin(); });
   const box = $("#admBody");
   try{
+    if(ADM_TAB === "stats") return await renderAdminStats(box);
     if(ADM_TAB === "classe"){
       const [us0, bans] = await Promise.all([CLOUD.users(), CLOUD.bannis().catch(() => [])]);
       const BAN = new Set(bans.map(b => b.id)), us = us0.filter(u => !BAN.has(u.id) && u.email !== CLOUD_USER.email);
       const moi = us0.find(u => u.email === CLOUD_USER.email);
-      box.innerHTML = (us.length ? `<p class="muted" style="margin:0 0 10px">${us.length} personne${us.length>1?"s":""} avec un compte. « Exclure » retire l'accès au compte : la personne est déconnectée, ne peut plus envoyer de demande ni enregistrer ses stats, et ne reçoit plus les notifications.</p><div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Personne</th><th>Réponses</th><th>Réussite</th><th>Point faible</th><th>Vu le</th><th></th></tr></thead><tbody>${us.map(u => { const s = u.stats || {}, ch = s.ch || {}; const t = Object.values(ch).reduce((a,c) => ({ok:a.ok+c.ok, ko:a.ko+c.ko}), {ok:0,ko:0}); const n = t.ok+t.ko; const weak = Object.entries(ch).filter(([,c]) => c.ok+c.ko >= 3).map(([k,c]) => [k, c.ok/(c.ok+c.ko)]).sort((a,b) => a[1]-b[1])[0]; return `<tr><td>${esc(u.nom||u.email)}</td><td class="num">${n}</td><td class="num">${n ? Math.round(t.ok/n*100)+" %" : "—"}</td><td>${weak && byKey(weak[0]) ? esc(byKey(weak[0]).c.titre)+" ("+Math.round(weak[1]*100)+" %)" : "—"}</td><td class="num">${fmtDate(CLOUD.ms(u.maj))}</td><td><button class="btn danger" style="padding:6px 10px;font-size:13px" data-ban="${esc(u.id)}">Exclure</button></td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Personne d'autre n'a encore créé de compte.</p>`)
+      box.innerHTML = (us.length ? `<p class="muted" style="margin:0 0 10px">${us.length} personne${us.length>1?"s":""} avec un compte. « Exclure » retire l'accès au compte : la personne est déconnectée, ne peut plus envoyer de demande ni enregistrer ses stats, et ne reçoit plus les notifications. <button class="link" id="csvClasse">Exporter en CSV</button></p><div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Personne</th><th>Réponses</th><th>Réussite</th><th>Quiz</th><th>Examens</th><th>Révisés</th><th>Point faible</th><th>Vu le</th><th></th></tr></thead><tbody>${us.map(u => { const s = u.stats || {}, ch = s.ch || {}; const t = Object.values(ch).reduce((a,c) => ({ok:a.ok+c.ok, ko:a.ko+c.ko}), {ok:0,ko:0}); const n = t.ok+t.ko; const weak = Object.entries(ch).filter(([,c]) => c.ok+c.ko >= 3).map(([k,c]) => [k, c.ok/(c.ok+c.ko)]).sort((a,b) => a[1]-b[1])[0]; return `<tr><td>${esc(u.nom||u.email)}</td><td class="num">${n}</td><td class="num">${n ? Math.round(t.ok/n*100)+" %" : "—"}</td><td class="num">${(s.hist||[]).filter(h => !/^Examen blanc/.test(h.t||"")).length}</td><td class="num">${(s.ex||[]).length ? fmtN(Math.round(s.ex.reduce((a,e) => a+e.note, 0)/s.ex.length*10)/10)+"/20 ("+s.ex.length+")" : "—"}</td><td class="num">${Object.keys(u.done||{}).filter(k => byKey(k)).length}/${FLAT.length}</td><td>${weak && byKey(weak[0]) ? esc(byKey(weak[0]).c.titre)+" ("+Math.round(weak[1]*100)+" %)" : "—"}</td><td class="num">${fmtDate(CLOUD.ms(u.maj))}</td><td><button class="btn danger" style="padding:6px 10px;font-size:13px" data-ban="${esc(u.id)}">Exclure</button></td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Personne d'autre n'a encore créé de compte.</p>`)
         + (bans.length ? `<div class="box" style="margin-top:18px"><h2>Personnes exclues</h2><ul class="list">${bans.map(b => `<li style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:180px"><b>${esc(b.nom || b.email || "Sans nom")}</b>${b.email ? ` <span class="muted">${esc(b.email)}</span>` : ""}<br><small class="muted">Exclusion le ${esc(fmtDate(CLOUD.ms(b.quand)))}</small></span><button class="btn" data-unban="${esc(b.id)}">Réintégrer</button></li>`).join("")}</ul></div>` : "");
+      $("#csvClasse")?.addEventListener("click", () => {
+        const q = v => '"' + String(v ?? "").replace(/^[=+\-@]/, "'$&").replace(/"/g, '""') + '"'; // pas de formule exécutée par le tableur
+        const rows = [["Nom","E-mail","Réponses","Réussite (%)","Quiz terminés","Examens","Moyenne examens","Chapitres révisés","Dernière activité"]].concat(us.map(u => { const s = u.stats || {}, t = Object.values(s.ch || {}).reduce((a,c) => ({ok:a.ok+c.ok, ko:a.ko+c.ko}), {ok:0,ko:0}), n = t.ok+t.ko, ex = s.ex || []; return [u.nom||"", u.email||"", n, n ? Math.round(t.ok/n*100) : "", (s.hist||[]).filter(h => !/^Examen blanc/.test(h.t||"")).length, ex.length, ex.length ? (ex.reduce((a,e) => a+e.note, 0)/ex.length).toFixed(1).replace(".", ",") : "", Object.keys(u.done||{}).filter(k => byKey(k)).length, CLOUD.ms(u.maj) ? new Date(CLOUD.ms(u.maj)).toLocaleString("fr-FR") : ""]; }));
+        const url = URL.createObjectURL(new Blob(["\ufeff" + rows.map(r => r.map(q).join(";")).join("\r\n")], {type: "text/csv"}));
+        const a = document.createElement("a"); a.href = url; a.download = "classe-" + isoD(new Date()) + ".csv"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
+      });
       box.onclick = async e => {
         const b = e.target.closest("[data-ban]"), r = e.target.closest("[data-unban]");
         if(b){ const u = us.find(x => x.id === b.dataset.ban); if(!b.dataset.c){ b.dataset.c = 1; b.textContent = `Confirmer : exclure ${u.nom || u.email}`; return; } b.disabled = true; try{ await CLOUD.exclure(u); toast(`${esc(u.nom || u.email)} ne fait plus partie de la classe.`); }catch(err){ toast(esc(err.message)); } renderAdmin(); }
@@ -1260,6 +1272,78 @@ async function renderAdmin(){
       catch(err){ btn.disabled = false; toast(esc(err.message)); }
     };
   }catch(err){ box.innerHTML = `<div class="msg err">${esc(err.message)}</div>`; }
+}
+/* ---------- Espace admin : statistiques de la classe ----------
+   Calculées dans le navigateur de l'admin à partir des collections qu'il est seul à pouvoir lire
+   (users, demandes, bannis) : rien n'est publié ni ouvert aux autres. L'admin et les personnes
+   exclues ne sont pas comptés. */
+const aPct = (ok, n) => n ? Math.round(ok / n * 100) : 0;
+const okko = o => (o.ok || 0) + (o.ko || 0);
+let QIDX_C = null;
+const QIDX = () => { if(QIDX_C) return QIDX_C; const m = QIDX_C = new Map(); FLAT.forEach(x => { itemsOf(x).forEach(it => m.set(qid(it), it)); (x.c.examen||[]).forEach(p => (p.questions||[]).forEach(q => { const it = {src: {key: x.key, titre: x.c.titre, mat: x.m.nom}, q: p.titre + " · " + q.q, a: q.type === "num" ? fmtN(q.reponse) + (q.unite ? " " + q.unite : "") : q.type === "qcm" ? (q.choix||[])[q.bonne] : "", type: "exam"}; m.set(qid(it), it); })); }); return m; };
+const barsHtml = (vals, labels, tip, color) => { const mx = Math.max(1, ...vals); return `<div class="hist adm-hist" role="img" aria-label="${esc(tip(null))}">${vals.map((v, i) => `<i title="${esc(tip(i))}" style="height:${v ? Math.max(4, v / mx * 100) : 0}%;background:${color || "var(--accent)"}"></i>`).join("")}</div><div class="adm-x" ${labels.length === vals.length ? `style="display:grid;grid-template-columns:repeat(${vals.length},1fr);gap:4px;text-align:center"` : ""}>${labels.map(l => `<span>${esc(l)}</span>`).join("")}</div>`; };
+async function renderAdminStats(box){
+  const [us0, bans, dms] = await Promise.all([CLOUD.users(), CLOUD.bannis().catch(() => []), CLOUD.allDemandes().catch(() => [])]);
+  const BAN = new Set(bans.map(b => b.id));
+  const us = us0.filter(u => !BAN.has(u.id) && u.email !== CLOUD_USER.email).map(u => { const s = u.stats || {}; return {...u, s: {q: s.q || {}, ch: s.ch || {}, hist: s.hist || [], ex: s.ex || []}, dn: Object.keys(u.done || {}).filter(k => byKey(k))}; });
+  const N = us.length, now = Date.now(), J = 864e5;
+  const actifs = d => us.filter(u => now - CLOUD.ms(u.maj) < d * J).length;
+  const tot = us.reduce((a, u) => { Object.values(u.s.ch).forEach(c => { a.ok += c.ok || 0; a.ko += c.ko || 0; }); return a; }, {ok: 0, ko: 0});
+  const nRep = tot.ok + tot.ko;
+  const quizs = us.flatMap(u => u.s.hist.filter(h => !/^Examen blanc/.test(h.t || "")).map(h => ({...h, u})));
+  const exs = us.flatMap(u => u.s.ex.map(e => ({...e, u})));
+  const exMoy = exs.length ? exs.reduce((a, e) => a + e.note, 0) / exs.length : 0;
+  const nDone = us.reduce((a, u) => a + u.dn.length, 0);
+  // Activité : quiz et examens terminés (dates enregistrées dans l'historique de chacun)
+  const acts = us.flatMap(u => u.s.hist.map(h => h.d)).filter(Boolean);
+  const jours = [...Array(28)].map((_, i) => { const d = new Date(now - (27 - i) * J); return isoD(d); });
+  const parJour = jours.map(d => acts.filter(t => isoD(new Date(t)) === d).length);
+  const JS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
+  const parJs = JS.map((_, i) => acts.filter(t => (new Date(t).getDay() + 6) % 7 === i).length);
+  const parH = [...Array(24)].map((_, h) => acts.filter(t => new Date(t).getHours() === h).length);
+  // Par matière et par chapitre
+  const chStat = FLAT.map(x => { let ok = 0, ko = 0, el = 0; us.forEach(u => { const c = u.s.ch[x.key]; if(c && okko(c)){ ok += c.ok || 0; ko += c.ko || 0; el++; } }); return {x, ok, ko, n: ok + ko, el, rev: us.filter(u => u.dn.includes(x.key)).length}; });
+  const matStat = SUBJ.map(m => { const cs = chStat.filter(o => o.x.m === m), ok = cs.reduce((a, o) => a + o.ok, 0), n = cs.reduce((a, o) => a + o.n, 0); const el = us.filter(u => cs.some(o => okko(u.s.ch[o.x.key] || {}))).length; const ex = exs.filter(e => e.m === m.id); return {m, ok, n, el, ex: ex.length, exMoy: ex.length ? ex.reduce((a, e) => a + e.note, 0) / ex.length : null}; });
+  const durs = chStat.filter(o => o.n >= 5).sort((a, b) => a.ok / a.n - b.ok / b.n);
+  // Questions qui piègent la classe
+  const qs = new Map(); us.forEach(u => Object.entries(u.s.q).forEach(([id, v]) => { const o = qs.get(id) || {ok: 0, ko: 0, el: 0}; o.ok += v[0] || 0; o.ko += v[1] || 0; o.el++; qs.set(id, o); }));
+  const pieges = [...qs].map(([id, o]) => ({id, ...o, it: QIDX().get(id)})).filter(o => o.it && o.ok + o.ko >= 3 && o.ko).sort((a, b) => b.ko / (b.ok + b.ko) - a.ko / (a.ok + a.ko) || b.ko - a.ko).slice(0, 10);
+  // Examens blancs : répartition des notes
+  const TR = [[0, 5], [5, 8], [8, 10], [10, 12], [12, 14], [14, 16], [16, 20.01]];
+  const parNote = TR.map(([a, b]) => exs.filter(e => e.note >= a && e.note < b).length);
+  // Demandes
+  const parStatut = {}; dms.forEach(d => { const k = d.statut === "a_integrer" && INTEGREES.has(d.id) ? "integree" : d.statut; parStatut[k] = (parStatut[k] || 0) + 1; });
+  const traitees = dms.filter(d => d.statut !== "en_attente"), acc = traitees.filter(d => d.statut !== "refusee").length;
+  const delais = traitees.map(d => CLOUD.ms(d.decide) - CLOUD.ms(d.cree)).filter(t => t > 0).sort((a, b) => a - b);
+  const delai = delais.length ? delais[Math.floor(delais.length / 2)] : null;
+  const fmtDuree = t => t < 36e5 ? Math.max(1, Math.round(t / 6e4)) + " min" : t < 2 * J ? Math.round(t / 36e5) + " h" : Math.round(t / J) + " j";
+  const parMotif = {}; dms.forEach(d => parMotif[d.type] = (parMotif[d.type] || 0) + 1);
+  const auteurs = {}; dms.forEach(d => { const k = d.auteur || d.email || "?"; auteurs[k] = (auteurs[k] || 0) + 1; });
+  const topAut = Object.entries(auteurs).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const top = us.map(u => ({u, n: okko(Object.values(u.s.ch).reduce((a, c) => ({ok: a.ok + (c.ok || 0), ko: a.ko + (c.ko || 0)}), {ok: 0, ko: 0}))})).filter(o => o.n).sort((a, b) => b.n - a.n).slice(0, 5);
+  // Contenu de l'appli
+  const contenu = SUBJ.map(m => { const xs = FLAT.filter(x => x.m === m); return {m, ch: xs.length, cartes: xs.reduce((a, x) => a + (x.c.flashcards || []).length, 0), q: xs.reduce((a, x) => a + itemsOf(x).length, 0), ex: xs.reduce((a, x) => a + (x.c.examen || []).length, 0), ph: GAL.filter(g => g.matiere === m.id).length}; });
+  const stat = (v, l, c) => `<div class="stat"><b ${c ? `style="color:${c}"` : ""}>${v}</b><small>${l}</small></div>`;
+  const meter = (lbl, p, val, color) => `<div class="meter"><span class="lbl">${lbl}</span><span class="val">${val}</span><span class="track"><i style="width:${p}%;background:${color || pctColor(p)}"></i></span></div>`;
+  box.innerHTML = `<div class="adm-stats">
+    <p class="muted" style="margin:0 0 4px;font-size:14px">${N} compte${N > 1 ? "s" : ""} dans la classe (sans toi ni les personnes exclues). Les chiffres viennent des stats enregistrées sur les comptes : ce qui est fait sans être connecté n'apparaît pas.</p>
+    <div class="section-head" style="margin-top:14px"><h2>Vue d'ensemble</h2></div>
+    <div class="stat-row four">${stat(N, "comptes")}${stat(actifs(7), "actifs ces 7 jours")}${stat(actifs(1), "actifs aujourd'hui")}${stat(N ? Math.round(actifs(30) / N * 100) + " %" : "—", "actifs ce mois-ci")}</div>
+    <div class="stat-row four">${stat(nRep, "réponses aux quiz")}${stat(nRep ? aPct(tot.ok, nRep) + " %" : "—", "de bonnes réponses", nRep ? pctColor(aPct(tot.ok, nRep)) : "")}${stat(quizs.length, "quiz terminés")}${stat(N ? fmtN(Math.round(nRep / N)) : "—", "réponses par personne")}</div>
+    <div class="stat-row four">${stat(exs.length, "examens blancs passés")}${stat(exs.length ? fmtN(Math.round(exMoy * 10) / 10) + "/20" : "—", "moyenne aux examens", exs.length ? pctColor(exMoy * 5) : "")}${stat(nDone, "chapitres marqués révisés")}${stat(N && FLAT.length ? aPct(nDone, N * FLAT.length) + " %" : "—", "du programme révisé")}</div>
+    <div class="box"><h2>Activité des 28 derniers jours</h2>${acts.length ? barsHtml(parJour, [fmtJour(jours[0], {day: "numeric", month: "short"}), "", fmtJour(jours[27], {day: "numeric", month: "short"})], i => i == null ? "Quiz et examens terminés par jour" : `${fmtJour(jours[i], {weekday: "short", day: "numeric", month: "short"})} : ${parJour[i]} quiz ou examen${parJour[i] > 1 ? "s" : ""}`) + `<p class="muted adm-note">Quiz et examens blancs terminés par jour, toute la classe. Survole une barre pour le détail.</p>` : `<p class="muted" style="margin:0">Pas encore de quiz terminé.</p>`}</div>
+    ${acts.length ? `<div class="two"><div class="box"><h2>Jours de révision</h2>${barsHtml(parJs, JS, i => i == null ? "Quiz par jour de la semaine" : `${JS[i]} : ${parJs[i]}`)}</div><div class="box"><h2>Heures de révision</h2>${barsHtml(parH, ["0 h", "6 h", "12 h", "18 h", "23 h"], i => i == null ? "Quiz par heure" : `${i} h : ${parH[i]}`)}</div></div>` : ""}
+    <div class="box"><h2>Par matière</h2><div class="meters">${matStat.map(o => meter(esc(o.m.nom) + (o.n ? `<br><small class="muted">${o.el} pers.${o.ex ? ` · examens ${fmtN(Math.round(o.exMoy * 10) / 10)}/20 (${o.ex})` : ""}</small>` : ""), o.n ? aPct(o.ok, o.n) : 0, o.n ? `${aPct(o.ok, o.n)} % · ${o.n} rép.` : "pas de quiz")).join("")}</div></div>
+    <div class="box"><h2>Chapitres où la classe a le plus de mal</h2>${durs.length ? `<div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Chapitre</th><th>Réussite</th><th>Réponses</th><th>Personnes</th><th>Révisé par</th></tr></thead><tbody>${durs.slice(0, 8).map(o => `<tr><td><button class="link" data-go="${esc(o.x.key)}">${esc(o.x.c.titre)}</button><br><small class="muted">${esc(o.x.m.nom)}</small></td><td class="num" style="color:${pctColor(aPct(o.ok, o.n))}">${aPct(o.ok, o.n)} %</td><td class="num">${o.n}</td><td class="num">${o.el}</td><td class="num">${o.rev}/${N}</td></tr>`).join("")}</tbody></table></div><p class="muted adm-note">Chapitres avec au moins 5 réponses, du plus raté au mieux réussi.</p>` : `<p class="muted" style="margin:0">Pas encore assez de réponses.</p>`}</div>
+    <div class="box"><h2>Questions qui piègent la classe</h2>${pieges.length ? `<ul class="list">${pieges.map(o => `<li><b>${esc(o.it.type === "def" ? "Définition : " + o.it.def : o.it.q)}</b>${o.it.a ? `<br><span style="color:var(--ok)">✓ ${esc(o.it.a)}</span>` : ""}<br><span class="muted" style="font-size:12.5px"><b style="color:${pctColor(100 - aPct(o.ko, o.ok + o.ko))}">${aPct(o.ko, o.ok + o.ko)} % d'erreurs</b> · ${o.ko} erreur${o.ko > 1 ? "s" : ""} sur ${o.ok + o.ko} · ${o.el} pers. · <button class="link" data-go="${esc(o.it.src.key)}">${esc(o.it.src.titre)}</button></span></li>`).join("")}</ul><p class="muted adm-note">Utile pour savoir quoi réexpliquer ou corriger dans le cours.</p>` : `<p class="muted" style="margin:0">Pas encore assez de réponses.</p>`}</div>
+    <div class="box"><h2>Avancement par chapitre</h2><div class="meters">${chStat.map(o => meter(`<button class="link" style="font-weight:500;text-decoration:none;color:var(--ink)" data-go="${esc(o.x.key)}">${esc(o.x.c.titre)}</button>`, N ? aPct(o.rev, N) : 0, `révisé ${o.rev}/${N}${o.n ? ` · quiz ${aPct(o.ok, o.n)} %` : ""}`, "var(--accent)")).join("")}</div><p class="muted adm-note">La barre montre la part de la classe qui a marqué le chapitre comme révisé.</p></div>
+    ${exs.length ? `<div class="box"><h2>Examens blancs : répartition des notes</h2>${barsHtml(parNote, TR.map(([a, b]) => `${a}–${Math.round(b)}`), i => i == null ? "Nombre d'examens par tranche de note" : `${TR[i][0]} à ${Math.round(TR[i][1])}/20 : ${parNote[i]} examen${parNote[i] > 1 ? "s" : ""}`)}<p class="muted adm-note">${exs.length} examen${exs.length > 1 ? "s" : ""} · meilleure note ${fmtN(Math.max(...exs.map(e => e.note)))}/20 · ${exs.filter(e => e.note >= 10).length} à 10 ou plus.</p></div>` : ""}
+    <div class="two">
+      <div class="box"><h2>Les plus actifs</h2>${top.length ? `<ul class="list">${top.map(o => `<li>${esc(o.u.nom || o.u.email)} <span class="badge">${o.n} rép.</span></li>`).join("")}</ul>` : `<p class="muted" style="margin:0">Personne pour l'instant.</p>`}</div>
+      <div class="box"><h2>Demandes</h2>${dms.length ? `<div class="meters">${Object.entries(parStatut).sort((a, b) => b[1] - a[1]).map(([k, v]) => meter(esc((STATUT[k] || [k])[0]), aPct(v, dms.length), String(v), "var(--accent)")).join("")}</div><p class="muted adm-note">${dms.length} demande${dms.length > 1 ? "s" : ""} · ${traitees.length ? aPct(acc, traitees.length) + " % acceptées" : "aucune traitée"}${delai != null ? ` · traitées en ${fmtDuree(delai)} (médiane)` : ""}<br>Motifs : ${Object.entries(parMotif).map(([k, v]) => esc(TYPE_LBL[k] || k) + " " + v).join(", ")}<br>Les plus contributifs : ${topAut.map(([k, v]) => esc(k) + " (" + v + ")").join(", ")}</p>` : `<p class="muted" style="margin:0">Aucune demande.</p>`}</div>
+    </div>
+    <div class="box"><h2>Contenu de l'appli</h2><div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Matière</th><th>Chapitres</th><th>Cartes</th><th>Questions</th><th>Exercices d'examen</th><th>Photos</th></tr></thead><tbody>${contenu.map(o => `<tr><td>${esc(o.m.nom)}</td><td class="num">${o.ch}</td><td class="num">${o.cartes}</td><td class="num">${o.q}</td><td class="num">${o.ex}</td><td class="num">${o.ph}</td></tr>`).join("")}</tbody></table></div></div>
+  </div>`;
 }
 let ADMIN_DMS = [];
 function updatePips(){
