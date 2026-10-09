@@ -4418,11 +4418,11 @@ window.COURS = {
       "chapitres": [
         {
           "id": "evaluations-annee",
-          "titre": "Infos du cours et conseils pour progresser",
-          "type": "Cours",
+          "titre": "Fonctionnement du cours d’anglais",
+          "type": "Infos",
           "date": "2026-10-09",
           "source": "Enregistrement du cours d'anglais (modalités d'évaluation), résumé",
-          "resume": "L’essentiel : comment tu es évalué, les règles en cours, et les outils pour progresser.",
+          "resume": "Fiche pratique : comment tu es évalué, les règles en cours et les ressources pour progresser.",
           "sections": [
             {
               "titre": "Évaluation",
@@ -4441,102 +4441,10 @@ window.COURS = {
               "html": "<ul><li><b>Dictionnaires :</b> DeepL (1-2 mots), WordReference ou Reverso (FR↔EN), Merriam-Webster (définitions en anglais).</li><li><b>anglaisfacile.com</b> : test de niveau puis exercices ciblés.</li><li><b>ENF / Moodle</b> : nombres en anglais, prononciation de l’alphabet, liens du prof.</li><li><b>TOEIC</b> (facultatif, sur 990) : le prof aide à le préparer ; inscription possible via le CNAM à tarif réduit.</li></ul>"
             }
           ],
-          "pointsCles": [
-            "3 évaluations + participation notée à chaque cours.",
-            "Oral : 1 min 30 minimum par personne.",
-            "En cours : on parle anglais, on ne traduit pas pour le voisin.",
-            "Pratique régulière : Duolingo, séries en VO, BBC, musique.",
-            "Dictionnaires : DeepL, WordReference/Reverso, Merriam-Webster.",
-            "Ressources sur l’ENF/Moodle ; TOEIC possible via le CNAM."
-          ],
+          "pointsCles": [],
           "definitions": [],
-          "flashcards": [
-            {
-              "q": "Combien d’évaluations d’anglais dans l’année ?",
-              "r": "3, plus une note de participation à chaque cours."
-            },
-            {
-              "q": "Temps de parole minimum à l’oral ?",
-              "r": "1 min 30 par personne (environ 3-4 min à deux)."
-            },
-            {
-              "q": "Pourquoi ne pas réviser l’anglais juste avant le contrôle ?",
-              "r": "Une langue progresse seulement avec une pratique régulière."
-            },
-            {
-              "q": "Usage du téléphone en cours ?",
-              "r": "Comme dictionnaire oui ; pas pour lire une traduction toute faite."
-            },
-            {
-              "q": "Ordre des sous-titres pour une série en VO ?",
-              "r": "Français, puis anglais, puis aucun."
-            },
-            {
-              "q": "Quel dictionnaire pour des définitions en anglais ?",
-              "r": "Merriam-Webster."
-            },
-            {
-              "q": "Où passer le TOEIC à tarif réduit ?",
-              "r": "Via le CNAM (examen payant, noté sur 990)."
-            }
-          ],
-          "quiz": [
-            {
-              "q": "Quel temps de parole minimum à l’oral ?",
-              "choix": [
-                "1 min 30 par personne",
-                "1 min 30 pour le groupe",
-                "5 minutes par personne",
-                "Aucun"
-              ],
-              "bonne": 0,
-              "explication": "Minimum individuel : 1 min 30."
-            },
-            {
-              "q": "Pourquoi la participation est-elle notée à chaque cours ?",
-              "choix": [
-                "Pour encourager une pratique régulière",
-                "Pour remplacer l’oral",
-                "Pour le TOEIC",
-                "Elle ne l’est pas"
-              ],
-              "bonne": 0,
-              "explication": "En langue, on progresse en pratiquant en continu."
-            },
-            {
-              "q": "Usage du téléphone accepté en cours ?",
-              "choix": [
-                "Chercher un mot",
-                "Lire une traduction de sa question",
-                "Traduire pour son voisin",
-                "Aucun"
-              ],
-              "bonne": 0,
-              "explication": "Dictionnaire oui ; la phrase, tu la formules toi-même."
-            },
-            {
-              "q": "Pour traduire un ou deux mots, le prof conseille…",
-              "choix": [
-                "DeepL",
-                "Google Traduction pour des phrases",
-                "Merriam-Webster en français",
-                "Rien"
-              ],
-              "bonne": 0,
-              "explication": "DeepL, pour des mots isolés, pas des expressions."
-            },
-            {
-              "q": "Bonne progression pour une série en VO ?",
-              "choix": [
-                "Sous-titres FR → EN → aucun",
-                "Aucun sous-titre dès le début",
-                "Toujours en VF",
-                "Sous-titres EN sur son français"
-              ],
-              "bonne": 0,
-              "explication": "On augmente la difficulté par étapes."
-            }
-          ]
+          "flashcards": [],
+          "quiz": []
         }
       ]
     },

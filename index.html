@@ -568,7 +568,7 @@ const real = DATA.matieres.filter(m => !m.exemple);
 const SUBJ = real.length ? real : DATA.matieres;
 
 // Type de chapitre : Cours, Exercices ou TP (champ « type » ou déduit de l'identifiant)
-const TYPES = ["Cours","Exercices","TP"];
+const TYPES = ["Infos","Cours","Exercices","TP"];
 const typeOf = c => c.type || (/^tp-/.test(c.id) ? "TP" : /^exercices?-/.test(c.id) ? "Exercices" : "Cours");
 // Chapitres rangés par matière, puis par type, dans l'ordre du fichier
 SUBJ.forEach(m => { m.chapitres = TYPES.flatMap(t => (m.chapitres||[]).filter(c => typeOf(c) === t)); });
@@ -700,7 +700,7 @@ function renderChapter(key){
     ${c.source?`<p class="muted" style="margin:0;font-size:13px">Source : ${esc(c.source)}</p>`:""}
     <div class="actions">
       ${cards.length ? `<button class="btn primary" id="revBtn">${ICON.cards}Réviser (${cards.length} cartes) <kbd>R</kbd></button>` : ""}
-      <button class="btn" id="quizBtn">${ICON.quiz}Quiz${cst ? ` · ${Math.round(cst.ok/(cst.ok+cst.ko)*100)} %` : ""} <kbd>Q</kbd></button>
+      ${itemsOf(x).length ? `<button class="btn" id="quizBtn">${ICON.quiz}Quiz${cst ? ` · ${Math.round(cst.ok/(cst.ok+cst.ko)*100)} %` : ""} <kbd>Q</kbd></button>` : ""}
       ${(c.examen||[]).length ? `<button class="btn" id="exBtn">${ICON.exam}Examen blanc <kbd>E</kbd></button>` : ""}
       ${photos.length ? `<button class="btn" id="photoBtn">${ICON.photo}Photos (${photos.length})</button>` : ""}
       <button class="btn ${isDone?"done":""}" id="doneBtn">${isDone?"✓ Révisé":"Marquer comme révisé"} <kbd>M</kbd></button>
@@ -719,7 +719,7 @@ function renderChapter(key){
     </div>`;
   $("#revBtn")?.addEventListener("click", () => startReview(cards, c.titre));
   $("#doneBtn").addEventListener("click", toggleDone);
-  $("#quizBtn").addEventListener("click", () => openQuiz({m: m.id, c: key}));
+  $("#quizBtn")?.addEventListener("click", () => openQuiz({m: m.id, c: key}));
   $("#exBtn")?.addEventListener("click", () => { if(!(EX && !EX.rendu)){ exSel = {...exSel, m: m.id, c: key}; store.set("examSel", exSel); } nav("examen"); });
   $("#photoBtn")?.addEventListener("click", () => document.getElementById("sec-photos").scrollIntoView({behavior:"smooth"}));
   $("#propBtn").addEventListener("click", () => openForm({matiere: m.id, chapitre: c.id}));
@@ -1271,7 +1271,7 @@ function renderQuizSetup(){
   $("#qzTitle").textContent = "Quiz";
   $("#qzBody").innerHTML = `
     <div class="qz-lbl">1. Sur quoi ?</div>
-    <div class="qz-chips">${chip("data-qm", "", !qzSel.m, "Tout (général)", ALL_ITEMS.length)}${SUBJ.map(s => chip("data-qm", s.id, qzSel.m === s.id, s.nom, poolFor({m:s.id}).length)).join("")}</div>
+    <div class="qz-chips">${chip("data-qm", "", !qzSel.m, "Tout (général)", ALL_ITEMS.length)}${SUBJ.filter(s => poolFor({m:s.id}).length).map(s => chip("data-qm", s.id, qzSel.m === s.id, s.nom, poolFor({m:s.id}).length)).join("")}</div>
     ${m ? `<div class="qz-lbl">2. Un chapitre précis ?</div><div class="qz-chips">${chip("data-qc", "", !qzSel.c, "Toute la matière")}${FLAT.filter(x => x.m === m && itemsOf(x).length).map(x => chip("data-qc", x.key, qzSel.c === x.key, `${typeOf(x.c)} ${x.num}. ${x.c.titre}`, itemsOf(x).length)).join("")}</div>` : ""}
     <div class="qz-lbl">${m ? "3" : "2"}. Quelles questions ?</div>
     <div class="qz-chips">${chip("data-qmode", "normal", qzSel.mode === "normal", "Toutes, au hasard")}${chip("data-qmode", "faibles", qzSel.mode === "faibles", "Mes points faibles", nf, !nf)}${chip("data-qmode", "nouvelles", qzSel.mode === "nouvelles", "Jamais vues", nn, !nn)}</div>
@@ -1458,7 +1458,7 @@ function renderExamSetup(){
     <p class="lede">Un sujet chronométré avec des questions de cours et des exercices à calculer, corrigé et noté sur 20 à la fin.</p>
     <div class="box">
       <div class="qz-lbl">1. Quelle matière ?</div>
-      <div class="qz-chips">${SUBJ.map(s => chip("data-xm", s.id, exSel.m === s.id, s.nom)).join("")}</div>
+      <div class="qz-chips">${SUBJ.filter(s => exPbs({m: s.id}).length || poolFor({m: s.id}).length).map(s => chip("data-xm", s.id, exSel.m === s.id, s.nom)).join("")}</div>
       ${m ? `<div class="qz-lbl">2. Toute la matière ou un chapitre ?</div>
       <div class="qz-chips">${chip("data-xc", "", !exSel.c, "Toute la matière", `${(exPbs({m: m.id})).length} exercices`)}${chs.map(x => chip("data-xc", x.key, exSel.c === x.key, `${typeOf(x.c)} ${x.num}. ${x.c.titre}`)).join("")}</div>` : ""}
       <div class="qz-lbl">3. Durée</div>
