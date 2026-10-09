@@ -121,7 +121,7 @@ h3{text-wrap:balance}
 .resume-card:hover{border-color:var(--c)}
 .resume-card small{display:block;color:var(--muted);font-size:12px;font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
 .resume-card b{font-family:var(--f-display);font-size:18px}
-.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.quick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
 .quick button{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-align:left;min-width:0}
 .quick button:hover{border-color:var(--accent)}
 .quick b{font-size:15px}
@@ -387,8 +387,8 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
   .quick{grid-template-columns:1fr 1fr}
   .two{grid-template-columns:1fr}
   .stat b{font-size:24px}
-  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
-  .tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border:0;background:none;color:var(--muted);font-size:11px;border-radius:10px;min-height:48px}
+  .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border:0;background:none;color:var(--muted);font-size:10.5px;white-space:nowrap;letter-spacing:-.01em;border-radius:10px;min-height:48px}
   .tabbar button:active{background:var(--sunken)}
   .tabbar button[aria-current="page"]{color:var(--accent)}
   .tabbar svg.i{width:22px;height:22px}
@@ -407,6 +407,53 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
   .toast{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 }
 @media (max-width:420px){ .stat-row{grid-template-columns:1fr 1fr} .stat-row .stat:last-child{grid-column:1/3} }
+/* Examen blanc */
+.ex-bar{position:sticky;top:var(--top-h,56px);z-index:20;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 14px;margin:0 0 18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.ex-bar .t{flex:1;min-width:140px;font-weight:600}
+.ex-bar .t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.ex-timer{font-family:var(--f-mono);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.ex-timer.low{color:var(--bad)}
+.ex-part{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:26px 0 10px}
+.ex-q{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:14px 16px;margin:0 0 12px}
+.ex-q .h{display:flex;gap:10px;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.ex-q .h b{font-family:var(--f-body);font-size:16.5px;line-height:1.4;font-weight:600}
+.ex-q .pts{flex:none;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.ex-q .def{display:block;margin-top:6px;font-weight:400;padding:8px 10px;border-radius:8px;background:var(--sunken)}
+.ex-opts{display:grid;gap:8px}
+.ex-opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:var(--f-body);font-size:15.5px;line-height:1.4;cursor:pointer}
+.ex-opt input{margin-top:3px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.ex-opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.ex-opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.ex-opt.ko{border-color:var(--bad);background:var(--bad-soft)}
+.ex-pb{border:1px solid var(--line);border-left:4px solid var(--c,var(--accent));border-radius:var(--r);background:var(--surface);padding:16px 18px;margin:0 0 16px}
+.ex-pb h3{font-family:var(--f-display);font-size:19px;margin:0 0 4px}
+.ex-pb .src{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.ex-pb .enonce{font-family:var(--f-body);font-size:16px;line-height:1.55}
+.ex-pb .ex-q{background:var(--bg)}
+.ex-num{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ex-num input{width:160px;max-width:100%;font-family:var(--f-mono);font-size:16px}
+.ex-num .u{font-family:var(--f-mono);color:var(--muted)}
+.ex-q textarea{width:100%;min-height:80px;font-family:var(--f-body);font-size:15px}
+.ex-hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.ex-res{margin-top:10px;padding:10px 12px;border-radius:10px;border-left:4px solid var(--ok);background:var(--sunken);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.ex-res.bad{border-left-color:var(--bad)}
+.ex-res.half{border-left-color:var(--warn)}
+.ex-res.todo{border-left-color:var(--accent)}
+.ex-res .verdict{font-family:var(--f-ui);font-weight:700;display:block;margin-bottom:4px}
+.ex-res p{margin:6px 0}
+.ex-self{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ex-self .btn{padding:7px 12px;font-size:13.5px}
+.ex-self .btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ex-note{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin:0 0 18px}
+.ex-note .big{font-family:var(--f-display);font-size:48px;line-height:1;font-variant-numeric:tabular-nums}
+.ex-note .big small{font-size:22px;color:var(--muted)}
+.ex-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ex-list li{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.ex-list li .n{font-family:var(--f-mono);font-weight:700;min-width:64px}
+.ex-list li span{flex:1;min-width:0}
+.ex-list li small{color:var(--muted)}
+.ex-resume{border-color:var(--accent);background:var(--accent-soft)}
+@media (max-width:860px){ .ex-bar{border-radius:0;margin:0 -16px 16px;border-left:0;border-right:0} .ex-bar{gap:10px;padding:8px 12px;flex-wrap:nowrap} .ex-bar .t{min-width:0;font-size:14px;line-height:1.25} .ex-timer{font-size:19px} .ex-bar .btn{padding:9px 12px;font-size:14px;flex:none} .quick .wide{grid-column:1/3} }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 
@@ -417,6 +464,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
     <button data-nav="">Accueil</button>
     <button data-nav="photos">Photos</button>
     <button data-nav="quiz">Quiz</button>
+    <button data-nav="examen">Examen blanc</button>
     <button data-nav="moi">Mon espace<span class="pip" data-pip hidden></span></button>
     <button data-nav="admin" data-admin hidden>Admin<span class="pip" data-pip-admin hidden></span></button>
   </nav>
@@ -450,6 +498,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
       <span><kbd>1</kbd> … <kbd>9</kbd></span><span>Ouvrir la matière n°</span>
       <span><kbd>R</kbd></span><span>Réviser le chapitre (cartes)</span>
       <span><kbd>Q</kbd></span><span>Quiz (sur le chapitre ouvert, ou général)</span>
+      <span><kbd>E</kbd></span><span>Examen blanc (sur la matière du chapitre ouvert)</span>
       <span><kbd>P</kbd></span><span>Photos des cours</span>
       <span><kbd>1</kbd> … <kbd>4</kbd> / <kbd>Entrée</kbd></span><span>Répondre / question suivante (en quiz)</span>
       <span><kbd>M</kbd></span><span>Marquer le chapitre comme révisé</span>
@@ -494,6 +543,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
   <button data-nav=""><svg class="i" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
   <button id="tbMenu"><svg class="i" viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg>Cours</button>
   <button data-nav="quiz"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg>Quiz</button>
+  <button data-nav="examen"><svg class="i" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h4"/></svg>Examen</button>
   <button data-nav="photos"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>Photos</button>
   <button data-nav="moi"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Mon espace<span class="pip" data-pip hidden></span></button>
 </nav>
@@ -536,6 +586,7 @@ const ICON = {
   photo:'<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>',
   stats:'<svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
   edit:'<svg class="i" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
+  exam:'<svg class="i" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h4"/><circle cx="4.5" cy="18" r="0"/></svg>',
   bell:'<svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/></svg>'
 };
 const fmtDate = d => { if(!d) return ""; const t = new Date(typeof d === "number" ? d : d+"T12:00:00"); return isNaN(t) ? d : t.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"}); };
@@ -565,6 +616,7 @@ function renderSide(){
   h += `<div class="side-links">
     <button class="chap-link" data-nav="photos">${ICON.photo}<span>Photos des cours</span></button>
     <button class="chap-link" data-nav="quiz">${ICON.quiz}<span>Quiz</span></button>
+    <button class="chap-link" data-nav="examen">${ICON.exam}<span>Examen blanc</span></button>
     <button class="chap-link" data-nav="moi">${ICON.stats}<span>Mon espace et mes stats</span></button>
   </div>`;
   $("#side").innerHTML = h;
@@ -609,7 +661,9 @@ function renderHome(){
     <h1>${name ? `Salut ${esc(name)} !` : "Tous tes cours au même endroit"}</h1>
     <p class="lede">Les cours, les TP corrigés, les photos et un quiz pour t'entraîner, rangés par matière.</p>
     ${last ? `<button class="resume-card" data-go="${esc(last.key)}" style="--c:${esc(last.m.couleur)}"><span class="dot"></span><span><small>Reprendre</small><b>${esc(last.c.titre)}</b></span><span class="muted">→</span></button>` : ""}
+    ${EX && !EX.rendu ? `<button class="resume-card ex-resume" data-nav="examen" style="--c:var(--accent)"><span class="dot"></span><span><small>Examen blanc en cours</small><b>${esc(EX.titre.replace(/^Examen blanc · /,""))}</b></span><span class="muted">Reprendre →</span></button>` : ""}
     <div class="quick">
+      <button data-nav="examen" class="wide">${ICON.exam}<b>Examen blanc</b><small>Sujet chronométré noté sur 20, par matière ou chapitre</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
       <button id="qCards">${ICON.cards}<b>Cartes</b><small>Révision rapide question / réponse</small></button>
       <button data-nav="photos">${ICON.photo}<b>Photos</b><small>${GAL.length} photos de cours classées</small></button>
@@ -623,8 +677,8 @@ function renderHome(){
         <div class="chap-rows">${TYPES.map(t => { const cs = FLAT.filter(x => x.m === m && typeOf(x.c) === t); return cs.length ? `<div class="grp-lbl">${t}</div>` + cs.map(x => `<button class="chap-row" data-go="${esc(x.key)}"><span class="n">${x.num}.</span><span class="t">${esc(x.c.titre)}${NEW.has(x.key)?'<span class="new-mark">NOUVEAU</span>':""}</span><span class="ok-mark">${done[x.key]?"✓":""}</span></button>`).join("") : ""; }).join("")}</div>
       </div>`; }).join("")}
     </div></div>
-    <p class="touch-only muted" style="font-size:14px;margin-top:24px">En bas : <b>Cours</b> ouvre le sommaire, <b>Quiz</b> pour t'interroger, <b>Photos</b> pour les polys, <b>Mon espace</b> pour tes stats et tes demandes.</p>
-    <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
+    <p class="touch-only muted" style="font-size:14px;margin-top:24px">En bas : <b>Cours</b> ouvre le sommaire, <b>Quiz</b> pour t'interroger, <b>Examen</b> pour un contrôle blanc, <b>Photos</b> pour les polys, <b>Mon espace</b> pour tes stats et tes demandes.</p>
+    <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
   $("#qCards").onclick = () => startReview(allCards(), "Tous les cours");
   const annMax = Math.max(0, ...ANNONCES.map(a => a.t)); if(annMax) store.set("annSeen", annMax);
 }
@@ -645,6 +699,7 @@ function renderChapter(key){
     <div class="actions">
       ${cards.length ? `<button class="btn primary" id="revBtn">${ICON.cards}Réviser (${cards.length} cartes) <kbd>R</kbd></button>` : ""}
       <button class="btn" id="quizBtn">${ICON.quiz}Quiz${cst ? ` · ${Math.round(cst.ok/(cst.ok+cst.ko)*100)} %` : ""} <kbd>Q</kbd></button>
+      ${(c.examen||[]).length ? `<button class="btn" id="exBtn">${ICON.exam}Examen blanc <kbd>E</kbd></button>` : ""}
       ${photos.length ? `<button class="btn" id="photoBtn">${ICON.photo}Photos (${photos.length})</button>` : ""}
       <button class="btn ${isDone?"done":""}" id="doneBtn">${isDone?"✓ Révisé":"Marquer comme révisé"} <kbd>M</kbd></button>
     </div>
@@ -663,6 +718,7 @@ function renderChapter(key){
   $("#revBtn")?.addEventListener("click", () => startReview(cards, c.titre));
   $("#doneBtn").addEventListener("click", toggleDone);
   $("#quizBtn").addEventListener("click", () => openQuiz({m: m.id, c: key}));
+  $("#exBtn")?.addEventListener("click", () => { if(!(EX && !EX.rendu)){ exSel = {...exSel, m: m.id, c: key}; store.set("examSel", exSel); } nav("examen"); });
   $("#photoBtn")?.addEventListener("click", () => document.getElementById("sec-photos").scrollIntoView({behavior:"smooth"}));
   $("#propBtn").addEventListener("click", () => openForm({matiere: m.id, chapitre: c.id}));
   initWidgets($("#view"));
@@ -770,7 +826,7 @@ $("#lbStage").addEventListener("touchend", e => { if(lbx === null || $("#lbStage
 
 /* ---------- Statistiques (par personne : sur l'appareil, et sur le compte si connecté) ---------- */
 // stats = { q: {id: [bonnes, fausses, dernière date]}, ch: {chapitre: {ok, ko}}, hist: [{d, t, n, s}] }
-function stats(){ const s = store.get("stats", null) || {}; s.q = s.q || {}; s.ch = s.ch || {}; s.hist = s.hist || []; return s; }
+function stats(){ const s = store.get("stats", null) || {}; s.q = s.q || {}; s.ch = s.ch || {}; s.hist = s.hist || []; s.ex = s.ex || []; return s; }
 const qid = it => { let h = 0; const s = it.src.key + "|" + it.q; for(let i=0;i<s.length;i++) h = (h*31 + s.charCodeAt(i)) | 0; return (h>>>0).toString(36); };
 function record(it, ok){
   const s = stats(), id = qid(it), q = s.q[id] || [0,0,0];
@@ -814,6 +870,9 @@ function renderMe(){
       <div class="box"><h2>Par chapitre</h2><div class="meters">${FLAT.map(x => { const t = s.ch[x.key]; const k = t ? t.ok+t.ko : 0, p = k ? Math.round(t.ok/k*100) : 0; return `<div class="meter"><span class="lbl"><button class="link" style="font-weight:500;text-decoration:none;color:var(--ink)" data-go="${esc(x.key)}">${esc(x.c.titre)}</button></span><span class="val">${k ? p+" %" : "—"}${bests[JSON.stringify([x.m.id, x.key])]!=null ? " · record "+bests[JSON.stringify([x.m.id, x.key])]+" %" : ""}</span><span class="track"><i style="width:${p}%;background:${pctColor(p)}"></i></span></div>`; }).join("")}</div></div>
     ` : `<p class="msg info">Fais un premier quiz : tes réussites et tes difficultés apparaîtront ici, chapitre par chapitre.</p><button class="btn primary" data-nav="quiz">${ICON.quiz}Lancer un quiz</button>`}
     </div>
+    ${s.ex.length ? `<div class="section"><div class="section-head"><h2>Mes examens blancs</h2><button class="link" data-nav="examen">Nouvel examen</button></div>
+      <div class="stat-row"><div class="stat"><b style="color:${pctColor(s.ex.reduce((a,e) => a + e.note, 0) / s.ex.length * 5)}">${fmtN(Math.round(s.ex.reduce((a,e) => a + e.note, 0) / s.ex.length * 10) / 10)}</b><small>moyenne sur 20</small></div><div class="stat"><b>${fmtN(Math.max(...s.ex.map(e => e.note)))}</b><small>meilleure note</small></div><div class="stat"><b>${s.ex.length}</b><small>examen${s.ex.length>1?"s":""} passé${s.ex.length>1?"s":""}</small></div></div>
+      <div class="box"><ul class="ex-list">${s.ex.slice(-10).reverse().map(e => `<li><b class="n" style="color:${pctColor(e.note*5)}">${fmtN(e.note)}/20</b><span>${esc(e.t.replace(/^Examen blanc · /,""))}<br><small>${esc(fmtDate(e.d))} · ${e.min} min</small></span></li>`).join("")}</ul></div></div>` : ""}
     <div class="section"><div class="section-head"><h2>Mes demandes</h2><button class="btn" id="newReq">${ICON.edit}Nouvelle demande</button></div><div id="myReqs">${u ? `<p class="muted">Chargement…</p>` : `<p class="muted">Connecte-toi pour envoyer une demande de modification ou d'ajout et suivre sa validation.</p>`}</div></div>
     <div class="section"><div class="section-head"><h2>Notifications</h2></div>
       <div class="box"><p style="margin:0 0 10px">Quand un cours est ajouté, l'appli te le signale en haut de l'accueil et par un message à l'ouverture.</p>
@@ -1006,7 +1065,7 @@ function updatePips(){
 }
 
 /* ---------- Navigation ---------- */
-const VIEWS = {"": renderHome, photos: renderPhotos, moi: renderMe, admin: renderAdmin};
+const VIEWS = {"": renderHome, photos: renderPhotos, examen: renderExam, moi: renderMe, admin: renderAdmin};
 function render(){
   document.body.classList.toggle("no-side", false);
   if(route in VIEWS) VIEWS[route](); else renderChapter(route);
@@ -1250,6 +1309,192 @@ function renderQuizEnd(){
   $("#qzBody").querySelectorAll("[data-cards]").forEach(b => b.onclick = () => { const x = byKey(b.dataset.cards); startReview(x.c.flashcards, x.c.titre); });
 }
 
+/* ---------- Examen blanc ----------
+   Sujet type contrôle sur une matière ou un chapitre :
+   - Partie A : questions de cours (QCM tirés des quiz, cartes et définitions), 1 point chacune ;
+   - Partie B : exercices du champ « examen » des chapitres (réponses numériques notées
+     automatiquement, QCM, et questions rédigées que l'élève corrige lui-même avec le corrigé).
+   Chronométré ; la copie est rendue automatiquement à la fin du temps. Note sur 20,
+   enregistrée dans les stats (stats.ex) et visible dans Mon espace. */
+const EX_DUR = [{min: 30, qcm: 6, pb: 1}, {min: 60, qcm: 10, pb: 2}, {min: 90, qcm: 12, pb: 3}, {min: 120, qcm: 15, pb: 4}];
+let exSel = store.get("examSel", {m: null, c: null, min: 60, chrono: true});
+let EX = store.get("examEnCours", null);
+let exTick = null;
+const exSave = () => store.set("examEnCours", EX);
+const exScope = sel => FLAT.filter(x => x.m.id === sel.m && (!sel.c || x.key === sel.c));
+const exPbs = sel => exScope(sel).flatMap(x => (x.c.examen||[]).map((p, j) => ({x, p, j})));
+function exTitle(sel){ const m = SUBJ.find(s => s.id === sel.m); return "Examen blanc · " + (sel.c ? byKey(sel.c).c.titre : m ? m.nom : ""); }
+function exPlan(sel){
+  const d = EX_DUR.find(o => o.min === sel.min) || EX_DUR[1];
+  const nq = poolFor({m: sel.m, c: sel.c}).length, np = exPbs(sel).length;
+  return {qcm: Math.min(d.qcm, nq), pb: Math.min(d.pb, np), nq, np};
+}
+// Tirage : on alterne les chapitres pour couvrir toute la matière
+function spread(list, key, n){
+  const g = {}; shuffle(list).forEach(o => (g[key(o)] = g[key(o)] || []).push(o));
+  const qs = shuffle(Object.values(g)), out = [];
+  while(out.length < n && qs.some(q => q.length)) qs.forEach(q => { if(out.length < n && q.length) out.push(q.shift()); });
+  return out;
+}
+function exStart(){
+  const plan = exPlan(exSel);
+  const qcm = spread(poolFor({m: exSel.m, c: exSel.c}), it => it.src.key, plan.qcm).map(makeQuestion);
+  const pbs = spread(exPbs(exSel), o => o.x.key, plan.pb).map(o => ({key: o.x.key, j: o.j, ...o.p, questions: o.p.questions.map(q => q.type === "qcm" ? {...q, ordre: shuffle(q.choix.map((_, k) => k))} : q)}));
+  EX = {sel: {...exSel}, titre: exTitle(exSel), debut: Date.now(), fin: exSel.chrono ? Date.now() + exSel.min*60000 : null, qcm, pbs, rep: {}, rendu: null, auto: {}, enregistre: false};
+  exSave(); renderExam(); scrollTo(0,0);
+}
+const parseNum = s => { s = String(s ?? "").replace(/\s| /g, "").replace(/[−–]/g, "-").replace(",", ".").match(/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?/i); return s ? parseFloat(s[0]) : NaN; };
+const numOk = (v, q) => !isNaN(v) && Math.abs(v - q.reponse) <= Math.max(Math.abs(q.reponse) * (q.tol ?? 0.02), 1e-9);
+const fmtN = v => String(+(+v).toPrecision(4)).replace(".", ",");
+// Points obtenus par question (null = question rédigée pas encore auto-corrigée)
+function exScore(){
+  let pts = 0, max = 0, aCorriger = 0;
+  EX.qcm.forEach((q, i) => { max += 1; if(EX.rep["a"+i] === q.good) pts += 1; });
+  EX.pbs.forEach((p, i) => p.questions.forEach((q, k) => {
+    const id = `b${i}.${k}`, r = EX.rep[id], pt = q.points || 1; max += pt;
+    if(q.type === "num"){ if(numOk(parseNum(r), q)) pts += pt; }
+    else if(q.type === "qcm"){ if(r === q.bonne) pts += pt; }
+    else { const a = EX.auto[id]; if(a == null) aCorriger++; else pts += pt * a; }
+  }));
+  return {pts, max, aCorriger, note: max ? Math.round(pts / max * 200) / 10 : 0};
+}
+function exAnswered(){
+  let n = 0, t = EX.qcm.length; EX.qcm.forEach((_, i) => { if(EX.rep["a"+i] != null) n++; });
+  EX.pbs.forEach((p, i) => p.questions.forEach((q, k) => { t++; const r = EX.rep[`b${i}.${k}`]; if(r != null && String(r).trim() !== "") n++; }));
+  return {n, t};
+}
+function exRendre(auto){
+  if(!EX || EX.rendu) return;
+  EX.rendu = Date.now(); clearInterval(exTick); $("#toast").hidden = true;
+  // Les questions de cours et les calculs comptent aussi dans les stats par chapitre
+  EX.qcm.forEach((q, i) => record(q, EX.rep["a"+i] === q.good));
+  EX.pbs.forEach((p, i) => { const x = byKey(p.key); p.questions.forEach((q, k) => { if(q.type === "libre") return; const r = EX.rep[`b${i}.${k}`]; record({src: {key: p.key, titre: x ? x.c.titre : ""}, q: p.titre + " · " + q.q}, q.type === "num" ? numOk(parseNum(r), q) : r === q.bonne); }); });
+  exSave(); exEnregistrer();
+  if(route !== "examen") nav("examen"); else { renderExam(); scrollTo(0,0); }
+  if(auto) toast("Temps écoulé : ta copie a été rendue automatiquement.", 7000);
+}
+// Note enregistrée quand toutes les questions rédigées sont auto-corrigées
+function exEnregistrer(){
+  const sc = exScore(); if(sc.aCorriger) return;
+  const s = stats(); s.ex = s.ex || [];
+  const e = {d: EX.debut, t: EX.titre, m: EX.sel.m, c: EX.sel.c, note: sc.note, pts: sc.pts, max: sc.max, min: Math.round((EX.rendu - EX.debut) / 60000)};
+  const k = s.ex.findIndex(o => o.d === e.d); if(k >= 0) s.ex[k] = e; else s.ex.push(e);
+  s.ex = s.ex.slice(-40); store.set("stats", s);
+  if(!EX.enregistre){ EX.enregistre = true; s.hist.push({d: Date.now(), t: EX.titre, n: exAnswered().t, s: Math.round(sc.note * 5)}); s.hist = s.hist.slice(-60); store.set("stats", s); }
+  exSave();
+}
+function exTimerTxt(){ const ms = Math.max(0, EX.fin - Date.now()), s = Math.ceil(ms / 1000); return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`; }
+function exStartTick(){
+  clearInterval(exTick);
+  if(!EX || EX.rendu || !EX.fin) return;
+  exTick = setInterval(() => {
+    if(!EX || EX.rendu){ clearInterval(exTick); return; }
+    if(Date.now() >= EX.fin) return exRendre(true);
+    const t = document.getElementById("exTimer"); if(t){ t.textContent = exTimerTxt(); t.classList.toggle("low", EX.fin - Date.now() < 5*60000); }
+  }, 1000);
+}
+function renderExam(){
+  current = null;
+  if(EX && !EX.rendu && EX.fin && Date.now() >= EX.fin){ EX.rendu = EX.fin; exRendre(true); return; }
+  if(EX && !EX.rendu) return renderExamCopie();
+  if(EX && EX.rendu && !EX.vu) return renderExamCorrection();
+  renderExamSetup();
+}
+function renderExamSetup(){
+  if(exSel.m && !SUBJ.some(s => s.id === exSel.m)) exSel.m = null;
+  if(!exSel.m) exSel.m = (SUBJ.find(s => exPbs({m: s.id}).length) || SUBJ[0] || {}).id || null;
+  if(exSel.c && !byKey(exSel.c)) exSel.c = null;
+  const m = SUBJ.find(s => s.id === exSel.m), plan = exPlan(exSel);
+  const chip = (attr, val, on, label, sub) => `<button class="qz-chip" ${attr}="${esc(val ?? "")}" aria-pressed="${on}">${esc(label)}${sub!=null?`<small>${esc(sub)}</small>`:""}</button>`;
+  const chs = m ? FLAT.filter(x => x.m === m && ((x.c.examen||[]).length || itemsOf(x).length)) : [];
+  const passes = (stats().ex || []).slice().reverse();
+  const ici = passes.filter(e => e.m === exSel.m && (e.c || null) === (exSel.c || null)).slice(0, 5);
+  const ok = plan.qcm + plan.pb > 0;
+  $("#view").innerHTML = `
+    <div class="eyebrow">Examen blanc</div>
+    <h1>Entraîne-toi comme au contrôle</h1>
+    <p class="lede">Un sujet chronométré avec des questions de cours et des exercices à calculer, corrigé et noté sur 20 à la fin.</p>
+    <div class="box">
+      <div class="qz-lbl">1. Quelle matière ?</div>
+      <div class="qz-chips">${SUBJ.map(s => chip("data-xm", s.id, exSel.m === s.id, s.nom)).join("")}</div>
+      ${m ? `<div class="qz-lbl">2. Toute la matière ou un chapitre ?</div>
+      <div class="qz-chips">${chip("data-xc", "", !exSel.c, "Toute la matière", `${(exPbs({m: m.id})).length} exercices`)}${chs.map(x => chip("data-xc", x.key, exSel.c === x.key, `${typeOf(x.c)} ${x.num}. ${x.c.titre}`)).join("")}</div>` : ""}
+      <div class="qz-lbl">3. Durée</div>
+      <div class="qz-chips">${EX_DUR.map(d => chip("data-xd", d.min, exSel.min === d.min, d.min < 60 ? d.min+" min" : (d.min/60 === 1 ? "1 h" : d.min === 90 ? "1 h 30" : d.min/60+" h"))).join("")}${chip("data-xchrono", "", !exSel.chrono, "Sans chrono")}</div>
+      <p class="muted" style="margin:16px 0 0;font-size:14px">${ok ? `Ton sujet : <b>${plan.qcm} question${plan.qcm>1?"s":""} de cours</b> et <b>${plan.pb} exercice${plan.pb>1?"s":""}</b>${exSel.chrono ? `, en <b>${exSel.min} minutes</b>` : ", sans limite de temps"}. Tu rends ta copie quand tu veux ; à la fin du temps, elle part toute seule.` : "Pas encore de questions pour ce choix."}${plan.pb < (EX_DUR.find(o => o.min === exSel.min)||{}).pb && plan.pb ? ` Ce choix n'a que ${plan.np} exercice${plan.np>1?"s":""} : prends toute la matière pour un sujet plus long.` : ""}</p>
+      <button class="btn primary qz-start" id="exGo" ${ok?"":"disabled"}>Commencer l'examen</button>
+    </div>
+    <div class="box"><h2>Comment ça marche</h2><ul class="list" style="margin:0">
+      <li><b>Pendant l'épreuve</b>, rien n'est corrigé, comme au vrai contrôle. Tes réponses sont gardées même si tu fermes l'appli.</li>
+      <li><b>Les calculs</b> se notent tout seuls : tape la valeur dans l'unité demandée (virgule ou point).</li>
+      <li><b>Les questions à rédiger</b> (schéma, équation, justification), tu les fais au brouillon, puis tu te notes toi-même avec le corrigé.</li>
+      <li><b>Ta note sur 20</b> va dans <button class="link" data-nav="moi">Mon espace</button>.</li></ul></div>
+    ${ici.length ? `<div class="box"><h2>Tes derniers examens sur ce choix</h2><ul class="ex-list">${ici.map(e => `<li><b class="n" style="color:${pctColor(e.note*5)}">${fmtN(e.note)}/20</b><span>${esc(fmtDate(e.d))}</span><small>${e.min} min</small></li>`).join("")}</ul></div>` : ""}`;
+  const sv = () => { store.set("examSel", exSel); renderExamSetup(); };
+  $$("[data-xm]").forEach(b => b.onclick = () => { exSel.m = b.dataset.xm; exSel.c = null; sv(); });
+  $$("[data-xc]").forEach(b => b.onclick = () => { exSel.c = b.dataset.xc || null; sv(); });
+  $$("[data-xd]").forEach(b => b.onclick = () => { exSel.min = +b.dataset.xd; exSel.chrono = true; sv(); });
+  $$("[data-xchrono]").forEach(b => b.onclick = () => { exSel.chrono = false; sv(); });
+  $("#exGo").onclick = exStart;
+}
+function exBar(){
+  const a = exAnswered();
+  return `<div class="ex-bar"><span class="t">${esc(EX.titre)}<small>${a.n} / ${a.t} réponses données</small></span>${EX.fin ? `<span class="ex-timer" id="exTimer" aria-label="Temps restant">${exTimerTxt()}</span>` : ""}<button class="btn primary" id="exRendre">Rendre</button></div>`;
+}
+const pbSrc = p => { const x = byKey(p.key); return x ? `<p class="src">${esc(x.m.nom)} · ${esc(x.c.titre)}</p>` : ""; };
+function renderExamCopie(){
+  const r = EX.rep;
+  document.documentElement.style.setProperty("--top-h", ($(".top")?.offsetHeight || 56) + "px");
+  $("#view").innerHTML = exBar() + `
+    ${EX.qcm.length ? `<div class="ex-part">Partie A · Questions de cours · ${EX.qcm.length} point${EX.qcm.length>1?"s":""}</div>
+    ${EX.qcm.map((q, i) => `<div class="ex-q"><div class="h"><b>A${i+1}. ${esc(q.q)}${q.def ? `<span class="def">« ${esc(q.def)} »</span>` : ""}</b><span class="pts">1 pt</span></div>
+      <div class="ex-opts">${q.opts.map((o, k) => `<label class="ex-opt"><input type="radio" name="a${i}" data-a="a${i}" value="${k}" ${r["a"+i] === k ? "checked" : ""}><span>${esc(o)}</span></label>`).join("")}</div></div>`).join("")}` : ""}
+    ${EX.pbs.length ? `<div class="ex-part">Partie B · Exercices</div>
+    ${EX.pbs.map((p, i) => { const x = byKey(p.key); return `<div class="ex-pb" style="--c:${esc(x ? x.m.couleur : "")}"><h3>Exercice ${i+1} : ${esc(p.titre)}</h3>${pbSrc(p)}<div class="enonce prose">${wrapTables(p.enonce)}</div>
+      ${p.questions.map((q, k) => { const id = `b${i}.${k}`, v = r[id]; return `<div class="ex-q"><div class="h"><b>${i+1}.${k+1}. ${esc(q.q)}</b><span class="pts">${fmtN(q.points||1)} pt${(q.points||1)>1?"s":""}</span></div>
+        ${q.type === "num" ? `<div class="ex-num"><input class="input" inputmode="decimal" autocomplete="off" data-b="${id}" value="${esc(v ?? "")}" placeholder="Ta valeur" aria-label="Réponse ${i+1}.${k+1}">${q.unite ? `<span class="u">${esc(q.unite)}</span>` : ""}</div>`
+        : q.type === "qcm" ? `<div class="ex-opts">${q.ordre.map(c => `<label class="ex-opt"><input type="radio" name="${id}" data-bq="${id}" value="${c}" ${v === c ? "checked" : ""}><span>${esc(q.choix[c])}</span></label>`).join("")}</div>`
+        : `<textarea class="input" data-b="${id}" placeholder="Ta réponse (ou fais-la sur papier)">${esc(v ?? "")}</textarea><p class="ex-hint">Question à rédiger : tu te corrigeras toi-même avec le corrigé à la fin.</p>`}</div>`; }).join("")}</div>`; }).join("")}` : ""}
+    <div class="qz-foot"><button class="btn" id="exAbandon">Abandonner</button><button class="btn primary" id="exRendre2">Rendre ma copie</button></div>`;
+  const upd = () => { exSave(); const a = exAnswered(), s = document.querySelector(".ex-bar .t small"); if(s) s.textContent = `${a.n} / ${a.t} réponses données`; };
+  $$("[data-a]").forEach(el => el.onchange = () => { r[el.dataset.a] = +el.value; upd(); });
+  $$("[data-bq]").forEach(el => el.onchange = () => { r[el.dataset.bq] = +el.value; upd(); });
+  $$("[data-b]").forEach(el => el.oninput = () => { r[el.dataset.b] = el.value; upd(); });
+  const rendre = e => { const a = exAnswered(), b = e.currentTarget; if(a.n < a.t && !b.dataset.c){ b.dataset.c = 1; b.textContent = b.id === "exRendre" ? "Confirmer ?" : `Rendre quand même (${a.t - a.n} sans réponse)`; toast(`Il reste ${a.t - a.n} question${a.t - a.n > 1 ? "s" : ""} sans réponse. Appuie encore pour rendre quand même.`); return; } exRendre(false); };
+  $("#exRendre").onclick = rendre; $("#exRendre2").onclick = rendre;
+  $("#exAbandon").onclick = e => { const b = e.currentTarget; if(!b.dataset.c){ b.dataset.c = 1; b.textContent = "Confirmer l'abandon"; return; } clearInterval(exTick); EX = null; exSave(); renderExamSetup(); scrollTo(0,0); };
+  initWidgets($("#view"));
+  exStartTick();
+}
+function renderExamCorrection(){
+  const sc = exScore(), r = EX.rep, dur = Math.round((EX.rendu - EX.debut) / 60000);
+  const msg = sc.aCorriger ? `Corrige-toi sur ${sc.aCorriger} question${sc.aCorriger>1?"s":""} à rédiger pour obtenir ta note définitive.` : sc.note >= 16 ? "Excellent, tu es prêt pour le contrôle." : sc.note >= 12 ? "Bien : relis les corrigés des questions ratées." : sc.note >= 10 ? "La moyenne est là : retravaille les chapitres signalés en rouge." : "Reprends les chapitres ci-dessous, puis refais un examen blanc.";
+  const mauvais = {};
+  const verdict = (ok, pt, txt) => `<span class="verdict" style="color:${ok === 1 ? "var(--ok)" : ok === 0.5 ? "var(--warn)" : "var(--bad)"}">${txt} · ${fmtN(pt)} pt${pt>1?"s":""}</span>`;
+  $("#view").innerHTML = `
+    <div class="eyebrow">Correction</div>
+    <h1>${esc(EX.titre)}</h1>
+    <div class="ex-note"><span class="big" style="color:${sc.aCorriger ? "var(--muted)" : pctColor(sc.note*5)}">${fmtN(sc.note)}<small>/20</small></span><span style="flex:1;min-width:200px"><b>${fmtN(sc.pts)} point${sc.pts>1?"s":""} sur ${fmtN(sc.max)}</b>${sc.aCorriger ? " (provisoire)" : ""} · ${dur} min<br><span class="muted">${msg}</span></span></div>
+    ${EX.qcm.length ? `<div class="ex-part">Partie A · Questions de cours</div>
+    ${EX.qcm.map((q, i) => { const ok = r["a"+i] === q.good; if(!ok) mauvais[q.src.key] = 1; return `<div class="ex-q"><div class="h"><b>A${i+1}. ${esc(q.q)}${q.def ? `<span class="def">« ${esc(q.def)} »</span>` : ""}</b><span class="pts">${ok?1:0}/1</span></div>
+      <div class="ex-opts">${q.opts.map((o, k) => `<div class="ex-opt ${k === q.good ? "ok" : k === r["a"+i] ? "ko" : ""}">${k === q.good ? "✓" : k === r["a"+i] ? "✗" : "·"} <span>${esc(o)}</span></div>`).join("")}</div>
+      ${!ok ? `<div class="ex-res bad">${r["a"+i] == null ? "Pas de réponse. " : ""}${q.expl ? esc(q.expl) + " " : ""}<button class="link" data-go="${esc(q.src.key)}">Revoir : ${esc(q.src.titre)}</button></div>` : ""}</div>`; }).join("")}` : ""}
+    ${EX.pbs.length ? `<div class="ex-part">Partie B · Exercices</div>
+    ${EX.pbs.map((p, i) => { const x = byKey(p.key); return `<div class="ex-pb" style="--c:${esc(x ? x.m.couleur : "")}"><h3>Exercice ${i+1} : ${esc(p.titre)}</h3>${pbSrc(p)}<details><summary class="link" style="text-decoration:none">Relire l'énoncé</summary><div class="enonce prose">${wrapTables(p.enonce)}</div></details>
+      ${p.questions.map((q, k) => { const id = `b${i}.${k}`, v = r[id], pt = q.points || 1; let body;
+        if(q.type === "num"){ const val = parseNum(v), ok = numOk(val, q); if(!ok) mauvais[p.key] = 1; body = `<div class="ex-res ${ok?"":"bad"}">${verdict(ok?1:0, ok?pt:0, ok ? "Juste" : v == null || String(v).trim() === "" ? "Pas de réponse" : "Faux")}Ta réponse : <b>${v == null || String(v).trim() === "" ? "—" : esc(v)}${q.unite && !isNaN(val) ? " "+esc(q.unite) : ""}</b> · attendu : <b>${fmtN(q.reponse)}${q.unite ? " "+esc(q.unite) : ""}</b>${q.corrige ? `<div>${q.corrige}</div>` : ""}</div>`; }
+        else if(q.type === "qcm"){ const ok = v === q.bonne; if(!ok) mauvais[p.key] = 1; body = `<div class="ex-res ${ok?"":"bad"}">${verdict(ok?1:0, ok?pt:0, ok ? "Juste" : v == null ? "Pas de réponse" : "Faux")}${v != null && !ok ? `Ta réponse : ${esc(q.choix[v])}<br>` : ""}Bonne réponse : <b>${esc(q.choix[q.bonne])}</b>${q.corrige ? `<div>${q.corrige}</div>` : ""}</div>`; }
+        else { const a = EX.auto[id]; if(a != null && a < 1) mauvais[p.key] = 1; body = `<div class="ex-res ${a == null ? "todo" : a === 1 ? "" : a === 0.5 ? "half" : "bad"}">${a == null ? `<span class="verdict" style="color:var(--accent)">À toi de te noter · ${fmtN(pt)} pt${pt>1?"s":""}</span>` : verdict(a, pt*a, a === 1 ? "Juste" : a === 0.5 ? "À moitié" : "Faux")}${v && String(v).trim() ? `Ta réponse : <span style="white-space:pre-wrap">${esc(v)}</span><br>` : ""}${q.attendu ? `Attendu : <b>${esc(q.attendu)}</b>` : ""}${q.corrige ? `<div>${q.corrige}</div>` : ""}
+          <div class="ex-self" role="group" aria-label="Ma note sur cette question">${[[1,"J'ai juste"],[0.5,"À moitié"],[0,"Faux"]].map(([s, l]) => `<button class="btn" data-self="${id}" data-v="${s}" aria-pressed="${a === s}">${l}</button>`).join("")}</div></div>`; }
+        return `<div class="ex-q"><div class="h"><b>${i+1}.${k+1}. ${esc(q.q)}</b><span class="pts">${fmtN(pt)} pt${pt>1?"s":""}</span></div>${body}</div>`; }).join("")}</div>`; }).join("")}` : ""}
+    ${Object.keys(mauvais).length ? `<div class="box"><h2>À revoir avant le contrôle</h2><ul class="list">${Object.keys(mauvais).map(k => byKey(k)).filter(Boolean).map(x => `<li><button class="link" data-go="${esc(x.key)}">${esc(x.c.titre)}</button> <span class="muted">(${esc(x.m.nom)})</span></li>`).join("")}</ul></div>` : ""}
+    <div class="qz-foot"><button class="btn" id="exStats">Mes stats</button><button class="btn primary" id="exNew">Nouvel examen</button></div>`;
+  $$("[data-self]").forEach(b => b.onclick = () => { const y = scrollY; EX.auto[b.dataset.self] = +b.dataset.v; exSave(); exEnregistrer(); renderExamCorrection(); scrollTo(0, y); });
+  $("#exNew").onclick = () => { EX.vu = true; exSave(); exSel = {...EX.sel}; renderExamSetup(); scrollTo(0,0); };
+  $("#exStats").onclick = () => nav("moi");
+  initWidgets($("#view"));
+}
+
 /* ---------- Barre mobile, fenêtres, thème ---------- */
 $("#tbMenu").onclick = () => document.body.classList.toggle("nav-open");
 $("#scrim").onclick = () => document.body.classList.remove("nav-open");
@@ -1295,6 +1540,7 @@ document.addEventListener("keydown", e => {
   else if(k.toLowerCase()==="r" && current){ const c = byKey(current).c; if((c.flashcards||[]).length) startReview(c.flashcards, c.titre); }
   else if(k.toLowerCase()==="m") toggleDone();
   else if(k.toLowerCase()==="q") openQuiz(current ? {m: byKey(current).m.id, c: current} : null);
+  else if(k.toLowerCase()==="e"){ if(current && !(EX && !EX.rendu)){ exSel = {...exSel, m: byKey(current).m.id, c: (byKey(current).c.examen||[]).length ? current : null}; store.set("examSel", exSel); } nav("examen"); }
   else if(k.toLowerCase()==="p") nav("photos");
   else if(k.toLowerCase()==="h") nav("");
   else if(k.toLowerCase()==="t") toggleTheme();
@@ -1311,6 +1557,7 @@ function mergeStats(a, b){
   Object.entries(b.ch||{}).forEach(([k,v]) => { const o = s.ch[k]; s.ch[k] = o ? {ok: Math.max(o.ok,v.ok), ko: Math.max(o.ko,v.ko)} : v; });
   const seenH = new Set(s.hist.map(h => h.d)); (b.hist||[]).forEach(h => { if(!seenH.has(h.d)) s.hist.push(h); });
   s.hist.sort((x,y) => x.d - y.d); s.hist = s.hist.slice(-60);
+  s.ex = [...(a.ex||[])]; const seenE = new Set(s.ex.map(e => e.d)); (b.ex||[]).forEach(e => { if(!seenE.has(e.d)) s.ex.push(e); }); s.ex.sort((x,y) => x.d - y.d); s.ex = s.ex.slice(-40);
   return s;
 }
 // Les ajouts déjà intégrés au cours par Claude (ids dans COURS.integrees) ne sont plus affichés à part.
@@ -1360,6 +1607,7 @@ route = start in VIEWS || byKey(start) ? start : (start === "quiz" ? "" : "");
 render();
 if(start === "quiz") openQuiz(null);
 announceNew();
+exStartTick();
 startCloud();
 })();
 </script>

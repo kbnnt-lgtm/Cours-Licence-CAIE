@@ -272,6 +272,96 @@ window.COURS = {
               "bonne": 0,
               "explication": "Inconvénients du cours : coût d'installation, maintenance structurée nécessaire, suppression d'emplois."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Analyse d'une perceuse automatique",
+              "enonce": "<p>Une station de perçage automatique reçoit des pièces brutes en acier et les ressort percées. Elle comporte :</p><ul><li>un pupitre avec un BP marche, un BP arrêt, un arrêt d'urgence et un petit écran tactile ;</li><li>un automate Modicon M340 ;</li><li>un moteur triphasé 400 V qui fait tourner le foret, alimenté par le contacteur KM1 ;</li><li>un vérin pneumatique qui fait descendre la broche, alimenté par le distributeur 1V1 ;</li><li>deux interrupteurs de position à galet (broche en haut, broche en bas) et un pressostat qui indique « air présent / absent » ;</li><li>une sonde de température de l'huile qui délivre un courant de 4 à 20 mA ;</li><li>un lecteur de code-barres qui identifie chaque pièce.</li></ul>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Le contacteur KM1 est :",
+                  "choix": [
+                    "un préactionneur",
+                    "un actionneur",
+                    "un capteur",
+                    "un élément de la partie relation"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>KM1 reçoit l'ordre de l'automate en <b>faible énergie</b> (bobine 24 V) et <b>distribue l'énergie forte</b> (400 V) au moteur : c'est un <b>préactionneur</b>. Le moteur, lui, est l'actionneur.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Classer tous les éléments de la liste dans la partie relation (PR), la partie commande (PC) ou la partie opérative (PO).",
+                  "points": 3,
+                  "attendu": "PR : pupitre (BP, AU, écran). PC : automate M340. PO : moteur, KM1, vérin, 1V1, capteurs (fins de course, pressostat, sonde, lecteur code-barres).",
+                  "corrige": "<p><b>PR</b> (dialogue avec l'opérateur) : BP marche, BP arrêt, arrêt d'urgence, écran tactile (IHM).</p><p><b>PC</b> (traitement de l'information) : l'automate M340.</p><p><b>PO</b> (partie visible, modifie la matière d'œuvre) : préactionneurs KM1 et 1V1, actionneurs (moteur, vérin), et <b>tous les capteurs</b> : interrupteurs de position, pressostat, sonde de température, lecteur de code-barres.</p><div class=\"attention\">Piège classique : les capteurs appartiennent à la <b>partie opérative</b>, même s'ils envoient leurs informations à la partie commande.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Combien de capteurs TOR la station comporte-t-elle ?",
+                  "reponse": 3,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Un capteur TOR ne donne que deux états (0 ou 1) : les <b>2 interrupteurs de position</b> et le <b>pressostat</b>, soit <b>3</b> capteurs TOR. La sonde 4-20 mA est analogique, le lecteur de code-barres est numérique.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Donner la matière d'œuvre et la valeur ajoutée de ce système.",
+                  "points": 1,
+                  "attendu": "Matière d'œuvre : la pièce brute. Valeur ajoutée : le perçage (pièce percée).",
+                  "corrige": "<p>La <b>matière d'œuvre</b> est l'ensemble des éléments modifiés par le système : la pièce brute en acier. En sortie on obtient matière d'œuvre + <b>valeur ajoutée</b> : la pièce est percée (et identifiée).</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Capteurs, énergie et automatisation",
+              "enonce": "<p>Une chaîne d'emballage de pots de yaourt doit être automatisée. Le responsable de production te pose quelques questions sur le futur système automatisé de production (SAP).</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Un codeur monté sur l'arbre du convoyeur envoie une suite d'impulsions qui permet de calculer la vitesse. C'est un capteur :",
+                  "choix": [
+                    "numérique",
+                    "TOR",
+                    "analogique",
+                    "de la partie relation"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Un <b>générateur d'impulsions</b> fait partie des capteurs <b>numériques</b> cités dans le cours (avec les lecteurs de code-barres et la RFID). Ils servent à mesurer une position, une vitesse ou à identifier un produit.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Un capteur de pression délivre une tension de 0 à 10 V proportionnelle à la pression. C'est un capteur :",
+                  "choix": [
+                    "analogique",
+                    "TOR",
+                    "numérique",
+                    "préactionneur"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Sa sortie varie en continu et est <b>proportionnelle à la mesure</b> : c'est un capteur <b>analogique</b>.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Expliquer pourquoi la sortie de l'automate ne peut pas alimenter directement le moteur triphasé 400 V du convoyeur, et ce qu'on place entre les deux.",
+                  "points": 2,
+                  "attendu": "La sortie automate ne fournit qu'une faible énergie (24 V, quelques dizaines de mA) : elle commande un contacteur (préactionneur) qui distribue l'énergie forte au moteur (actionneur).",
+                  "corrige": "<p>La sortie d'un automate délivre un <b>signal de faible énergie</b> (par exemple 24 V, quelques dizaines de milliampères). Le moteur demande une <b>énergie forte</b> (400 V triphasé). On intercale donc un <b>préactionneur</b> : un <b>contacteur</b>. La sortie automate commande sa bobine, et ses contacts de puissance alimentent le moteur (l'<b>actionneur</b>), qui transforme l'énergie électrique en énergie mécanique.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Définir un SAP, puis citer deux avantages et deux inconvénients de l'automatisation.",
+                  "points": 2,
+                  "attendu": "Système qui gère de façon autonome un cycle de travail préétabli (séquences / étapes). Avantages : moins de tâches pénibles, plus de sécurité, production accrue. Inconvénients : coût d'installation, maintenance structurée, suppression d'emplois.",
+                  "corrige": "<p>Un système de production est <b>automatisé</b> lorsqu'il gère de manière <b>autonome</b> un <b>cycle de travail préétabli</b>, décomposé en séquences et/ou en étapes.</p><p><b>Avantages</b> (deux parmi) : élimination des tâches pénibles, augmentation de la sécurité, capacité de production améliorée, adaptation aux contraintes, souplesse, création de postes d'automaticien.</p><p><b>Inconvénients</b> (deux parmi) : coût d'installation, maintenance structurée nécessaire, suppression d'emplois.</p>"
+                }
+              ]
+            }
           ]
         },
         {
@@ -731,6 +821,120 @@ window.COURS = {
               "bonne": 0,
               "explication": "Le GRAFCET décrit des étapes dans le temps : il sert au séquentiel."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Voyant « machine prête »",
+              "enonce": "<p>Sur une machine, un voyant vert S doit être allumé seulement s'il n'y a <b>ni</b> le défaut D1 (surchauffe) <b>ni</b> le défaut D2 (manque d'air). Chaque défaut est donné par un contact : au repos (pas de défaut) il vaut 0, actionné (défaut présent) il vaut 1.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Établir la table de vérité de S.",
+                  "points": 2,
+                  "attendu": "S = 1 seulement pour D1 = 0, D2 = 0 ; S = 0 pour 01, 10 et 11.",
+                  "corrige": "<p>On écrit les combinaisons dans l'ordre 00, 01, 10, 11 :</p><table><thead><tr><th>D1</th><th>D2</th><th>S</th></tr></thead><tbody><tr><td>0</td><td>0</td><td><b>1</b></td></tr><tr><td>0</td><td>1</td><td><b>0</b></td></tr><tr><td>1</td><td>0</td><td><b>0</b></td></tr><tr><td>1</td><td>1</td><td><b>0</b></td></tr></tbody></table><p>Le voyant n'est allumé que si les deux entrées sont à 0.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "De quelle fonction logique s'agit-il ?",
+                  "choix": [
+                    "NON-OU (NOR)",
+                    "NON-ET (NAND)",
+                    "OU exclusif",
+                    "ET"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>S = 1 seulement si toutes les entrées sont à 0 : c'est la table du <b>NON-OU</b>, inverse du OU.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Écrire l'équation de S, puis décrire son schéma électrique à contacts.",
+                  "points": 2,
+                  "attendu": "S = /(D1 + D2) ; deux contacts NC D1 et D2 en série avec le voyant.",
+                  "corrige": "<p><code>S = /(D1 + D2)</code> (la barre couvre toute la somme). Par De Morgan, <code>S = /D1 · /D2</code>.</p><p>Schéma : deux contacts <b>normalement fermés (NC)</b> D1 et D2 <b>en série</b> avec le voyant. Au repos le courant passe ; dès qu'un défaut ouvre son contact, le voyant s'éteint.</p><div class=\"attention\">Ne pas confondre : deux NC <b>en parallèle</b> donneraient un NON-ET.</div>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Quel circuit intégré choisir pour réaliser cette fonction avec des portes à 2 entrées ?",
+                  "choix": [
+                    "7402",
+                    "7400",
+                    "7432",
+                    "7486"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Le <b>7402</b> contient 4 portes NON-OU. 7400 = NON-ET, 7432 = OU, 7486 = OU exclusif. Attention, le brochage du 7402 est différent (sorties en 1, 4, 10, 13).</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Lecture de chronogramme",
+              "enonce": "<p>Les entrées E1 et E2 évoluent seconde par seconde selon le tableau suivant (de t = 0 à t = 8 s) :</p><table><thead><tr><th>Seconde</th><th>0-1</th><th>1-2</th><th>2-3</th><th>3-4</th><th>4-5</th><th>5-6</th><th>6-7</th><th>7-8</th></tr></thead><tbody><tr><td>E1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>E2</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr></tbody></table><p>On les envoie en même temps sur une porte OU exclusif (sortie S1), une porte NON-ET (sortie S2) et une porte NON-OU (sortie S3).</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Donner l'état de S1 (OU exclusif) sur chacun des 8 intervalles.",
+                  "points": 2,
+                  "attendu": "S1 = 0 1 0 1 0 1 0 1",
+                  "corrige": "<p>S1 = 1 quand <b>une seule</b> entrée est à 1 : <code>S1 = E1 · /E2 + /E1 · E2</code>.</p><table><thead><tr><th>Seconde</th><th>0-1</th><th>1-2</th><th>2-3</th><th>3-4</th><th>4-5</th><th>5-6</th><th>6-7</th><th>7-8</th></tr></thead><tbody><tr><td>E1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>E2</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td><b>S1</b></td><td><b>0</b></td><td><b>1</b></td><td><b>0</b></td><td><b>1</b></td><td><b>0</b></td><td><b>1</b></td><td><b>0</b></td><td><b>1</b></td></tr></tbody></table>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pendant combien de secondes au total S1 est-elle à 1 ?",
+                  "reponse": 4,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>S1 vaut 1 sur les intervalles 1-2, 3-4, 5-6 et 7-8, soit <b>4 s</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pendant combien de secondes au total S2 (NON-ET) est-elle à 1 ?",
+                  "reponse": 6,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p><code>S2 = /(E1 · E2)</code> vaut 0 seulement quand E1 = 1 <b>et</b> E2 = 1, c'est-à-dire sur 2-3 et 4-5.</p><table><thead><tr><th>Seconde</th><th>0-1</th><th>1-2</th><th>2-3</th><th>3-4</th><th>4-5</th><th>5-6</th><th>6-7</th><th>7-8</th></tr></thead><tbody><tr><td>S2</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr></tbody></table><p>S2 = 1 pendant 8 − 2 = <b>6 s</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pendant combien de secondes au total S3 (NON-OU) est-elle à 1 ?",
+                  "reponse": 2,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p><code>S3 = /(E1 + E2)</code> vaut 1 seulement quand les deux entrées sont à 0 : intervalles 0-1 et 6-7.</p><table><thead><tr><th>Seconde</th><th>0-1</th><th>1-2</th><th>2-3</th><th>3-4</th><th>4-5</th><th>5-6</th><th>6-7</th><th>7-8</th></tr></thead><tbody><tr><td>S3</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr></tbody></table><p>Soit <b>2 s</b>. On remarque que l'intervalle 0-1 et l'intervalle 6-7 ont la même combinaison (00) : elles donnent bien la même sortie, c'est du combinatoire.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Combinatoire ou séquentiel ?",
+              "enonce": "<p>On étudie trois installations :</p><ol><li>la commande bimanuelle d'une presse (deux boutons à appuyer en même temps) ;</li><li>l'éclairage d'une cage d'escalier par télérupteur (chaque appui sur un bouton change l'état de la lampe) ;</li><li>le moteur d'un portail commandé par un bouton « ouvrir » et un bouton « fermer », qui ne doit tourner que si un seul bouton est appuyé.</li></ol>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Lequel de ces systèmes est séquentiel ?",
+                  "choix": [
+                    "Le télérupteur",
+                    "La commande bimanuelle",
+                    "Le portail",
+                    "Aucun des trois"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Avec le télérupteur, le <b>même appui</b> allume ou éteint selon l'état d'avant : même cause, effet différent. Il y a une mémoire, donc un historique : c'est <b>séquentiel</b>.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Pour la presse et pour le portail, nommer la fonction logique utilisée et donner son équation (boutons B1, B2 pour la presse ; O et F pour le portail).",
+                  "points": 2,
+                  "attendu": "Presse : ET, S = B1 · B2. Portail : OU exclusif, M = O · /F + /O · F.",
+                  "corrige": "<p><b>Presse :</b> la sortie vaut 1 seulement si les deux boutons sont à 1 : fonction <b>ET</b>, <code>S = B1 · B2</code> (deux NO en série).</p><p><b>Portail :</b> soit l'un, soit l'autre, mais pas les deux : <b>OU exclusif</b>, <code>M = O ⊕ F = O · /F + /O · F</code>. C'est l'usage « sécurité » du OU exclusif : interdire deux ordres contradictoires simultanés.</p>"
+                }
+              ]
+            }
           ]
         },
         {
@@ -906,6 +1110,128 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "Une porte ET par ligne à 1, puis une porte OU qui les réunit."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Du schéma à contacts à la table de vérité",
+              "enonce": "<p>Une lampe S est alimentée par le circuit suivant : un contact NO <b>a</b> est en série avec un ensemble formé d'un contact NO <b>b</b> en parallèle avec un contact NC <b>c</b>.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire l'équation de S.",
+                  "points": 1,
+                  "attendu": "S = a · (b + /c)",
+                  "corrige": "<p>Série = ET, parallèle = OU, contact NC = NON. La branche parallèle donne <code>b + /c</code>, en série avec a :</p><p><code>S = a · (b + /c)</code></p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Établir la table de vérité de S (ordre a, b, c de 000 à 111).",
+                  "points": 1,
+                  "attendu": "S = 1 pour 100, 110 et 111 seulement.",
+                  "corrige": "<table><thead><tr><th>a</th><th>b</th><th>c</th><th>S</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr><td>0</td><td>0</td><td>1</td><td><b>0</b></td></tr><tr><td>0</td><td>1</td><td>0</td><td><b>0</b></td></tr><tr><td>0</td><td>1</td><td>1</td><td><b>0</b></td></tr><tr><td>1</td><td>0</td><td>0</td><td><b>1</b></td></tr><tr><td>1</td><td>0</td><td>1</td><td><b>0</b></td></tr><tr><td>1</td><td>1</td><td>0</td><td><b>1</b></td></tr><tr><td>1</td><td>1</td><td>1</td><td><b>1</b></td></tr></tbody></table><p>Si a = 0, S = 0 (contact ouvert en série). Si a = 1, S = b + /c : vaut 0 seulement pour b = 0, c = 1.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pour combien de combinaisons des entrées la lampe est-elle allumée ?",
+                  "reponse": 3,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>On compte les lignes à 1 de la table : (1,0,0), (1,1,0), (1,1,1), soit <b>3</b> combinaisons sur 2³ = 8.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "a = 1, b = 0, c = 1 : la lampe est…",
+                  "choix": [
+                    "éteinte (S = 0)",
+                    "allumée (S = 1)",
+                    "allumée seulement si c est NO",
+                    "indéterminée"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>On remplace : <code>S = 1 · (0 + /1) = 1 · (0 + 0) = 0</code>. Le contact b est ouvert et le contact NC c est actionné donc ouvert : aucun chemin.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "De la table de vérité à l'équation simplifiée",
+              "enonce": "<p>Un système à trois entrées a, b, c a une sortie S qui vaut 1 uniquement pour les combinaisons (a, b, c) = (1, 0, 0), (1, 0, 1) et (1, 1, 1). Pour toutes les autres combinaisons, S = 0.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire l'équation de S avec la méthode du cours (une ligne à 1 = un ET, puis OU entre les termes).",
+                  "points": 1,
+                  "attendu": "S = a · /b · /c + a · /b · c + a · b · c",
+                  "corrige": "<p>Chaque ligne à 1 donne un ET contenant <b>toutes</b> les entrées (barrées si elles valent 0) :</p><ul><li>(1, 0, 0) → <code>a · /b · /c</code></li><li>(1, 0, 1) → <code>a · /b · c</code></li><li>(1, 1, 1) → <code>a · b · c</code></li></ul><p><code>S = a · /b · /c + a · /b · c + a · b · c</code></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Avant simplification, combien de portes ET faut-il dans le logigramme ?",
+                  "reponse": 3,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Une porte ET par ligne à 1 : <b>3</b> portes ET (à 3 entrées), réunies par une porte OU. Il faut aussi des portes NON pour /b et /c.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Simplifier l'équation de S.",
+                  "points": 2,
+                  "attendu": "S = a · (/b + c)",
+                  "corrige": "<p>On met <code>a · /b</code> en facteur dans les deux premiers termes : <code>a · /b · /c + a · /b · c = a · /b · (/c + c) = a · /b · 1 = a · /b</code>.</p><p>Donc <code>S = a · /b + a · b · c = a · (/b + b · c)</code>.</p><p>Comme dans l'exercice 4 du chapitre, <code>/b + b · c = /b + c</code> (si b = 0 le terme vaut 1 ; si b = 1 il vaut c). D'où :</p><p><code>S = a · (/b + c)</code></p><p>Vérification ligne (1, 1, 0) : <code>1 · (0 + 0) = 0</code>, correct.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Décrire le schéma à contacts de l'équation simplifiée.",
+                  "points": 1,
+                  "attendu": "Contact NO a en série avec (contact NC b en parallèle avec contact NO c).",
+                  "corrige": "<p>Un contact <b>NO a</b> en série avec un ensemble parallèle formé d'un contact <b>NC b</b> (pour /b) et d'un contact <b>NO c</b>. L'ensemble alimente S.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Du logigramme à l'équation, De Morgan",
+              "enonce": "<p>Un logigramme a trois entrées a, b, c :</p><ul><li>une porte NON-OU reçoit a et b ; sa sortie et c entrent dans une porte ET qui donne X ;</li><li>une porte NON-ET reçoit b et c ; sa sortie et a entrent dans une porte ET qui donne Y ;</li><li>une porte OU (≥1) reçoit X et Y et donne S.</li></ul>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire les équations de X, Y et S.",
+                  "points": 1,
+                  "attendu": "X = /(a + b) · c ; Y = a · /(b · c) ; S = /(a + b) · c + a · /(b · c)",
+                  "corrige": "<p>On écrit la sortie de chaque porte en partant des entrées :</p><p><code>X = /(a + b) · c</code><br><code>Y = a · /(b · c)</code><br><code>S = X + Y = /(a + b) · c + a · /(b · c)</code></p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Appliquer le théorème de De Morgan pour écrire S sans grande barre.",
+                  "points": 2,
+                  "attendu": "S = /a · /b · c + a · /b + a · /c",
+                  "corrige": "<p>De Morgan : on barre chaque terme et on change le signe.</p><p><code>/(a + b) = /a · /b</code> donc <code>X = /a · /b · c</code>.</p><p><code>/(b · c) = /b + /c</code> donc <code>Y = a · (/b + /c) = a · /b + a · /c</code>.</p><p><code>S = /a · /b · c + a · /b + a · /c</code></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pour combien des 8 combinaisons de (a, b, c) la sortie S vaut-elle 1 ?",
+                  "reponse": 4,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<table><thead><tr><th>a</th><th>b</th><th>c</th><th>S</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td><b>0</b></td></tr><tr><td>0</td><td>0</td><td>1</td><td><b>1</b></td></tr><tr><td>0</td><td>1</td><td>0</td><td><b>0</b></td></tr><tr><td>0</td><td>1</td><td>1</td><td><b>0</b></td></tr><tr><td>1</td><td>0</td><td>0</td><td><b>1</b></td></tr><tr><td>1</td><td>0</td><td>1</td><td><b>1</b></td></tr><tr><td>1</td><td>1</td><td>0</td><td><b>1</b></td></tr><tr><td>1</td><td>1</td><td>1</td><td><b>0</b></td></tr></tbody></table><p>S = 1 pour (0,0,1), (1,0,0), (1,0,1) et (1,1,0) : <b>4</b> combinaisons.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Pour a = 1, b = 1, c = 1, que vaut S ?",
+                  "choix": [
+                    "0",
+                    "1",
+                    "Indéterminé",
+                    "Ça dépend de l'ordre des portes"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><code>X = /(1 + 1) · 1 = 0</code> et <code>Y = 1 · /(1 · 1) = 1 · 0 = 0</code>, donc <code>S = 0 + 0 = 0</code>.</p>"
+                }
+              ]
             }
           ]
         },
@@ -1158,6 +1484,152 @@ window.COURS = {
               "bonne": 0,
               "explication": "Consigne de sécurité du TP : le formateur vérifie le câblage avant la mise sous tension."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Rack M340 et adressage",
+              "enonce": "<p>Un rack M340 BMX XBP 0600 contient : l'alimentation BMX CPS 2000 dans son emplacement (P), la CPU BMX P34 2020 en emplacement 0, un module BMX DDI 1602 en emplacement 1, un module BMX DRA 1605 en emplacement 2 et un deuxième module BMX DDI 1602 en emplacement 3. On câble un capteur de fin de course sur la <b>6<sup>e</sup> voie</b> du module d'entrées de l'emplacement 3, et un voyant sur la <b>1<sup>re</sup> voie</b> du module de sorties.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Donner l'adresse du capteur et celle du voyant.",
+                  "points": 2,
+                  "attendu": "Capteur : %I0.3.5 ; voyant : %Q0.2.0",
+                  "corrige": "<p>Format : %I ou %Q, puis <b>rack . emplacement . voie</b>, les voies étant numérotées à partir de <b>0</b>.</p><p>6<sup>e</sup> voie = voie 5, module d'entrées en emplacement 3 : <code>%I0.3.5</code>.</p><p>1<sup>re</sup> voie = voie 0, module de sorties DRA en emplacement 2 : <code>%Q0.2.0</code>.</p><div class=\"attention\">Piège : la 6<sup>e</sup> voie n'est pas la voie 6.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Combien d'entrées TOR ce rack offre-t-il au total ?",
+                  "reponse": 32,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Chaque DDI 1602 a <b>16 entrées TOR</b> (24 V DC). Deux modules : 2 × 16 = <b>32</b> entrées.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Que signifie l'adresse %Q0.2.4 ?",
+                  "choix": [
+                    "Sortie, rack 0, emplacement 2, voie 4",
+                    "Entrée, rack 0, emplacement 2, voie 4",
+                    "Sortie, rack 2, emplacement 0, voie 4",
+                    "Bit interne n° 24"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>%Q = sortie, puis rack 0, emplacement 2 (la DRA 1605), voie 4.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Dans quel emplacement se trouve toujours la CPU d'un rack M340 ?",
+                  "choix": [
+                    "0",
+                    "1",
+                    "(P)",
+                    "Le dernier emplacement"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>La CPU est toujours en emplacement <b>0</b>. L'alimentation a son propre emplacement non numéroté (P), et les modules commencent à l'emplacement 1.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Les 7 fonctions logiques en LD",
+              "enonce": "<p>Sur la platine du TP, BP1 (<code>%I0.1.0</code>) et BP2 (<code>%I0.1.1</code>) commandent 7 voyants, chacun programmé dans un réseau LD : OUI (= BP1), NON (= /BP1), ET, OU, NAND, NOR et XOR.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Décrire le réseau LD du voyant NAND et celui du voyant XOR (contacts NO, NC, série, parallèle).",
+                  "points": 2,
+                  "attendu": "NAND : deux contacts NC BP1 et BP2 en parallèle. XOR : deux branches en parallèle, (BP1 NO + BP2 NC en série) et (BP1 NC + BP2 NO en série).",
+                  "corrige": "<p><b>NAND :</b> <code>/(BP1 · BP2) = /BP1 + /BP2</code> (De Morgan) : deux contacts <b>NC</b> <code>-|/|-</code> BP1 et BP2 <b>en parallèle</b>, qui commandent la bobine ET_NON.</p><p><b>XOR :</b> <code>BP1 · /BP2 + /BP1 · BP2</code> : deux branches en parallèle, la première avec BP1 NO en série avec BP2 NC, la seconde avec BP1 NC en série avec BP2 NO. Elles commandent la bobine OU_EXCLUSIF.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Pendant l'essai, on appuie sur BP1 seul (BP1 = 1, BP2 = 0). Combien des 7 voyants sont allumés ?",
+                  "reponse": 4,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>On calcule chaque fonction pour (1, 0) :</p><table><thead><tr><th>OUI</th><th>NON</th><th>ET</th><th>OU</th><th>NAND</th><th>NOR</th><th>XOR</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table><p>Voyants allumés : OUI, OU, NAND, XOR, soit <b>4</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Aucun bouton n'est appuyé. Combien de voyants sont allumés ?",
+                  "reponse": 3,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Pour (0, 0) :</p><table><thead><tr><th>OUI</th><th>NON</th><th>ET</th><th>OU</th><th>NAND</th><th>NOR</th><th>XOR</th></tr></thead><tbody><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr></tbody></table><p>NON, NAND et NOR sont allumés : <b>3</b> voyants.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Deux contacts NC BP1 et BP2 en série commandent une bobine. Quelle fonction réalise-t-on ?",
+                  "choix": [
+                    "NOR",
+                    "NAND",
+                    "XOR",
+                    "ET"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><code>/BP1 · /BP2 = /(BP1 + BP2)</code> : c'est le <b>NOR</b>. En parallèle, ce serait le NAND.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Mise en œuvre sous Control Expert",
+              "enonce": "<p>Tu dois créer, programmer et charger un projet sur l'automate M340 de la platine avec Control Expert (ex-Unity Pro).</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Dans quel ordre suit-on les trois grandes étapes d'une application Unity Pro ?",
+                  "points": 1,
+                  "attendu": "Configuration matérielle, puis vues fonctionnelles, puis variables automate.",
+                  "corrige": "<p>1) <b>Configuration matérielle</b> (rack, CPU, modules) ; 2) <b>vues fonctionnelles</b> ; 3) <b>variables automate</b> (créées au fur et à mesure).</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Après le transfert, la ligne d'état affiche RUN, GENERE et EQUAL. On modifie un contact dans le ladder sans transférer. Que devient l'indication EQUAL ?",
+                  "choix": [
+                    "DIFFERENT",
+                    "Elle reste EQUAL",
+                    "STOP",
+                    "GENERE"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>EQUAL signifie que le programme du PC est identique à celui de l'automate. Après une modification non transférée, l'état passe à <b>DIFFERENT</b>.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "L'analyse du projet donne « 0 erreur(s), 0 avertissement(s) ». Que peut-on en conclure ?",
+                  "choix": [
+                    "Le programme est bien écrit, mais il faut faire les essais pour vérifier qu'il fonctionne",
+                    "Le programme fait forcément ce qu'on veut",
+                    "L'automate est déjà en RUN",
+                    "Le câblage est correct"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>« Analyser » vérifie la <b>syntaxe</b> et les déclarations, pas le fonctionnement. Ce sont les <b>essais</b> (tester les 4 combinaisons de BP1 / BP2) qui valident le programme.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Quelle norme définit les langages LD, FBD, ST et SFC ?",
+                  "choix": [
+                    "IEC 61131-3",
+                    "ISO 9001",
+                    "NF C 15-100",
+                    "IEC 60617"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>La norme <b>IEC 61131-3</b> définit les langages des automates programmables (LD, FBD, ST, SFC, et IL devenu obsolète).</p>"
+                }
+              ]
+            }
           ]
         },
         {
@@ -1373,6 +1845,115 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "En ladder le « courant » ne remonte jamais de droite à gauche : %Q0.2.5 = %I0.1.7 seulement."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Marche / arrêt d'un convoyeur",
+              "enonce": "<p>Le moteur d'un convoyeur (sortie <code>%Q0.2.3</code>) est commandé par un BP marche câblé <b>NO</b> sur <code>%I0.1.4</code> et un BP arrêt câblé <b>NF</b> sur <code>%I0.1.5</code>. Une impulsion sur marche doit lancer le moteur, qui continue de tourner quand on relâche ; un appui sur arrêt l'arrête. L'arrêt doit être prioritaire.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire l'équation de %Q0.2.3 avec un auto-maintien, puis décrire le réseau LD.",
+                  "points": 3,
+                  "attendu": "%Q0.2.3 = (%I0.1.4 + %Q0.2.3) · %I0.1.5 ; contact NO %I0.1.4 en parallèle avec un contact NO %Q0.2.3, le tout en série avec un contact NO %I0.1.5, vers la bobine %Q0.2.3.",
+                  "corrige": "<p>Le contact de la sortie se place <b>en parallèle du BP marche</b> : il « prend le relais » quand on relâche. L'arrêt est <b>en série</b>, après le parallèle, donc prioritaire.</p><p><code>%Q0.2.3 = (%I0.1.4 + %Q0.2.3) · %I0.1.5</code></p><p>Réseau : contact NO <code>%I0.1.4</code> ∥ contact NO <code>%Q0.2.3</code>, en série avec un contact <b>NO</b> <code>%I0.1.5</code>, puis la bobine <code>%Q0.2.3</code>.</p><div class=\"attention\">Le BP arrêt est câblé NF : au repos l'entrée vaut 1. On le programme donc avec un contact <b>NO</b> (non barré). Avec un contact barré, le moteur ne démarrerait jamais.</div>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Pourquoi câble-t-on le BP arrêt en NF ?",
+                  "choix": [
+                    "Si le fil est coupé, l'entrée passe à 0 et la machine s'arrête (sécurité)",
+                    "Pour économiser une entrée",
+                    "Parce que l'automate ne lit pas les NO",
+                    "Pour que la marche soit prioritaire"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Un fil coupé met l'entrée à 0, ce qui arrête la machine : la panne va dans le sens de la <b>sécurité</b>.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "On remplace l'auto-maintien par des bobines Set / Reset. Décrire les deux réseaux et indiquer dans quel ordre les placer.",
+                  "points": 2,
+                  "attendu": "Réseau 1 : contact NO %I0.1.4 → bobine (S) %Q0.2.3. Réseau 2 : contact barré %I0.1.5 → bobine (R) %Q0.2.3. Reset placé après le Set pour un arrêt prioritaire.",
+                  "corrige": "<p><b>Réseau 1 :</b> contact NO <code>%I0.1.4</code> → bobine <b>(S)</b> <code>%Q0.2.3</code>.</p><p><b>Réseau 2 :</b> contact <b>barré</b> <code>%I0.1.5</code> → bobine <b>(R)</b> <code>%Q0.2.3</code>. Appuyer sur l'arrêt NF fait passer l'entrée à 0, le contact barré se ferme et déclenche le Reset.</p><p>Si marche et arrêt sont actionnés ensemble, c'est le <b>dernier réseau scruté</b> qui gagne : on place donc le Reset <b>après</b> le Set pour que l'arrêt soit prioritaire.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Le moteur tourne et on passe l'automate en STOP pour transférer un programme. Que fait le moteur ?",
+                  "choix": [
+                    "Il s'arrête : les sorties passent dans leur état de repli (en général 0)",
+                    "Il continue grâce à l'auto-maintien",
+                    "Il garde son état jusqu'au prochain RUN",
+                    "Il tourne en sens inverse"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>En STOP, le programme n'est plus exécuté et les sorties physiques passent dans leur <b>état de repli</b> (en général 0) : le moteur s'arrête. Sur une vraie machine, on vérifie que cet arrêt ne met personne en danger.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Scrutation et bit interne",
+              "enonce": "<p>Une section LD contient trois réseaux, exécutés dans cet ordre :</p><ol><li>contact NO <code>%I0.1.0</code> → bobine <code>%M2</code> ;</li><li>contact NO <code>%M2</code> en série avec un contact NC <code>%I0.1.1</code> → bobine <code>%Q0.2.0</code> ;</li><li>contact NO <code>%I0.1.1</code> → bobine <code>%Q0.2.0</code>.</li></ol><p>La sortie <code>%Q0.2.0</code> est donc écrite dans deux réseaux.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Qu'est-ce que %M2 ?",
+                  "choix": [
+                    "Un bit interne, mémoire de l'automate non câblée",
+                    "La 3e entrée du module en emplacement 2",
+                    "Une sortie de la CPU",
+                    "Un mot de 16 bits"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><code>%M</code> = <b>bit interne</b> : une case mémoire de l'automate, reliée à aucune borne. On ne peut le voir qu'en mode connecté ou dans une table d'animation.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "On appuie sur %I0.1.0 seul (%I0.1.0 = 1, %I0.1.1 = 0). Que vaut %Q0.2.0 en fin de cycle ?",
+                  "choix": [
+                    "0",
+                    "1",
+                    "Il clignote",
+                    "Erreur de l'automate"
+                  ],
+                  "bonne": 0,
+                  "points": 2,
+                  "corrige": "<p>Réseau 1 : <code>%M2 = 1</code>. Réseau 2 : <code>%Q0.2.0 = %M2 · /%I0.1.1 = 1 · 1 = 1</code>. Réseau 3 : <code>%Q0.2.0 = %I0.1.1 = 0</code>.</p><p>Les sorties sont écrites à la fin du cycle avec la <b>dernière valeur calculée</b> : celle du réseau 3. Donc <code>%Q0.2.0 = 0</code>, le voyant reste éteint.</p><div class=\"attention\">Écrire la même bobine dans deux réseaux est une erreur classique : seul le dernier réseau compte.</div>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Comment corriger le programme pour que %Q0.2.0 = %M2 · /%I0.1.1 + %I0.1.1 ?",
+                  "points": 2,
+                  "attendu": "Une seule bobine %Q0.2.0 : la branche %M2 · /%I0.1.1 en parallèle avec la branche %I0.1.1, dans le même réseau.",
+                  "corrige": "<p>On supprime le réseau 3 et on écrit la bobine <b>une seule fois</b> : dans le réseau 2, on place en parallèle la branche (<code>%M2</code> NO en série avec <code>%I0.1.1</code> NC) et la branche <code>%I0.1.1</code> NO. Les deux chemins mènent à l'unique bobine <code>%Q0.2.0</code>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Le cycle de scrutation de l'automate dure 5 ms. Combien de cycles exécute-t-il par seconde ?",
+                  "reponse": 200,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Nombre de cycles = 1 s / durée d'un cycle = 1 / 0,005 = <b>200</b> cycles par seconde. À chaque cycle : lecture des entrées, traitement des réseaux (haut en bas, gauche à droite), écriture des sorties.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Dans l'énoncé d'un TP, on lit l'adresse %I1.6. Quelle est l'adresse complète sur la platine M340 ?",
+                  "choix": [
+                    "%I0.1.6",
+                    "%I1.0.6",
+                    "%I0.6.1",
+                    "%Q0.1.6"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Format court : <b>emplacement . voie</b>, le rack 0 étant sous-entendu. <code>%I1.6</code> devient <code>%I0.1.6</code> (rack 0, emplacement 1, voie 6).</p>"
+                }
+              ]
             }
           ]
         },
@@ -1687,6 +2268,144 @@ window.COURS = {
               "bonne": 0,
               "explication": "Le compteur réagit au front montant : un seul passage de 0 à 1 = +1."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Chronogramme TON, TOF, TP",
+              "enonce": "<p>Une entrée <code>%I0.1.1</code> attaque l'entrée IN de trois blocs, tous réglés avec <code>PT = T#4s</code> : <code>Tempo_travail</code> (TON), <code>Tempo_repos</code> (TOF) et <code>Tempo_mono</code> (TP).</p><p><code>%I0.1.1</code> est à 1 de 0 à 3 s, de 5 à 12 s, de 14 à 15 s et de 16,5 à 17 s. Elle est à 0 le reste du temps.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "À quel instant Tempo_travail.Q (TON) passe-t-il à 1 ?",
+                  "reponse": 9,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Le TON passe à 1 quand IN est resté à 1 <b>sans interruption pendant PT</b>.</p><ul><li>0 à 3 s : 3 s &lt; 4 s, rien.</li><li>5 à 12 s : 7 s, Q passe à 1 à 5 + 4 = <b>9 s</b> et retombe à 12 s.</li><li>14 à 15 s et 16,5 à 17 s : trop courts.</li></ul>"
+                },
+                {
+                  "type": "num",
+                  "q": "À quel instant Tempo_repos.Q (TOF) retombe-t-il définitivement à 0 ?",
+                  "reponse": 21,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 2,
+                  "corrige": "<p>Le TOF passe à 1 dès que IN monte (0 s) et retombe PT après la retombée de IN, sauf si IN remonte avant.</p><ul><li>IN retombe à 3 s ; chute prévue à 7 s, mais IN remonte à 5 s.</li><li>IN retombe à 12 s ; chute prévue à 16 s, mais IN remonte à 14 s.</li><li>IN retombe à 15 s ; chute prévue à 19 s, mais IN remonte à 16,5 s.</li><li>IN retombe à 17 s : Q tombe à 17 + 4 = <b>21 s</b>.</li></ul><p>Tempo_repos.Q reste donc à 1 sans interruption de 0 à 21 s.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Combien d'impulsions Tempo_mono.Q (TP) donne-t-il ?",
+                  "reponse": 3,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Le TP donne une impulsion de 4 s sur chaque <b>front montant</b>, et n'est pas redéclenchable pendant l'impulsion :</p><ul><li>front à 0 s : Q = 1 de 0 à 4 s ;</li><li>front à 5 s : Q = 1 de 5 à 9 s ;</li><li>front à 14 s : Q = 1 de 14 à 18 s ;</li><li>front à 16,5 s : <b>ignoré</b>, l'impulsion est en cours.</li></ul><p>Soit <b>3</b> impulsions.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Laquelle de ces écritures de PT est refusée par Control Expert ?",
+                  "choix": [
+                    "4s",
+                    "T#4s",
+                    "t#4S",
+                    "TIME#4s"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Une valeur de type TIME commence toujours par <code>T#</code>, <code>t#</code> ou <code>TIME#</code>. « 4s » seul n'est pas une durée valide.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Compteur / décompteur de cartons",
+              "enonce": "<p>Une instance <code>Cpt_Cartons</code> de type <b>CTUD_INT</b> a PV = 4. Un capteur sur CU compte les cartons qui entrent dans une zone de stockage, un capteur sur CD ceux qui en sortent. R et LD sont commandés par un commutateur 3 positions.</p><p>Au départ, CV = 0. On effectue dans l'ordre : LD, puis deux fronts sur CD, puis R, puis un front sur CD, puis deux fronts sur CU.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Que vaut CV juste après les deux fronts sur CD (avant R) ?",
+                  "reponse": 2,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>LD charge <code>CV = PV = 4</code>, puis deux fronts sur CD : 4 − 1 − 1 = <b>2</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Que vaut CV à la fin de la séquence ?",
+                  "reponse": 1,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>R met CV à 0, un front sur CD donne −1 (le type INT est signé, le compteur descend sous 0), puis deux fronts sur CU : −1 + 2 = <b>1</b>.</p><table><thead><tr><th>Action</th><th>CV</th><th>QU</th><th>QD</th></tr></thead><tbody><tr><td>LD</td><td>4</td><td>1</td><td>0</td></tr><tr><td>CD</td><td>3</td><td>0</td><td>0</td></tr><tr><td>CD</td><td>2</td><td>0</td><td>0</td></tr><tr><td>R</td><td>0</td><td>0</td><td>1</td></tr><tr><td>CD</td><td>-1</td><td>0</td><td>1</td></tr><tr><td>CU</td><td>0</td><td>0</td><td>1</td></tr><tr><td>CU</td><td>1</td><td>0</td><td>0</td></tr></tbody></table>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "À la fin de la séquence, que valent QU et QD ?",
+                  "choix": [
+                    "QU = 0, QD = 0",
+                    "QU = 1, QD = 0",
+                    "QU = 0, QD = 1",
+                    "QU = 1, QD = 1"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><code>QU = (CV ≥ PV)</code> : 1 ≥ 4 est faux, QU = 0. <code>QD = (CV ≤ 0)</code> : 1 ≤ 0 est faux, QD = 0.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Un carton reste 2 s devant le capteur CU. De combien CV augmente-t-il ?",
+                  "choix": [
+                    "1",
+                    "2",
+                    "Autant que de cycles automate pendant 2 s",
+                    "0"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Le compteur réagit au <b>front montant</b> (passage de 0 à 1), pas au niveau : un seul front, donc +1.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Clignotant 2 s / 6 s",
+              "enonce": "<p>Tant que l'entrée <code>%I0.1.2</code> est à 1, le voyant <code>%Q0.2.4</code> doit clignoter : <b>2 s allumé, 6 s éteint</b>. On utilise deux blocs TP qui se relancent l'un l'autre : <code>T_on</code> (PT = T#2s) et <code>T_off</code> (PT = T#6s). On active <code>%I0.1.2</code> à t = 0 et on la laisse à 1.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire les équations des entrées IN des deux blocs et de la sortie %Q0.2.4.",
+                  "points": 2,
+                  "attendu": "T_on.IN = %I0.1.2 · /T_off.Q ; T_off.IN = %I0.1.2 · /T_on.Q ; %Q0.2.4 = T_on.Q",
+                  "corrige": "<p>Chaque TP ne démarre que si l'autre est fini (contact NC de l'autre) :</p><p><code>T_on.IN = %I0.1.2 · /T_off.Q</code><br><code>T_off.IN = %I0.1.2 · /T_on.Q</code><br><code>%Q0.2.4 = T_on.Q</code></p><p>Le contact NC est indispensable : un TP ne redémarre que sur un <b>front montant</b> de IN. Sans lui, IN resterait à 1 et le voyant ne s'allumerait qu'une seule fois.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Quelle est la période du clignotant ?",
+                  "reponse": 8,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Période = temps allumé + temps éteint = 2 + 6 = <b>8 s</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Quel est le rapport cyclique (part du temps où le voyant est allumé) ?",
+                  "reponse": 25,
+                  "unite": "%",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Rapport cyclique = 2 / 8 = 0,25, soit <b>25 %</b>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Combien de fois le voyant s'allume-t-il pendant la première minute (de t = 0 à t = 60 s) ?",
+                  "reponse": 8,
+                  "unite": "",
+                  "tol": 0.01,
+                  "points": 1,
+                  "corrige": "<p>Le voyant s'allume à t = 0, 8, 16, 24, 32, 40, 48 et 56 s (un allumage toutes les 8 s). Le suivant serait à 64 s, après la minute. Soit <b>8</b> allumages.</p>"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -1859,6 +2578,126 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "C'est la définition de la convention récepteur ; on écrit alors U = R·I."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Résistance d'un câble de cuivre",
+              "enonce": "<p>Un câble d'alimentation en cuivre a une longueur L = 250 m et une section S = 2,5 mm². La résistivité du cuivre vaut ρ = 0,017 Ω·mm²/m. On considère que cette valeur de ρ correspond à 0 °C. Le coefficient de température du cuivre vaut α = 0,004 °C⁻¹.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance R0 du câble à 0 °C.",
+                  "reponse": 1.7,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Formule : <code>R = ρ · L / S</code>. Avec ρ en Ω·mm²/m, on garde L en m et S en mm².</p><p><code>R0 = 0,017 × 250 / 2,5 = 4,25 / 2,5</code></p><p><b>R0 = 1,7 Ω</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance du câble quand il est à θ = 40 °C.",
+                  "reponse": 1.972,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Formule : <code>Rθ = R0 · (1 + α · θ)</code>.</p><p><code>R40 = 1,7 × (1 + 0,004 × 40) = 1,7 × 1,16</code></p><p><b>R40 ≈ 1,97 Ω</b></p><p>La résistance augmente avec la température, comme pour tous les métaux (α positif).</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "On remplace ce câble par un câble de même longueur mais de section 5 mm². Sa résistance…",
+                  "choix": [
+                    "est divisée par 2",
+                    "double",
+                    "ne change pas",
+                    "est divisée par 4"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>R = ρ·L/S est inversement proportionnelle à la section : si S double (2,5 → 5 mm²), R est divisée par 2 (0,85 Ω à 0 °C).</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Associations de résistances",
+              "enonce": "<p>On dispose des résistances R1 = 12 Ω, R2 = 4 Ω et R3 = 5 Ω. On branche R1 et R2 en parallèle, puis on met ce groupe en série avec R3.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance équivalente R12 du groupe R1 // R2.",
+                  "reponse": 3,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Deux résistances en parallèle : produit sur somme.</p><p><code>R12 = R1 · R2 / (R1 + R2) = 12 × 4 / (12 + 4) = 48 / 16</code></p><p><b>R12 = 3 Ω</b></p><div class=\"attention\">R12 est plus petite que la plus petite des deux résistances (4 Ω) : c'est un bon contrôle.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance équivalente Req de tout le montage.",
+                  "reponse": 8,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>R12 et R3 sont en série : elles s'ajoutent.</p><p><code>Req = R12 + R3 = 3 + 5</code></p><p><b>Req = 8 Ω</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la conductance G d'une résistance de 50 Ω.",
+                  "reponse": 0.02,
+                  "unite": "S",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>La conductance est l'inverse de la résistance : <code>G = 1/R = 1/50</code>.</p><p><b>G = 0,02 S</b> (siemens).</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Trois résistances identiques de 30 Ω sont branchées en parallèle. La résistance équivalente vaut…",
+                  "choix": [
+                    "10 Ω",
+                    "90 Ω",
+                    "15 Ω",
+                    "30 Ω"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>n résistances égales R en parallèle donnent R/n : <code>30 / 3 = 10 Ω</code>. On ne peut pas utiliser « produit sur somme » pour trois résistances directement.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Bobine et condensateur en régime continu",
+              "enonce": "<p>Un générateur de tension continue E = 24 V alimente une résistance R = 60 Ω en série avec une bobine d'inductance L = 0,5 H. Le circuit est branché depuis longtemps : le régime continu est établi (plus rien ne varie). On néglige la résistance du fil de la bobine.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire les relations entre tension et courant pour une bobine et pour un condensateur.",
+                  "points": 1,
+                  "attendu": "u = L · di/dt ; i = C · du/dt",
+                  "corrige": "<p>Bobine : <code>u = L · di/dt</code> (la tension dépend de la vitesse de variation du courant).</p><p>Condensateur : <code>i = C · du/dt</code> (le courant dépend de la vitesse de variation de la tension).</p><div class=\"attention\">Ne pas écrire « L = di/dt » : il manque la tension u.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer le courant I dans le circuit en régime établi.",
+                  "reponse": 0.4,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>En régime continu établi, le courant ne varie plus : di/dt = 0, donc u = L·di/dt = 0. La bobine se comporte comme un <b>fil</b>.</p><p>Il ne reste que R : <code>I = E / R = 24 / 60</code></p><p><b>I = 0,4 A</b></p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "On remplace la bobine par un condensateur. En régime établi, le courant vaut…",
+                  "choix": [
+                    "0 A",
+                    "0,4 A",
+                    "0,2 A",
+                    "il devient infini"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>En régime établi, du/dt = 0, donc i = C·du/dt = 0 : le condensateur se comporte comme un <b>interrupteur ouvert</b>. Aucun courant ne circule.</p>"
+                }
+              ]
             }
           ]
         },
@@ -2068,6 +2907,138 @@ window.COURS = {
               "bonne": 0,
               "explication": "En parallèle, tous les dipôles ont la même tension : c'est la référence commune."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Lecture d'une tension sinusoïdale",
+              "enonce": "<p>Une tension alternative a pour expression instantanée :</p><p><code>u(t) = 340 · sin(100π·t + π/4)</code> (u en volts, t en secondes).</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer la valeur efficace U de cette tension.",
+                  "reponse": 240.4,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>L'amplitude est Û = 340 V. Or <code>Û = U√2</code>, donc <code>U = Û / √2 = 340 / 1,414</code>.</p><p><b>U ≈ 240,4 V</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la fréquence f.",
+                  "reponse": 50,
+                  "unite": "Hz",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>La pulsation est ω = 100π rad/s. Or <code>ω = 2πf</code>, donc <code>f = ω / (2π) = 100π / (2π)</code>.</p><p><b>f = 50 Hz</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la période T, en millisecondes.",
+                  "reponse": 20,
+                  "unite": "ms",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>T = 1 / f = 1 / 50 = 0,02 s</code></p><p><b>T = 20 ms</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Donner la phase à l'origine φ en degrés.",
+                  "reponse": 45,
+                  "unite": "°",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>φ = π/4 rad. Conversion : degrés = radians × 180 / π, donc <code>φ = (π/4) × 180/π = 180/4</code>.</p><p><b>φ = 45°</b></p>"
+                }
+              ]
+            },
+            {
+              "titre": "Impédance d'une bobine et d'un condensateur",
+              "enonce": "<p>Sur le réseau 230 V, 50 Hz, on branche successivement :</p><ul><li>une bobine parfaite d'inductance L = 0,2 H ;</li><li>un condensateur de capacité C = 47 µF.</li></ul><p>On prend ω = 2π × 50 ≈ 314,16 rad/s.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer l'impédance Z de la bobine.",
+                  "reponse": 62.83,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Pour une bobine : <code>Z = Lω = 0,2 × 314,16</code></p><p><b>Z ≈ 62,8 Ω</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer le courant efficace I absorbé par la bobine sous 230 V.",
+                  "reponse": 3.66,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Loi d'Ohm en valeurs efficaces : <code>I = U / Z = 230 / 62,83</code></p><p><b>I ≈ 3,66 A</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer l'impédance Z du condensateur.",
+                  "reponse": 67.7,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Pour un condensateur : <code>Z = 1 / (Cω) = 1 / (47 × 10⁻⁶ × 314,16)</code></p><p><b>Z ≈ 67,7 Ω</b></p><div class=\"attention\">Ne pas oublier de convertir les µF en F : 47 µF = 47 × 10⁻⁶ F.</div>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Pour le condensateur, le courant est…",
+                  "choix": [
+                    "en avance de 90° sur la tension",
+                    "en retard de 90° sur la tension",
+                    "en phase avec la tension",
+                    "en avance de 45° sur la tension"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Pour un condensateur, φ = −π/2 : le courant est en <b>avance</b> de 90° sur la tension. Pour la bobine, il est en retard de 90°.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Puissances et relèvement du facteur de puissance",
+              "enonce": "<p>Un moteur monophasé absorbe une puissance active P = 3 000 W sous U = 230 V, 50 Hz, avec un facteur de puissance cos φ = 0,75 (inductif).</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer le courant efficace I absorbé par le moteur.",
+                  "reponse": 17.39,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>P = U · I · cos φ</code>, donc <code>I = P / (U · cos φ) = 3 000 / (230 × 0,75) = 3 000 / 172,5</code></p><p><b>I ≈ 17,4 A</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la puissance apparente S.",
+                  "reponse": 4000,
+                  "unite": "VA",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>S = U · I = 230 × 17,39</code>, ou directement <code>S = P / cos φ = 3 000 / 0,75</code></p><p><b>S = 4 000 VA</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la puissance réactive Q.",
+                  "reponse": 2646,
+                  "unite": "var",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>Q = √(S² − P²) = √(4 000² − 3 000²) = √7 000 000</code></p><p>On peut aussi calculer sin φ = √(1 − 0,75²) ≈ 0,661 et <code>Q = U · I · sin φ</code>.</p><p><b>Q ≈ 2 646 var</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "On veut relever le facteur de puissance à cos φ' = 0,93. Calculer la capacité C du condensateur à brancher en parallèle, en µF.",
+                  "reponse": 87.9,
+                  "unite": "µF",
+                  "tol": 0.03,
+                  "points": 2,
+                  "corrige": "<p>Formule : <code>C = P · (tan φ − tan φ') / (U² · ω)</code></p><p>tan φ = tan(arccos 0,75) ≈ 0,882 ; tan φ' = tan(arccos 0,93) ≈ 0,395.</p><p><code>C = 3 000 × (0,882 − 0,395) / (230² × 314,16) = 1 460 / 16 619 000</code></p><p><b>C ≈ 8,79 × 10⁻⁵ F ≈ 88 µF</b></p><div class=\"attention\">Le condensateur se branche <b>en parallèle</b> avec la charge. Garder 3 décimales sur les tangentes pour ne pas trop arrondir.</div>"
+                }
+              ]
+            }
           ]
         },
         {
@@ -2242,6 +3213,101 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "arctan(−2 / −2) = 45°, mais a < 0 et b < 0 : le vecteur est en bas à gauche, donc 45° − 180° = −135°."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Somme de deux courants déphasés",
+              "enonce": "<p>Deux courants arrivent sur un même nœud et s'additionnent : I = I1 + I2.</p><ul><li>I1 a pour module 6 A et pour argument −π/6 (−30°) ;</li><li>I2 a pour module 4 A et pour argument π/3 (60°).</li></ul><p>On donne cos 30° = √3/2 ≈ 0,866 et sin 30° = 0,5.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer la partie réelle a1 de I1.",
+                  "reponse": 5.2,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>a1 = |I1| · cos φ1 = 6 × cos(−30°) = 6 × 0,866</code></p><p><b>a1 ≈ 5,20 A</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la partie imaginaire b1 de I1.",
+                  "reponse": -3,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>b1 = |I1| · sin φ1 = 6 × sin(−30°) = −6 × 0,5</code></p><p><b>b1 = −3 A</b></p><div class=\"attention\">sin(−φ) = −sin φ : la partie imaginaire est négative.</div>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Écrire I2 puis I = I1 + I2 en forme algébrique.",
+                  "points": 1,
+                  "attendu": "I2 ≈ 2 + 3,46j ; I ≈ 7,20 + 0,46j",
+                  "corrige": "<p><code>I2 = 4 × cos 60° + j · 4 × sin 60° = 2 + 3,46 j</code></p><p>On additionne les parties réelles entre elles et les parties imaginaires entre elles :</p><p><code>I = (5,196 + 2) + (−3 + 3,464) j</code></p><p><b>I ≈ 7,20 + 0,46 j</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer le module |I| du courant total.",
+                  "reponse": 7.21,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p><code>|I| = √(a² + b²) = √(7,196² + 0,464²) = √52,0</code></p><p><b>|I| ≈ 7,21 A</b></p><div class=\"attention\">Ce n'est pas 6 + 4 = 10 A : on n'additionne jamais les modules de courants déphasés.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer l'argument φ du courant total, en degrés.",
+                  "reponse": 3.7,
+                  "unite": "°",
+                  "tol": 0.05,
+                  "points": 2,
+                  "corrige": "<p>La partie réelle est positive, donc <code>φ = arctan(b / a) = arctan(0,464 / 7,196)</code>.</p><p><b>φ ≈ 3,7°</b></p>"
+                }
+              ]
+            },
+            {
+              "titre": "Différence de deux courants et piège du quadrant",
+              "enonce": "<p>On donne, en forme algébrique : I1 = 3 + 2j et I2 = 5 + 6j (en ampères). On cherche I3 = I1 − I2.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Écrire I3 en forme algébrique.",
+                  "points": 1,
+                  "attendu": "I3 = −2 − 4j",
+                  "corrige": "<p>Réel : 3 − 5 = −2. Imaginaire : 2 − 6 = −4.</p><p><b>I3 = −2 − 4 j</b></p><p>Le j reste collé à la partie imaginaire jusqu'au bout.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer le module |I3|.",
+                  "reponse": 4.472,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>|I3| = √((−2)² + (−4)²) = √(4 + 16) = √20</code></p><p><b>|I3| ≈ 4,47 A</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer l'argument de I3, en degrés (entre −180° et 180°).",
+                  "reponse": -116.6,
+                  "unite": "°",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>La calculatrice donne <code>arctan(−4 / −2) = arctan(2) ≈ 63,4°</code>.</p><p>Mais a = −2 &lt; 0 et b = −4 &lt; 0 : le vecteur est en bas à gauche. Il faut retirer 180° :</p><p><code>φ3 = 63,4° − 180°</code></p><p><b>φ3 ≈ −116,6°</b></p><div class=\"attention\">Piège classique : répondre 63,4° (le vecteur serait alors en haut à droite).</div>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Un courant I = −3 + 3j a pour argument…",
+                  "choix": [
+                    "135°",
+                    "−45°",
+                    "45°",
+                    "−135°"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>arctan(3 / −3) = −45° sur la calculatrice. Comme a &lt; 0 et b &gt; 0, le vecteur est en haut à gauche : −45° + 180° = <b>135°</b>.</p>"
+                }
+              ]
             }
           ]
         },
@@ -2526,6 +3592,102 @@ window.COURS = {
               "bonne": 1,
               "explication": "A1 et A5 sont traversées par tout le courant I ; A2, A3 et A4 n'en reçoivent qu'un tiers chacune."
             }
+          ],
+          "examen": [
+            {
+              "titre": "Loi des nœuds et loi des mailles",
+              "enonce": "<p><b>Partie 1.</b> À un nœud N, les courants I1 = 3 A et I2 = −2 A sont fléchés vers le nœud ; les courants I3 = 4 A et I4 sont fléchés en sortant du nœud.</p><p><b>Partie 2.</b> Une maille passe successivement par les points A, B, C, D puis revient en A. On connaît U_AB = 5 V, U_BC = −3 V et U_CD = 2 V (avec U_XY = V_X − V_Y).</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer I4.",
+                  "reponse": -3,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Loi des nœuds : ce qui arrive = ce qui repart.</p><p><code>I1 + I2 = I3 + I4</code>, soit <code>3 + (−2) = 4 + I4</code>, donc <code>I4 = 1 − 4</code>.</p><p><b>I4 = −3 A</b> : le courant circule en réalité vers le nœud.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer U_DA.",
+                  "reponse": -4,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>En faisant le tour de la maille A → B → C → D → A, la somme des tensions est nulle :</p><p><code>U_AB + U_BC + U_CD + U_DA = 0</code>, soit <code>5 − 3 + 2 + U_DA = 0</code>.</p><p><b>U_DA = −4 V</b></p><p>Vérification par les potentiels : avec V_A = 0, V_B = −5 V, V_C = −2 V, V_D = −4 V, donc U_DA = V_D − V_A = −4 V.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Pont diviseur de tension à vide et en charge",
+              "enonce": "<p>Un générateur idéal E = 12 V alimente deux résistances en série : R1 = 2,2 kΩ (côté borne +) puis R2 = 3,3 kΩ (côté borne −). On appelle U2 la tension aux bornes de R2.</p><p>Dans un second temps, on branche une charge Rc = 3,3 kΩ en parallèle sur R2.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "À vide (sans Rc), calculer U2.",
+                  "reponse": 7.2,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>R1 et R2 sont parcourues par le même courant : le pont diviseur s'applique.</p><p><code>U2 = E · R2 / (R1 + R2) = 12 × 3,3 / 5,5</code></p><p><b>U2 = 7,2 V</b></p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Une fois Rc branchée, peut-on encore écrire U2 = E·R2/(R1 + R2) ?",
+                  "choix": [
+                    "Non, car R1 et R2 ne sont plus parcourues par le même courant",
+                    "Oui, car R2 n'a pas changé",
+                    "Oui, car E est un générateur idéal",
+                    "Non, car la loi d'Ohm ne s'applique plus"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Rc prend du courant au point milieu : le courant dans R1 n'est plus celui de R2. Il faut d'abord remplacer R2 // Rc par sa résistance équivalente.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "En charge, calculer la nouvelle valeur de U2.",
+                  "reponse": 5.14,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p><code>R2 // Rc = 3,3 × 3,3 / (3,3 + 3,3) = 1,65 kΩ</code> (deux résistances égales : R/2).</p><p>R1 et ce groupe sont en série, même courant : <code>U2 = E · 1,65 / (2,2 + 1,65) = 12 × 1,65 / 3,85</code></p><p><b>U2 ≈ 5,14 V</b> : la tension a baissé à cause de la charge.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Caractéristique d'un générateur réel",
+              "enonce": "<p>On relève la caractéristique U = f(I) d'un générateur :</p><table><thead><tr><th>I (mA)</th><th>0</th><th>10</th><th>20</th><th>40</th></tr></thead><tbody><tr><td>U (V)</td><td>18</td><td>17,5</td><td>17</td><td>16</td></tr></tbody></table><p>Les points sont alignés sur une droite.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Donner la f.é.m. E du générateur.",
+                  "reponse": 18,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Le modèle est <code>U = E − r·I</code>. Pour I = 0 (à vide), U = E.</p><p><b>E = 18 V</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance interne r.",
+                  "reponse": 50,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Pente de la droite : <code>(16 − 18) V / (40 − 0) mA = −2 V / 0,040 A = −50 Ω</code>.</p><p><b>r = 50 Ω</b></p><div class=\"attention\">Convertir les mA en A avant de diviser.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Quelle tension U le générateur fournit-il pour I = 60 mA ?",
+                  "reponse": 15,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>U = 18 − 50 × 0,060 = 18 − 3</code></p><p><b>U = 15 V</b></p>"
+                }
+              ]
+            }
           ]
         },
         {
@@ -2745,6 +3907,129 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "Deux résistances en parallèle : produit sur somme."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Bloc parallèle suivi de deux résistances en série",
+              "enonce": "<p>Le dipôle A-B est formé de trois résistances R1 = 20 Ω, R2 = 30 Ω et R3 = 60 Ω branchées entre les deux mêmes nœuds (en parallèle). Ce bloc est suivi, sans dérivation, de R4 = 15 Ω puis de R5 = 25 Ω.</p>",
+              "questions": [
+                {
+                  "type": "libre",
+                  "q": "Donner l'expression littérale de la résistance équivalente Req du dipôle A-B.",
+                  "points": 2,
+                  "attendu": "Req = 1/(1/R1 + 1/R2 + 1/R3) + R4 + R5",
+                  "corrige": "<p>Le bloc parallèle : <code>1/Req1 = 1/R1 + 1/R2 + 1/R3</code>, donc <code>Req1 = 1/(1/R1 + 1/R2 + 1/R3)</code>.</p><p>Puis la série : <b><code>Req = 1/(1/R1 + 1/R2 + 1/R3) + R4 + R5</code></b>.</p><div class=\"attention\">R4 et R5 restent en dehors de la fraction : on ne mélange pas des 1/R et des R dans une même somme.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer Req1, la résistance du bloc parallèle.",
+                  "reponse": 10,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>1/Req1 = 1/20 + 1/30 + 1/60 = 3/60 + 2/60 + 1/60 = 6/60</code></p><p><b>Req1 = 10 Ω</b> (plus petite que 20 Ω, c'est cohérent).</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer Req.",
+                  "reponse": 50,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>Req = 10 + 15 + 25</code></p><p><b>Req = 50 Ω</b></p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Un élève calcule le bloc avec R1·R2·R3/(R1 + R2 + R3). Pourquoi est-ce faux ?",
+                  "choix": [
+                    "Le produit sur somme ne vaut que pour deux résistances",
+                    "Il fallait additionner R1, R2 et R3",
+                    "Il fallait multiplier par R4",
+                    "Ce n'est pas faux, c'est une autre méthode"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Le produit sur somme ne marche que pour <b>deux</b> résistances. Ici il donnerait 36 000/110 ≈ 327 Ω, plus grand que chaque résistance du parallèle : impossible.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Réduction pas à pas avec les nœuds A, B, C, D",
+              "enonce": "<p>Un dipôle A-B comporte quatre nœuds A, B, C, D et six résistances :</p><ul><li>R1 = 12 kΩ entre A et C ;</li><li>R2 = 6 kΩ entre A et C ;</li><li>R3 = 8 kΩ entre C et D ;</li><li>R4 = 12 kΩ entre A et D ;</li><li>R5 = 4 kΩ entre D et B ;</li><li>R6 = 15 kΩ entre A et B.</li></ul>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer Req1 = R1 // R2.",
+                  "reponse": 4,
+                  "unite": "kΩ",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>R1 et R2 sont entre les mêmes nœuds A et C : en parallèle.</p><p><code>Req1 = 12 × 6 / (12 + 6) = 72 / 18</code></p><p><b>Req1 = 4 kΩ</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance équivalente entre A et D (après avoir tenu compte de R3 et R4).",
+                  "reponse": 6,
+                  "unite": "kΩ",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Req1 (A vers C) puis R3 (C vers D) sont en série : <code>Req2 = 4 + 8 = 12 kΩ</code>, entre A et D.</p><p>Req2 et R4 sont toutes deux entre A et D : en parallèle. <code>Req3 = 12 × 12 / 24</code></p><p><b>Req3 = 6 kΩ</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance équivalente RAB du dipôle.",
+                  "reponse": 6,
+                  "unite": "kΩ",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Req3 (A vers D) puis R5 (D vers B) : en série, <code>Req4 = 6 + 4 = 10 kΩ</code>.</p><p>Req4 et R6 sont entre A et B : en parallèle. <code>RAB = 10 × 15 / 25</code></p><p><b>RAB = 6 kΩ</b></p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Écrire l'expression littérale complète de RAB avec la notation //.",
+                  "points": 1,
+                  "attendu": "RAB = { [ (R1 // R2) + R3 ] // R4 + R5 } // R6",
+                  "corrige": "<p>Les étapes sont emboîtées, on ne les additionne pas :</p><p><code>RAB = { [ (R1 // R2) + R3 ] // R4 + R5 } // R6</code></p><div class=\"attention\">Additionner les résultats des étapes (4 + 6 + 6) serait faux : chaque étape sert dans la suivante.</div>"
+                }
+              ]
+            },
+            {
+              "titre": "Retrouver une résistance inconnue",
+              "enonce": "<p>Entre A et B, trois branches sont en parallèle :</p><ul><li>branche 1 : R1 = 30 Ω et R2 = 60 Ω en parallèle (entre A et C), puis R4 = 80 Ω entre C et B ;</li><li>branche 2 : R3, inconnue, directement entre A et B ;</li><li>branche 3 : R5 = 50 Ω directement entre A et B.</li></ul><p>On mesure RAB = 20 Ω.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Calculer la résistance Req1 de la branche 1.",
+                  "reponse": 100,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>R1 // R2 = 30 × 60 / 90 = 20 Ω</code>, puis en série avec R4 : <code>Req1 = 20 + 80</code>.</p><p><b>Req1 = 100 Ω</b></p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Quelle relation permet de trouver R3 ?",
+                  "choix": [
+                    "1/R3 = 1/RAB − 1/Req1 − 1/R5",
+                    "R3 = RAB − Req1 − R5",
+                    "R3 = RAB − Req1",
+                    "1/R3 = 1/RAB + 1/Req1 + 1/R5"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>R3 est en parallèle avec les deux autres branches : <code>1/RAB = 1/Req1 + 1/R3 + 1/R5</code>. On isole l'inverse de R3.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer R3.",
+                  "reponse": 50,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p><code>1/R3 = 1/20 − 1/100 − 1/50 = 0,05 − 0,01 − 0,02 = 0,02 S</code></p><p><b>R3 = 50 Ω</b></p><p>Vérification : 1/100 + 1/50 + 1/50 = 0,05 S, soit RAB = 20 Ω. RAB est bien plus petite que la plus petite branche (50 Ω).</p>"
+                }
+              ]
             }
           ]
         },
@@ -3008,6 +4293,118 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "La loi d'Ohm relie le courant d'une résistance à la tension à ses propres bornes."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Deux générateurs, trois branches",
+              "enonce": "<p>Trois branches sont branchées entre un nœud A (en haut) et un nœud B (en bas) :</p><ul><li>branche 1 : générateur E1 = 12 V (borne + vers A) en série avec R1 = 4 Ω, courant I1 fléché de B vers A ;</li><li>branche 2 : générateur E2 = 24 V (borne + vers A) en série avec R2 = 6 Ω, courant I2 fléché de B vers A ;</li><li>branche 3 : résistance R3 = 12 Ω, courant I3 fléché de A vers B.</li></ul>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Combien d'équations de mailles indépendantes faut-il écrire ?",
+                  "choix": [
+                    "2",
+                    "3",
+                    "1",
+                    "4"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>b = 3 branches, n = 2 nœuds : <code>m = b − n + 1 = 3 − 2 + 1 = 2</code>. Avec n − 1 = 1 équation de nœud, on a 3 équations pour 3 inconnues.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la tension U_AB.",
+                  "reponse": 14,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Toutes les branches sont entre A et B : Millman.</p><p><code>U_AB = (E1/R1 + E2/R2) / (1/R1 + 1/R2 + 1/R3) = (12/4 + 24/6) / (1/4 + 1/6 + 1/12)</code></p><p><code>= (3 + 4) / (3/12 + 2/12 + 1/12) = 7 / 0,5</code></p><p><b>U_AB = 14 V</b></p><p>Avec Kirchhoff : nœud A <code>I1 + I2 = I3</code> ; mailles <code>E1 − R1·I1 − R3·I3 = 0</code> et <code>E2 − R2·I2 − R3·I3 = 0</code> ; on trouve le même résultat.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer I1.",
+                  "reponse": -0.5,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>Dans la branche 1 : <code>U_AB = E1 − R1·I1</code>, donc <code>I1 = (E1 − U_AB) / R1 = (12 − 14) / 4</code>.</p><p><b>I1 = −0,5 A</b> : le courant descend réellement dans la branche de E1 (E2, plus fort, la recharge).</p><div class=\"attention\">I1 n'est pas E1/R1 = 3 A : la tension aux bornes de R1 n'est pas E1.</div>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer I2.",
+                  "reponse": 1.667,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>I2 = (E2 − U_AB) / R2 = (24 − 14) / 6 = 10 / 6</code></p><p><b>I2 ≈ 1,67 A</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer I3 et vérifier la loi des nœuds.",
+                  "reponse": 1.167,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>I3 = U_AB / R3 = 14 / 12</code></p><p><b>I3 ≈ 1,17 A</b></p><p>Vérification au nœud A : <code>I1 + I2 = −0,5 + 1,667 = 1,167 A = I3</code>. Juste.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Source de courant et générateur : superposition",
+              "enonce": "<p>Trois branches sont branchées entre le fil du haut et le fil du bas :</p><ul><li>une source de courant idéale I0 = 20 mA, fléchée vers le haut ;</li><li>un générateur E = 5 V (borne + en haut) en série avec R1 = 100 Ω, parcouru par I1 vers le haut ;</li><li>une branche R2 = 150 Ω en série avec R3 = 250 Ω, parcourue par I2 vers le bas. U est la tension aux bornes de R3 (convention récepteur).</li></ul><p>On utilise le théorème de superposition pour calculer I2.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Pour étudier E seule, par quoi remplace-t-on la source de courant I0 ?",
+                  "choix": [
+                    "Un circuit ouvert",
+                    "Un fil",
+                    "Une résistance de 1 Ω",
+                    "On la laisse en place"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Une source de courant éteinte impose 0 A : on ouvre sa branche. (Une source de tension éteinte devient un fil.)</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer I2', la contribution de E seule, en mA.",
+                  "reponse": 10,
+                  "unite": "mA",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>I0 ouverte : E, R1, R2 et R3 forment une seule boucle série.</p><p><code>I2' = E / (R1 + R2 + R3) = 5 / 500 = 0,010 A</code></p><p><b>I2' = 10 mA</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer I2'', la contribution de I0 seule, en mA.",
+                  "reponse": 4,
+                  "unite": "mA",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>E remplacée par un fil : I0 se partage entre R1 (100 Ω) et la branche R2 + R3 (400 Ω). Diviseur de courant, l'<b>autre</b> résistance au numérateur :</p><p><code>I2'' = I0 · R1 / (R1 + R2 + R3) = 20 × 100 / 500</code></p><p><b>I2'' = 4 mA</b></p>"
+                },
+                {
+                  "type": "num",
+                  "q": "En déduire I2, en mA.",
+                  "reponse": 14,
+                  "unite": "mA",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>I2 = I2' + I2'' = 10 + 4</code></p><p><b>I2 = 14 mA</b></p><p>Contrôle par Kirchhoff : <code>I2 = (E + R1·I0) / (R1 + R2 + R3) = (5 + 2) / 500 = 14 mA</code>.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Calculer la tension U aux bornes de R3.",
+                  "reponse": 3.5,
+                  "unite": "V",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p><code>U = R3 · I2 = 250 × 0,014</code></p><p><b>U = 3,5 V</b></p><p>Et I1 = I2 − I0 = 14 − 20 = −6 mA : une partie du courant de la source redescend par la branche E, R1.</p>"
+                }
+              ]
             }
           ]
         }
