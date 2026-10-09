@@ -6,7 +6,9 @@
 //  - sinon Firebase AI Logic, avec la clé publique de config.js.
 // Expose window.IA.chat(contexte) → { send(texte, onMorceau) }.
 const cfg = window.CLOUD_CONFIG;
-const CLE = cfg.ia && cfg.ia.cleGemini, RELAIS = cfg.ia && cfg.ia.relais; // relais : la clé reste cachée côté serveur
+// Clé Gemini posée par l'admin dans le fichier ia-cle.js du dépôt (window.CLE_GEMINI = "…"), facultatif
+try { await import(new URL("ia-cle.js", location.href).href); } catch (e) {}
+const CLE = (cfg.ia && cfg.ia.cleGemini) || window.CLE_GEMINI, RELAIS = cfg.ia && cfg.ia.relais; // relais : la clé reste cachée côté serveur
 const DIRECT = !!(CLE || RELAIS);
 const MODELES = (cfg.ia && cfg.ia.modeles) || ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
 let AI = null, ai = null;
