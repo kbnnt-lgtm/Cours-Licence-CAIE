@@ -4422,11 +4422,15 @@ window.COURS = {
           "type": "Cours",
           "date": "2026-10-09",
           "source": "Enregistrement du cours d'anglais (modalités d'évaluation), résumé",
-          "resume": "Les évaluations d'anglais de l'année (dont un oral avec un temps de parole minimum) et comment pratiquer en dehors du cours.",
+          "resume": "Les évaluations d’anglais de l’année, et tout ce qui aide à progresser : pratique régulière, séries en VO, sites, ressources de l’ENF et TOEIC.",
           "sections": [
             {
               "titre": "Les évaluations",
               "html": "<p>Il y a <b>trois évaluations</b> d'anglais sur l'année.</p>"
+            },
+            {
+              "titre": "Progresser : la régularité avant tout",
+              "html": "<p>Une langue ne se révise pas comme les autres matières : <b>deux semaines de révision avant un contrôle ne suffisent pas</b>. Le niveau ne monte qu’avec une pratique <b>régulière</b> ; sans pratique, on stagne.</p><div class=\"attention\"><b>Note de participation :</b> la participation est notée <b>à chaque cours</b>, justement pour encourager à pratiquer en continu.</div>"
             },
             {
               "titre": "L'oral : temps de parole",
@@ -4443,6 +4447,22 @@ window.COURS = {
             {
               "titre": "Pratiquer en dehors du cours",
               "html": "<p>Pour une langue, la <b>répétition régulière</b> est indispensable. L'appli conseillée est <b>Duolingo</b> :</p><ul><li>des exercices courts et répétitifs, idéals pour pratiquer chaque jour ;</li><li>ludique, donc facile à tenir dans la durée ;</li><li><b>gratuite</b>. Une version payante sans publicité existe, à environ <b>89 € par an</b>, mais elle n'est pas nécessaire.</li></ul><div class=\"exemple\"><b>Astuce :</b> quelques minutes par jour valent mieux qu'une longue séance de temps en temps.</div><p><b>Les ressources du prof sur Moodle.</b> Des liens pour travailler l’anglais sont déposés sur Moodle, dans le module d’anglais (accès par l’ENF).</p>\n<p><b>Apprendre avec la musique.</b> L’un de ces liens mène à une appli, sur téléphone ou sur ordinateur :</p>\n<ul><li>tu choisis ton style de musique (pop, rock, rap, country…) ;</li><li>tu choisis un niveau parmi <b>4</b> ;</li><li>tu complètes les paroles de la chanson pendant l’écoute ; au niveau avancé, tu tapes <b>100 %</b> des paroles.</li></ul>\n<div class=\"attention\"><b>À savoir :</b> la grammaire et le vocabulaire des chansons sont moins rigoureux qu’en cours, mais c’est très bon pour la <b>compréhension orale</b>.</div>\n<p><b>Les jeux vidéo.</b> Jouer en anglais, ou avec des joueurs anglophones, fait aussi apprendre du vocabulaire.</p>\n<p class=\"muted\" style=\"font-size:13px\">Le nom de l’appli de musique n’est pas donné dans le cours : c’est probablement LyricsTraining, mais vérifie le lien sur Moodle.</p>"
+            },
+            {
+              "titre": "Séries, films et actualités en anglais",
+              "html": "<p>Avec une plateforme de streaming (Netflix, Prime Video, Canal+…), regarde en <b>version originale</b> en faisant évoluer les sous-titres :</p><ol><li>son anglais + sous-titres <b>français</b> (c’est un bon début) ;</li><li>son anglais + sous-titres <b>anglais</b> ;</li><li>son anglais <b>sans sous-titres</b>.</li></ol><p>Sans sous-titres, c’est plus difficile selon l’accent et le dialecte, mais c’est un très bon entraînement.</p><p><b>Actualités :</b> lis ou écoute les infos internationales en anglais, par exemple sur l’appli ou le site de la <b>BBC</b>. Il existe aussi de bons sites en anglais américain, canadien ou australien.</p>"
+            },
+            {
+              "titre": "Sites pour la grammaire et le vocabulaire",
+              "html": "<ul><li><b>anglaisfacile.com</b> (lien donné sur l’ENF) : beaucoup d’activités. On commence par un <b>test de niveau</b>, qui repère tes points faibles, puis le site propose des exercices ciblés. C’est de l’anglais <b>général</b>, pas technique.</li><li>Pour l’anglais technique, il existe des sites de <b>vocabulaire électrique</b> spécialisés.</li></ul>"
+            },
+            {
+              "titre": "Ressources du prof sur l’ENF",
+              "html": "<ul><li><b>Les nombres en anglais</b> : dates, heures, argent, grands et petits nombres, fractions, décimaux.</li><li><b>La prononciation de l’alphabet</b>.</li><li>D’autres documents à lire, avec la possibilité de poser des questions au prof.</li></ul><div class=\"attention\"><b>En cours, on épelle en anglais</b>, jamais en français : entraîne-toi à prononcer les lettres de l’alphabet.</div>"
+            },
+            {
+              "titre": "Préparer le TOEIC (facultatif)",
+              "html": "<p>Si tu as un bon niveau et que tu veux aller plus loin, le prof peut t’aider à <b>préparer le TOEIC</b> : documents, applis et sites conseillés. Parle-lui-en si ça t’intéresse.</p><ul><li>Le <b>CNAM</b> organise des sessions de TOEIC ; tu peux t’y inscrire à un <b>tarif préférentiel</b> (l’examen reste payant).</li><li>Le score du TOEIC (Listening and Reading) va jusqu’à <b>990</b>.</li></ul>"
             }
           ],
           "pointsCles": [
@@ -4454,7 +4474,12 @@ window.COURS = {
             "Pratiquer hors cours : Duolingo (gratuit, répétitif et ludique), un peu chaque jour.",
             "Ressources du prof : liens sur Moodle (module d’anglais, via l’ENF).",
             "Appli musique : compléter les paroles en écoutant, 4 niveaux ; bon pour la compréhension.",
-            "Jouer à des jeux vidéo en anglais aide à apprendre du vocabulaire."
+            "Jouer à des jeux vidéo en anglais aide à apprendre du vocabulaire.",
+            "Progresser en langue = pratiquer régulièrement ; la participation est notée à chaque cours.",
+            "Séries en VO : sous-titres français, puis anglais, puis aucun.",
+            "anglaisfacile.com : test de niveau puis activités ciblées (anglais général).",
+            "Sur l’ENF : les nombres en anglais et la prononciation de l’alphabet ; en cours, on épelle en anglais.",
+            "TOEIC possible : aide du prof, et inscription via le CNAM à tarif préférentiel."
           ],
           "definitions": [],
           "flashcards": [
@@ -4489,6 +4514,26 @@ window.COURS = {
             {
               "q": "Comment fonctionne l’appli de musique conseillée ?",
               "r": "On choisit un style et un niveau (4 niveaux), puis on complète les paroles en écoutant ; au niveau avancé, on tape 100 % des paroles."
+            },
+            {
+              "q": "Dans quel ordre faire évoluer les sous-titres en regardant une série en VO ?",
+              "r": "Sous-titres français, puis sous-titres anglais, puis sans sous-titres."
+            },
+            {
+              "q": "Pourquoi la participation est-elle notée à chaque cours d’anglais ?",
+              "r": "Parce qu’une langue progresse avec une pratique régulière ; réviser juste avant un contrôle ne suffit pas."
+            },
+            {
+              "q": "Que propose anglaisfacile.com ?",
+              "r": "Un test de niveau qui repère tes difficultés, puis des activités ciblées (anglais général)."
+            },
+            {
+              "q": "En cours d’anglais, comment épelle-t-on un mot ?",
+              "r": "En anglais, pas en français : il faut connaître la prononciation de l’alphabet."
+            },
+            {
+              "q": "Où passer le TOEIC à tarif préférentiel ?",
+              "r": "Avec les sessions organisées par le CNAM (l’examen reste payant)."
             }
           ],
           "quiz": [
@@ -4557,6 +4602,39 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "Les chansons sont moins rigoureuses en grammaire, mais très bonnes pour la compréhension."
+            },
+            {
+              "q": "Quelle est la bonne progression pour regarder des séries en anglais ?",
+              "choix": [
+                "VF sous-titres → sous-titres anglais → sans sous-titres",
+                "Sans sous-titres dès le début",
+                "Toujours en VF",
+                "Sous-titres anglais seulement sur le son français"
+              ],
+              "bonne": 0,
+              "explication": "On commence avec le son anglais et les sous-titres français, puis anglais, puis aucun."
+            },
+            {
+              "q": "Pourquoi ne peut-on pas réviser l’anglais seulement deux semaines avant un contrôle ?",
+              "choix": [
+                "Le niveau ne progresse qu’avec une pratique régulière",
+                "Les contrôles sont toujours à l’oral",
+                "Les cours ne sont pas sur l’ENF",
+                "Le TOEIC est obligatoire"
+              ],
+              "bonne": 0,
+              "explication": "Une langue demande de la pratique en continu ; c’est aussi pour ça que la participation est notée à chaque cours."
+            },
+            {
+              "q": "En cours, si on te demande d’épeler un mot, tu l’épelles…",
+              "choix": [
+                "En anglais",
+                "En français",
+                "Au choix",
+                "Par écrit seulement"
+              ],
+              "bonne": 0,
+              "explication": "On épelle en anglais : d’où le document sur la prononciation de l’alphabet."
             }
           ]
         }
