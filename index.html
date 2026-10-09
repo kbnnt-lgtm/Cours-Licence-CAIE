@@ -121,7 +121,7 @@ h3{text-wrap:balance}
 .resume-card:hover{border-color:var(--c)}
 .resume-card small{display:block;color:var(--muted);font-size:12px;font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
 .resume-card b{font-family:var(--f-display);font-size:18px}
-.quick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
 .quick button{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-align:left;min-width:0}
 .quick button:hover{border-color:var(--accent)}
 .quick b{font-size:15px}
@@ -291,6 +291,9 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .help-list{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;padding:12px 10px;align-items:center}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;max-width:min(92vw,520px);display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--ink);color:var(--bg);box-shadow:0 10px 30px rgba(0,0,0,.3);font-size:14px}
 .toast button{border:0;background:none;color:inherit;font-weight:700;text-decoration:underline;padding:0}
+.toast .toast-msg{display:flex;gap:12px;align-items:center;flex:1;min-width:0}
+.toast .toast-x{flex:none;text-decoration:none;font-size:15px;line-height:1;width:28px;height:28px;margin:-4px -6px -4px 0;border-radius:50%;opacity:.75}
+.toast .toast-x:hover{opacity:1;background:rgba(127,127,127,.25)}
 
 /* Révision (cartes) */
 .card-stage{padding:20px 20px 8px}
@@ -453,7 +456,14 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .ex-list li span{flex:1;min-width:0}
 .ex-list li small{color:var(--muted)}
 .ex-resume{border-color:var(--accent);background:var(--accent-soft)}
-@media (max-width:860px){ .ex-bar{border-radius:0;margin:0 -16px 16px;border-left:0;border-right:0} .ex-bar{gap:10px;padding:8px 12px;flex-wrap:nowrap} .ex-bar .t{min-width:0;font-size:14px;line-height:1.25} .ex-timer{font-size:19px} .ex-bar .btn{padding:9px 12px;font-size:14px;flex:none} .quick .wide{grid-column:1/3} }
+.ex-promo{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:11px 14px;border:1px solid var(--accent);border-left-width:4px;border-radius:var(--r);background:var(--accent-soft);color:var(--ink);text-align:left}
+.ex-promo svg.i{color:var(--accent);width:22px;height:22px;flex:none}
+.ex-promo span:not(.go){flex:1;min-width:0}
+.ex-promo b{display:block;font-size:15px}
+.ex-promo small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.ex-promo .go{flex:none;color:var(--accent);font-weight:700;font-size:14px}
+.ex-promo:hover{background:var(--surface)}
+@media (max-width:860px){ .ex-bar{border-radius:0;margin:0 -16px 16px;border-left:0;border-right:0} .ex-bar{gap:10px;padding:8px 12px;flex-wrap:nowrap} .ex-bar .t{min-width:0;font-size:14px;line-height:1.25} .ex-timer{font-size:19px} .ex-bar .btn{padding:9px 12px;font-size:14px;flex:none} }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 
@@ -595,8 +605,8 @@ const pctColor = p => p >= 80 ? "var(--ok)" : p >= 55 ? "var(--warn)" : "var(--b
 
 /* ---------- Toast ---------- */
 let toastT;
-function toast(html, ms = 5000){ const t = $("#toast"); t.innerHTML = html; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); }
-$("#toast").addEventListener("click", e => { const g = e.target.closest("[data-go]"), n = e.target.closest("[data-nav]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } else if(n){ $("#toast").hidden = true; nav(n.dataset.nav); } });
+function toast(html, ms = 5000){ const t = $("#toast"); t.innerHTML = `<span class="toast-msg">${html}</span><button class="toast-x" aria-label="Fermer">✕</button>`; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); }
+$("#toast").addEventListener("click", e => { if(e.target.closest(".toast-x")){ $("#toast").hidden = true; return; } const g = e.target.closest("[data-go]"), n = e.target.closest("[data-nav]"); if(g){ $("#toast").hidden = true; go(g.dataset.go); } else if(n){ $("#toast").hidden = true; nav(n.dataset.nav); } });
 
 /* ---------- Sommaire ---------- */
 function renderSide(){
@@ -663,8 +673,8 @@ function renderHome(){
     ${last ? `<button class="resume-card" data-go="${esc(last.key)}" style="--c:${esc(last.m.couleur)}"><span class="dot"></span><span><small>Reprendre</small><b>${esc(last.c.titre)}</b></span><span class="muted">→</span></button>` : ""}
     ${EX && !EX.rendu ? `<button class="resume-card ex-resume" data-nav="examen" style="--c:var(--accent)"><span class="dot"></span><span><small>Examen blanc en cours</small><b>${esc(EX.titre.replace(/^Examen blanc · /,""))}</b></span><span class="muted">Reprendre →</span></button>` : ""}
     <div id="pushInvite"></div>
+    ${EX && !EX.rendu ? "" : `<button class="ex-promo" data-nav="examen">${ICON.exam}<span><b>Examen blanc</b><small>Un vrai sujet de contrôle, chronométré et noté sur 20${(stats().ex||[]).length ? ` · dernière note ${fmtN(stats().ex.slice(-1)[0].note)}/20` : ""}</small></span><span class="go">Essayer →</span></button>`}
     <div class="quick">
-      <button data-nav="examen" class="wide">${ICON.exam}<b>Examen blanc</b><small>Sujet chronométré noté sur 20, par matière ou chapitre</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
       <button id="qCards">${ICON.cards}<b>Cartes</b><small>Révision rapide question / réponse</small></button>
       <button data-nav="photos">${ICON.photo}<b>Photos</b><small>${GAL.length} photos de cours classées</small></button>
