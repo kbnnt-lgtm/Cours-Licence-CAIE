@@ -4418,11 +4418,11 @@ window.COURS = {
       "chapitres": [
         {
           "id": "evaluations-annee",
-          "titre": "Évaluations de l'année",
+          "titre": "Évaluations et conseils pour progresser",
           "type": "Cours",
           "date": "2026-10-09",
           "source": "Enregistrement du cours d'anglais (modalités d'évaluation), résumé",
-          "resume": "Ce qu'il faut savoir sur les évaluations d'anglais de l'année : trois évaluations, dont un oral avec un temps de parole minimum.",
+          "resume": "Les évaluations d'anglais de l'année (dont un oral avec un temps de parole minimum) et comment pratiquer en dehors du cours.",
           "sections": [
             {
               "titre": "Les évaluations",
@@ -4439,6 +4439,10 @@ window.COURS = {
             {
               "titre": "Écrire au professeur",
               "html": "<ul><li>Les messages au professeur s'écrivent <b>en anglais</b>.</li><li><b>Sans IA</b> : rédige tes messages toi-même.</li></ul>"
+            },
+            {
+              "titre": "Pratiquer en dehors du cours",
+              "html": "<p>Pour une langue, la <b>répétition régulière</b> est indispensable. L'appli conseillée est <b>Duolingo</b> :</p><ul><li>des exercices courts et répétitifs, idéals pour pratiquer chaque jour ;</li><li>ludique, donc facile à tenir dans la durée ;</li><li><b>gratuite</b>. Une version payante sans publicité existe, à environ <b>89 € par an</b>, mais elle n'est pas nécessaire.</li></ul><div class=\"exemple\"><b>Astuce :</b> quelques minutes par jour valent mieux qu'une longue séance de temps en temps.</div>"
             }
           ],
           "pointsCles": [
@@ -4446,7 +4450,8 @@ window.COURS = {
             "Oral : au moins 1 min 30 de parole par personne.",
             "À deux : environ 3 à 4 minutes au total.",
             "L'enregistrement est supprimé après l'évaluation, sauf si tu veux le garder ; il n'est jamais publié.",
-            "Écrire au professeur en anglais, sans IA."
+            "Écrire au professeur en anglais, sans IA.",
+            "Pratiquer hors cours : Duolingo (gratuit, répétitif et ludique), un peu chaque jour."
           ],
           "definitions": [],
           "flashcards": [
@@ -4469,6 +4474,10 @@ window.COURS = {
             {
               "q": "Comment écrire au professeur ?",
               "r": "En anglais, et sans utiliser d'IA."
+            },
+            {
+              "q": "Quelle appli est conseillée pour pratiquer l'anglais hors cours ?",
+              "r": "Duolingo : gratuite, répétitive et ludique, à utiliser un peu chaque jour."
             }
           ],
           "quiz": [
@@ -4515,6 +4524,17 @@ window.COURS = {
               ],
               "bonne": 0,
               "explication": "Les messages s'écrivent en anglais, rédigés soi-même, sans IA."
+            },
+            {
+              "q": "Pourquoi Duolingo est-il conseillé pour pratiquer l'anglais ?",
+              "choix": [
+                "Il fait répéter régulièrement, de façon ludique",
+                "Il remplace les évaluations",
+                "Il est obligatoire et payant",
+                "Il corrige les oraux"
+              ],
+              "bonne": 0,
+              "explication": "La répétition est indispensable en langue ; l'appli est ludique et gratuite (version sans pub payante en option)."
             }
           ]
         }
