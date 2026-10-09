@@ -10,12 +10,15 @@ service cloud.firestore {
     }
     // Personne exclue de la classe par l'admin (collection bannis)
     function banned() { return signedIn() && exists(/databases/$(db)/documents/bannis/$(request.auth.uid)); }
+    function enAttente(id) { return get(/databases/$(db)/documents/demandes/$(id)).data.statut == 'en_attente'; }
     function owner(id) { return get(/databases/$(db)/documents/demandes/$(id)).data.uid == request.auth.uid; }
 
     // Profil, progression et stats : chacun les siens, l'admin peut lire ceux de la classe
     match /users/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow write: if signedIn() && request.auth.uid == uid && !banned();
+      allow write: if signedIn() && request.auth.uid == uid && !banned()
+        && request.resource.data.keys().hasOnly(['stats', 'done', 'quizBest', 'nom', 'email', 'maj'])
+        && (!('email' in request.resource.data) || request.resource.data.email == request.auth.token.email);
       allow delete: if isAdmin();
     }
 
@@ -23,19 +26,27 @@ service cloud.firestore {
     match /demandes/{id} {
       allow create: if signedIn() && !banned() && request.resource.data.uid == request.auth.uid
         && request.resource.data.statut == 'en_attente'
+        && request.resource.data.keys().hasOnly(['uid', 'auteur', 'email', 'statut', 'type', 'matiere', 'chapitre', 'chapitreTitre', 'titre', 'texte', 'nbPhotos', 'minis', 'fichiers', 'cree'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.auteur is string && request.resource.data.auteur.size() <= 80
+        && request.resource.data.type in ['cours', 'erreur', 'correction', 'photo', 'autre']
+        && request.resource.data.minis is list && request.resource.data.minis.size() <= 8
+        && request.resource.data.cree == request.time
         && request.resource.data.texte.size() <= 5000 && request.resource.data.titre.size() <= 120
         && request.resource.data.nbPhotos <= 8
         && (!('fichiers' in request.resource.data) || request.resource.data.fichiers.size() <= 3);
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
       allow update, delete: if isAdmin();
       match /photos/{p} {
-        allow create: if signedIn() && !banned() && owner(id) && request.resource.data.data.size() < 1000000;
+        allow create: if signedIn() && !banned() && owner(id) && enAttente(id) && p in ['0', '1', '2', '3', '4', '5', '6', '7']
+          && request.resource.data.data is string && request.resource.data.data.size() < 1000000;
         allow read: if isAdmin() || (signedIn() && owner(id));
         allow delete: if isAdmin();
       }
       // Fichiers joints (PDF, Word…), découpés en morceaux de moins de 1 Mo
       match /fichiers/{p} {
-        allow create: if signedIn() && !banned() && owner(id) && request.resource.data.data.size() < 1000000;
+        allow create: if signedIn() && !banned() && owner(id) && enAttente(id) && p.matches('^[0-2]-[0-9]{1,2}$')
+          && request.resource.data.keys().hasOnly(['data']) && request.resource.data.data is string && request.resource.data.data.size() < 1000000;
         allow read: if isAdmin() || (signedIn() && owner(id));
         allow delete: if isAdmin();
       }
@@ -58,6 +69,8 @@ service cloud.firestore {
       allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
       allow write: if isAdmin();
     }
+
+    // Tout ce qui n'est pas listé ici est refusé (lecture comme écriture).
 
     // Abonnements aux notifications (un document par appareil, id = jeton FCM).
     // Personne ne peut lire la liste ; l'envoi se fait côté serveur (GitHub Actions).

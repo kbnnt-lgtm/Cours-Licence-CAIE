@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2346c8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://*.firebaseio.com wss://*.firebaseio.com; frame-src https://cours-caie.firebaseapp.com https://accounts.google.com https://apis.google.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Cours CAIE">
@@ -652,6 +654,8 @@ const ONLINE_URL = "https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/";
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// Images envoyées par les membres : on n'accepte que des images encodées (pas de lien, pas de code)
+const safeImg = s => /^data:image\/(jpeg|png|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(String(s||"")) ? s : "";
 const store = {
   get(k, d){ try{ const v = localStorage.getItem("caie:"+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem("caie:"+k, JSON.stringify(v)); }catch(e){} if(SYNC_KEYS.includes(k)) scheduleSync(); }
@@ -807,7 +811,7 @@ function renderChapter(key){
     ${c.resume ? `<p class="summary" style="--c:${esc(m.couleur)}"><b>En bref.</b> ${esc(c.resume)}</p>` : ""}
     ${secs.length>1 ? `<nav class="toc" aria-label="Sections">${secs.map((s,j)=>`<a href="#" data-sec="${j}">${esc(s.titre)}</a>`).join("")}${photos.length?`<a href="#" data-sec="photos">Photos du cours</a>`:""}</nav>` : ""}
     <div class="prose">${secs.map((s,j)=>`<section id="sec-${j}"><h3>${esc(s.titre)}</h3>${wrapTables(s.html)}</section>`).join("")}</div>
-    ${contribs.length ? `<div class="box"><h2>Ajouts validés de la classe</h2>${contribs.map(k => `<div class="contrib"><b>${esc(k.titre||"Ajout")}</b>${k.texte?`<p style="margin:6px 0 0;font-family:var(--f-body);white-space:pre-wrap">${esc(k.texte)}</p>`:""}${k.nbPhotos?`<div class="strip" style="margin-top:8px">${(k.minis||[]).map((mi,j)=>`<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img src="${mi}" alt="Photo ${j+1}"></button>`).join("")}</div>`:""}${fjChips("contributions", k.id, k.fichiers)}<div class="who">Proposé par ${esc(k.auteur||"un membre")}</div></div>`).join("")}</div>` : ""}
+    ${contribs.length ? `<div class="box"><h2>Ajouts validés de la classe</h2>${contribs.map(k => `<div class="contrib"><b>${esc(k.titre||"Ajout")}</b>${k.texte?`<p style="margin:6px 0 0;font-family:var(--f-body);white-space:pre-wrap">${esc(k.texte)}</p>`:""}${k.nbPhotos?`<div class="strip" style="margin-top:8px">${(k.minis||[]).map((mi,j)=>`<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img src="${safeImg(mi)}" alt="Photo ${j+1}"></button>`).join("")}</div>`:""}${fjChips("contributions", k.id, k.fichiers)}<div class="who">Proposé par ${esc(k.auteur||"un membre")}</div></div>`).join("")}</div>` : ""}
     ${(c.pointsCles||[]).length ? `<div class="box"><h2>À retenir</h2><ul class="keypoints">${c.pointsCles.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>` : ""}
     ${(c.definitions||[]).length ? `<div class="box"><h2>Définitions</h2><dl class="defs">${c.definitions.map(d=>`<dt>${esc(d.terme)}</dt><dd>${esc(d.def)}</dd>`).join("")}</dl></div>` : ""}
     ${photos.length ? `<div class="box" id="sec-photos"><h2>Photos du cours</h2><div class="strip">${photos.map(g => thumb(g)).join("")}</div></div>` : ""}
@@ -887,7 +891,7 @@ function renderPhotos(){
       if(!chs.length) return `<div class="gal-mat" style="--c:${esc(m.couleur)}"><h2><span class="dot"></span>${esc(m.nom)}</h2><p class="muted">Pas encore de photo pour cette matière.</p></div>`;
       return `<div class="gal-mat" style="--c:${esc(m.couleur)}"><h2><span class="dot"></span>${esc(m.nom)}</h2>
         ${chs.map(o => `<div class="gal-chap"><h3><button data-go="${esc(o.x.key)}">${typeOf(o.x.c)} ${o.x.num}. ${esc(o.x.c.titre)}</button><small>${o.ph.length + o.cb.reduce((a,k)=>a+k.nbPhotos,0)} photo${o.ph.length>1?"s":""}</small></h3>
-          <div class="thumbs">${o.ph.map(g => thumb(g)).join("")}${o.cb.flatMap(k => (k.minis||[]).map((mi,j) => `<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img loading="lazy" src="${mi}" alt="${esc(k.titre||"Photo de la classe")}"><span>${esc(k.titre||"Photo")}<br><span class="who">par ${esc(k.auteur||"la classe")}</span></span></button>`)).join("")}</div></div>`).join("")}
+          <div class="thumbs">${o.ph.map(g => thumb(g)).join("")}${o.cb.flatMap(k => (k.minis||[]).map((mi,j) => `<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img loading="lazy" src="${safeImg(mi)}" alt="${esc(k.titre||"Photo de la classe")}"><span>${esc(k.titre||"Photo")}<br><span class="who">par ${esc(k.auteur||"la classe")}</span></span></button>`)).join("")}</div></div>`).join("")}
       </div>`;
     }).join("")}
     ${!GAL.length ? `<p class="msg info" style="margin-top:20px">Les photos n'ont pas pu être chargées. Ouvre la version en ligne : <a href="${ONLINE_URL}#photos">${ONLINE_URL}</a></p>` : ""}
@@ -908,8 +912,8 @@ async function openLb(){
   $("#lb").hidden = false; $("#lbStage").classList.remove("zoom");
   let src, title, chapKey;
   if(it.kind === "g"){ const g = it.g; src = g.fichier; title = g.titre; chapKey = g.matiere+"."+g.chapitre; }
-  else { const [id, j] = it.id.split(":"); const k = CONTRIBS.find(c => c.id === id) || {}; title = (k.titre||"Photo de la classe") + " · par " + (k.auteur||"la classe"); chapKey = k.matiere+"."+k.chapitre; src = (k.minis||[])[+j];
-    if(window.CLOUD){ CLOUD.contributionPhoto(id, j).then(d => { if(d && LB[lbI] === it) $("#lbImg").src = d; }).catch(()=>{}); } }
+  else { const [id, j] = it.id.split(":"); const k = CONTRIBS.find(c => c.id === id) || {}; title = (k.titre||"Photo de la classe") + " · par " + (k.auteur||"la classe"); chapKey = k.matiere+"."+k.chapitre; src = safeImg((k.minis||[])[+j]);
+    if(window.CLOUD){ CLOUD.contributionPhoto(id, j).then(d => { if(d && LB[lbI] === it) $("#lbImg").src = safeImg(d); }).catch(()=>{}); } }
   const x = byKey(chapKey);
   $("#lbImg").src = src; $("#lbImg").alt = title;
   $("#lbTitle").innerHTML = `${esc(title)}<small>${x ? esc(x.m.nom+" · "+x.c.titre) : ""} · ${lbI+1} / ${LB.length}</small>`;
@@ -1070,7 +1074,7 @@ function dmCard(d, admin){
     <div class="dm-head"><b>${esc(d.titre || TYPE_LBL[d.type] || "Demande")}</b><span class="badge">${esc(TYPE_LBL[d.type]||d.type)}</span><span class="badge ${st[1]}">${st[0]}</span></div>
     <div class="muted" style="font-size:13px">${esc(mat ? mat.nom : "Nouvelle matière")}${d.chapitreTitre ? " › " + esc(d.chapitreTitre) : ""}${admin ? "" : " · " + fmtDate(CLOUD.ms(d.cree))}</div>
     ${d.texte ? `<p>${esc(d.texte)}</p>` : ""}
-    ${(d.minis||[]).length ? `<div class="minis">${d.minis.map((m,i) => `<button data-dphoto="${esc(d.id)}:${i}" aria-label="Agrandir la photo ${i+1}"><img src="${m}" alt=""></button>`).join("")}</div>` : ""}
+    ${(d.minis||[]).length ? `<div class="minis">${d.minis.map((m,i) => `<button data-dphoto="${esc(d.id)}:${i}" aria-label="Agrandir la photo ${i+1}"><img src="${safeImg(m)}" alt=""></button>`).join("")}</div>` : ""}
     ${fjChips("demandes", d.id, d.fichiers)}
     ${av && av.texte ? `<div class="msg ${av.statut === "integree" ? "ok" : "info"}"><b>Avis de Claude :</b> ${esc(av.texte)}</div>` : ""}
     ${d.commentaire ? `<div class="msg info"><b>Réponse de l'admin :</b> ${esc(d.commentaire)}</div>` : ""}
@@ -1083,7 +1087,7 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("[data-dphoto]"); if(!b) return;
   const [id, i] = b.dataset.dphoto.split(":");
   $("#lb").hidden = false; $("#lbImg").src = b.querySelector("img").src; $("#lbTitle").textContent = "Photo de la demande"; $("#lbChap").hidden = true; $("#lbPrev").hidden = $("#lbNext").hidden = true; LB = [];
-  try{ const d = await CLOUD.demandePhoto(id, i); if(d) $("#lbImg").src = d; }catch(err){}
+  try{ const d = await CLOUD.demandePhoto(id, i); if(d) $("#lbImg").src = safeImg(d); }catch(err){}
 });
 /* ---------- Fichiers joints (PDF, Word…) ---------- */
 const DM_CACHE = new Map(), FJ_MAX = 3, FJ_TAILLE = 5 * 1024 * 1024, FJ_PART = 700000;
@@ -1101,8 +1105,8 @@ document.addEventListener("click", async e => {
   try{
     const b64 = await CLOUD.fichier(coll, id, +i, f); if(!b64) throw new Error("Fichier introuvable.");
     const bin = atob(b64), u8 = new Uint8Array(bin.length); for(let k = 0; k < bin.length; k++) u8[k] = bin.charCodeAt(k);
-    const url = URL.createObjectURL(new Blob([u8], {type: f.mime || "application/octet-stream"}));
-    const a = document.createElement("a"); a.href = url; a.download = f.nom; document.body.appendChild(a); a.click(); a.remove();
+    const url = URL.createObjectURL(new Blob([u8], {type: "application/octet-stream"}));
+    const a = document.createElement("a"); a.href = url; a.download = String(f.nom||"fichier").replace(/[\\/:*?"<>|]/g, "_"); document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 30000); $("#toast").hidden = true;
   }catch(err){ toast("Impossible de télécharger : " + esc(err.message)); }
   b.disabled = false;
