@@ -4445,6 +4445,242 @@ window.COURS = {
           "definitions": [],
           "flashcards": [],
           "quiz": []
+        },
+        {
+          "id": "se-presenter",
+          "titre": "Se présenter : titres, nom, épeler",
+          "type": "Cours",
+          "date": "2026-10-09",
+          "source": "Cours d’anglais (enregistrement), synthèse",
+          "resume": "Les titres de politesse (Mr, Mrs, Miss, Ms), les façons de dire son nom selon le contexte, et l’alphabet pour épeler son nom.",
+          "sections": [
+            {
+              "titre": "Les titres : Mr, Mrs, Miss, Ms",
+              "html": "<ul><li><b>Mr</b> /ˈmɪstə/ : pour <b>tous les hommes</b>, quel que soit l’âge ou la situation.</li><li><b>Mrs</b> /ˈmɪsɪz/ : femme <b>mariée</b>.</li><li><b>Miss</b> : femme <b>non mariée</b> ou jeune.</li><li><b>Ms</b> /mɪz/ : titre <b>neutre</b>, quand on ne sait pas ou qu’on ne veut pas préciser <i>(ajout, non vu en cours, mais très courant)</i>.</li></ul><p>Le titre s’emploie <b>avec le nom de famille</b> : <i>Mr Smith, Mrs Jones</i>.</p><div class=\"attention\"><b>Pièges :</b><br>• Jamais « Madam + nom » : ça n’a pas le sens de « Madame Dupont ».<br>• « MM » est une abréviation française, pas anglaise.</div><div class=\"exemple\"><b>UK ou US :</b> en anglais britannique, pas de point (<b>Mr</b>, <b>Mrs</b>) ; en américain, un point (<b>Mr.</b>, <b>Mrs.</b>). Les deux se voient, aucun n’est faux.</div>"
+            },
+            {
+              "titre": "Dire son nom",
+              "html": "<p><b>Name</b> = <b>first name</b> (prénom) + <b>surname</b> (nom de famille). On l’adapte au contexte :</p><ul><li>très formel : <i>My name is <b>Mrs</b> Smith.</i></li><li>moins formel : <i>My name is Elena Smith.</i></li><li>familier : <i>My name is Elena.</i></li></ul>"
+            },
+            {
+              "titre": "Épeler en anglais",
+              "html": "<p>Il faut savoir <b>épeler son prénom et son nom</b> en anglais (en cours, on épelle toujours en anglais) : utile pour donner une adresse ou un e-mail.</p><p><b>Astuce :</b> les lettres se regroupent par son. Par exemple B, C, D, E… riment toutes avec <b>green</b>.</p><div style=\"overflow-x:auto\"><table><thead><tr><th>Son</th><th>Rime avec</th><th>Lettres</th></tr></thead><tbody>\n<tr><td>/eɪ/</td><td>say, grey</td><td>A H J K</td></tr>\n<tr><td>/iː/</td><td><b>green</b></td><td>B C D E G P T V</td></tr>\n<tr><td>/e/</td><td>red</td><td>F L M N S X Z</td></tr>\n<tr><td>/aɪ/</td><td>white</td><td>I Y</td></tr>\n<tr><td>/əʊ/</td><td>go</td><td>O</td></tr>\n<tr><td>/uː/</td><td>blue</td><td>Q U W</td></tr>\n<tr><td>/ɑː/</td><td>car</td><td>R</td></tr></tbody></table></div><p class=\"muted\" style=\"font-size:13px\">Le tableau complet est sur l’ENF. Les mots de rime autres que « green » sont des repères ajoutés.</p><div class=\"attention\"><b>Lettres piégeuses pour un francophone :</b> <b>E</b> se dit « i », <b>I</b> se dit « aï », <b>G</b> se dit « dji », <b>J</b> se dit « djé », <b>R</b> se dit « ar ».</div><p><b>Alphabet OTAN</b> (accepté aussi) : Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike, November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, X-ray, Yankee, Zulu.</p>"
+            }
+          ],
+          "pointsCles": [
+            "Mr = tous les hommes ; Mrs = femme mariée ; Miss = non mariée ou jeune ; Ms = neutre.",
+            "Titre + nom de famille (Mr Smith) ; jamais « Madam + nom ».",
+            "UK sans point (Mr), US avec point (Mr.).",
+            "Name = first name + surname ; formel → familier selon le contexte.",
+            "Savoir épeler son nom en anglais ; B, C, D, E… riment avec green."
+          ],
+          "definitions": [
+            {
+              "terme": "First name",
+              "def": "Le prénom."
+            },
+            {
+              "terme": "Surname",
+              "def": "Le nom de famille."
+            },
+            {
+              "terme": "Ms",
+              "def": "Titre neutre pour une femme, sans indiquer si elle est mariée."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Quel titre pour un homme ?",
+              "r": "Mr, pour tous les hommes."
+            },
+            {
+              "q": "Mrs ou Miss pour une femme mariée ?",
+              "r": "Mrs (Miss = non mariée ou jeune)."
+            },
+            {
+              "q": "Quel titre neutre pour une femme ?",
+              "r": "Ms (prononcé « miz »)."
+            },
+            {
+              "q": "Mr ou Mr. ?",
+              "r": "Les deux : sans point en anglais britannique, avec point en américain."
+            },
+            {
+              "q": "Comment dit-on « prénom » et « nom de famille » ?",
+              "r": "First name et surname."
+            },
+            {
+              "q": "Comment se prononcent E et I en anglais ?",
+              "r": "E se dit « i », I se dit « aï »."
+            },
+            {
+              "q": "Avec quel mot riment B, C, D, E ?",
+              "r": "Green."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Quel titre convient pour un homme de 20 ans ?",
+              "choix": [
+                "Mr",
+                "Master Mr.",
+                "Mrs",
+                "Sir + nom"
+              ],
+              "bonne": 0,
+              "explication": "Mr s’emploie pour tous les hommes, quel que soit l’âge."
+            },
+            {
+              "q": "Comment s’adresser poliment à une femme dont on ignore la situation ?",
+              "choix": [
+                "Ms Smith",
+                "Madam Smith",
+                "MM Smith",
+                "Mrs Smith obligatoirement"
+              ],
+              "bonne": 0,
+              "explication": "Ms est le titre neutre ; « Madam + nom » ne se dit pas."
+            },
+            {
+              "q": "Quelle phrase est la plus formelle ?",
+              "choix": [
+                "My name is Mrs Smith.",
+                "My name is Elena.",
+                "I’m Elena.",
+                "Call me Lena."
+              ],
+              "bonne": 0,
+              "explication": "Titre + nom de famille = registre le plus formel."
+            },
+            {
+              "q": "Comment se prononce la lettre G en anglais ?",
+              "choix": [
+                "« dji »",
+                "« jé »",
+                "« gué »",
+                "« djé »"
+              ],
+              "bonne": 0,
+              "explication": "G rime avec green : « dji ». J se dit « djé »."
+            },
+            {
+              "q": "Dans « Mr. Brown », le point indique…",
+              "choix": [
+                "l’usage américain",
+                "une faute",
+                "une femme mariée",
+                "l’usage britannique"
+              ],
+              "bonne": 0,
+              "explication": "Les Américains mettent un point, les Britanniques non."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Titres et présentations",
+              "enonce": "<p>Tu accueilles des visiteurs anglophones à l’entreprise et tu dois les présenter correctement.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Mr Lee, 23 ans, célibataire. Quel titre ?",
+                  "choix": [
+                    "Mr",
+                    "Mrs",
+                    "Master",
+                    "Ms"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><b>Mr</b> : pour tous les hommes.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Sarah Jones porte une alliance et se présente comme mariée. Quel titre ?",
+                  "choix": [
+                    "Mrs Jones",
+                    "Miss Jones",
+                    "Madam Jones",
+                    "MM Jones"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><b>Mrs</b> : femme mariée. « Madam + nom » et « MM » sont des pièges.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Tu ne sais pas si Anna Brown est mariée. Quel titre neutre ?",
+                  "choix": [
+                    "Ms Brown",
+                    "Mrs Brown",
+                    "Miss Brown",
+                    "Madam Brown"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><b>Ms</b> : titre neutre.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Présente-toi de deux façons : très formelle, puis familière.",
+                  "attendu": "My name is Mr X (ou Mrs/Miss/Ms X). / My name is Prénom.",
+                  "points": 2,
+                  "corrige": "<p>Formel : <i>My name is Mr Martin.</i> Familier : <i>My name is Lucas.</i> Entre les deux : <i>My name is Lucas Martin.</i></p>"
+                }
+              ]
+            },
+            {
+              "titre": "Épeler",
+              "enonce": "<p>Au téléphone, un client anglais te demande d’épeler ton nom.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Quel groupe de lettres rime avec « green » ?",
+                  "choix": [
+                    "B, C, D, E",
+                    "A, H, J, K",
+                    "F, L, M, N",
+                    "Q, U, W"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>B, C, D, E, G, P, T, V riment avec <i>green</i>.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Comment épelle-t-on « GIE » ?",
+                  "choix": [
+                    "« dji – aï – i »",
+                    "« jé – i – eu »",
+                    "« gué – i – é »",
+                    "« dji – i – aï »"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>G = « dji », I = « aï », E = « i ».</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Épelle ton prénom et ton nom en anglais (à voix haute, puis écris la prononciation).",
+                  "attendu": "Chaque lettre prononcée à l’anglaise (attention à E, I, G, J, R).",
+                  "points": 2,
+                  "corrige": "<p>Exemple : MARTIN = « em – eï – ar – ti – aï – en ». Vérifie surtout E (« i »), I (« aï »), G (« dji »), J (« djé ») et R (« ar »).</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "En alphabet OTAN, « B » se dit…",
+                  "choix": [
+                    "Bravo",
+                    "Bingo",
+                    "Beta",
+                    "Bob"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Alpha, <b>Bravo</b>, Charlie, Delta…</p>"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
