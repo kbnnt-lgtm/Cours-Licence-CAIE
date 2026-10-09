@@ -122,7 +122,7 @@ h3{text-wrap:balance}
 .resume-card:hover{border-color:var(--c)}
 .resume-card small{display:block;color:var(--muted);font-size:12px;font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
 .resume-card b{font-family:var(--f-display);font-size:18px}
-.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.quick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
 .quick button{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-align:left;min-width:0}
 .quick button:hover{border-color:var(--accent)}
 .quick b{font-size:15px}
@@ -395,6 +395,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
   .btn{padding:12px 16px;font-size:15px}
   .actions .btn{flex:1 1 auto;justify-content:center}
   .quick{grid-template-columns:1fr 1fr}
+  .quick > :last-child:nth-child(odd){grid-column:span 2}
   .two{grid-template-columns:1fr}
   .stat b{font-size:24px}
   .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
@@ -480,6 +481,14 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .pl-next:hover{border-color:var(--accent)}
 .pl-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 18px}
 .pl-nav .btn{padding:8px 12px}
+.sm-weeks{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin:0 0 14px;scrollbar-width:thin}
+.sm-weeks .pill{flex:none;white-space:nowrap}
+.sm-acts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.sm-mat{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);background:var(--card);padding:12px 14px;margin-bottom:12px}
+.sm-mat h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:8px}
+.sm-mat .chap-row{grid-template-columns:84px 1fr auto;gap:8px}
+.sm-mat .sm-t{flex:none;width:76px;font-family:var(--f-mono,monospace);font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.sm-pl{font-size:14px;margin:0 0 16px}
 .pl-day{margin:0 0 16px}
 .pl-day h3{font-family:var(--f-ui);font-size:14px;font-weight:700;text-transform:capitalize;margin:0 0 8px;color:var(--muted)}
 .pl-day.today h3{color:var(--accent)}
@@ -541,6 +550,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
       <span><kbd>Q</kbd></span><span>Quiz (sur le chapitre ouvert, ou général)</span>
       <span><kbd>E</kbd></span><span>Examen blanc (sur la matière du chapitre ouvert)</span>
       <span><kbd>P</kbd></span><span>Photos des cours</span>
+      <span><kbd>S</kbd></span><span>Réviser une semaine (tous les cours vus cette semaine-là)</span>
       <span><kbd>1</kbd> … <kbd>4</kbd> / <kbd>Entrée</kbd></span><span>Répondre / question suivante (en quiz)</span>
       <span><kbd>M</kbd></span><span>Marquer le chapitre comme révisé</span>
       <span><kbd>H</kbd></span><span>Retour à l'accueil</span>
@@ -661,6 +671,7 @@ function renderSide(){
     <button class="chap-link" data-nav="photos">${ICON.photo}<span>Photos des cours</span></button>
     <button class="chap-link" data-nav="quiz">${ICON.quiz}<span>Quiz</span></button>
     <button class="chap-link" data-nav="examen">${ICON.exam}<span>Examen blanc</span></button>
+    <button class="chap-link" data-nav="semaine">${ICON.cards}<span>Réviser une semaine</span></button>
     <button class="chap-link" data-nav="planning">${ICON.cal}<span>Planning</span></button>
     <button class="chap-link" data-nav="moi">${ICON.stats}<span>Mon espace et mes stats</span></button>
   </div>`;
@@ -711,6 +722,7 @@ function renderHome(){
     ${nextCoursHtml()}
     ${EX && !EX.rendu ? "" : `<button class="ex-promo" data-nav="examen">${ICON.exam}<span><b>Examen blanc</b><small>Un vrai sujet de contrôle, chronométré et noté sur 20${(stats().ex||[]).length ? ` · dernière note ${fmtN(stats().ex.slice(-1)[0].note)}/20` : ""}</small></span><span class="go">Essayer →</span></button>`}
     <div class="quick">
+      <button data-nav="semaine">${ICON.cal}<b>Ma semaine</b><small>Tout ce qu'on a vu une semaine donnée</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
       <button id="qCards">${ICON.cards}<b>Cartes</b><small>Révision rapide question / réponse</small></button>
       <button data-nav="photos">${ICON.photo}<b>Photos</b><small>${GAL.length} photos de cours classées</small></button>
@@ -725,7 +737,7 @@ function renderHome(){
       </div>`; }).join("")}
     </div></div>
     <p class="touch-only muted" style="font-size:14px;margin-top:24px">En bas : <b>Cours</b> ouvre le sommaire, <b>Quiz</b> pour t'interroger, <b>Examen</b> pour un contrôle blanc, <b>Planning</b> pour tes cours et tes salles, <b>Mon espace</b> pour tes stats et tes demandes.</p>
-    <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
+    <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>S</kbd> semaine</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
   $("#qCards").onclick = () => startReview(allCards(), "Tous les cours");
   pushInvite();
   const annMax = Math.max(0, ...ANNONCES.map(a => a.t)); if(annMax) store.set("annSeen", annMax);
@@ -1201,7 +1213,7 @@ function updatePips(){
 }
 
 /* ---------- Navigation ---------- */
-const VIEWS = {"": renderHome, photos: renderPhotos, examen: renderExam, planning: renderPlanning, moi: renderMe, admin: renderAdmin};
+const VIEWS = {"": renderHome, photos: renderPhotos, examen: renderExam, planning: renderPlanning, semaine: renderSemaine, moi: renderMe, admin: renderAdmin};
 function render(){
   document.body.classList.toggle("no-side", false);
   if(route in VIEWS) VIEWS[route](); else renderChapter(route);
@@ -1668,6 +1680,7 @@ function renderPlanning(){
     <div class="eyebrow">Planning</div>
     <h1>${esc(titre)}</h1>
     <div class="pl-nav"><button class="btn" id="plPrev" aria-label="Semaine précédente">←</button><button class="btn" id="plToday">Cette semaine</button><button class="btn" id="plNext" aria-label="Semaine suivante">→</button>${!cours.length && nextWeekCours ? `<button class="btn primary" id="plJump">Prochains cours : ${esc(fmtJour(nextWeekCours.d, {day:"numeric", month:"long"}))} →</button>` : ""}</div>
+    ${chapsSemaine(plWeek).length ? `<button class="pl-next" id="plRev">${ICON.cards}<span class="txt"><small>Réviser cette semaine</small><b>${chapsSemaine(plWeek).length} cours dans l'appli</b></span><span class="muted">→</span></button>` : ""}
     ${body || `<p class="msg info">Rien de prévu cette semaine.</p>`}
     ${!cours.length && evs.length ? `<p class="muted" style="font-size:14px">Semaine en entreprise.</p>` : ""}
     <p class="muted" style="font-size:12.5px;margin-top:20px">Lieu : ${esc(PL.lieu)}. Planning exporté de Net-YParéo le ${esc(fmtDate(PL.maj))} : en cas de changement, c'est Net-YParéo qui fait foi.</p>`;
@@ -1676,6 +1689,45 @@ function renderPlanning(){
   $("#plNext").onclick = () => { const x = new Date(plWeek); x.setDate(x.getDate() + 7); goW(x); };
   $("#plToday").onclick = () => goW(new Date());
   $("#plJump")?.addEventListener("click", () => goW(plDate(nextWeekCours.d)));
+  $("#plRev")?.addEventListener("click", () => { smWeek = new Date(plWeek); nav("semaine"); });
+}
+
+/* ---------- Réviser une semaine ---------- */
+// Un chapitre appartient à la semaine de sa date (date du cours).
+let smWeek = null;
+const chapsSemaine = w => { const a = isoD(w), z = new Date(w); z.setDate(z.getDate() + 6); const b = isoD(z); return FLAT.filter(x => x.c.date && x.c.date >= a && x.c.date <= b && x.m.id !== "guide"); };
+const semLabel = (w, court) => { const f = new Date(w); f.setDate(f.getDate() + 4); return (court ? "" : "Semaine du ") + w.toLocaleDateString("fr-FR", {day:"numeric", month: w.getMonth() === f.getMonth() ? undefined : (court ? "short" : "long")}) + " au " + f.toLocaleDateString("fr-FR", {day:"numeric", month: court ? "short" : "long"}); };
+function renderSemaine(){
+  current = null;
+  const weeks = [...new Set(FLAT.filter(x => x.c.date && x.m.id !== "guide").map(x => isoD(lundi(plDate(x.c.date)))))].sort().reverse();
+  if(!weeks.length){ $("#view").innerHTML = `<div class="eyebrow">Réviser</div><h1>Ma semaine</h1><p class="msg info">Aucun cours daté pour l'instant.</p>`; return; }
+  if(!smWeek){ const cur = isoD(lundi(new Date())); smWeek = plDate(weeks.find(w => w <= cur) || weeks[weeks.length - 1]); }
+  const wk = isoD(smWeek), xs = chapsSemaine(smWeek);
+  const mats = SUBJ.map(m => ({m, xs: xs.filter(x => x.m === m)})).filter(o => o.xs.length);
+  const items = xs.flatMap(itemsOf), cards = xs.flatMap(x => x.c.flashcards || []);
+  const fin = new Date(smWeek); fin.setDate(fin.getDate() + 6);
+  const pl = (typeof PL_EV !== "undefined" ? PL_EV : []).filter(e => e.t !== "entreprise" && e.d >= wk && e.d <= isoD(fin));
+  const plMat = [...new Set(pl.map(e => e.titre))];
+  const i = weeks.indexOf(wk);
+  $("#view").innerHTML = `
+    <div class="eyebrow">Réviser une semaine</div>
+    <h1>${esc(semLabel(smWeek))}</h1>
+    <div class="sm-weeks" role="tablist" aria-label="Choisir la semaine">${weeks.map(w => `<button class="pill" data-smw="${w}" aria-pressed="${w === wk}">${esc(semLabel(plDate(w), true))}</button>`).join("")}</div>
+    <div class="pl-nav"><button class="btn" id="smPrev" ${i < 0 || i >= weeks.length - 1 ? "disabled" : ""} aria-label="Semaine précédente">← Avant</button><button class="btn" id="smNext" ${i <= 0 ? "disabled" : ""} aria-label="Semaine suivante">Après →</button></div>
+    ${xs.length ? `<p class="lede" style="margin-top:0">${xs.length} cours en ${mats.length} matière${mats.length > 1 ? "s" : ""}.</p>
+      <div class="sm-acts">${items.length ? `<button class="btn primary" id="smQuiz">${ICON.quiz}Quiz de la semaine <small>(${Math.min(20, items.length)} questions au hasard)</small></button>` : ""}${cards.length ? `<button class="btn" id="smCards">${ICON.cards}Cartes de la semaine <small>(${cards.length})</small></button>` : ""}</div>
+      ${mats.map(o => `<div class="sm-mat" style="--c:${esc(o.m.couleur || "#2346c8")}"><h3><span class="dot" style="width:10px;height:10px;border-radius:50%;background:var(--c)"></span>${esc(o.m.nom)}</h3>
+        <div class="chap-rows">${o.xs.map(x => `<button class="chap-row" data-go="${esc(x.key)}"><span class="sm-t">${esc(typeOf(x.c))}</span><span>${esc(x.c.titre)}</span><span class="muted" style="font-size:12.5px;margin-left:auto">${esc(fmtJour(x.c.date, {weekday:"short", day:"numeric"}))}</span></button>`).join("")}</div></div>`).join("")}`
+    : `<p class="msg info">Aucun cours de l'appli n'est daté de cette semaine.</p>`}
+    ${plMat.length ? `<p class="sm-pl muted">Au planning cette semaine : ${plMat.map(esc).join(", ")}.</p>` : ""}
+    <p class="muted" style="font-size:12.5px;margin-top:20px">Chaque cours est rangé à la date où il a été vu. Une date fausse ? Signale-le avec « Proposer une modification » sur le chapitre.</p>`;
+  const goW = w => { smWeek = plDate(w); renderSemaine(); scrollTo(0,0); };
+  $$("[data-smw]").forEach(b => b.onclick = () => goW(b.dataset.smw));
+  $("#smPrev").onclick = () => weeks[i + 1] && goW(weeks[i + 1]);
+  $("#smNext").onclick = () => weeks[i - 1] && goW(weeks[i - 1]);
+  $("#smQuiz")?.addEventListener("click", () => { closeAll(); $("#quizOv").hidden = false; startQuiz(shuffle(items).slice(0, 20), "Quiz · " + semLabel(smWeek)); });
+  $("#smCards")?.addEventListener("click", () => startReview(cards, semLabel(smWeek)));
+  document.querySelector("[data-smw][aria-pressed=true]")?.scrollIntoView({inline:"center", block:"nearest"});
 }
 
 /* ---------- Barre mobile, fenêtres, thème ---------- */
@@ -1725,6 +1777,7 @@ document.addEventListener("keydown", e => {
   else if(k.toLowerCase()==="q") openQuiz(current ? {m: byKey(current).m.id, c: current} : null);
   else if(k.toLowerCase()==="e"){ if(current && !(EX && !EX.rendu)){ exSel = {...exSel, m: byKey(current).m.id, c: (byKey(current).c.examen||[]).length ? current : null}; store.set("examSel", exSel); } nav("examen"); }
   else if(k.toLowerCase()==="p") nav("photos");
+  else if(k.toLowerCase()==="s") nav("semaine");
   else if(k.toLowerCase()==="h") nav("");
   else if(k.toLowerCase()==="t") toggleTheme();
 });
