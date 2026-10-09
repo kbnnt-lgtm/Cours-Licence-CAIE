@@ -3,7 +3,8 @@
 // (document meta/notifs) et envoie :
 //   - à tout le monde : nouveaux cours, nouvelles annonces ;
 //   - à l'admin : nouvelles demandes à valider ;
-//   - à l'auteur : la décision sur sa demande.
+//   - à l'auteur : la décision sur sa demande ;
+//   - à tout le monde, la veille à 18h : les cours du lendemain (planning.js).
 // Publie aussi les règles Firestore (notifs/firestore.rules) si elles ont changé.
 // Identifiants : secret GitHub FIREBASE_SA (clé de compte de service Firebase, JSON).
 import admin from "firebase-admin";
@@ -92,11 +93,46 @@ for (const d of decs) {
   await envoyer(subs.filter(p => p.uid === d.uid).map(p => p.token), "Ta demande", `« ${d.titre || "Ta demande"} » a été ${STATUT[d.statut]}.`, "moi");
 }
 
+// 7 bis. Rappel de la veille à 18h (heure de Paris) : cours, horaires et salles du lendemain
+const paris = d => new Intl.DateTimeFormat("fr-CA", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).formatToParts(d).reduce((o, x) => (o[x.type] = x.value, o), {});
+const pn = paris(new Date()), heure = +pn.hour;
+const demainD = new Date(Date.UTC(+pn.year, +pn.month - 1, +pn.day + 1)), demain = demainD.toISOString().slice(0, 10);
+let rappel = st.rappel || "";
+if (heure >= 18 && heure < 23 && rappel !== demain && fs.existsSync("planning.js")) {
+  vm.runInNewContext(fs.readFileSync("planning.js", "utf8"), ctx);
+  const P = ctx.window.PLANNING || { evenements: [] };
+  const evs = P.evenements.filter(e => e.d === demain && e.t !== "entreprise").sort((a, b) => a.h1.localeCompare(b.h1));
+  if (evs.length) {
+    const h = t => t.replace(/^0/, "").replace(":00", "h").replace(":", "h");
+    const blocs = [];
+    for (const e of evs) { const b = blocs[blocs.length - 1]; if (b && b.titre === e.titre && b.salle === e.salle) b.h.push(h(e.h1) + "–" + h(e.h2)); else blocs.push({ ...e, h: [h(e.h1) + "–" + h(e.h2)] }); }
+    // Chapitre probable : la matière de l'appli qui correspond au cours, et son dernier chapitre de cours
+    const MAT = [[/automatis|programmation|automate/i, "automatisme"], [/harmonisation|électrotech|distribution/i, "electrotechnique"], [/anglais/i, "anglais"]];
+    const mats = COURS.matieres.filter(m => !m.exemple);
+    const lignes = blocs.map(b => {
+      let l = `${b.h.join(" et ")} : ${b.titre}${b.prof ? " (" + b.prof + ")" : ""}${b.salle ? ", " + b.salle : ""}`;
+      const id = (MAT.find(([r]) => r.test(b.titre + " " + b.ue)) || [])[1];
+      const m = mats.find(x => x.id === id || x.nom.toLowerCase() === b.titre.toLowerCase());
+      const ch = m && m.chapitres.filter(c => !/^(exercices|devoirs|dm|tp)-/.test(c.id)).pop();
+      if (ch) l += `. Chapitre probable : suite de « ${ch.titre} »`;
+      return l + ".";
+    });
+    // Devoirs à rendre demain (titre du chapitre « pour le lundi 12 octobre »)
+    const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+    const cle = new RegExp(`\\b${demainD.getUTCDate()}(er)? ${MOIS[demainD.getUTCMonth()]}`, "i");
+    for (const m of mats) for (const c of m.chapitres) if (/^(dm|devoirs)-/.test(c.id) && cle.test(c.titre)) lignes.push(`À rendre : ${c.titre.replace(/\s*\(pour le[^)]*\)/i, "")}.`);
+    const jour = new Intl.DateTimeFormat("fr-FR", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" }).format(demainD);
+    await envoyer(tous, `Demain, ${jour}`, lignes.join("\n"), "planning");
+    console.log("Rappel du lendemain :\n" + lignes.join("\n"));
+  } else console.log("Pas de cours demain : pas de rappel.");
+  rappel = demain;
+}
+
 // 8. Nettoyage et nouvel état
 for (const t of morts) await db.collection("push").doc(t).delete().catch(() => {});
 for (const p of (await db.collection("push").get()).docs) if (p.data().uid && bannis.has(p.data().uid)) await p.ref.delete();
 await ref.set({ chapitres: chaps.map(c => c.key), annT: ann.length ? ann.reduce((m, a) => (ms(a.cree) > ms(m) ? a.cree : m), st.annT) : st.annT,
   dmT: dms.length ? dms.reduce((m, d) => (ms(d.cree) > ms(m) ? d.cree : m), st.dmT) : st.dmT,
-  decT: decs.length ? decs.reduce((m, d) => (ms(d.decide) > ms(m) ? d.decide : m), st.decT) : st.decT });
+  decT: decs.length ? decs.reduce((m, d) => (ms(d.decide) > ms(m) ? d.decide : m), st.decT) : st.decT, rappel });
 console.log("Terminé.");
 process.exit(0);
