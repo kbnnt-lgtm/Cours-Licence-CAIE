@@ -58,6 +58,15 @@ Mise en forme autorisée : **gras**, listes avec « - », listes numérotées «
 ${ctx.texte}
 === FIN DU COURS ===`;
 
+// Mode conversation vocale : réponses lues à voix haute, courtes et vivantes
+const ORAL = `
+
+=== MODE CONVERSATION ORALE ===
+L'étudiant te parle au micro et ta réponse est lue à voix haute. Parle comme dans une vraie discussion, dynamique et chaleureuse :
+- 2 à 4 phrases courtes, une idée à la fois, pas de liste, pas de gras, pas de titres, pas de symboles à lire : dis les formules en mots (« U égale R fois I »).
+- Reste fidèle au cours (mêmes notions, mêmes formules), mais sans le citer mot à mot.
+- Relance souvent la discussion : une question pour vérifier qu'il a compris, un petit défi, ou « tu veux qu'on voie un exemple ? ».
+- Si sa phrase est mal reconnue ou incomplète, devine le sens probable ou demande-lui de répéter.`;
 let ok = 0; // indice du premier modèle qui a répondu
 function erreur(e) {
   const m = String((e && (e.message || e.code)) || e);
@@ -69,14 +78,15 @@ function erreur(e) {
 function chat(ctx) {
   const hist = [];
   return {
-    async send(texte, onMorceau) {
+    async send(texte, onMorceau, opts = {}) {
       let lastErr;
       for (let i = ok; i < MODELES.length; i++) {
         try {
           let tout = "";
-          if (DIRECT) tout = await direct(MODELES[i], consignes(ctx), hist, texte, onMorceau);
+          const sys = consignes(ctx) + (opts.oral ? ORAL : "");
+          if (DIRECT) tout = await direct(MODELES[i], sys, hist, texte, onMorceau);
           else {
-            const model = AI.getGenerativeModel(ai, { model: MODELES[i], systemInstruction: consignes(ctx), generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } });
+            const model = AI.getGenerativeModel(ai, { model: MODELES[i], systemInstruction: sys, generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } });
             const s = model.startChat({ history: hist.slice() });
             const r = await s.sendMessageStream(texte);
             for await (const c of r.stream) { const t = c.text(); if (t) { tout += t; onMorceau && onMorceau(tout); } }
