@@ -4418,283 +4418,123 @@ window.COURS = {
       "chapitres": [
         {
           "id": "evaluations-annee",
-          "titre": "Évaluations et conseils pour progresser",
+          "titre": "Infos du cours et conseils pour progresser",
           "type": "Cours",
           "date": "2026-10-09",
           "source": "Enregistrement du cours d'anglais (modalités d'évaluation), résumé",
-          "resume": "Les évaluations d’anglais de l’année, et tout ce qui aide à progresser : pratique régulière, séries en VO, sites, ressources de l’ENF et TOEIC.",
+          "resume": "L’essentiel : comment tu es évalué, les règles en cours, et les outils pour progresser.",
           "sections": [
             {
-              "titre": "Les évaluations",
-              "html": "<p>Il y a <b>trois évaluations</b> d'anglais sur l'année.</p>"
+              "titre": "Évaluation",
+              "html": "<ul><li><b>3 évaluations</b> dans l’année, plus une <b>note de participation à chaque cours</b>.</li><li><b>Oral :</b> au moins <b>1 min 30 par personne</b> (environ 3-4 min à deux). L’enregistrement est supprimé après la note, jamais publié.</li></ul><div class=\"attention\">Une langue ne se révise pas la veille : seule la <b>pratique régulière</b> fait progresser.</div>"
             },
             {
-              "titre": "Progresser : la régularité avant tout",
-              "html": "<p>Une langue ne se révise pas comme les autres matières : <b>deux semaines de révision avant un contrôle ne suffisent pas</b>. Le niveau ne monte qu’avec une pratique <b>régulière</b> ; sans pratique, on stagne.</p><div class=\"attention\"><b>Note de participation :</b> la participation est notée <b>à chaque cours</b>, justement pour encourager à pratiquer en continu.</div>"
+              "titre": "En cours",
+              "html": "<ul><li>On parle <b>anglais</b>, même entre élèves ; on ne traduit pas pour son voisin.</li><li>Aucune question n’est bête, mais écoute avant de faire répéter.</li><li>On épelle en anglais : connais l’alphabet.</li><li>Téléphone OK comme dictionnaire, pas pour lire une traduction toute faite. Écris au prof en anglais, sans IA.</li></ul>"
             },
             {
-              "titre": "L'oral : temps de parole",
-              "html": "<ul><li>Chacun doit parler <b>individuellement au moins 1 min 30</b>. C'est un minimum, pas un maximum.</li><li>Pour un passage <b>à deux</b>, viser environ <b>3 à 4 minutes</b> au total.</li><li>Inutile de faire très long : rester raisonnable.</li></ul><div class=\"attention\"><b>À retenir :</b> 1 min 30 de parole <b>par personne</b>, pas pour le groupe.</div>"
+              "titre": "Pratiquer hors cours",
+              "html": "<ul><li><b>Duolingo</b> (gratuit), un peu chaque jour.</li><li><b>Séries en VO</b> : sous-titres FR → EN → aucun. Actus sur la <b>BBC</b>.</li><li><b>Musique</b> : appli du lien Moodle où l’on complète les paroles (4 niveaux).</li><li><b>Jeux vidéo</b> en anglais.</li></ul>"
             },
             {
-              "titre": "L'enregistrement de l'oral",
-              "html": "<p>L'oral est enregistré pour la notation. Après l'évaluation, l'enregistrement est <b>supprimé</b>, sauf si tu demandes à le garder. Il n'est <b>jamais publié</b>.</p>"
-            },
-            {
-              "titre": "Les règles en cours",
-              "html": "<ul><li><b>Aucune question n’est bête</b> : toutes les questions sont importantes.</li><li><b>Écoute avant de demander de répéter</b>. Si tu as fait l’effort et que tu n’as pas compris, le prof reformule, écrit au tableau ou mime. En revanche, il n’aime pas répéter parce qu’on bavardait ou qu’on était sur son téléphone.</li><li><b>On parle anglais</b> : avec le prof, et aussi entre élèves pendant le cours.</li><li><b>On ne traduit pas pour son voisin</b>. Le prof explique un mot en anglais plutôt que de le traduire, et tu dois essayer de faire pareil.</li><li>Téléphone, ordinateur ou tablette sont autorisés <b>comme dictionnaire</b>. Mais taper sa question dans un traducteur et lire la traduction, c’est non : formule toi-même.</li></ul><div class=\"exemple\"><b>L’effort compte plus que la perfection :</b> une phrase imparfaite que tu as construite toi-même vaut mieux qu’une traduction parfaite lue à voix haute.</div>"
-            },
-            {
-              "titre": "Écrire au professeur",
-              "html": "<ul><li>Les messages au professeur s'écrivent <b>en anglais</b>.</li><li><b>Sans IA</b> : rédige tes messages toi-même.</li></ul>"
-            },
-            {
-              "titre": "Pratiquer en dehors du cours",
-              "html": "<p>Pour une langue, la <b>répétition régulière</b> est indispensable. L'appli conseillée est <b>Duolingo</b> :</p><ul><li>des exercices courts et répétitifs, idéals pour pratiquer chaque jour ;</li><li>ludique, donc facile à tenir dans la durée ;</li><li><b>gratuite</b>. Une version payante sans publicité existe, à environ <b>89 € par an</b>, mais elle n'est pas nécessaire.</li></ul><div class=\"exemple\"><b>Astuce :</b> quelques minutes par jour valent mieux qu'une longue séance de temps en temps.</div><p><b>Les ressources du prof sur Moodle.</b> Des liens pour travailler l’anglais sont déposés sur Moodle, dans le module d’anglais (accès par l’ENF).</p>\n<p><b>Apprendre avec la musique.</b> L’un de ces liens mène à une appli, sur téléphone ou sur ordinateur :</p>\n<ul><li>tu choisis ton style de musique (pop, rock, rap, country…) ;</li><li>tu choisis un niveau parmi <b>4</b> ;</li><li>tu complètes les paroles de la chanson pendant l’écoute ; au niveau avancé, tu tapes <b>100 %</b> des paroles.</li></ul>\n<div class=\"attention\"><b>À savoir :</b> la grammaire et le vocabulaire des chansons sont moins rigoureux qu’en cours, mais c’est très bon pour la <b>compréhension orale</b>.</div>\n<p><b>Les jeux vidéo.</b> Jouer en anglais, ou avec des joueurs anglophones, fait aussi apprendre du vocabulaire.</p>\n<p class=\"muted\" style=\"font-size:13px\">Le nom de l’appli de musique n’est pas donné dans le cours : c’est probablement LyricsTraining, mais vérifie le lien sur Moodle.</p>"
-            },
-            {
-              "titre": "Séries, films et actualités en anglais",
-              "html": "<p>Avec une plateforme de streaming (Netflix, Prime Video, Canal+…), regarde en <b>version originale</b> en faisant évoluer les sous-titres :</p><ol><li>son anglais + sous-titres <b>français</b> (c’est un bon début) ;</li><li>son anglais + sous-titres <b>anglais</b> ;</li><li>son anglais <b>sans sous-titres</b>.</li></ol><p>Sans sous-titres, c’est plus difficile selon l’accent et le dialecte, mais c’est un très bon entraînement.</p><p><b>Actualités :</b> lis ou écoute les infos internationales en anglais, par exemple sur l’appli ou le site de la <b>BBC</b>. Il existe aussi de bons sites en anglais américain, canadien ou australien.</p>"
-            },
-            {
-              "titre": "Dictionnaires conseillés",
-              "html": "<ul><li><b>DeepL</b> : préféré à Google Traduction. Bien pour <b>un ou deux mots</b>, pas pour des expressions.</li><li><b>WordReference</b> et <b>Reverso</b> : dictionnaires français ↔ anglais, site et appli.</li><li><b>Merriam-Webster</b> (dictionnaire américain) : pour aller plus loin, avec des <b>définitions et des synonymes en anglais</b> plutôt qu’une traduction. On y trouve aussi l’étymologie, le mot du jour et des jeux de mots. Il explique l’anglais britannique comme l’anglais américain.</li></ul>"
-            },
-            {
-              "titre": "Sites pour la grammaire et le vocabulaire",
-              "html": "<ul><li><b>anglaisfacile.com</b> (lien donné sur l’ENF) : beaucoup d’activités. On commence par un <b>test de niveau</b>, qui repère tes points faibles, puis le site propose des exercices ciblés. C’est de l’anglais <b>général</b>, pas technique.</li><li>Pour l’anglais technique, il existe des sites de <b>vocabulaire électrique</b> spécialisés.</li></ul>"
-            },
-            {
-              "titre": "Ressources du prof sur l’ENF",
-              "html": "<ul><li><b>Les nombres en anglais</b> : dates, heures, argent, grands et petits nombres, fractions, décimaux.</li><li><b>La prononciation de l’alphabet</b>.</li><li>D’autres documents à lire, avec la possibilité de poser des questions au prof.</li></ul><div class=\"attention\"><b>En cours, on épelle en anglais</b>, jamais en français : entraîne-toi à prononcer les lettres de l’alphabet.</div>"
-            },
-            {
-              "titre": "Préparer le TOEIC (facultatif)",
-              "html": "<p>Si tu as un bon niveau et que tu veux aller plus loin, le prof peut t’aider à <b>préparer le TOEIC</b> : documents, applis et sites conseillés. Parle-lui-en si ça t’intéresse.</p><ul><li>Le <b>CNAM</b> organise des sessions de TOEIC ; tu peux t’y inscrire à un <b>tarif préférentiel</b> (l’examen reste payant).</li><li>Le score du TOEIC (Listening and Reading) va jusqu’à <b>990</b>.</li></ul>"
+              "titre": "Outils et ressources",
+              "html": "<ul><li><b>Dictionnaires :</b> DeepL (1-2 mots), WordReference ou Reverso (FR↔EN), Merriam-Webster (définitions en anglais).</li><li><b>anglaisfacile.com</b> : test de niveau puis exercices ciblés.</li><li><b>ENF / Moodle</b> : nombres en anglais, prononciation de l’alphabet, liens du prof.</li><li><b>TOEIC</b> (facultatif, sur 990) : le prof aide à le préparer ; inscription possible via le CNAM à tarif réduit.</li></ul>"
             }
           ],
           "pointsCles": [
-            "3 évaluations d'anglais dans l'année.",
-            "Oral : au moins 1 min 30 de parole par personne.",
-            "À deux : environ 3 à 4 minutes au total.",
-            "L'enregistrement est supprimé après l'évaluation, sauf si tu veux le garder ; il n'est jamais publié.",
-            "Écrire au professeur en anglais, sans IA.",
-            "Pratiquer hors cours : Duolingo (gratuit, répétitif et ludique), un peu chaque jour.",
-            "Ressources du prof : liens sur Moodle (module d’anglais, via l’ENF).",
-            "Appli musique : compléter les paroles en écoutant, 4 niveaux ; bon pour la compréhension.",
-            "Jouer à des jeux vidéo en anglais aide à apprendre du vocabulaire.",
-            "Progresser en langue = pratiquer régulièrement ; la participation est notée à chaque cours.",
-            "Séries en VO : sous-titres français, puis anglais, puis aucun.",
-            "anglaisfacile.com : test de niveau puis activités ciblées (anglais général).",
-            "Sur l’ENF : les nombres en anglais et la prononciation de l’alphabet ; en cours, on épelle en anglais.",
-            "TOEIC possible : aide du prof, et inscription via le CNAM à tarif préférentiel.",
-            "En cours : aucune question n’est bête, on parle anglais (même entre élèves), on ne traduit pas pour son voisin.",
-            "Téléphone OK comme dictionnaire, mais pas pour lire une traduction toute faite.",
-            "Dictionnaires : DeepL (1-2 mots), WordReference et Reverso (FR↔EN), Merriam-Webster (définitions en anglais)."
+            "3 évaluations + participation notée à chaque cours.",
+            "Oral : 1 min 30 minimum par personne.",
+            "En cours : on parle anglais, on ne traduit pas pour le voisin.",
+            "Pratique régulière : Duolingo, séries en VO, BBC, musique.",
+            "Dictionnaires : DeepL, WordReference/Reverso, Merriam-Webster.",
+            "Ressources sur l’ENF/Moodle ; TOEIC possible via le CNAM."
           ],
           "definitions": [],
           "flashcards": [
             {
-              "q": "Combien d'évaluations d'anglais dans l'année ?",
-              "r": "Trois."
+              "q": "Combien d’évaluations d’anglais dans l’année ?",
+              "r": "3, plus une note de participation à chaque cours."
             },
             {
-              "q": "Temps de parole minimum à l'oral ?",
-              "r": "1 min 30 par personne, individuellement."
+              "q": "Temps de parole minimum à l’oral ?",
+              "r": "1 min 30 par personne (environ 3-4 min à deux)."
             },
             {
-              "q": "Durée conseillée d'un oral à deux ?",
-              "r": "Environ 3 à 4 minutes au total."
+              "q": "Pourquoi ne pas réviser l’anglais juste avant le contrôle ?",
+              "r": "Une langue progresse seulement avec une pratique régulière."
             },
             {
-              "q": "Que devient l'enregistrement de l'oral ?",
-              "r": "Il est supprimé après l'évaluation, sauf si tu demandes à le garder. Il n'est jamais publié."
+              "q": "Usage du téléphone en cours ?",
+              "r": "Comme dictionnaire oui ; pas pour lire une traduction toute faite."
             },
             {
-              "q": "Comment écrire au professeur ?",
-              "r": "En anglais, et sans utiliser d'IA."
+              "q": "Ordre des sous-titres pour une série en VO ?",
+              "r": "Français, puis anglais, puis aucun."
             },
             {
-              "q": "Quelle appli est conseillée pour pratiquer l'anglais hors cours ?",
-              "r": "Duolingo : gratuite, répétitive et ludique, à utiliser un peu chaque jour."
+              "q": "Quel dictionnaire pour des définitions en anglais ?",
+              "r": "Merriam-Webster."
             },
             {
-              "q": "Où trouver les liens de ressources du prof d’anglais ?",
-              "r": "Sur Moodle, dans le module d’anglais (accès par l’ENF)."
-            },
-            {
-              "q": "Comment fonctionne l’appli de musique conseillée ?",
-              "r": "On choisit un style et un niveau (4 niveaux), puis on complète les paroles en écoutant ; au niveau avancé, on tape 100 % des paroles."
-            },
-            {
-              "q": "Dans quel ordre faire évoluer les sous-titres en regardant une série en VO ?",
-              "r": "Sous-titres français, puis sous-titres anglais, puis sans sous-titres."
-            },
-            {
-              "q": "Pourquoi la participation est-elle notée à chaque cours d’anglais ?",
-              "r": "Parce qu’une langue progresse avec une pratique régulière ; réviser juste avant un contrôle ne suffit pas."
-            },
-            {
-              "q": "Que propose anglaisfacile.com ?",
-              "r": "Un test de niveau qui repère tes difficultés, puis des activités ciblées (anglais général)."
-            },
-            {
-              "q": "En cours d’anglais, comment épelle-t-on un mot ?",
-              "r": "En anglais, pas en français : il faut connaître la prononciation de l’alphabet."
-            },
-            {
-              "q": "Où passer le TOEIC à tarif préférentiel ?",
-              "r": "Avec les sessions organisées par le CNAM (l’examen reste payant)."
-            },
-            {
-              "q": "En cours d’anglais, peut-on utiliser son téléphone ?",
-              "r": "Oui, comme dictionnaire. Mais pas pour taper sa question dans un traducteur et lire la traduction."
-            },
-            {
-              "q": "Pour quoi DeepL est-il adapté ?",
-              "r": "Pour traduire un ou deux mots, pas des expressions. Le prof le préfère à Google Traduction."
-            },
-            {
-              "q": "Quel dictionnaire donne des définitions et des synonymes en anglais ?",
-              "r": "Merriam-Webster (dictionnaire américain), avec aussi l’étymologie et le mot du jour."
-            },
-            {
-              "q": "Quelle langue parle-t-on entre élèves pendant le cours d’anglais ?",
-              "r": "L’anglais, et on ne traduit pas pour son voisin."
+              "q": "Où passer le TOEIC à tarif réduit ?",
+              "r": "Via le CNAM (examen payant, noté sur 990)."
             }
           ],
           "quiz": [
             {
-              "q": "Quel temps de parole minimum faut-il à l'oral ?",
+              "q": "Quel temps de parole minimum à l’oral ?",
               "choix": [
                 "1 min 30 par personne",
                 "1 min 30 pour le groupe",
-                "3 minutes par personne",
-                "Aucun minimum"
-              ],
-              "bonne": 0,
-              "explication": "C'est un minimum individuel : chacun doit parler au moins 1 min 30."
-            },
-            {
-              "q": "Pour un oral à deux, quelle durée totale viser ?",
-              "choix": [
-                "Environ 3 à 4 minutes",
-                "Exactement 1 min 30",
-                "Au moins 10 minutes",
-                "Aucune indication"
-              ],
-              "bonne": 0,
-              "explication": "Deux personnes × 1 min 30 minimum : environ 3 à 4 minutes, sans faire trop long."
-            },
-            {
-              "q": "Que devient l'enregistrement de ton oral ?",
-              "choix": [
-                "Supprimé après l'évaluation, sauf si tu veux le garder",
-                "Publié pour la classe",
-                "Gardé toute l'année",
-                "Envoyé à tous les étudiants"
-              ],
-              "bonne": 0,
-              "explication": "Il sert à la notation, puis il est supprimé ; il n'est jamais publié."
-            },
-            {
-              "q": "Dans quelle langue écrire au professeur ?",
-              "choix": [
-                "En anglais, sans IA",
-                "En français",
-                "En anglais, avec un traducteur automatique",
-                "Peu importe"
-              ],
-              "bonne": 0,
-              "explication": "Les messages s'écrivent en anglais, rédigés soi-même, sans IA."
-            },
-            {
-              "q": "Pourquoi Duolingo est-il conseillé pour pratiquer l'anglais ?",
-              "choix": [
-                "Il fait répéter régulièrement, de façon ludique",
-                "Il remplace les évaluations",
-                "Il est obligatoire et payant",
-                "Il corrige les oraux"
-              ],
-              "bonne": 0,
-              "explication": "La répétition est indispensable en langue ; l'appli est ludique et gratuite (version sans pub payante en option)."
-            },
-            {
-              "q": "Qu’apporte surtout l’appli où l’on complète les paroles de chansons ?",
-              "choix": [
-                "La compréhension orale",
-                "Une grammaire parfaite",
-                "La note de l’oral",
-                "La prononciation écrite"
-              ],
-              "bonne": 0,
-              "explication": "Les chansons sont moins rigoureuses en grammaire, mais très bonnes pour la compréhension."
-            },
-            {
-              "q": "Quelle est la bonne progression pour regarder des séries en anglais ?",
-              "choix": [
-                "VF sous-titres → sous-titres anglais → sans sous-titres",
-                "Sans sous-titres dès le début",
-                "Toujours en VF",
-                "Sous-titres anglais seulement sur le son français"
-              ],
-              "bonne": 0,
-              "explication": "On commence avec le son anglais et les sous-titres français, puis anglais, puis aucun."
-            },
-            {
-              "q": "Pourquoi ne peut-on pas réviser l’anglais seulement deux semaines avant un contrôle ?",
-              "choix": [
-                "Le niveau ne progresse qu’avec une pratique régulière",
-                "Les contrôles sont toujours à l’oral",
-                "Les cours ne sont pas sur l’ENF",
-                "Le TOEIC est obligatoire"
-              ],
-              "bonne": 0,
-              "explication": "Une langue demande de la pratique en continu ; c’est aussi pour ça que la participation est notée à chaque cours."
-            },
-            {
-              "q": "En cours, si on te demande d’épeler un mot, tu l’épelles…",
-              "choix": [
-                "En anglais",
-                "En français",
-                "Au choix",
-                "Par écrit seulement"
-              ],
-              "bonne": 0,
-              "explication": "On épelle en anglais : d’où le document sur la prononciation de l’alphabet."
-            },
-            {
-              "q": "Quel usage du téléphone est accepté en cours d’anglais ?",
-              "choix": [
-                "Chercher un mot dans un dictionnaire",
-                "Lire une traduction de sa question faite par un traducteur",
-                "Traduire le cours pour son voisin",
-                "Aucun usage"
-              ],
-              "bonne": 0,
-              "explication": "Le téléphone sert de dictionnaire ; la question, tu la formules toi-même en anglais."
-            },
-            {
-              "q": "Quel outil le prof conseille-t-il pour traduire un ou deux mots ?",
-              "choix": [
-                "DeepL",
-                "Google Traduction pour des phrases entières",
-                "Merriam-Webster en français",
+                "5 minutes par personne",
                 "Aucun"
               ],
               "bonne": 0,
-              "explication": "DeepL est préféré à Google Traduction, pour des mots isolés (pas des expressions)."
+              "explication": "Minimum individuel : 1 min 30."
             },
             {
-              "q": "Que faire si tu ne comprends pas une explication malgré ton attention ?",
+              "q": "Pourquoi la participation est-elle notée à chaque cours ?",
               "choix": [
-                "Demander : le prof reformule, écrit ou mime",
-                "Demander à ton voisin de traduire",
-                "Ne rien dire",
-                "Chercher la traduction et la lire"
+                "Pour encourager une pratique régulière",
+                "Pour remplacer l’oral",
+                "Pour le TOEIC",
+                "Elle ne l’est pas"
               ],
               "bonne": 0,
-              "explication": "Aucune question n’est bête : si tu as fait l’effort, le prof réexplique autrement."
+              "explication": "En langue, on progresse en pratiquant en continu."
+            },
+            {
+              "q": "Usage du téléphone accepté en cours ?",
+              "choix": [
+                "Chercher un mot",
+                "Lire une traduction de sa question",
+                "Traduire pour son voisin",
+                "Aucun"
+              ],
+              "bonne": 0,
+              "explication": "Dictionnaire oui ; la phrase, tu la formules toi-même."
+            },
+            {
+              "q": "Pour traduire un ou deux mots, le prof conseille…",
+              "choix": [
+                "DeepL",
+                "Google Traduction pour des phrases",
+                "Merriam-Webster en français",
+                "Rien"
+              ],
+              "bonne": 0,
+              "explication": "DeepL, pour des mots isolés, pas des expressions."
+            },
+            {
+              "q": "Bonne progression pour une série en VO ?",
+              "choix": [
+                "Sous-titres FR → EN → aucun",
+                "Aucun sous-titre dès le début",
+                "Toujours en VF",
+                "Sous-titres EN sur son français"
+              ],
+              "bonne": 0,
+              "explication": "On augmente la difficulté par étapes."
             }
           ]
         }
