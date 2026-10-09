@@ -110,6 +110,7 @@ window.CLOUD = {
   contributions: wrap(async () => (await list(collection(db, "contributions"))).sort((a, b) => ms(a.cree) - ms(b.cree))),
   contributionPhoto: wrap(async (id, i) => { const s = await getDoc(doc(db, "contributions", id, "photos", String(i))); return s.exists() ? s.data().data : null; }),
   annonces: wrap(async () => (await list(query(collection(db, "annonces"), orderBy("cree", "desc"), limit(20)))).map(a => ({ ...a, t: ms(a.cree) }))),
+  deleteAnnonce: wrap(async id => { needAdmin(); await deleteDoc(doc(db, "annonces", id)); }),
   addAnnonce: wrap(async (texte, lien) => { needAdmin(); await addDoc(collection(db, "annonces"), { texte, lien: lien || "", cree: serverTimestamp() }); }),
 
   // Vue admin : la classe, et exclusion d'une personne

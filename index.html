@@ -694,7 +694,7 @@ function markSeen(key){ if(NEW.delete(key)){ seen.push(key); store.set("seenChap
 function newsItems(){
   const items = [...NEW].map(k => { const x = byKey(k); return {t: Date.parse((x.c.date||"")+"T12:00:00") || Date.now(), html: `<b>Nouveau cours :</b> <button data-go="${esc(k)}">${esc(x.c.titre)}</button> <span class="muted">(${esc(x.m.nom)})</span>`, nouveau: true}; });
   const annSeen = store.get("annSeen", 0);
-  ANNONCES.forEach(a => items.push({t: a.t, html: a.lien && byKey(a.lien) ? `<button data-go="${esc(a.lien)}">${esc(a.texte)}</button>` : esc(a.texte), nouveau: a.t > annSeen}));
+  ANNONCES.filter(a => !annArchivee(a)).forEach(a => items.push({t: a.t, html: a.lien && byKey(a.lien) ? `<button data-go="${esc(a.lien)}">${esc(a.texte)}</button>` : esc(a.texte), nouveau: a.t > annSeen}));
   return items.sort((a,b) => b.t - a.t).slice(0, 8);
 }
 function announceNew(){
@@ -1184,8 +1184,20 @@ async function renderAdmin(){
       return;
     }
     if(ADM_TAB === "annonce"){
-      box.innerHTML = `<div class="box"><h2>Envoyer une annonce à tout le monde</h2><p class="muted" style="margin:0 0 10px">Elle apparaît dans « Nouveautés » sur l'accueil de chacun, et en message à l'ouverture.</p><div class="form"><div class="field"><label for="anTxt">Texte</label><input class="input" id="anTxt" maxlength="200" placeholder="Ex. : le cours sur les grafcets vient d'être ajouté"></div><div class="field"><label for="anLien">Chapitre lié (facultatif)</label><select class="input" id="anLien"><option value="">Aucun</option>${FLAT.map(x => `<option value="${esc(x.key)}">${esc(x.m.nom)} · ${esc(x.c.titre)}</option>`).join("")}</select></div><div id="anMsg"></div><button class="btn primary" id="anGo">Publier l'annonce</button></div></div>`;
-      $("#anGo").onclick = async () => { const t = $("#anTxt").value.trim(); if(!t) return; try{ await CLOUD.addAnnonce(t, $("#anLien").value); $("#anMsg").innerHTML = `<div class="msg ok">Annonce publiée.</div>`; $("#anTxt").value = ""; loadAnnonces(); }catch(err){ $("#anMsg").innerHTML = `<div class="msg err">${esc(err.message)}</div>`; } };
+      box.innerHTML = `<div class="box"><h2>Envoyer une annonce à tout le monde</h2><p class="muted" style="margin:0 0 10px">Elle apparaît dans « Nouveautés » sur l'accueil de chacun, et en message à l'ouverture.</p><div class="form"><div class="field"><label for="anTxt">Texte</label><input class="input" id="anTxt" maxlength="200" placeholder="Ex. : le cours sur les grafcets vient d'être ajouté"></div><div class="field"><label for="anLien">Chapitre lié (facultatif)</label><select class="input" id="anLien"><option value="">Aucun</option>${FLAT.map(x => `<option value="${esc(x.key)}">${esc(x.m.nom)} · ${esc(x.c.titre)}</option>`).join("")}</select></div><div id="anMsg"></div><button class="btn primary" id="anGo">Publier l'annonce</button></div></div>
+        <div class="box"><h2>Annonces publiées</h2><p class="muted" style="margin:0 0 10px;font-size:14px">Chaque annonce disparaît toute seule de l'accueil à la fin de la période de cours où elle a été publiée (d'après le planning). Les archivées restent listées ici.</p><div id="anList"><p class="muted">Chargement…</p></div></div>`;
+      const showAn = async () => {
+        try{ ANNONCES = await CLOUD.annonces(); }catch(err){ $("#anList").innerHTML = `<div class="msg err">${esc(err.message)}</div>`; return; }
+        $("#anList").innerHTML = ANNONCES.length ? `<div style="display:grid;gap:8px">${ANNONCES.map(a => `<div class="dm" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:180px">${esc(a.texte)}<br><small class="muted">${a.t ? esc(fmtDate(a.t)) : ""}${a.lien && byKey(a.lien) ? " · " + esc(byKey(a.lien).c.titre) : ""}${annFin(a) ? ` · ${annArchivee(a) ? "<b>archivée</b> depuis le" : "visible jusqu'au"} ${esc(fmtJour(annFin(a), {day:"numeric", month:"long"}))}` : ""}</small></span><button class="btn danger" data-andel="${esc(a.id)}">Supprimer</button></div>`).join("")}</div>` : `<p class="muted">Aucune annonce.</p>`;
+      };
+      showAn();
+      $("#anList").onclick = async e => {
+        const b = e.target.closest("[data-andel]"); if(!b) return;
+        if(!b.dataset.c){ b.dataset.c = 1; b.textContent = "Confirmer ?"; return; }
+        b.disabled = true;
+        try{ await CLOUD.deleteAnnonce(b.dataset.andel); toast("Annonce supprimée."); showAn(); }catch(err){ toast(esc(err.message)); b.disabled = false; }
+      };
+      $("#anGo").onclick = async () => { const t = $("#anTxt").value.trim(); if(!t) return; try{ await CLOUD.addAnnonce(t, $("#anLien").value); $("#anMsg").innerHTML = `<div class="msg ok">Annonce publiée.</div>`; $("#anTxt").value = ""; showAn(); }catch(err){ $("#anMsg").innerHTML = `<div class="msg err">${esc(err.message)}</div>`; } };
       return;
     }
     const all = await CLOUD.allDemandes();
@@ -1649,6 +1661,17 @@ const PL_EV = PL ? PL.evenements : [];
 const isoD = dt => `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;
 const lundi = dt => { const x = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; };
 const plDate = d => new Date(d + "T12:00:00");
+// Périodes de cours = semaines de cours consécutives au planning (entre deux périodes en entreprise).
+// Une annonce s'archive à la fin de la période où elle a été publiée (ou de la suivante si publiée en entreprise).
+const PERIODES = (() => {
+  const ds = [...new Set(PL_EV.filter(e => e.t !== "entreprise").map(e => e.d))].sort(), out = [];
+  ds.forEach(d => { const p = out[out.length - 1];
+    if(p && Math.round((lundi(plDate(d)) - lundi(plDate(p.fin))) / 864e5) <= 7) p.fin = d; else out.push({debut: d, fin: d}); });
+  return out;
+})();
+const finPeriode = d => (PERIODES.find(p => p.fin >= d) || {}).fin || null;
+const annFin = a => a.t ? finPeriode(isoD(new Date(a.t))) : null;
+const annArchivee = a => { const f = annFin(a); return !!f && isoD(new Date()) > f; };
 const fmtJour = (d, opts) => plDate(d).toLocaleDateString("fr-FR", opts || {weekday:"long", day:"numeric", month:"long"});
 const hFr = h => h.replace(":", "h");
 let plWeek = null;
@@ -1801,7 +1824,7 @@ async function loadContribs(){ try{ const done = new Set((window.COURS && COURS.
 async function loadAnnonces(){
   try{
     ANNONCES = await CLOUD.annonces();
-    const annSeen = store.get("annSeen", 0), fresh = ANNONCES.filter(a => a.t > annSeen);
+    const annSeen = store.get("annSeen", 0), fresh = ANNONCES.filter(a => a.t > annSeen && !annArchivee(a));
     if(fresh.length && !NEW.size){ toast(`${ICON.bell}<span>${esc(fresh[0].texte)}</span>${fresh[0].lien && byKey(fresh[0].lien) ? `<button data-go="${esc(fresh[0].lien)}">Voir</button>` : ""}`, 9000);
       try{ if(store.get("notif", false) && Notification.permission === "granted") new Notification("Cours Licence CAIE", {body: fresh[0].texte}); }catch(e){} }
   }catch(e){}
