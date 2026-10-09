@@ -4411,6 +4411,116 @@ window.COURS = {
       ]
     },
     {
+      "id": "anglais",
+      "nom": "Anglais",
+      "semestre": "Langue vivante",
+      "couleur": "#7048e8",
+      "chapitres": [
+        {
+          "id": "evaluations-annee",
+          "titre": "Évaluations de l'année",
+          "type": "Cours",
+          "date": "2026-10-09",
+          "source": "Enregistrement du cours d'anglais (modalités d'évaluation), résumé",
+          "resume": "Ce qu'il faut savoir sur les évaluations d'anglais de l'année : trois évaluations, dont un oral avec un temps de parole minimum.",
+          "sections": [
+            {
+              "titre": "Les évaluations",
+              "html": "<p>Il y a <b>trois évaluations</b> d'anglais sur l'année.</p>"
+            },
+            {
+              "titre": "L'oral : temps de parole",
+              "html": "<ul><li>Chacun doit parler <b>individuellement au moins 1 min 30</b>. C'est un minimum, pas un maximum.</li><li>Pour un passage <b>à deux</b>, viser environ <b>3 à 4 minutes</b> au total.</li><li>Inutile de faire très long : rester raisonnable.</li></ul><div class=\"attention\"><b>À retenir :</b> 1 min 30 de parole <b>par personne</b>, pas pour le groupe.</div>"
+            },
+            {
+              "titre": "L'enregistrement de l'oral",
+              "html": "<p>L'oral est enregistré pour la notation. Après l'évaluation, l'enregistrement est <b>supprimé</b>, sauf si tu demandes à le garder. Il n'est <b>jamais publié</b>.</p>"
+            },
+            {
+              "titre": "Écrire au professeur",
+              "html": "<ul><li>Les messages au professeur s'écrivent <b>en anglais</b>.</li><li><b>Sans IA</b> : rédige tes messages toi-même.</li></ul>"
+            }
+          ],
+          "pointsCles": [
+            "3 évaluations d'anglais dans l'année.",
+            "Oral : au moins 1 min 30 de parole par personne.",
+            "À deux : environ 3 à 4 minutes au total.",
+            "L'enregistrement est supprimé après l'évaluation, sauf si tu veux le garder ; il n'est jamais publié.",
+            "Écrire au professeur en anglais, sans IA."
+          ],
+          "definitions": [],
+          "flashcards": [
+            {
+              "q": "Combien d'évaluations d'anglais dans l'année ?",
+              "r": "Trois."
+            },
+            {
+              "q": "Temps de parole minimum à l'oral ?",
+              "r": "1 min 30 par personne, individuellement."
+            },
+            {
+              "q": "Durée conseillée d'un oral à deux ?",
+              "r": "Environ 3 à 4 minutes au total."
+            },
+            {
+              "q": "Que devient l'enregistrement de l'oral ?",
+              "r": "Il est supprimé après l'évaluation, sauf si tu demandes à le garder. Il n'est jamais publié."
+            },
+            {
+              "q": "Comment écrire au professeur ?",
+              "r": "En anglais, et sans utiliser d'IA."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Quel temps de parole minimum faut-il à l'oral ?",
+              "choix": [
+                "1 min 30 par personne",
+                "1 min 30 pour le groupe",
+                "3 minutes par personne",
+                "Aucun minimum"
+              ],
+              "bonne": 0,
+              "explication": "C'est un minimum individuel : chacun doit parler au moins 1 min 30."
+            },
+            {
+              "q": "Pour un oral à deux, quelle durée totale viser ?",
+              "choix": [
+                "Environ 3 à 4 minutes",
+                "Exactement 1 min 30",
+                "Au moins 10 minutes",
+                "Aucune indication"
+              ],
+              "bonne": 0,
+              "explication": "Deux personnes × 1 min 30 minimum : environ 3 à 4 minutes, sans faire trop long."
+            },
+            {
+              "q": "Que devient l'enregistrement de ton oral ?",
+              "choix": [
+                "Supprimé après l'évaluation, sauf si tu veux le garder",
+                "Publié pour la classe",
+                "Gardé toute l'année",
+                "Envoyé à tous les étudiants"
+              ],
+              "bonne": 0,
+              "explication": "Il sert à la notation, puis il est supprimé ; il n'est jamais publié."
+            },
+            {
+              "q": "Dans quelle langue écrire au professeur ?",
+              "choix": [
+                "En anglais, sans IA",
+                "En français",
+                "En anglais, avec un traducteur automatique",
+                "Peu importe"
+              ],
+              "bonne": 0,
+              "explication": "Les messages s'écrivent en anglais, rédigés soi-même, sans IA."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "guide",
       "nom": "Mode d'emploi",
       "semestre": "Exemple",
