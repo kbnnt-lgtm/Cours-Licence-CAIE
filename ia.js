@@ -1,14 +1,16 @@
 // Assistant IA des cours (bulle « Une question ? »). Chargé à la première ouverture de la bulle.
 // Deux voies vers Gemini (offre gratuite) :
+//  - CLOUD_CONFIG.ia.relais : relais Cloudflare (relais-ia/worker.js) qui garde la clé Gemini secrète ;
 //  - CLOUD_CONFIG.ia.cleGemini présente : appel direct à l'API Gemini avec une clé dédiée, restreinte
 //    au site (référents HTTP) et à la seule API Gemini dans Google Cloud ;
 //  - sinon Firebase AI Logic, avec la clé publique de config.js.
 // Expose window.IA.chat(contexte) → { send(texte, onMorceau) }.
 const cfg = window.CLOUD_CONFIG;
-const CLE = cfg.ia && cfg.ia.cleGemini;
-const MODELES = (cfg.ia && cfg.ia.modeles) || ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash"];
+const CLE = cfg.ia && cfg.ia.cleGemini, RELAIS = cfg.ia && cfg.ia.relais; // relais : la clé reste cachée côté serveur
+const DIRECT = !!(CLE || RELAIS);
+const MODELES = (cfg.ia && cfg.ia.modeles) || ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
 let AI = null, ai = null;
-if (!CLE) {
+if (!DIRECT) {
   const V = "12.4.0";
   const B = (window.FIREBASE_SDK_BASE_IA || `https://www.gstatic.com/firebasejs/${V}/`);
   const [{ initializeApp, getApps }, M] = await Promise.all([import(B + "firebase-app.js"), import(B + "firebase-ai.js")]);
@@ -18,7 +20,8 @@ if (!CLE) {
 }
 // Appel direct (flux SSE) : renvoie le texte complet, appelle onMorceau au fil de l'eau
 async function direct(modele, systeme, hist, texte, onMorceau) {
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modele}:streamGenerateContent?alt=sse&key=${encodeURIComponent(CLE)}`, {
+  const url = RELAIS ? `${RELAIS}?modele=${encodeURIComponent(modele)}` : `https://generativelanguage.googleapis.com/v1beta/models/${modele}:streamGenerateContent?alt=sse&key=${encodeURIComponent(CLE)}`;
+  const r = await fetch(url, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ systemInstruction: { parts: [{ text: systeme }] }, contents: [...hist, { role: "user", parts: [{ text: texte }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } })
   });
@@ -69,7 +72,7 @@ function chat(ctx) {
       for (let i = ok; i < MODELES.length; i++) {
         try {
           let tout = "";
-          if (CLE) tout = await direct(MODELES[i], consignes(ctx), hist, texte, onMorceau);
+          if (DIRECT) tout = await direct(MODELES[i], consignes(ctx), hist, texte, onMorceau);
           else {
             const model = AI.getGenerativeModel(ai, { model: MODELES[i], systemInstruction: consignes(ctx), generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } });
             const s = model.startChat({ history: hist.slice() });
@@ -80,7 +83,7 @@ function chat(ctx) {
           ok = i; return tout;
         } catch (e) {
           lastErr = e;
-          if (!/404|not found|is not supported|no longer available/i.test(String(e && e.message))) break; // modèle inconnu → on tente le suivant
+          if (!/404|not found|is not supported|no longer available|503|UNAVAILABLE|high demand|overloaded/i.test(String(e && e.message))) break; // modèle indisponible → on tente le suivant
         }
       }
       throw new Error(erreur(lastErr));
