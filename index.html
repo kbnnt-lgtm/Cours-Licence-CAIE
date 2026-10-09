@@ -1859,7 +1859,8 @@ function iaContexte(x){
   if((c.pointsCles||[]).length) parts.push("## À retenir\n" + c.pointsCles.map(p => "- " + p).join("\n"));
   if((c.definitions||[]).length) parts.push("## Définitions\n" + c.definitions.map(d => "- " + d.terme + " : " + d.def).join("\n"));
   if((c.flashcards||[]).length) parts.push("## Cartes de révision\n" + c.flashcards.map(f => "- " + (f.q||f.recto||"") + " → " + (f.r||f.verso||"")).join("\n"));
-  return {titre: c.titre, matiere: x.m.nom, texte: parts.join("\n\n").slice(0, 30000)};
+  if((c.examen||[]).length) parts.push("## Exercices d'examen blanc\n" + c.examen.map(e => "### " + (e.titre||"Exercice") + "\n" + iaTexte(e.enonce) + "\n" + (e.questions||[]).map((q,k) => (k+1) + ". " + iaTexte(q.q) + (q.choix ? " (choix : " + q.choix.join(" / ") + " ; bonne réponse : " + q.choix[q.bonne] + ")" : "") + (q.corrige ? "\n   Corrigé : " + iaTexte(q.corrige) : "")).join("\n")).join("\n\n"));
+  return {titre: c.titre, matiere: x.m.nom, texte: parts.join("\n\n").slice(0, 60000)};
 }
 function iaMd(t){
   const inl = s => esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<i>$2</i>");
