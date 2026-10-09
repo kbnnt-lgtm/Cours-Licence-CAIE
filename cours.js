@@ -417,28 +417,14 @@ window.COURS = {
             }
           ],
           "pointsCles": [
-            "Même cause (même combinaison des entrées) = toujours le même effet ; l'effet disparaît avec la cause.",
-            "Algèbre de Boole : variables à deux états. Fonctions de base : ET, OU, OUI, NON.",
-            "7408 = 4 portes ET ; 7432 = 4 portes OU ; VCC broche 14, GND broche 7.",
-            "Combinatoire : sortie = f(entrées actuelles). Séquentiel : en plus l'historique et le temps.",
-            "Le GRAFCET sert au séquentiel, pas au combinatoire.",
-            "Un séquentiel contient du combinatoire, jamais l'inverse.",
-            "Convention : repos = 0, actionné = 1.",
-            "Table de vérité = ranger les combinaisons ; chronogramme = les voir dans le temps.",
-            "OUI : S = E (contact NO en série). NON : S = /E (contact NF).",
-            "Deux normes de symboles : européenne (rectangles) et américaine (formes).",
-            "ET : S = E1 · E2, deux NO en série, S = 1 seulement si les deux entrées sont à 1.",
-            "NON-ET : S = /(E1 · E2), deux NC en parallèle (et non en série !).",
-            "Le chronogramme est la table de vérité déroulée dans le temps.",
-            "NON-OU : S = /(E1 + E2), deux NC en série. S = 1 seulement si toutes les entrées sont à 0.",
-            "NON-ET = ET suivi d'un NON ; NON-OU = OU suivi d'un NON. Circuits : 7400 (NON-ET), 7402 (NON-OU).",
-            "OU exclusif : soit l'un, soit l'autre, pas les deux (S = E1 ⊕ E2), utilisé comme sécurité.",
-            "Outils principaux du combinatoire : équation logique, table de vérité, logigramme.",
-            "OU : S = 1 dès qu'au moins une entrée est à 1.",
-            "Équation : S = E1 + E2 (le + se lit « ou »).",
-            "Symbole normalisé : rectangle marqué ≥1.",
-            "Câblage : contacts en parallèle.",
-            "Circuit 7432 : 4 portes OU, VCC broche 14, GND broche 7."
+            "Combinatoire : la sortie ne dépend que des entrées actuelles (même cause, même effet). Séquentiel : en plus la mémoire et le temps (étudié avec le GRAFCET).",
+            "Convention : repos = 0, actionné = 1. Table de vérité dans l’ordre 00, 01, 10, 11 ; le chronogramme est la table déroulée dans le temps.",
+            "OUI : S = E (contact NO). NON : S = /E (contact NC).",
+            "ET : S = E1 · E2, deux NO en série. S = 1 seulement si les deux entrées sont à 1.",
+            "OU : S = E1 + E2, deux NO en parallèle (symbole ≥1). S = 0 seulement si les deux entrées sont à 0.",
+            "NON-ET : S = /(E1 · E2), deux NC en parallèle. NON-OU : S = /(E1 + E2), deux NC en série.",
+            "OU exclusif : S = E1 ⊕ E2, l’un ou l’autre mais pas les deux (sert de sécurité).",
+            "Circuits : 7408 (ET), 7432 (OU), 7400 (NON-ET), 7402 (NON-OU, brochage différent), 7486 (OU exclusif) ; VCC broche 14, GND broche 7."
           ],
           "definitions": [
             {
@@ -524,212 +510,36 @@ window.COURS = {
           ],
           "flashcards": [
             {
-              "q": "Quels sont les 2 types d'automatismes logiques ?",
-              "r": "Les systèmes à logique combinatoire et les systèmes à logique séquentielle."
-            },
-            {
-              "q": "Définition d'un système à logique combinatoire ?",
-              "r": "La ou les sorties ne dépendent que de la combinaison des entrées."
-            },
-            {
-              "q": "« Même cause, même effet » : que signifie-t-il en logique combinatoire ?",
-              "r": "La même combinaison des entrées produit toujours le même état des sorties ; l'effet disparaît lorsque la cause disparaît."
-            },
-            {
-              "q": "Qu'est-ce que l'algèbre de Boole ?",
-              "r": "L'algèbre définie pour des variables ne pouvant prendre que deux états."
-            },
-            {
-              "q": "Quelles sont les fonctions logiques de base ?",
-              "r": "ET, OU, OUI et NON."
-            },
-            {
-              "q": "Quel circuit intégré contient 4 portes ET ?",
-              "r": "Le 7408."
-            },
-            {
               "q": "De quoi dépend la sortie d'un système combinatoire ?",
               "r": "Uniquement de l'état actuel des entrées (ni historique, ni temps)."
-            },
-            {
-              "q": "Quel est le « troisième paramètre » qui apparaît dans un système séquentiel ?",
-              "r": "Le temps."
-            },
-            {
-              "q": "Quel outil sert à étudier les systèmes séquentiels ?",
-              "r": "Le GRAFCET."
-            },
-            {
-              "q": "Peut-on trouver du combinatoire dans un système séquentiel ? Et l'inverse ?",
-              "r": "Oui, un séquentiel contient du combinatoire. L'inverse est impossible."
-            },
-            {
-              "q": "Qu'est-ce que la logique câblée ?",
-              "r": "Les fonctions logiques réalisées avec relais et contacts (avant les automates). Chaque fonction combinatoire y correspond à un montage de contacts ; elle peut aussi mémoriser (auto-maintien)."
-            },
-            {
-              "q": "À quoi sert une table de vérité ? Et un chronogramme ?",
-              "r": "La table range toutes les combinaisons possibles ; le chronogramme montre l'évolution des 0 et 1 dans le temps."
-            },
-            {
-              "q": "Convention : un contact au repos vaut… ? actionné ?",
-              "r": "Repos = 0, actionné = 1."
-            },
-            {
-              "q": "Équation et schéma de la fonction OUI ?",
-              "r": "S = E. Un interrupteur (NO) en série avec la lampe."
-            },
-            {
-              "q": "Équation de la fonction NON ? Que vaut S si E = 0 ?",
-              "r": "S = /E (non E). Si E = 0, S = 1."
-            },
-            {
-              "q": "Quelles sont les deux normes de symboles logiques ?",
-              "r": "Européenne (rectangles avec 1, ≥1, &) et américaine (triangle, ogive…)."
-            },
-            {
-              "q": "Quand la sortie d'une fonction ET est-elle à 1 ?",
-              "r": "Seulement quand E1 et E2 sont tous les deux à 1."
-            },
-            {
-              "q": "Équation logique de la fonction ET ?",
-              "r": "S = E1 · E2 (se lit « E1 et E2 »)."
-            },
-            {
-              "q": "Schéma électrique de la fonction ET ?",
-              "r": "Deux interrupteurs NO en série avec la lampe."
             },
             {
               "q": "Dans quel ordre remplit-on les entrées d'une table de vérité à 2 entrées ?",
               "r": "00, 01, 10, 11 (toujours le même ordre, comme en binaire)."
             },
             {
-              "q": "Quel est le lien entre table de vérité et chronogramme ?",
-              "r": "Le chronogramme est la table de vérité déroulée dans le temps : chaque intervalle correspond à une ligne."
-            },
-            {
-              "q": "Schéma électrique de la fonction OU ?",
-              "r": "Deux interrupteurs NO en parallèle avec la lampe."
-            },
-            {
-              "q": "Fonction NON-ET : quand la sortie vaut-elle 0 ?",
-              "r": "Seulement quand E1 = 1 et E2 = 1."
-            },
-            {
-              "q": "Équation de la fonction NON-ET ?",
-              "r": "S = /(E1 · E2)."
-            },
-            {
-              "q": "Schéma électrique de la fonction NON-ET ?",
-              "r": "Deux contacts NC en parallèle avec la lampe."
-            },
-            {
-              "q": "Pourquoi le NON-ET n'est-il pas fait de deux NC en série ?",
-              "r": "Avec deux NC en série, la lampe s'éteint dès qu'un seul est actionné : c'est la table du NON-OU, pas du NON-ET."
-            },
-            {
-              "q": "NON-ET : différence entre symbole européen et international ?",
-              "r": "Européen : rectangle & avec marque d'inversion. International : forme en D avec un petit rond en sortie."
-            },
-            {
-              "q": "Comment décompose-t-on la fonction NON-ET ?",
-              "r": "Une porte ET suivie d'une porte NON."
-            },
-            {
-              "q": "Quelle référence de circuit regroupe des portes NON-ET ?",
-              "r": "Le 7400."
-            },
-            {
-              "q": "Fonction NON-OU : quand la sortie vaut-elle 1 ?",
-              "r": "Seulement quand E1 = 0 et E2 = 0."
-            },
-            {
-              "q": "Équation de la fonction NON-OU ?",
-              "r": "S = /(E1 + E2)."
-            },
-            {
-              "q": "Schéma électrique de la fonction NON-OU ?",
-              "r": "Deux contacts NC en série avec la lampe."
-            },
-            {
-              "q": "Comment décompose-t-on la fonction NON-OU ?",
-              "r": "Une porte OU suivie d'une porte NON."
-            },
-            {
-              "q": "Fonction OU exclusif : quand la sortie vaut-elle 1 ?",
-              "r": "Quand une seule des deux entrées est à 1 (soit l'un, soit l'autre, pas les deux)."
-            },
-            {
-              "q": "OU exclusif : que vaut S si E1 = 1 et E2 = 1 ?",
-              "r": "S = 0 (contrairement au OU)."
-            },
-            {
-              "q": "À quoi sert souvent le OU exclusif ?",
-              "r": "De sécurité : autoriser une action ou l'autre, jamais les deux en même temps."
-            },
-            {
-              "q": "Symbole européen du OU exclusif ?",
-              "r": "Un rectangle marqué =1."
-            },
-            {
-              "q": "Quels sont les outils principaux pour étudier un système combinatoire ?",
-              "r": "L'équation logique, la table de vérité et le logigramme (plus le chronogramme)."
-            },
-            {
-              "q": "Quand la sortie d'une fonction OU est-elle à 1 ?",
-              "r": "Quand une entrée, l'autre, ou les deux sont à 1."
-            },
-            {
-              "q": "Fonction OU : que vaut S si E1 = 0 et E2 = 0 ?",
-              "r": "S = 0. C'est le seul cas où la sortie est à 0."
-            },
-            {
-              "q": "Fonction OU : que vaut S si E1 = 1 et E2 = 1 ?",
-              "r": "S = 1."
+              "q": "Équation logique de la fonction ET ?",
+              "r": "S = E1 · E2 (se lit « E1 et E2 »)."
             },
             {
               "q": "Équation logique de la fonction OU ?",
               "r": "S = E1 + E2 (se lit « E1 ou E2 »)."
             },
             {
-              "q": "Quel signe figure dans le symbole normalisé de la porte OU ?",
-              "r": "≥1 (au moins une entrée à 1)."
+              "q": "Schéma électrique de la fonction NON-ET ?",
+              "r": "Deux contacts NC en parallèle avec la lampe."
             },
             {
-              "q": "Comment câbler une fonction OU avec deux contacts ?",
-              "r": "Les deux contacts en parallèle, en série avec la charge (lampe S)."
+              "q": "Schéma électrique de la fonction NON-OU ?",
+              "r": "Deux contacts NC en série avec la lampe."
             },
             {
-              "q": "Quel circuit intégré contient 4 portes OU ?",
-              "r": "Le 7432."
-            },
-            {
-              "q": "7432 : broches d'alimentation ?",
-              "r": "VCC broche 14, GND broche 7."
-            },
-            {
-              "q": "Quel circuit intégré contient 4 portes OU exclusif ?",
-              "r": "Le 7486."
-            },
-            {
-              "q": "Quel circuit intégré contient 4 portes NON-OU ? Piège ?",
-              "r": "Le 7402. Piège : son brochage est différent de celui des 7400, 7408 et 7432 (sorties en 1, 4, 10, 13)."
+              "q": "Fonction OU exclusif : quand la sortie vaut-elle 1 ?",
+              "r": "Quand une seule des deux entrées est à 1 (soit l'un, soit l'autre, pas les deux)."
             },
             {
               "q": "Va-et-vient ou télérupteur : lequel est combinatoire ?",
               "r": "Le va-et-vient (la lampe dépend seulement de la position actuelle des deux interrupteurs). Le télérupteur mémorise son état : il est séquentiel."
-            },
-            {
-              "q": "Exemple concret de fonction ET en atelier ?",
-              "r": "La commande bimanuelle d'une presse : il faut appuyer sur les deux boutons en même temps."
-            },
-            {
-              "q": "Que vaut 1 + 1 en logique ?",
-              "r": "1 (le « + » veut dire OU)."
-            },
-            {
-              "q": "Théorème de De Morgan pour le NON-ET ?",
-              "r": "/(E1 · E2) = /E1 + /E2 : c'est pour ça que deux NC en parallèle donnent un NON-ET."
             }
           ],
           "quiz": [
@@ -934,6 +744,184 @@ window.COURS = {
                   "corrige": "<p><b>Presse :</b> la sortie vaut 1 seulement si les deux boutons sont à 1 : fonction <b>ET</b>, <code>S = B1 · B2</code> (deux NO en série).</p><p><b>Portail :</b> soit l'un, soit l'autre, mais pas les deux : <b>OU exclusif</b>, <code>M = O ⊕ F = O · /F + /O · F</code>. C'est l'usage « sécurité » du OU exclusif : interdire deux ordres contradictoires simultanés.</p>"
                 }
               ]
+            }
+          ],
+          "cartesPlus": [
+            {
+              "q": "Quels sont les 2 types d'automatismes logiques ?",
+              "r": "Les systèmes à logique combinatoire et les systèmes à logique séquentielle."
+            },
+            {
+              "q": "Définition d'un système à logique combinatoire ?",
+              "r": "La ou les sorties ne dépendent que de la combinaison des entrées."
+            },
+            {
+              "q": "« Même cause, même effet » : que signifie-t-il en logique combinatoire ?",
+              "r": "La même combinaison des entrées produit toujours le même état des sorties ; l'effet disparaît lorsque la cause disparaît."
+            },
+            {
+              "q": "Qu'est-ce que l'algèbre de Boole ?",
+              "r": "L'algèbre définie pour des variables ne pouvant prendre que deux états."
+            },
+            {
+              "q": "Quelles sont les fonctions logiques de base ?",
+              "r": "ET, OU, OUI et NON."
+            },
+            {
+              "q": "Quel circuit intégré contient 4 portes ET ?",
+              "r": "Le 7408."
+            },
+            {
+              "q": "Quel est le « troisième paramètre » qui apparaît dans un système séquentiel ?",
+              "r": "Le temps."
+            },
+            {
+              "q": "Quel outil sert à étudier les systèmes séquentiels ?",
+              "r": "Le GRAFCET."
+            },
+            {
+              "q": "Peut-on trouver du combinatoire dans un système séquentiel ? Et l'inverse ?",
+              "r": "Oui, un séquentiel contient du combinatoire. L'inverse est impossible."
+            },
+            {
+              "q": "Qu'est-ce que la logique câblée ?",
+              "r": "Les fonctions logiques réalisées avec relais et contacts (avant les automates). Chaque fonction combinatoire y correspond à un montage de contacts ; elle peut aussi mémoriser (auto-maintien)."
+            },
+            {
+              "q": "À quoi sert une table de vérité ? Et un chronogramme ?",
+              "r": "La table range toutes les combinaisons possibles ; le chronogramme montre l'évolution des 0 et 1 dans le temps."
+            },
+            {
+              "q": "Convention : un contact au repos vaut… ? actionné ?",
+              "r": "Repos = 0, actionné = 1."
+            },
+            {
+              "q": "Équation et schéma de la fonction OUI ?",
+              "r": "S = E. Un interrupteur (NO) en série avec la lampe."
+            },
+            {
+              "q": "Équation de la fonction NON ? Que vaut S si E = 0 ?",
+              "r": "S = /E (non E). Si E = 0, S = 1."
+            },
+            {
+              "q": "Quelles sont les deux normes de symboles logiques ?",
+              "r": "Européenne (rectangles avec 1, ≥1, &) et américaine (triangle, ogive…)."
+            },
+            {
+              "q": "Quand la sortie d'une fonction ET est-elle à 1 ?",
+              "r": "Seulement quand E1 et E2 sont tous les deux à 1."
+            },
+            {
+              "q": "Schéma électrique de la fonction ET ?",
+              "r": "Deux interrupteurs NO en série avec la lampe."
+            },
+            {
+              "q": "Quel est le lien entre table de vérité et chronogramme ?",
+              "r": "Le chronogramme est la table de vérité déroulée dans le temps : chaque intervalle correspond à une ligne."
+            },
+            {
+              "q": "Schéma électrique de la fonction OU ?",
+              "r": "Deux interrupteurs NO en parallèle avec la lampe."
+            },
+            {
+              "q": "Fonction NON-ET : quand la sortie vaut-elle 0 ?",
+              "r": "Seulement quand E1 = 1 et E2 = 1."
+            },
+            {
+              "q": "Équation de la fonction NON-ET ?",
+              "r": "S = /(E1 · E2)."
+            },
+            {
+              "q": "Pourquoi le NON-ET n'est-il pas fait de deux NC en série ?",
+              "r": "Avec deux NC en série, la lampe s'éteint dès qu'un seul est actionné : c'est la table du NON-OU, pas du NON-ET."
+            },
+            {
+              "q": "NON-ET : différence entre symbole européen et international ?",
+              "r": "Européen : rectangle & avec marque d'inversion. International : forme en D avec un petit rond en sortie."
+            },
+            {
+              "q": "Comment décompose-t-on la fonction NON-ET ?",
+              "r": "Une porte ET suivie d'une porte NON."
+            },
+            {
+              "q": "Quelle référence de circuit regroupe des portes NON-ET ?",
+              "r": "Le 7400."
+            },
+            {
+              "q": "Fonction NON-OU : quand la sortie vaut-elle 1 ?",
+              "r": "Seulement quand E1 = 0 et E2 = 0."
+            },
+            {
+              "q": "Équation de la fonction NON-OU ?",
+              "r": "S = /(E1 + E2)."
+            },
+            {
+              "q": "Comment décompose-t-on la fonction NON-OU ?",
+              "r": "Une porte OU suivie d'une porte NON."
+            },
+            {
+              "q": "OU exclusif : que vaut S si E1 = 1 et E2 = 1 ?",
+              "r": "S = 0 (contrairement au OU)."
+            },
+            {
+              "q": "À quoi sert souvent le OU exclusif ?",
+              "r": "De sécurité : autoriser une action ou l'autre, jamais les deux en même temps."
+            },
+            {
+              "q": "Symbole européen du OU exclusif ?",
+              "r": "Un rectangle marqué =1."
+            },
+            {
+              "q": "Quels sont les outils principaux pour étudier un système combinatoire ?",
+              "r": "L'équation logique, la table de vérité et le logigramme (plus le chronogramme)."
+            },
+            {
+              "q": "Quand la sortie d'une fonction OU est-elle à 1 ?",
+              "r": "Quand une entrée, l'autre, ou les deux sont à 1."
+            },
+            {
+              "q": "Fonction OU : que vaut S si E1 = 0 et E2 = 0 ?",
+              "r": "S = 0. C'est le seul cas où la sortie est à 0."
+            },
+            {
+              "q": "Fonction OU : que vaut S si E1 = 1 et E2 = 1 ?",
+              "r": "S = 1."
+            },
+            {
+              "q": "Quel signe figure dans le symbole normalisé de la porte OU ?",
+              "r": "≥1 (au moins une entrée à 1)."
+            },
+            {
+              "q": "Comment câbler une fonction OU avec deux contacts ?",
+              "r": "Les deux contacts en parallèle, en série avec la charge (lampe S)."
+            },
+            {
+              "q": "Quel circuit intégré contient 4 portes OU ?",
+              "r": "Le 7432."
+            },
+            {
+              "q": "7432 : broches d'alimentation ?",
+              "r": "VCC broche 14, GND broche 7."
+            },
+            {
+              "q": "Quel circuit intégré contient 4 portes OU exclusif ?",
+              "r": "Le 7486."
+            },
+            {
+              "q": "Quel circuit intégré contient 4 portes NON-OU ? Piège ?",
+              "r": "Le 7402. Piège : son brochage est différent de celui des 7400, 7408 et 7432 (sorties en 1, 4, 10, 13)."
+            },
+            {
+              "q": "Exemple concret de fonction ET en atelier ?",
+              "r": "La commande bimanuelle d'une presse : il faut appuyer sur les deux boutons en même temps."
+            },
+            {
+              "q": "Que vaut 1 + 1 en logique ?",
+              "r": "1 (le « + » veut dire OU)."
+            },
+            {
+              "q": "Théorème de De Morgan pour le NON-ET ?",
+              "r": "/(E1 · E2) = /E1 + /E2 : c'est pour ça que deux NC en parallèle donnent un NON-ET."
             }
           ]
         },

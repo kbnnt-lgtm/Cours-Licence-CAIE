@@ -63,6 +63,18 @@ window.CLOUD = {
   // Statistiques et progression de la personne connectée
   loadMine: wrap(async () => { need(); const s = await getDoc(doc(db, "users", user.uid)); return s.exists() ? s.data() : null; }),
   saveMine: wrap(async data => { need(); await setDoc(doc(db, "users", user.uid), { ...data, nom: user.nom, email: user.email, maj: serverTimestamp() }, { merge: true }); }),
+  // Synchro sûre : lit la fiche du compte et écrit ce que fn calcule à partir d'elle, en une transaction.
+  // mergeFields remplace chaque champ en entier (un chapitre décoché disparaît vraiment).
+  syncMine: wrap(async fn => {
+    need(); const ref = doc(db, "users", user.uid), nom = String(user.nom || "").slice(0, 80);
+    return F.runTransaction(db, async t => {
+      const s = await t.get(ref), out = fn(s.exists() ? s.data() : {});
+      t.set(ref, { ...out, nom, email: user.email, maj: serverTimestamp() }, { mergeFields: [...Object.keys(out), "nom", "email", "maj"] });
+      return out;
+    });
+  }),
+  // Jeton du compte connecté (vérifié par le relais de l'assistant IA)
+  jeton: async () => (auth.currentUser ? auth.currentUser.getIdToken() : null),
 
   // Demandes de modification / ajout
   submitDemande: wrap(async (d, photos, fichiers = []) => {
@@ -107,7 +119,8 @@ window.CLOUD = {
   removeContribution: wrap(async c => { needAdmin(); for (const id of partsIds(c)) await deleteDoc(doc(db, "contributions", c.id, "fichiers", id)); for (let i = 0; i < (c.nbPhotos || 0); i++) await deleteDoc(doc(db, "contributions", c.id, "photos", String(i))); await deleteDoc(doc(db, "contributions", c.id)); }),
 
   // Contenu validé, visible de tous (même sans compte)
-  contributions: wrap(async () => (await list(collection(db, "contributions"))).sort((a, b) => ms(a.cree) - ms(b.cree))),
+  // depuis (ms) : seulement les ajouts validés après cette date (le reste est en mémoire sur l'appareil)
+  contributions: wrap(async depuis => (await list(depuis ? query(collection(db, "contributions"), where("cree", ">", F.Timestamp.fromMillis(depuis))) : collection(db, "contributions"))).sort((a, b) => ms(a.cree) - ms(b.cree))),
   contributionPhoto: wrap(async (id, i) => { const s = await getDoc(doc(db, "contributions", id, "photos", String(i))); return s.exists() ? s.data().data : null; }),
   annonces: wrap(async () => (await list(query(collection(db, "annonces"), orderBy("cree", "desc"), limit(20)))).map(a => ({ ...a, t: ms(a.cree) }))),
   deleteAnnonce: wrap(async id => { needAdmin(); await deleteDoc(doc(db, "annonces", id)); }),
@@ -130,6 +143,25 @@ window.CLOUD = {
   attente: wrap(async () => { needAdmin(); return (await list(collection(db, "attente"))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
   inscrits: wrap(async () => { needAdmin(); return list(collection(db, "inscrits")); }),
   inscription: wrap(async (u, ok) => { needAdmin(); const b = writeBatch(db); b.set(doc(db, "inscrits", u.id), { statut: ok ? "valide" : "refuse", nom: u.nom || "", email: u.email || "", quand: serverTimestamp() }); b.delete(doc(db, "attente", u.id)); await b.commit(); }),
+  // Sauvegarde complète de la base (admin) : toutes les collections lisibles, avec ou sans photos et fichiers
+  sauvegarde: wrap(async (avecFichiers, progres) => {
+    needAdmin();
+    const brut = v => v && typeof v.toMillis === "function" ? { _date: new Date(v.toMillis()).toISOString() } : Array.isArray(v) ? v.map(brut) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, brut(x)])) : v;
+    const out = { site: "Cours Licence CAIE", date: new Date().toISOString(), collections: {} };
+    for (const c of ["users", "inscrits", "attente", "bannis", "demandes", "contributions", "annonces"]) {
+      progres && progres(c);
+      const docs = (await getDocs(collection(db, c))).docs;
+      out.collections[c] = {};
+      for (const d of docs) {
+        const e = brut(d.data());
+        if (avecFichiers && (c === "demandes" || c === "contributions")) for (const sc of ["photos", "fichiers"]) {
+          const sd = (await getDocs(collection(db, c, d.id, sc))).docs; if (sd.length) e["_" + sc] = Object.fromEntries(sd.map(x => [x.id, x.data()]));
+        }
+        out.collections[c][d.id] = e;
+      }
+    }
+    return out;
+  }),
   suisExclu: async () => { if (!user || user.admin) return false; try { return (await getDoc(doc(db, "bannis", user.uid))).exists(); } catch (e) { return false; } },
 
   // Notifications push (même appli fermée) : jeton FCM enregistré dans push/{jeton},

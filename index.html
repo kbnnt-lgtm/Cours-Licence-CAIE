@@ -298,6 +298,16 @@ body.mur-on #toast{z-index:9500}
 .dm .minis img{display:block;width:70px;height:70px;object-fit:cover}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 16px}
 table.data{border-collapse:collapse;width:100%;font-size:14px}
+.streak{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.streak-n{display:grid;grid-template-columns:auto auto;align-items:center;gap:0 8px;padding-right:14px;border-right:1px solid var(--line)}
+.streak-n .i{grid-row:1/3;width:28px;height:28px;color:var(--warn)}
+.streak-n b{font-family:var(--f-display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.streak-n small{color:var(--muted);font-size:12.5px}
+.streak-obj{flex:1;min-width:200px;display:grid;gap:6px}
+.streak-t{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px}
+.streak-t span{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.streak .track{height:8px;border-radius:999px;background:var(--sunken);overflow:hidden}.streak .track i{display:block;height:100%;border-radius:999px}
+@media (max-width:420px){ .streak-n{border-right:0;padding-right:0} }
 .stat-row.four{grid-template-columns:repeat(4,minmax(0,1fr));margin:8px 0}
 @media (max-width:600px){ .stat-row.four{grid-template-columns:1fr 1fr} .stat-row.four .stat:last-child{grid-column:auto} }
 .adm-hist{height:110px} .adm-hist i{max-width:none}
@@ -692,7 +702,8 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const safeImg = s => /^data:image\/(jpeg|png|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(String(s||"")) ? s : "";
 const store = {
   get(k, d){ try{ const v = localStorage.getItem("caie:"+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
-  set(k, v){ try{ localStorage.setItem("caie:"+k, JSON.stringify(v)); }catch(e){} if(SYNC_KEYS.includes(k)) scheduleSync(); }
+  set(k, v){ try{ localStorage.setItem("caie:"+k, JSON.stringify(v)); }catch(e){} if(SYNC_KEYS.includes(k)) scheduleSync(); },
+  raw(k, v){ try{ localStorage.setItem("caie:"+k, JSON.stringify(v)); }catch(e){} } // sans relancer la synchro
 };
 const SYNC_KEYS = ["done","stats","quizBest"];
 const real = DATA.matieres.filter(m => !m.exemple);
@@ -720,6 +731,7 @@ const ICON = {
   exam:'<svg class="i" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h4"/><circle cx="4.5" cy="18" r="0"/></svg>',
   cal:'<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
   file:'<svg class="i" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>',
+  flame:'<svg class="i" viewBox="0 0 24 24"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-4 2.5-5 .3 1.6 1 2.6 2 3 .5-2.6-.5-5.4.5-8z"/></svg>',
   bell:'<svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/></svg>'
 };
 const fmtDate = d => { if(!d) return ""; const t = new Date(typeof d === "number" ? d : d+"T12:00:00"); return isNaN(t) ? d : t.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"}); };
@@ -798,12 +810,13 @@ function renderHome(){
     ${last ? `<button class="resume-card" data-go="${esc(last.key)}" style="--c:${esc(last.m.couleur)}"><span class="dot"></span><span><small>Reprendre</small><b>${esc(last.c.titre)}</b></span><span class="muted">→</span></button>` : ""}
     ${EX && !EX.rendu ? `<button class="resume-card ex-resume" data-nav="examen" style="--c:var(--accent)"><span class="dot"></span><span><small>Examen blanc en cours</small><b>${esc(EX.titre.replace(/^Examen blanc · /,""))}</b></span><span class="muted">Reprendre →</span></button>` : ""}
     <div id="pushInvite"></div>
+    ${regulariteHtml()}
     ${nextCoursHtml()}
     ${EX && !EX.rendu ? "" : `<button class="ex-promo" data-nav="examen">${ICON.exam}<span><b>Examen blanc</b><small>Un vrai sujet de contrôle, chronométré et noté sur 20${(stats().ex||[]).length ? ` · dernière note ${fmtN(stats().ex.slice(-1)[0].note)}/20` : ""}</small></span><span class="go">Essayer →</span></button>`}
     <div class="quick">
       <button data-nav="semaine">${ICON.cal}<b>Ma semaine</b><small>Tout ce qu'on a vu une semaine donnée</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
-      <button id="qCards">${ICON.cards}<b>Cartes</b><small>Révision rapide question / réponse</small></button>
+      <button id="qCards">${ICON.cards}<b>Cartes du jour</b><small>${(n => n ? `${n} carte${n>1?"s":""} à revoir aujourd'hui` : "Tout est à jour pour aujourd'hui")(cartesDuJour().length)}</small></button>
       <button data-nav="photos">${ICON.photo}<b>Photos</b><small>${GAL.length} photos de cours classées</small></button>
       <button data-nav="moi">${ICON.stats}<b>Mes stats</b><small>${answered ? `${answered} réponses · tes points faibles` : "Tes réussites et tes difficultés"}</small></button>
     </div>
@@ -817,7 +830,7 @@ function renderHome(){
     </div></div>
     <p class="touch-only muted" style="font-size:14px;margin-top:24px">En bas : <b>Cours</b> ouvre le sommaire, <b>Quiz</b> pour t'interroger, <b>Examen</b> pour un contrôle blanc, <b>Planning</b> pour tes cours et tes salles, <b>Mon espace</b> pour tes stats et tes demandes.</p>
     <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>S</kbd> semaine</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
-  $("#qCards").onclick = () => startReview(allCards(), "Tous les cours");
+  $("#qCards").onclick = () => { const c = cartesDuJour(); if(c.length) startReview(c, "Cartes du jour"); else toast("Aucune carte à revoir aujourd'hui. Reviens demain, ou révise un chapitre avec « Réviser ».", 6000); };
   pushInvite();
   const annMax = Math.max(0, ...ANNONCES.map(a => a.t)); if(annMax) store.set("annSeen", annMax);
 }
@@ -832,7 +845,7 @@ function renderChapter(key){
   const contribs = CONTRIBS.filter(k => k.matiere === m.id && k.chapitre === c.id);
   const cst = stats().ch[key];
   $("#view").innerHTML = `
-    <div class="crumbs" style="--c:${esc(m.couleur)}"><span class="chip"><span class="dot"></span>${esc(m.nom)}</span><span class="badge">${typeOf(c)} ${x.num}</span>${c.date?`<span>Ajouté le ${fmtDate(c.date)}</span>`:""}</div>
+    <div class="crumbs" style="--c:${esc(m.couleur)}"><span class="chip"><span class="dot"></span>${esc(m.nom)}</span><span class="badge">${typeOf(c)} ${x.num}</span>${c.date?`<span>Vu en cours le ${fmtDate(c.date)}</span>`:""}</div>
     <h1>${esc(c.titre)}</h1>
     ${c.source?`<p class="muted" style="margin:0;font-size:13px">Source : ${esc(c.source)}</p>`:""}
     <div class="actions">
@@ -965,14 +978,63 @@ $("#lbStage").addEventListener("touchend", e => { if(lbx === null || $("#lbStage
 
 /* ---------- Statistiques (par personne : sur l'appareil, et sur le compte si connecté) ---------- */
 // stats = { q: {id: [bonnes, fausses, dernière date]}, ch: {chapitre: {ok, ko}}, hist: [{d, t, n, s}] }
-function stats(){ const s = store.get("stats", null) || {}; s.q = s.q || {}; s.ch = s.ch || {}; s.hist = s.hist || []; s.ex = s.ex || []; return s; }
+// stats.j = {jour: nb de réponses} (régularité) ; stats.c = {carte: [boîte, échéance, dernière révision, première fois]} (cartes) ; stats.raz = date de remise à zéro
+function stats(){ const s = store.get("stats", null) || {}; s.q = s.q || {}; s.ch = s.ch || {}; s.hist = s.hist || []; s.ex = s.ex || []; s.j = s.j || {}; s.c = s.c || {}; return s; }
 const qid = it => { let h = 0; const s = it.src.key + "|" + it.q; for(let i=0;i<s.length;i++) h = (h*31 + s.charCodeAt(i)) | 0; return (h>>>0).toString(36); };
 function record(it, ok){
   const s = stats(), id = qid(it), q = s.q[id] || [0,0,0];
   q[ok?0:1]++; q[2] = Date.now(); s.q[id] = q;
   const c = s.ch[it.src.key] || {ok:0, ko:0}; c[ok?"ok":"ko"]++; s.ch[it.src.key] = c;
+  const j = isoD(new Date()); s.j[j] = (s.j[j] || 0) + 1;
   store.set("stats", s);
 }
+
+/* ---------- Régularité : série de jours et objectif de la semaine ---------- */
+const OBJ_CHOIX = [20, 50, 100, 200];
+const objectif = () => { const o = store.get("objectif", 50); return OBJ_CHOIX.includes(o) ? o : 50; };
+function regularite(){
+  const s = stats(), jours = new Set(Object.keys(s.j).filter(d => s.j[d] > 0));
+  s.hist.forEach(h => jours.add(isoD(new Date(h.d))));
+  const auj = isoD(new Date()), veille = d => { const x = plDate(d); x.setDate(x.getDate() - 1); return isoD(x); };
+  let serie = 0, d = jours.has(auj) ? auj : veille(auj);
+  while(jours.has(d)){ serie++; d = veille(d); }
+  let record = 0, run = 0, prev = null;
+  [...jours].sort().forEach(x => { run = prev && veille(x) === prev ? run + 1 : 1; prev = x; record = Math.max(record, run); });
+  const lu = lundi(new Date()), sem = [...Array(7)].map((_, i) => { const x = new Date(lu); x.setDate(x.getDate() + i); return isoD(x); });
+  const parJour = sem.map(x => s.j[x] || 0), semaine = parJour.reduce((a, b) => a + b, 0);
+  return {serie, record, aujourdhui: jours.has(auj), semaine, parJour, sem, obj: objectif()};
+}
+function regulariteHtml(){
+  const r = regularite(), p = Math.min(100, Math.round(r.semaine / r.obj * 100));
+  return `<div class="streak" role="group" aria-label="Régularité">
+    <span class="streak-n">${ICON.flame}<b>${r.serie}</b><small>jour${r.serie > 1 ? "s" : ""} de suite</small></span>
+    <span class="streak-obj"><span class="streak-t"><b>Objectif de la semaine</b><span>${r.semaine} / ${r.obj} réponses${r.semaine >= r.obj ? " · atteint !" : ""}</span></span><span class="track"><i style="width:${p}%;background:${r.semaine >= r.obj ? "var(--ok)" : "var(--accent)"}"></i></span>
+    <small class="muted">${r.serie && !r.aujourdhui ? "Révise aujourd'hui pour garder ta série." : !r.serie ? "Réponds à quelques questions aujourd'hui pour lancer ta série." : "Bien joué, ta série continue."}</small></span>
+  </div>`;
+}
+
+/* ---------- Cartes à répétition espacée ----------
+   Une carte sue passe dans la boîte suivante et revient dans 1, 3, 7, 14 puis 30 jours ;
+   une carte ratée revient le lendemain. Les « Cartes du jour » = cartes arrivées à échéance
+   + quelques nouvelles, d'abord dans les chapitres marqués révisés puis les plus récents. */
+const INTERV = [1, 3, 7, 14, 30], NOUV_JOUR = 10;
+const jour0 = t => { const x = new Date(t); x.setHours(0, 0, 0, 0); return x.getTime(); };
+const CARD_KEY = new Map(); FLAT.forEach(x => (x.c.flashcards||[]).forEach(f => CARD_KEY.set(f, x)));
+const cardId = (x, f) => qid({src: {key: x.key}, q: f.q});
+function noteCarte(f, ok){
+  const x = CARD_KEY.get(f); if(!x) return;
+  const s = stats(), id = cardId(x, f), o = s.c[id] || [0, 0, 0, Date.now()], b = ok ? Math.min(o[0] + 1, INTERV.length) : 0;
+  s.c[id] = [b, jour0(Date.now()) + (ok ? INTERV[b - 1] : 1) * 864e5, Date.now(), o[3] || o[2] || Date.now()];
+  store.raw("stats", s);
+  record({src: {key: x.key, titre: x.c.titre}, q: f.q}, ok);
+}
+function cartesDuJour(){
+  const s = stats(), now = Date.now(), dues = [], nouv = [];
+  FLAT.forEach(x => (x.c.flashcards||[]).forEach(f => { const e = s.c[cardId(x, f)]; if(e){ if(e[1] <= now) dues.push(f); } else nouv.push({f, x}); }));
+  nouv.sort((a, b) => (!!done[b.x.key] - !!done[a.x.key]) || String(b.x.c.date||"").localeCompare(String(a.x.c.date||"")));
+  return [...shuffle(dues), ...nouv.slice(0, Math.max(0, NOUV_JOUR - Object.values(s.c).filter(e => jour0(e[3] || 0) === jour0(now)).length)).map(o => o.f)];
+}
+function prochainesCartes(){ const s = stats(), demain = jour0(Date.now()) + 864e5; return Object.values(s.c).filter(e => e[1] > Date.now() && e[1] <= demain).length; }
 function weakness(it){ const q = stats().q[qid(it)]; if(!q) return 0.5; return (q[1] + 1) / (q[0] + q[1] + 2); }
 
 /* ---------- Notifications push (appli fermée) ---------- */
@@ -1039,6 +1101,12 @@ function renderMe(){
       <div class="box"><h2>Par chapitre</h2><div class="meters">${FLAT.map(x => { const t = s.ch[x.key]; const k = t ? t.ok+t.ko : 0, p = k ? Math.round(t.ok/k*100) : 0; return `<div class="meter"><span class="lbl"><button class="link" style="font-weight:500;text-decoration:none;color:var(--ink)" data-go="${esc(x.key)}">${esc(x.c.titre)}</button></span><span class="val">${k ? p+" %" : "—"}${bests[JSON.stringify([x.m.id, x.key])]!=null ? " · record "+bests[JSON.stringify([x.m.id, x.key])]+" %" : ""}</span><span class="track"><i style="width:${p}%;background:${pctColor(p)}"></i></span></div>`; }).join("")}</div></div>
     ` : `<p class="msg info">Fais un premier quiz : tes réussites et tes difficultés apparaîtront ici, chapitre par chapitre.</p><button class="btn primary" data-nav="quiz">${ICON.quiz}Lancer un quiz</button>`}
     </div>
+    <div class="section"><div class="section-head"><h2>Ma régularité</h2></div>
+      ${regulariteHtml()}
+      <div class="box"><div class="hist" aria-label="Réponses par jour cette semaine">${(r => r.parJour.map((v, i) => `<i title="${esc(fmtJour(r.sem[i], {weekday:"long", day:"numeric"}))} : ${v} réponse${v>1?"s":""}" style="height:${v ? Math.max(6, v / Math.max(...r.parJour) * 100) : 0}%;background:var(--accent)"></i>`).join(""))(regularite())}</div>
+        <div class="adm-x" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center">${["lun","mar","mer","jeu","ven","sam","dim"].map(j => `<span>${j}</span>`).join("")}</div>
+        <p class="muted" style="font-size:13px;margin:10px 0 0">Meilleure série : ${regularite().record} jour${regularite().record>1?"s":""}. Chaque réponse compte : quiz, cartes, examens blancs.</p>
+        <div class="field" style="margin-top:10px"><label for="objSel">Mon objectif de la semaine</label><select class="input" id="objSel" style="max-width:240px">${OBJ_CHOIX.map(o => `<option value="${o}" ${o===objectif()?"selected":""}>${o} réponses</option>`).join("")}</select></div></div></div>
     ${s.ex.length ? `<div class="section"><div class="section-head"><h2>Mes examens blancs</h2><button class="link" data-nav="examen">Nouvel examen</button></div>
       <div class="stat-row"><div class="stat"><b style="color:${pctColor(s.ex.reduce((a,e) => a + e.note, 0) / s.ex.length * 5)}">${fmtN(Math.round(s.ex.reduce((a,e) => a + e.note, 0) / s.ex.length * 10) / 10)}</b><small>moyenne sur 20</small></div><div class="stat"><b>${fmtN(Math.max(...s.ex.map(e => e.note)))}</b><small>meilleure note</small></div><div class="stat"><b>${s.ex.length}</b><small>examen${s.ex.length>1?"s":""} passé${s.ex.length>1?"s":""}</small></div></div>
       <div class="box"><ul class="ex-list">${s.ex.slice(-10).reverse().map(e => `<li><b class="n" style="color:${pctColor(e.note*5)}">${fmtN(e.note)}/20</b><span>${esc(e.t.replace(/^Examen blanc · /,""))}<br><small>${esc(fmtDate(e.d))} · ${e.min} min</small></span></li>`).join("")}</ul></div></div>` : ""}
@@ -1048,8 +1116,9 @@ function renderMe(){
       <div id="pushBox"></div>
       ${"Notification" in window ? `<label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="notifCb" ${store.get("notif",false) && Notification.permission==="granted" ? "checked" : ""} style="width:20px;height:20px;accent-color:var(--accent)"> Afficher aussi une notification du téléphone ou de l'ordinateur</label>` : ""}
       </div></div>`;
-  $("#resetStats")?.addEventListener("click", e => { const b = e.target; if(b.dataset.c){ store.set("stats", {}); store.set("quizBest", {}); renderMe(); } else { b.dataset.c = 1; b.textContent = "Confirmer la remise à zéro"; } });
+  $("#resetStats")?.addEventListener("click", e => { const b = e.target; if(b.dataset.c){ store.set("quizBest", {}); store.set("stats", {raz: Date.now()}); renderMe(); } else { b.dataset.c = 1; b.textContent = "Confirmer la remise à zéro"; } });
   $("#weakQuiz")?.addEventListener("click", () => openQuiz(null, "faibles"));
+  $("#objSel").onchange = e => { store.set("objectif", +e.target.value); renderMe(); };
   $("#newReq").onclick = () => openForm({});
   $("#notifCb")?.addEventListener("change", async e => {
     if(e.target.checked){ let p = Notification.permission; try{ if(p === "default") p = await Notification.requestPermission(); }catch(_){} if(p !== "granted"){ e.target.checked = false; toast("Les notifications sont bloquées par le navigateur pour ce site."); return; } }
@@ -1244,12 +1313,31 @@ async function renderAdmin(){
   current = null;
   if(!CLOUD_USER || !CLOUD_USER.admin){ $("#view").innerHTML = `<h1>Espace admin</h1><p class="msg info">Cet espace est réservé à l'administrateur. Connecte-toi dans « Mon espace ».</p>`; return; }
   $("#view").innerHTML = `<div class="eyebrow">Administration</div><h1>Espace admin</h1>
-    <div class="tabs">${[["attente","À valider"],["inscriptions","Inscriptions"],["toutes","Toutes les demandes"],["stats","Statistiques"],["classe","La classe"],["annonce","Annonce"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
+    <div class="tabs">${[["attente","À valider"],["inscriptions","Inscriptions"],["toutes","Toutes les demandes"],["stats","Statistiques"],["classe","La classe"],["annonce","Annonce"],["sauvegarde","Sauvegarde"]].map(([k,v]) => `<button class="pill" data-tab="${k}" aria-pressed="${ADM_TAB===k}">${v}</button>`).join("")}</div>
     <div id="admBody"><p class="muted">Chargement…</p></div>`;
   $("#view").querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { ADM_TAB = b.dataset.tab; renderAdmin(); });
   const box = $("#admBody");
   try{
     if(ADM_TAB === "stats") return await renderAdminStats(box);
+    if(ADM_TAB === "sauvegarde"){
+      const der = store.get("sauvegardeLe", 0);
+      box.innerHTML = `<div class="box"><h2>Sauvegarder la base</h2><p style="margin:0 0 10px">Firebase ne garde aucune copie : une suppression par erreur est définitive. Ce bouton télécharge toute la base dans un fichier sur ton appareil (comptes, inscriptions, stats, demandes, ajouts, annonces). Rien n'est publié. Range ce fichier en lieu sûr : il contient les e-mails de la classe.</p>
+        <label style="display:flex;gap:10px;align-items:center;margin:0 0 12px"><input type="checkbox" id="svFich" style="width:20px;height:20px;accent-color:var(--accent)"> Inclure les photos et fichiers joints (fichier plus lourd)</label>
+        <div id="svMsg"></div><button class="btn primary" id="svGo">Télécharger la sauvegarde</button>
+        <p class="muted" style="font-size:13px;margin:10px 0 0">${der ? "Dernière sauvegarde depuis cet appareil : " + esc(new Date(der).toLocaleString("fr-FR")) + "." : "Aucune sauvegarde depuis cet appareil."} Conseil : une fois par mois, et avant chaque grosse modification.</p></div>`;
+      $("#svGo").onclick = async () => {
+        const b = $("#svGo"), msg = t => $("#svMsg").innerHTML = t ? `<p class="msg info" style="margin:0 0 10px">${esc(t)}</p>` : ""; b.disabled = true;
+        try{
+          const data = await CLOUD.sauvegarde($("#svFich").checked, c => msg("Lecture : " + c + "…"));
+          const n = Object.values(data.collections).reduce((a, c) => a + Object.keys(c).length, 0);
+          const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], {type: "application/json"}));
+          const a = document.createElement("a"); a.href = url; a.download = "sauvegarde-cours-caie-" + isoD(new Date()) + ".json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 60000);
+          store.set("sauvegardeLe", Date.now()); msg(""); toast(`Sauvegarde téléchargée : ${n} fiches.`);
+        }catch(err){ msg(""); toast("Sauvegarde impossible : " + esc(err.message), 8000); }
+        b.disabled = false;
+      };
+      return;
+    }
     if(ADM_TAB === "inscriptions"){
       const [att, ins] = await Promise.all([CLOUD.attente(), CLOUD.inscrits()]);
       const refus = ins.filter(i => i.statut === "refuse"), nOk = ins.filter(i => i.statut === "valide").length;
@@ -1436,18 +1524,43 @@ const IDX = FLAT.map(x => {
   return {...x, text, n: norm(text), nt: norm(x.c.titre)};
 });
 let sel = 0, hits = [];
+// Vocabulaire des cours (mots de 3 lettres ou plus) pour corriger les fautes de frappe
+let VOCAB = null;
+function vocab(){ if(VOCAB) return VOCAB; VOCAB = new Map(); IDX.forEach(x => (x.n.match(/[a-z0-9]{3,}/g) || []).forEach(w => VOCAB.set(w, (VOCAB.get(w) || 0) + 1))); return VOCAB; }
+function distance(a, b, max){
+  if(Math.abs(a.length - b.length) > max) return max + 1;
+  let p2 = null, p = [...Array(b.length + 1).keys()];
+  for(let i = 1; i <= a.length; i++){
+    const c = [i]; let best = i;
+    for(let j = 1; j <= b.length; j++){
+      c[j] = Math.min(p[j] + 1, c[j-1] + 1, p[j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+      if(p2 && i > 1 && j > 1 && a[i-1] === b[j-2] && a[i-2] === b[j-1]) c[j] = Math.min(c[j], p2[j-2] + 1); // lettres inversées
+      best = Math.min(best, c[j]);
+    }
+    if(best > max) return max + 1;
+    p2 = p; p = c;
+  }
+  return p[b.length];
+}
+function corrige(w){
+  if(w.length < 4 || IDX.some(x => x.n.includes(w))) return w;
+  const max = w.length <= 5 ? 1 : 2; let bon = null, bd = max + 1, bn = 0;
+  vocab().forEach((n, v) => { if(Math.abs(v.length - w.length) > max) return; const d = distance(w, v, max); if(d < bd || (d === bd && n > bn)){ bon = v; bd = d; bn = n; } });
+  return bon || w;
+}
 function openSearch(){ closeAll(); $("#searchOv").hidden = false; $("#q").value = ""; doSearch(); document.body.classList.remove("nav-open"); setTimeout(()=>$("#q").focus(), 0); }
 function doSearch(){
   const q = norm($("#q").value.trim());
-  const words = q.split(/\s+/).filter(Boolean);
+  let words = q.split(/\s+/).filter(Boolean), corr = "";
+  const cherche = ws => IDX.filter(x => ws.every(w => x.n.includes(w))).sort((a,b)=> (b.nt.includes(ws[0])) - (a.nt.includes(ws[0]))).slice(0,30);
   if(!words.length){ hits = IDX.slice(0,8); }
-  else hits = IDX.filter(x => words.every(w => x.n.includes(w))).sort((a,b)=> (b.nt.includes(words[0])) - (a.nt.includes(words[0]))).slice(0,30);
+  else { hits = cherche(words); if(!hits.length){ const w2 = words.map(corrige); if(w2.join(" ") !== words.join(" ")){ const h2 = cherche(w2); if(h2.length){ hits = h2; words = w2; corr = w2.join(" "); } } } }
   sel = 0;
-  $("#results").innerHTML = hits.length ? hits.map((x,i) => {
+  $("#results").innerHTML = (corr ? `<div class="empty" style="padding:10px 14px;text-align:left">Résultats pour « <b>${esc(corr)}</b> » (rien pour « ${esc($("#q").value.trim())} »).</div>` : "") + (hits.length ? hits.map((x,i) => {
     let snip = x.c.resume || "";
     if(words.length){ const p = x.n.indexOf(words[0]); if(p>=0){ const a = Math.max(0,p-50); snip = (a?"…":"")+x.text.slice(a, p+110)+"…"; } }
     return `<button class="res" role="option" data-i="${i}" aria-selected="${i===0}" style="--c:${esc(x.m.couleur)}"><span class="rt"><span class="dot"></span>${hl(x.c.titre, words)}</span><span class="rx">${esc(x.m.nom)} · ${hl(snip, words)}</span></button>`;
-  }).join("") : `<div class="empty">Rien trouvé pour « ${esc($("#q").value)} ».</div>`;
+  }).join("") : `<div class="empty">Rien trouvé pour « ${esc($("#q").value)} ».</div>`);
 }
 function hl(s, words){
   let out = esc(s); if(!words.length) return out;
@@ -1468,18 +1581,18 @@ $("#q").addEventListener("keydown", e => {
 $("#results").addEventListener("click", e => { const b = e.target.closest(".res"); if(b) go(hits[+b.dataset.i].key); });
 
 /* ---------- Révision (cartes) ---------- */
-let deck = [], pos = 0, flipped = false, known = 0;
+let deck = [], pos = 0, flipped = false, known = 0, deckNote = new Set();
 function allCards(){ return FLAT.flatMap(x => x.c.flashcards||[]); }
 function startReview(cards, title){
   if(!cards.length) return;
   closeAll();
-  deck = [...cards].sort(()=>Math.random()-.5); pos = 0; flipped = false; known = 0;
+  deck = title === "Cartes du jour" ? [...cards] : shuffle(cards); pos = 0; flipped = false; known = 0; deckNote = new Set();
   $("#revTitle").textContent = "Révision · " + title;
   $("#revOv").hidden = false; renderCard();
 }
 function renderCard(){
   if(pos >= deck.length){
-    $("#revBody").innerHTML = `<div class="card-stage"><div class="flash"><span class="side">Terminé</span><span class="q">${known} carte${known>1?"s":""} sue${known>1?"s":""} du premier coup</span><span class="a">${known===new Set(deck).size?"Parfait, tout est acquis.":"Les cartes « À revoir » sont revenues en fin de paquet jusqu'à ce que tu les saches."}</span></div></div>
+    $("#revBody").innerHTML = `<div class="card-stage"><div class="flash"><span class="side">Terminé</span><span class="q">${known} carte${known>1?"s":""} sue${known>1?"s":""} du premier coup</span><span class="a">${known===new Set(deck).size?"Parfait, tout est acquis.":"Les cartes « À revoir » sont revenues en fin de paquet jusqu'à ce que tu les saches."}${(n => n ? ` Demain : ${n} carte${n>1?"s":""} à revoir.` : "")(prochainesCartes())}</span></div></div>
       <div class="rev-foot"><span class="count">Session finie</span><span class="grp"><button class="btn" id="revAgain">Recommencer</button><button class="btn primary" id="revEnd">Fermer</button></span></div>`;
     $("#revAgain").onclick = () => startReview([...new Set(deck)], $("#revTitle").textContent.replace("Révision · ",""));
     $("#revEnd").onclick = closeAll;
@@ -1498,7 +1611,7 @@ function renderCard(){
   $("#again") && ($("#again").onclick = () => answer(false));
 }
 function flip(){ flipped = !flipped; renderCard(); }
-function answer(ok){ if(ok) known++; else deck.push(deck[pos]); pos++; flipped = false; renderCard(); }
+function answer(ok){ const f = deck[pos]; if(!deckNote.has(f)){ deckNote.add(f); noteCarte(f, ok); if(ok) known++; } if(!ok) deck.push(f); pos++; flipped = false; renderCard(); }
 let tx = null;
 $("#revBody").addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, {passive:true});
 $("#revBody").addEventListener("touchend", e => { if(tx === null) return; const dx = e.changedTouches[0].clientX - tx; tx = null; if(Math.abs(dx) < 60 || !flipped || pos >= deck.length) return; answer(dx > 0); });
@@ -1513,7 +1626,7 @@ const shuffle = a => { a = [...a]; for(let i=a.length-1;i>0;i--){ const j = Math
 const norm2 = t => String(t||"").trim().toLowerCase();
 function itemsOf(x){
   const out = [], src = {key: x.key, titre: x.c.titre, mat: x.m.nom, couleur: x.m.couleur};
-  (x.c.flashcards||[]).forEach(f => out.push({type:"card", q:f.q, a:f.r, src}));
+  [...(x.c.flashcards||[]), ...(x.c.cartesPlus||[])].forEach(f => out.push({type:"card", q:f.q, a:f.r, src}));
   (x.c.definitions||[]).forEach(d => out.push({type:"def", q:"Quel terme correspond à cette définition ?", def:d.def, a:d.terme, src}));
   (x.c.quiz||[]).forEach(z => out.push({type:"own", q:z.q, a:z.choix[z.bonne], wrong:z.choix.filter((_,i)=>i!==z.bonne), expl:z.explication, src}));
   return out;
@@ -1931,7 +2044,26 @@ function renderSemaine(){
 /* ---------- Barre mobile, fenêtres, thème ---------- */
 $("#tbMenu").onclick = () => document.body.classList.toggle("nav-open");
 $("#scrim").onclick = () => document.body.classList.remove("nav-open");
-function closeAll(){ ["#searchOv","#helpOv","#revOv","#quizOv","#formOv"].forEach(s => $(s).hidden = true); }
+function closeAll(){ const rev = !$("#revOv").hidden; ["#searchOv","#helpOv","#revOv","#quizOv","#formOv"].forEach(s => $(s).hidden = true); if(rev && route === "") render(); }
+const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+const FENETRES = ["#lb", "#searchOv", "#helpOv", "#revOv", "#quizOv", "#formOv", "#mur"].map(s => $(s)).filter(Boolean);
+const fenetreOuverte = () => FENETRES.find(o => !o.hidden);
+const OUVREUR = new Map();
+const fenObs = new MutationObserver(ms => ms.forEach(m => {
+  const o = m.target;
+  if(o.hidden){ const b = OUVREUR.get(o); OUVREUR.delete(o); if(b && b.isConnected && !fenetreOuverte()) setTimeout(() => { if(!fenetreOuverte()) b.focus({preventScroll: true}); }, 0); }
+  else if(!OUVREUR.has(o)){ OUVREUR.set(o, document.activeElement); setTimeout(() => { if(!o.hidden && !o.contains(document.activeElement)) [...o.querySelectorAll(FOCUSABLE)].find(el => el.offsetParent !== null)?.focus({preventScroll: true}); }, 40); }
+}));
+FENETRES.forEach(o => fenObs.observe(o, {attributes: true, attributeFilter: ["hidden"]}));
+document.addEventListener("keydown", e => {
+  if(e.key !== "Tab") return;
+  const o = fenetreOuverte(); if(!o) return;
+  const f = [...o.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null); if(!f.length) return;
+  const a = f[0], z = f[f.length - 1], act = document.activeElement;
+  if(!o.contains(act)){ e.preventDefault(); a.focus(); }
+  else if(e.shiftKey && act === a){ e.preventDefault(); z.focus(); }
+  else if(!e.shiftKey && act === z){ e.preventDefault(); a.focus(); }
+}, true);
 $$(".overlay").forEach(o => o.addEventListener("click", e => { if(e.target === o || e.target.closest("[data-close]")) closeAll(); }));
 $("#searchBtn").onclick = openSearch;
 $("#helpBtn").onclick = () => { closeAll(); $("#helpOv").hidden = false; };
@@ -1992,7 +2124,7 @@ function iaContexte(x){
   (c.sections||[]).forEach(s => parts.push("## " + s.titre + "\n" + iaTexte(s.html)));
   if((c.pointsCles||[]).length) parts.push("## À retenir\n" + c.pointsCles.map(p => "- " + p).join("\n"));
   if((c.definitions||[]).length) parts.push("## Définitions\n" + c.definitions.map(d => "- " + d.terme + " : " + d.def).join("\n"));
-  if((c.flashcards||[]).length) parts.push("## Cartes de révision\n" + c.flashcards.map(f => "- " + (f.q||f.recto||"") + " → " + (f.r||f.verso||"")).join("\n"));
+  if((c.flashcards||[]).length || (c.cartesPlus||[]).length) parts.push("## Cartes de révision\n" + [...(c.flashcards||[]), ...(c.cartesPlus||[])].map(f => "- " + (f.q||f.recto||"") + " → " + (f.r||f.verso||"")).join("\n"));
   if((c.examen||[]).length) parts.push("## Exercices d'examen blanc\n" + c.examen.map(e => "### " + (e.titre||"Exercice") + "\n" + iaTexte(e.enonce) + "\n" + (e.questions||[]).map((q,k) => (k+1) + ". " + iaTexte(q.q) + (q.choix ? " (choix : " + q.choix.join(" / ") + " ; bonne réponse : " + q.choix[q.bonne] + ")" : "") + (q.corrige ? "\n   Corrigé : " + iaTexte(q.corrige) : "")).join("\n")).join("\n\n"));
   return {titre: c.titre, matiere: x.m.nom, texte: parts.join("\n\n").slice(0, 60000)};
 }
@@ -2176,20 +2308,73 @@ function renderMur(){
   $("#murCheck")?.addEventListener("click", async e => { e.target.disabled = true; const avant = INSCR; INSCR = await CLOUD.monStatut(); if(INSCR === "valide") return location.reload(); renderMur(); if(INSCR === avant) toast("Pas encore validée. Réessaie plus tard."); });
   if(!CLOUD_USER) bindAccount();
 }
-let syncT = null, syncReady = false;
-function scheduleSync(){ if(!CLOUD_USER || !syncReady) return; clearTimeout(syncT); syncT = setTimeout(() => CLOUD.saveMine({stats: stats(), done: store.get("done", {}), quizBest: store.get("quizBest", {})}).catch(()=>{}), 1500); }
-// Fusionne les stats du compte et celles de l'appareil (on garde le maximum de chaque compteur)
-function mergeStats(a, b){
-  const s = {q:{...(a.q||{})}, ch:{...(a.ch||{})}, hist:[...(a.hist||[])]};
-  Object.entries(b.q||{}).forEach(([k,v]) => { const o = s.q[k]; s.q[k] = o ? [Math.max(o[0],v[0]), Math.max(o[1],v[1]), Math.max(o[2]||0,v[2]||0)] : v; });
-  Object.entries(b.ch||{}).forEach(([k,v]) => { const o = s.ch[k]; s.ch[k] = o ? {ok: Math.max(o.ok,v.ok), ko: Math.max(o.ko,v.ko)} : v; });
-  const seenH = new Set(s.hist.map(h => h.d)); (b.hist||[]).forEach(h => { if(!seenH.has(h.d)) s.hist.push(h); });
-  s.hist.sort((x,y) => x.d - y.d); s.hist = s.hist.slice(-60);
-  s.ex = [...(a.ex||[])]; const seenE = new Set(s.ex.map(e => e.d)); (b.ex||[]).forEach(e => { if(!seenE.has(e.d)) s.ex.push(e); }); s.ex.sort((x,y) => x.d - y.d); s.ex = s.ex.slice(-40);
+let syncT = null, syncReady = false, syncEnCours = false, syncEncore = false;
+function scheduleSync(delai = 1500){ if(!CLOUD_USER || !syncReady) return; clearTimeout(syncT); syncT = setTimeout(syncNow, delai); }
+// Synchro par écarts : la « base » (par compte, sur l'appareil) est ce que le compte contenait à la dernière
+// synchro réussie. Ce qui a été fait ici depuis (écart appareil − base) est ajouté au compte, et un chapitre
+// décoché ici est retiré du compte. Deux appareils s'additionnent donc au lieu de s'écraser.
+async function syncNow(){
+  if(!CLOUD_USER || !syncReady) return;
+  if(syncEnCours){ syncEncore = true; return; }
+  syncEnCours = true; syncEncore = false;
+  const uid = CLOUD_USER.uid, kb = "syncBase:" + uid;
+  try{
+    const loc = {stats: stats(), done: store.get("done", {}), quizBest: store.get("quizBest", {})}, base = store.get(kb, null);
+    const out = await CLOUD.syncMine(cur => {
+      const cs = cur.stats || {}, razIci = (loc.stats.raz || 0) > (cs.raz || 0);
+      return {stats: fuseStats(cs, loc.stats, base ? base.stats : cs), done: fuseDone(cur.done || {}, loc.done, base ? base.done : null), quizBest: razIci ? loc.quizBest : fuseMax(cur.quizBest || {}, loc.quizBest)};
+    });
+    if(!CLOUD_USER || CLOUD_USER.uid !== uid) return;
+    // Ce qui a été fait pendant l'envoi n'est pas perdu : on le rejoue par-dessus le résultat
+    const now = {stats: stats(), done: store.get("done", {}), quizBest: store.get("quizBest", {})};
+    store.raw(kb, {stats: out.stats, done: out.done});
+    store.raw("stats", fuseStats(out.stats, now.stats, loc.stats));
+    done = fuseDone(out.done, now.done, loc.done); store.raw("done", done);
+    store.raw("quizBest", fuseMax(out.quizBest, now.quizBest));
+    if(JSON.stringify(now) !== JSON.stringify(loc)) syncEncore = true;
+  }catch(e){ /* hors ligne : on réessaiera */ }
+  finally{ syncEnCours = false; if(syncEncore) scheduleSync(); }
+}
+const plus = (c, l, b) => (c || 0) + Math.max(0, (l || 0) - (b || 0));
+function fuseStats(c, l, b){
+  c = c || {}; l = l || {}; b = b || {};
+  if((l.raz || 0) > (c.raz || 0)) return {...l}; // remise à zéro faite sur cet appareil : elle s'applique au compte
+  const perdu = (c.raz || 0) > (b.raz || 0); // remise à zéro faite ailleurs : ce qui a été fait ici avant ne compte plus
+  const s = {...c, q: {...(c.q||{})}, ch: {...(c.ch||{})}, j: {...(c.j||{})}, c: {...(c.c||{})}, hist: [...(c.hist||[])], ex: [...(c.ex||[])]};
+  if(!perdu){
+    const bq = b.q || {}, bch = b.ch || {}, bj = b.j || {};
+    Object.entries(l.q||{}).forEach(([k, v]) => { const o = s.q[k] || [0,0,0], w = bq[k] || [0,0,0]; s.q[k] = [plus(o[0], v[0], w[0]), plus(o[1], v[1], w[1]), Math.max(o[2]||0, v[2]||0)]; });
+    Object.entries(l.ch||{}).forEach(([k, v]) => { const o = s.ch[k] || {ok:0, ko:0}, w = bch[k] || {}; s.ch[k] = {ok: plus(o.ok, v.ok, w.ok), ko: plus(o.ko, v.ko, w.ko)}; });
+    Object.entries(l.j||{}).forEach(([k, v]) => { s.j[k] = plus(s.j[k], v, bj[k]); });
+  }
+  const apres = t => !perdu || t > (c.raz || 0);
+  Object.entries(l.c||{}).forEach(([k, v]) => { const o = s.c[k]; if(apres(v[2]) && (!o || (v[2]||0) > (o[2]||0))) s.c[k] = v; });
+  const uni = (a, x, n) => { const vu = new Set(a.map(h => h.d)); x.forEach(h => { if(!vu.has(h.d) && apres(h.d)) a.push(h); }); return a.sort((p, q) => p.d - q.d).slice(-n); };
+  s.hist = uni(s.hist, l.hist || [], 60); s.ex = uni(s.ex, l.ex || [], 40);
   return s;
 }
+function fuseDone(c, l, b){
+  if(!b) return {...c, ...l}; // première synchro de cet appareil : on réunit
+  const r = {...c};
+  Object.keys(l).forEach(k => { if(!b[k]) r[k] = true; });   // coché ici depuis
+  Object.keys(b).forEach(k => { if(!l[k]) delete r[k]; });   // décoché ici depuis
+  return r;
+}
+const fuseMax = (a, b) => { const r = {...a}; Object.entries(b || {}).forEach(([k, v]) => r[k] = Math.max(v, r[k] ?? 0)); return r; };
 // Les ajouts déjà intégrés au cours par Claude (ids dans COURS.integrees) ne sont plus affichés à part.
-async function loadContribs(){ try{ const done = new Set((window.COURS && COURS.integrees) || []); CONTRIBS = (await CLOUD.contributions()).filter(k => !done.has(k.id) && !k.claude); }catch(e){} }
+const filtreContribs = l => { const integ = new Set((window.COURS && COURS.integrees) || []); return l.filter(k => !integ.has(k.id) && !k.claude); };
+async function loadContribs(){
+  let cache = store.get("contribs", null);
+  if(cache && Array.isArray(cache.l)) CONTRIBS = filtreContribs(cache.l);
+  try{
+    const enMs = l => l.map(k => ({...k, cree: CLOUD.ms(k.cree)}));
+    if(!cache || !Array.isArray(cache.l) || Date.now() - (cache.t || 0) > 864e5) cache = {t: Date.now(), l: enMs(await CLOUD.contributions())};
+    else { const nv = enMs(await CLOUD.contributions(cache.max || 0)), ids = new Set(nv.map(k => k.id)); cache.l = cache.l.filter(k => !ids.has(k.id)).concat(nv).sort((a, b) => a.cree - b.cree); }
+    cache.max = Math.max(0, ...cache.l.map(k => k.cree || 0));
+    store.set("contribs", cache);
+    CONTRIBS = filtreContribs(cache.l);
+  }catch(e){}
+}
 async function loadAnnonces(){
   try{
     ANNONCES = await CLOUD.annonces();
@@ -2220,13 +2405,7 @@ async function startCloud(){
     renderMur();
     if(u && INSCR !== "valide") return;
     if(u){
-      try{
-        const mine = await CLOUD.loadMine() || {};
-        store.set("stats", mergeStats(stats(), mine.stats || {}));
-        done = {...(mine.done||{}), ...store.get("done", {})}; store.set("done", done);
-        const qb = {...(mine.quizBest||{})}; Object.entries(store.get("quizBest", {})).forEach(([k,v]) => qb[k] = Math.max(v, qb[k] ?? 0)); store.set("quizBest", qb);
-      }catch(e){}
-      syncReady = true; scheduleSync();
+      syncReady = true; await syncNow();
       if(u.admin) CLOUD.attente().then(a => { if(a.length) toast(`${ICON.bell}<span>${a.length > 1 ? a.length + " inscriptions à valider" : "Inscription à valider : " + esc(a[0].nom || a[0].email || "")}</span><button data-insc>Voir</button>`, 12000); }).catch(() => {});
       if(u.admin){ try{ ADMIN_DMS = await CLOUD.allDemandes();
         const vu = store.get("dmSeen", 0), nv = ADMIN_DMS.filter(d => d.statut === "en_attente" && CLOUD.ms(d.cree) > vu);
@@ -2244,6 +2423,9 @@ async function startCloud(){
 const start = (location.hash||"").slice(1);
 route = start in VIEWS || byKey(start) ? start : (start === "quiz" ? "" : "");
 render(); renderMur();
+if("serviceWorker" in navigator && MUR) navigator.serviceWorker.register("firebase-messaging-sw.js").catch(() => {});
+window.addEventListener("offline", () => toast("Hors ligne : tu peux continuer à réviser. Tes résultats seront envoyés au retour du réseau.", 7000));
+window.addEventListener("online", () => { toast("Connexion retrouvée.", 3000); scheduleSync(300); });
 if(start === "quiz") openQuiz(null);
 announceNew();
 exStartTick();

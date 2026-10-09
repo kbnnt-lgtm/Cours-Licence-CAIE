@@ -22,12 +22,19 @@ if (!DIRECT) {
 }
 // Appel direct (flux SSE) : renvoie le texte complet, appelle onMorceau au fil de l'eau
 async function direct(modele, systeme, hist, texte, onMorceau) {
-  const url = RELAIS ? `${RELAIS}?modele=${encodeURIComponent(modele)}` : `https://generativelanguage.googleapis.com/v1beta/models/${modele}:streamGenerateContent?alt=sse&key=${encodeURIComponent(CLE)}`;
+  // Relais : on joint le jeton du compte connecté, le relais vérifie que le compte est validé par l'admin
+  const jeton = RELAIS && window.CLOUD && window.CLOUD.jeton ? await window.CLOUD.jeton().catch(() => null) : null;
+  const url = RELAIS ? `${RELAIS}?modele=${encodeURIComponent(modele)}${jeton ? "&jeton=" + encodeURIComponent(jeton) : ""}` : `https://generativelanguage.googleapis.com/v1beta/models/${modele}:streamGenerateContent?alt=sse&key=${encodeURIComponent(CLE)}`;
   const r = await fetch(url, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ systemInstruction: { parts: [{ text: systeme }] }, contents: [...hist, { role: "user", parts: [{ text: texte }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 4000 } })
   });
-  if (!r.ok) { let m = r.status + ""; try { const j = await r.json(); m += " " + (j.error && (j.error.status + " " + j.error.message)); } catch (e) {} throw new Error(m); }
+  if (!r.ok) {
+    let m = r.status + "", brut = ""; try { brut = await r.text(); const j = JSON.parse(brut); m += " " + (j.error && (j.error.status + " " + j.error.message)); } catch (e) {}
+    // Message en clair du relais (compte non connecté ou pas validé, limite atteinte) : affiché tel quel
+    if (RELAIS && [401, 403, 429].includes(r.status) && brut && !brut.trim().startsWith("{")) { const e = new Error(brut.trim()); e.relais = true; throw e; }
+    throw new Error(m);
+  }
   const lec = r.body.getReader(), dec = new TextDecoder(); let tampon = "", tout = "";
   for (;;) {
     const { done, value } = await lec.read(); if (done) break;
@@ -69,6 +76,7 @@ L'étudiant te parle au micro et ta réponse est lue à voix haute. Parle comme 
 - Si sa phrase est mal reconnue ou incomplète, devine le sens probable ou demande-lui de répéter.`;
 let ok = 0; // indice du premier modèle qui a répondu
 function erreur(e) {
+  if (e && e.relais) return e.message;
   const m = String((e && (e.message || e.code)) || e);
   if (/api-not-enabled|genai config not found|API_KEY|API key not valid|SERVICE_BLOCKED|referer|not been used|SERVICE_DISABLED|firebasevertexai|PERMISSION_DENIED|403/i.test(m)) return "L'assistant n'est pas encore activé côté Firebase. L'administrateur doit l'activer (Firebase › AI Logic).";
   if (/429|quota|RESOURCE_EXHAUSTED/i.test(m)) return "Beaucoup de questions en ce moment, la limite gratuite est atteinte. Réessaie dans une minute.";

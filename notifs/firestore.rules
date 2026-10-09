@@ -15,12 +15,23 @@ service cloud.firestore {
       && get(/databases/$(db)/documents/inscrits/$(request.auth.uid)).data.statut == 'valide'); }
     function enAttente(id) { return get(/databases/$(db)/documents/demandes/$(id)).data.statut == 'en_attente'; }
     function owner(id) { return get(/databases/$(db)/documents/demandes/$(id)).data.uid == request.auth.uid; }
+    // Tailles maximales de la fiche d'un compte (évite qu'une fiche soit gonflée exprès)
+    function texteCourt(d, k, n) { return !(k in d) || (d[k] is string && d[k].size() <= n); }
+    function carte(d, k, n) { return !(k in d) || (d[k] is map && d[k].size() <= n); }
+    function liste(d, k, n) { return !(k in d) || (d[k] is list && d[k].size() <= n); }
+    function statsOk(d) {
+      return !('stats' in d) || (d.stats is map && d.stats.keys().hasOnly(['q', 'ch', 'hist', 'ex', 'j', 'c', 'raz'])
+        && carte(d.stats, 'q', 6000) && carte(d.stats, 'ch', 500) && liste(d.stats, 'hist', 60) && liste(d.stats, 'ex', 40)
+        && carte(d.stats, 'j', 800) && carte(d.stats, 'c', 3000) && (!('raz' in d.stats) || d.stats.raz is number));
+    }
+    function ficheOk(d) { return texteCourt(d, 'nom', 80) && carte(d, 'done', 500) && carte(d, 'quizBest', 500) && statsOk(d); }
 
     // Profil, progression et stats : chacun les siens, l'admin peut lire ceux de la classe
     match /users/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow write: if signedIn() && request.auth.uid == uid && !banned() && valide()
         && request.resource.data.keys().hasOnly(['stats', 'done', 'quizBest', 'nom', 'email', 'maj'])
+        && ficheOk(request.resource.data)
         && (!('email' in request.resource.data) || request.resource.data.email == request.auth.token.email);
       allow delete: if isAdmin();
     }
@@ -35,9 +46,12 @@ service cloud.firestore {
         && request.resource.data.type in ['cours', 'erreur', 'correction', 'photo', 'autre']
         && request.resource.data.minis is list && request.resource.data.minis.size() <= 8
         && request.resource.data.cree == request.time
-        && request.resource.data.texte.size() <= 5000 && request.resource.data.titre.size() <= 120
+        && request.resource.data.texte is string && request.resource.data.texte.size() <= 5000
+        && request.resource.data.titre is string && request.resource.data.titre.size() <= 120
+        && texteCourt(request.resource.data, 'matiere', 60) && texteCourt(request.resource.data, 'chapitre', 120)
+        && texteCourt(request.resource.data, 'chapitreTitre', 200) && request.resource.data.nbPhotos is int
         && request.resource.data.nbPhotos <= 8
-        && (!('fichiers' in request.resource.data) || request.resource.data.fichiers.size() <= 3);
+        && liste(request.resource.data, 'fichiers', 3);
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
       allow update, delete: if isAdmin();
       match /photos/{p} {
@@ -95,6 +109,7 @@ service cloud.firestore {
     match /push/{t} {
       allow create, update: if t.size() < 400 && request.resource.data.token == t
         && request.resource.data.keys().hasOnly(['token', 'uid', 'cree', 'ua'])
+        && texteCourt(request.resource.data, 'ua', 300)
         && (request.resource.data.uid == null || (signedIn() && request.resource.data.uid == request.auth.uid));
       allow delete: if true;
     }
