@@ -11,5 +11,7 @@ window.CLOUD_CONFIG = {
   },
   admins: ["kylianbonnet5986@gmail.com"],
   // Clé publique des notifications push (Cloud Messaging › Certificats Web Push)
+  // Assistant IA : relais Cloudflare qui garde la clé Gemini cachée (secret GEMINI_KEY)
+  ia: { relais: "https://caie-ia.kylianbonnet5986.workers.dev" },
   vapidKey: "BMMYHA3Vg-Av8aQcSxqghLL6XO-8Hv5ggf-_tD7u3PXXrESKK8f5ZNB8zxDbwICRTGA_iQuBf2UJIS-kAvgVdJc"
 };
