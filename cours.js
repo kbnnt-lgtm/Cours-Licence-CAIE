@@ -4681,6 +4681,217 @@ window.COURS = {
               ]
             }
           ]
+        },
+        {
+          "id": "faire-connaissance",
+          "titre": "Faire connaissance : questions, a / an, pluriel",
+          "type": "Cours",
+          "date": "2026-10-09",
+          "source": "Notes de cours de Thomas (09/10/2026), synthèse",
+          "resume": "Les questions à poser à quelqu’un qu’on rencontre, son métier en anglais, le choix entre a et an, le pluriel des noms et la forme be + -ing.",
+          "sections": [
+            {
+              "titre": "Questions pour faire connaissance",
+              "html": "<p>Exercice de <b>brainstorming</b> : les questions à poser à quelqu’un qu’on rencontre pour la première fois.</p><ul><li><i>What’s your name? How old are you? Where do you live?</i></li><li><i>What do you do? What’s your job? What’s the name of your company?</i></li><li><i>Why do you like your job?</i></li><li><i>What are your hobbies? Do you play any sports? What kind of music do you like?</i></li><li><i>Do you have any pets?</i></li><li><i>What’s your main quality / your main weakness?</i> → <i>I’m organised.</i></li></ul><p><b>Mon métier en anglais :</b></p><ul><li>Bureau d’études → <b>Electrical design engineer</b></li><li>Chargé d’affaires → <b>Technical coordinator for electrical installations</b></li></ul><div class=\"attention\"><b>Pièges vus dans les notes :</b><br>• Question avec <b>do</b> : <i>Why <b>do</b> you like your job?</i> (pas « Why you like »).<br>• <i>Do you play <b>any</b> sports?</i> · <i>What’s <b>the</b> name of…?</i><br>• Race d’un animal = <b>breed</b> (pas « race »).<br>• <i>Do you like <b>taking risks</b> in life?</i></div>"
+            },
+            {
+              "titre": "A ou an ?",
+              "html": "<p>Le choix dépend de la <b>prononciation</b> du mot qui suit, pas de son orthographe :</p><ul><li><b>an</b> devant un <b>son voyelle</b> : <i>an hour</i> (h muet), <i>an apple</i>.</li><li><b>a</b> devant un <b>son consonne</b> : <i>a uniform, a unicorn, a European country</i> (u et eu se disent « you »), <i>one hour</i>.</li></ul>"
+            },
+            {
+              "titre": "Le pluriel des noms",
+              "html": "<ul><li>En général : <b>+ s</b> → <i>a car → two cars</i>.</li><li><b>+ es</b> après -ch, -sh, -s, -x : <i>a witch → witches, a wish → wishes, a bus → buses, a fox → foxes</i>.</li><li>Consonne + <b>y → ies</b> : <i>a hobby → hobbies</i>.</li><li>Irréguliers : <i>child → children, man → men, person → people</i>.</li><li>Invariable : <i>a series → two series</i>.</li></ul><div class=\"attention\">Au pluriel, plus de <b>a</b> : <i>witches</i>, pas « a witches ». Et <i>series</i> s’écrit sans accent.</div>"
+            },
+            {
+              "titre": "Be + -ing : une action en cours",
+              "html": "<p>Le verbe en <b>-ing</b>, toujours avec <b>be</b>, décrit une action <b>en cours ou temporaire</b> (présent continu).</p><div class=\"exemple\"><i>I <b>am playing</b> video games.</i> (en ce moment)</div><div class=\"attention\">Ne pas oublier <b>be</b> : « I playing » est faux.</div>"
+            }
+          ],
+          "pointsCles": [
+            "Pour faire connaissance : name, age, job, company, hobbies, sports, pets, qualities.",
+            "Question au présent : Do / Why do you…?",
+            "Métier : Electrical design engineer (bureau d’études).",
+            "an devant un son voyelle (an hour), a devant un son consonne (a uniform).",
+            "Pluriel : +s, +es après ch/sh/s/x, y → ies ; child → children, man → men, person → people.",
+            "be + -ing = action en cours : I am playing."
+          ],
+          "definitions": [
+            {
+              "terme": "Breed",
+              "def": "La race d’un animal."
+            },
+            {
+              "terme": "Hobby",
+              "def": "Un loisir, un passe-temps (pluriel : hobbies)."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Comment dit-on « bureau d’études » (mon métier) ?",
+              "r": "Electrical design engineer."
+            },
+            {
+              "q": "« Chargé d’affaires » en anglais ?",
+              "r": "Technical coordinator for electrical installations."
+            },
+            {
+              "q": "A ou an devant « hour » ?",
+              "r": "An hour : le h ne se prononce pas."
+            },
+            {
+              "q": "A ou an devant « uniform » ?",
+              "r": "A uniform : le u se dit « you », c’est un son consonne."
+            },
+            {
+              "q": "Pluriel de « fox », « wish », « hobby » ?",
+              "r": "Foxes, wishes, hobbies."
+            },
+            {
+              "q": "Pluriel de « child », « man », « person » ?",
+              "r": "Children, men, people."
+            },
+            {
+              "q": "Comment dire « je suis en train de jouer » ?",
+              "r": "I am playing (be + -ing)."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Quelle question est correcte ?",
+              "choix": [
+                "Why do you like your job?",
+                "Why you like your job?",
+                "Why you are like your job?",
+                "Why does you like your job?"
+              ],
+              "bonne": 0,
+              "explication": "Au présent simple, la question se construit avec do."
+            },
+            {
+              "q": "Laquelle est correcte ?",
+              "choix": [
+                "a European country",
+                "an European country",
+                "an uniform",
+                "a hour"
+              ],
+              "bonne": 0,
+              "explication": "European commence par le son « you » : a."
+            },
+            {
+              "q": "Le pluriel de « bus » est…",
+              "choix": [
+                "buses",
+                "buss",
+                "bus",
+                "busies"
+              ],
+              "bonne": 0,
+              "explication": "+ es après -s."
+            },
+            {
+              "q": "Le pluriel de « person » est…",
+              "choix": [
+                "people",
+                "persons",
+                "peoples",
+                "personnes"
+              ],
+              "bonne": 0,
+              "explication": "Pluriel irrégulier."
+            },
+            {
+              "q": "Quelle phrase décrit une action en cours ?",
+              "choix": [
+                "I am playing video games.",
+                "I playing video games.",
+                "I play video games yesterday.",
+                "I am play video games."
+              ],
+              "bonne": 0,
+              "explication": "be + verbe en -ing."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Faire connaissance",
+              "enonce": "<p>Tu rencontres un nouveau collègue anglais à l’entreprise.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "Pour lui demander pourquoi il aime son métier :",
+                  "choix": [
+                    "Why do you like your job?",
+                    "Why you like your job?",
+                    "Why like you your job?",
+                    "Why are you like your job?"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>Question au présent simple : <b>Why do you</b> + verbe.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Tu travailles au bureau d’études. Tu dis :",
+                  "choix": [
+                    "I’m an electrical design engineer.",
+                    "I’m a electrical design engineer.",
+                    "I’m electrical design engineer office.",
+                    "I’m a study office."
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p><b>an</b> devant electrical (son voyelle), et le métier s’appelle <i>electrical design engineer</i>.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Écris 4 questions pour faire connaissance (travail, loisirs, animaux, musique).",
+                  "attendu": "Ex. : What do you do? What are your hobbies? Do you have any pets? What kind of music do you like?",
+                  "points": 2,
+                  "corrige": "<p><i>What do you do? / What are your hobbies? / Do you have any pets? / What kind of music do you like?</i> Vérifie le <b>do</b> dans chaque question.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "A / an et pluriel",
+              "enonce": "<p>Complète ou corrige.</p>",
+              "questions": [
+                {
+                  "type": "qcm",
+                  "q": "___ hour, ___ unicorn",
+                  "choix": [
+                    "an / a",
+                    "a / an",
+                    "an / an",
+                    "a / a"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>h muet → <b>an</b> hour ; u = « you » → <b>a</b> unicorn.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Pluriel de « witch » :",
+                  "choix": [
+                    "witches",
+                    "a witches",
+                    "witchs",
+                    "witchies"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>+ es après -ch, et pas de <b>a</b> au pluriel.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Mets au pluriel : hobby, man, series, fox.",
+                  "attendu": "hobbies, men, series, foxes",
+                  "points": 2,
+                  "corrige": "<p>hobbies (y → ies), men (irrégulier), series (invariable), foxes (+ es après x).</p>"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4747,7 +4958,13 @@ window.COURS = {
     "CRr2Qk03YAIScyP8iCTK"
   ],
   "integrees": [
-    "pxgPOCAkPxgmJHEaNEYc"
+    "pxgPOCAkPxgmJHEaNEYc",
+    "9h2PCcISxfYhpLBkVre7"
   ],
-  "avisClaude": {}
+  "avisClaude": {
+    "9h2PCcISxfYhpLBkVre7": {
+      "statut": "integree",
+      "texte": "Merci Thomas ! Nouveau chapitre Anglais « Faire connaissance : questions, a / an, pluriel » : questions pour faire connaissance, ton métier en anglais, a/an, pluriel et be + -ing. Les titres Mr/Mrs/Miss/Ms étaient déjà dans « Se présenter ». J’ai corrigé au passage quelques petites erreurs (Why do you…, witches sans « a », I am playing, series)."
+    }
+  }
 };
