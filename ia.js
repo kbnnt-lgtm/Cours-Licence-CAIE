@@ -28,7 +28,7 @@ ${ctx.texte}
 let ok = 0; // indice du premier modèle qui a répondu
 function erreur(e) {
   const m = String((e && (e.message || e.code)) || e);
-  if (/api-not-enabled|not been used|SERVICE_DISABLED|firebasevertexai|PERMISSION_DENIED|403/i.test(m)) return "L'assistant n'est pas encore activé côté Firebase. L'administrateur doit l'activer (Firebase › AI Logic).";
+  if (/api-not-enabled|genai config not found|not been used|SERVICE_DISABLED|firebasevertexai|PERMISSION_DENIED|403/i.test(m)) return "L'assistant n'est pas encore activé côté Firebase. L'administrateur doit l'activer (Firebase › AI Logic).";
   if (/429|quota|RESOURCE_EXHAUSTED/i.test(m)) return "Beaucoup de questions en ce moment, la limite gratuite est atteinte. Réessaie dans une minute.";
   if (/network|fetch|Failed to fetch/i.test(m)) return "Pas de connexion. Vérifie ton réseau et réessaie.";
   return "L'assistant ne répond pas pour l'instant. Réessaie dans un moment.";
