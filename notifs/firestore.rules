@@ -1,0 +1,63 @@
+rules_version = '2';
+// Règles de sécurité de la base (à coller dans Firebase › Firestore Database › Règles).
+// Adresse Google de l'administrateur : kylianbonnet5986@gmail.com
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in ['kylianbonnet5986@gmail.com'];
+    }
+    // Personne exclue de la classe par l'admin (collection bannis)
+    function banned() { return signedIn() && exists(/databases/$(db)/documents/bannis/$(request.auth.uid)); }
+    function owner(id) { return get(/databases/$(db)/documents/demandes/$(id)).data.uid == request.auth.uid; }
+
+    // Profil, progression et stats : chacun les siens, l'admin peut lire ceux de la classe
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if signedIn() && request.auth.uid == uid && !banned();
+      allow delete: if isAdmin();
+    }
+
+    // Demandes de modification / ajout : créées par un membre connecté, validées par l'admin
+    match /demandes/{id} {
+      allow create: if signedIn() && !banned() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.statut == 'en_attente'
+        && request.resource.data.texte.size() <= 5000 && request.resource.data.titre.size() <= 120
+        && request.resource.data.nbPhotos <= 8;
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow update, delete: if isAdmin();
+      match /photos/{p} {
+        allow create: if signedIn() && !banned() && owner(id) && request.resource.data.data.size() < 1000000;
+        allow read: if isAdmin() || (signedIn() && owner(id));
+        allow delete: if isAdmin();
+      }
+    }
+
+    // Contenu validé et annonces : visibles par tous, écrits par l'admin
+    match /contributions/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+      match /photos/{p} { allow read: if true; allow write: if isAdmin(); }
+    }
+    match /annonces/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Exclusions : écrites par l'admin ; chacun peut vérifier s'il est exclu
+    match /bannis/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow write: if isAdmin();
+    }
+
+    // Abonnements aux notifications (un document par appareil, id = jeton FCM).
+    // Personne ne peut lire la liste ; l'envoi se fait côté serveur (GitHub Actions).
+    match /push/{t} {
+      allow create, update: if t.size() < 400 && request.resource.data.token == t
+        && request.resource.data.keys().hasOnly(['token', 'uid', 'cree', 'ua'])
+        && (request.resource.data.uid == null || (signedIn() && request.resource.data.uid == request.auth.uid));
+      allow delete: if true;
+    }
+  }
+}

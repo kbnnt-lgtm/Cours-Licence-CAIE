@@ -662,6 +662,7 @@ function renderHome(){
     <p class="lede">Les cours, les TP corrigés, les photos et un quiz pour t'entraîner, rangés par matière.</p>
     ${last ? `<button class="resume-card" data-go="${esc(last.key)}" style="--c:${esc(last.m.couleur)}"><span class="dot"></span><span><small>Reprendre</small><b>${esc(last.c.titre)}</b></span><span class="muted">→</span></button>` : ""}
     ${EX && !EX.rendu ? `<button class="resume-card ex-resume" data-nav="examen" style="--c:var(--accent)"><span class="dot"></span><span><small>Examen blanc en cours</small><b>${esc(EX.titre.replace(/^Examen blanc · /,""))}</b></span><span class="muted">Reprendre →</span></button>` : ""}
+    <div id="pushInvite"></div>
     <div class="quick">
       <button data-nav="examen" class="wide">${ICON.exam}<b>Examen blanc</b><small>Sujet chronométré noté sur 20, par matière ou chapitre</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
@@ -680,6 +681,7 @@ function renderHome(){
     <p class="touch-only muted" style="font-size:14px;margin-top:24px">En bas : <b>Cours</b> ouvre le sommaire, <b>Quiz</b> pour t'interroger, <b>Examen</b> pour un contrôle blanc, <b>Photos</b> pour les polys, <b>Mon espace</b> pour tes stats et tes demandes.</p>
     <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
   $("#qCards").onclick = () => startReview(allCards(), "Tous les cours");
+  pushInvite();
   const annMax = Math.max(0, ...ANNONCES.map(a => a.t)); if(annMax) store.set("annSeen", annMax);
 }
 
@@ -836,6 +838,36 @@ function record(it, ok){
 }
 function weakness(it){ const q = stats().q[qid(it)]; if(!q) return 0.5; return (q[1] + 1) / (q[0] + q[1] + 2); }
 
+/* ---------- Notifications push (appli fermée) ---------- */
+const IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const STANDALONE = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+let PUSH_OK = null;
+async function pushPossible(){ if(PUSH_OK === null){ try{ PUSH_OK = CLOUD_ON && await CLOUD.pushPossible(); }catch(e){ PUSH_OK = false; } } return PUSH_OK; }
+async function activerPush(btn){
+  if(btn) btn.disabled = true;
+  try{ await CLOUD.activerPush(); toast(`${ICON.bell}<span>Notifications activées : tu seras prévenu des nouveaux cours, même appli fermée.</span>`); }
+  catch(err){ toast(esc(err.message), 8000); }
+  if(btn) btn.disabled = false;
+  if(route === "moi") renderPushBox(); if(route === "") renderHome();
+}
+async function renderPushBox(){
+  const box = $("#pushBox"); if(!box) return;
+  if(!CLOUD_ON){ box.innerHTML = ""; return; }
+  if(IOS && !STANDALONE){ box.innerHTML = `<p class="msg info" style="margin:0 0 10px">Pour recevoir les notifications sur iPhone, ajoute d'abord le site à l'écran d'accueil : bouton Partager, puis « Sur l'écran d'accueil ». Ouvre ensuite l'appli depuis cette icône et reviens ici.</p>`; return; }
+  if(!await pushPossible()){ box.innerHTML = ""; return; }
+  const on = CLOUD.pushActif();
+  box.innerHTML = `<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 12px"><span style="flex:1;min-width:200px">${on ? `<b>Notifications activées sur cet appareil.</b> Tu es prévenu des nouveaux cours, des annonces${CLOUD_USER ? " et des réponses à tes demandes" : ""}, même appli fermée.` : `<b>Reçois une notification</b> à chaque nouveau cours ou annonce, même appli fermée.`}</span><button class="btn ${on ? "" : "primary"}" id="pushBtn">${ICON.bell}${on ? "Désactiver" : "Activer"}</button></div>`;
+  $("#pushBtn").onclick = async e => { if(on){ await CLOUD.desactiverPush(); renderPushBox(); } else activerPush(e.currentTarget); };
+}
+
+async function pushInvite(){
+  const box = $("#pushInvite"); if(!box || !CLOUD_ON || store.get("pushNon", false) || (IOS && !STANDALONE)) return;
+  if(!await pushPossible() || CLOUD.pushActif() || !$("#pushInvite")) return;
+  box.innerHTML = `<div class="box" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0 0;border-color:var(--accent)"><span style="flex:1;min-width:200px">${ICON.bell} <b>Sois prévenu des nouveaux cours</b>, même quand l'appli est fermée.</span><button class="btn primary" id="pushYes">Activer</button><button class="btn" id="pushNo">Plus tard</button></div>`;
+  $("#pushYes").onclick = e => activerPush(e.currentTarget);
+  $("#pushNo").onclick = () => { store.set("pushNon", true); box.innerHTML = ""; };
+}
+
 /* ---------- Mon espace ---------- */
 function renderMe(){
   current = null;
@@ -876,6 +908,7 @@ function renderMe(){
     <div class="section"><div class="section-head"><h2>Mes demandes</h2><button class="btn" id="newReq">${ICON.edit}Nouvelle demande</button></div><div id="myReqs">${u ? `<p class="muted">Chargement…</p>` : `<p class="muted">Connecte-toi pour envoyer une demande de modification ou d'ajout et suivre sa validation.</p>`}</div></div>
     <div class="section"><div class="section-head"><h2>Notifications</h2></div>
       <div class="box"><p style="margin:0 0 10px">Quand un cours est ajouté, l'appli te le signale en haut de l'accueil et par un message à l'ouverture.</p>
+      <div id="pushBox"></div>
       ${"Notification" in window ? `<label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="notifCb" ${store.get("notif",false) && Notification.permission==="granted" ? "checked" : ""} style="width:20px;height:20px;accent-color:var(--accent)"> Afficher aussi une notification du téléphone ou de l'ordinateur</label>` : ""}
       </div></div>`;
   $("#resetStats")?.addEventListener("click", e => { const b = e.target; if(b.dataset.c){ store.set("stats", {}); store.set("quizBest", {}); renderMe(); } else { b.dataset.c = 1; b.textContent = "Confirmer la remise à zéro"; } });
@@ -887,6 +920,7 @@ function renderMe(){
   });
   bindAccount();
   if(u) loadMyReqs();
+  renderPushBox();
 }
 function accountBox(){
   if(!CLOUD_ON) return `<div class="box"><p style="margin:0">${CLOUD_FAIL ? "Les comptes ne sont pas joignables pour le moment (pas de connexion ?). " : ""}Tes statistiques sont enregistrées <b>sur cet appareil</b>.${location.href.startsWith(ONLINE_URL) && !window.CLOUD_CONFIG ? " Les comptes (stats sur tous tes appareils, demandes, photos) seront activés très bientôt." : location.protocol === "file:" || !window.CLOUD_CONFIG ? ` Pour avoir un compte, envoyer des demandes et retrouver tes stats partout, ouvre la version en ligne : <a href="${ONLINE_URL}">${ONLINE_URL}</a>` : ""}</p></div>`;
@@ -1031,8 +1065,16 @@ async function renderAdmin(){
   const box = $("#admBody");
   try{
     if(ADM_TAB === "classe"){
-      const us = await CLOUD.users();
-      box.innerHTML = us.length ? `<div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Personne</th><th>Réponses</th><th>Réussite</th><th>Point faible</th><th>Vu le</th></tr></thead><tbody>${us.map(u => { const s = u.stats || {}, ch = s.ch || {}; const t = Object.values(ch).reduce((a,c) => ({ok:a.ok+c.ok, ko:a.ko+c.ko}), {ok:0,ko:0}); const n = t.ok+t.ko; const weak = Object.entries(ch).filter(([,c]) => c.ok+c.ko >= 3).map(([k,c]) => [k, c.ok/(c.ok+c.ko)]).sort((a,b) => a[1]-b[1])[0]; return `<tr><td>${esc(u.nom||u.email)}</td><td class="num">${n}</td><td class="num">${n ? Math.round(t.ok/n*100)+" %" : "—"}</td><td>${weak && byKey(weak[0]) ? esc(byKey(weak[0]).c.titre)+" ("+Math.round(weak[1]*100)+" %)" : "—"}</td><td class="num">${fmtDate(CLOUD.ms(u.maj))}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Personne n'a encore créé de compte.</p>`;
+      const [us0, bans] = await Promise.all([CLOUD.users(), CLOUD.bannis().catch(() => [])]);
+      const BAN = new Set(bans.map(b => b.id)), us = us0.filter(u => !BAN.has(u.id) && u.email !== CLOUD_USER.email);
+      const moi = us0.find(u => u.email === CLOUD_USER.email);
+      box.innerHTML = (us.length ? `<p class="muted" style="margin:0 0 10px">${us.length} personne${us.length>1?"s":""} avec un compte. « Exclure » retire l'accès au compte : la personne est déconnectée, ne peut plus envoyer de demande ni enregistrer ses stats, et ne reçoit plus les notifications.</p><div class="tbl" style="overflow-x:auto"><table class="data"><thead><tr><th>Personne</th><th>Réponses</th><th>Réussite</th><th>Point faible</th><th>Vu le</th><th></th></tr></thead><tbody>${us.map(u => { const s = u.stats || {}, ch = s.ch || {}; const t = Object.values(ch).reduce((a,c) => ({ok:a.ok+c.ok, ko:a.ko+c.ko}), {ok:0,ko:0}); const n = t.ok+t.ko; const weak = Object.entries(ch).filter(([,c]) => c.ok+c.ko >= 3).map(([k,c]) => [k, c.ok/(c.ok+c.ko)]).sort((a,b) => a[1]-b[1])[0]; return `<tr><td>${esc(u.nom||u.email)}</td><td class="num">${n}</td><td class="num">${n ? Math.round(t.ok/n*100)+" %" : "—"}</td><td>${weak && byKey(weak[0]) ? esc(byKey(weak[0]).c.titre)+" ("+Math.round(weak[1]*100)+" %)" : "—"}</td><td class="num">${fmtDate(CLOUD.ms(u.maj))}</td><td><button class="btn danger" style="padding:6px 10px;font-size:13px" data-ban="${esc(u.id)}">Exclure</button></td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Personne d'autre n'a encore créé de compte.</p>`)
+        + (bans.length ? `<div class="box" style="margin-top:18px"><h2>Personnes exclues</h2><ul class="list">${bans.map(b => `<li style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:180px"><b>${esc(b.nom || b.email || "Sans nom")}</b>${b.email ? ` <span class="muted">${esc(b.email)}</span>` : ""}<br><small class="muted">Exclusion le ${esc(fmtDate(CLOUD.ms(b.quand)))}</small></span><button class="btn" data-unban="${esc(b.id)}">Réintégrer</button></li>`).join("")}</ul></div>` : "");
+      box.onclick = async e => {
+        const b = e.target.closest("[data-ban]"), r = e.target.closest("[data-unban]");
+        if(b){ const u = us.find(x => x.id === b.dataset.ban); if(!b.dataset.c){ b.dataset.c = 1; b.textContent = `Confirmer : exclure ${u.nom || u.email}`; return; } b.disabled = true; try{ await CLOUD.exclure(u); toast(`${esc(u.nom || u.email)} ne fait plus partie de la classe.`); }catch(err){ toast(esc(err.message)); } renderAdmin(); }
+        if(r){ r.disabled = true; try{ await CLOUD.reintegrer(r.dataset.unban); toast("Personne réintégrée."); }catch(err){ toast(esc(err.message)); } renderAdmin(); }
+      };
       return;
     }
     if(ADM_TAB === "annonce"){
@@ -1577,10 +1619,15 @@ async function startCloud(){
     await import(new URL(src, location.href).href);
     CLOUD_ON = true;
   }catch(e){ CLOUD_FAIL = true; return; }
+  CLOUD.onPush((n, link) => toast(`${ICON.bell}<span>${esc(n.title ? n.title + " : " + (n.body || "") : n.body || "")}</span>${link && link.includes("#") ? (h => `<button ${byKey(h) ? "data-go" : "data-nav"}="${esc(h)}">Voir</button>`)(link.split("#")[1]) : ""}`, 10000));
   await Promise.all([loadContribs(), loadAnnonces()]);
   if(route === "" || route === "photos" || byKey(route)) render();
   CLOUD.onUser(async u => {
     CLOUD_USER = u; syncReady = false;
+    if(u && await CLOUD.suisExclu()){
+      CLOUD_USER = null; try{ await CLOUD.desactiverPush(); await CLOUD.signOut(); }catch(e){}
+      toast("Ton compte a été retiré de la classe par l'administrateur. Contacte-le si c'est une erreur.", 12000); render(); return;
+    }
     if(u){
       try{
         const mine = await CLOUD.loadMine() || {};

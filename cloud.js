@@ -15,8 +15,18 @@ const ADMINS = (cfg.admins || []).map(s => s.toLowerCase());
 const { doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp, writeBatch } = F;
 
 let user = null; const subs = new Set();
+let MSG = null;
+async function messaging() {
+  if (MSG !== null) return MSG;
+  try { const Mm = await import(B + "firebase-messaging.js"); MSG = (await Mm.isSupported()) ? { Mm, m: Mm.getMessaging(app) } : false; } catch (e) { MSG = false; }
+  return MSG;
+}
 const profile = u => u && ({ uid: u.uid, email: u.email, nom: u.displayName || (u.email || "").split("@")[0], admin: !!u.email && u.emailVerified && ADMINS.includes(u.email.toLowerCase()) });
-A.onAuthStateChanged(auth, u => { user = profile(u); subs.forEach(f => f(user)); });
+A.onAuthStateChanged(auth, u => {
+  user = profile(u); subs.forEach(f => f(user));
+  const t = localStorage.getItem("caie:pushToken");
+  if (t) setDoc(doc(db, "push", t), { token: t, uid: user ? user.uid : null, cree: serverTimestamp(), ua: navigator.userAgent.slice(0, 200) }).catch(() => {});
+});
 const need = () => { if (!user) throw new Error("Connecte-toi d'abord."); };
 const needAdmin = () => { need(); if (!user.admin) throw new Error("Réservé à l'administrateur."); };
 const list = async q => (await getDocs(q)).docs.map(d => ({ id: d.id, ...d.data() }));
@@ -94,8 +104,32 @@ window.CLOUD = {
   annonces: wrap(async () => (await list(query(collection(db, "annonces"), orderBy("cree", "desc"), limit(20)))).map(a => ({ ...a, t: ms(a.cree) }))),
   addAnnonce: wrap(async (texte, lien) => { needAdmin(); await addDoc(collection(db, "annonces"), { texte, lien: lien || "", cree: serverTimestamp() }); }),
 
-  // Vue admin : la classe
+  // Vue admin : la classe, et exclusion d'une personne
   users: wrap(async () => { needAdmin(); return list(collection(db, "users")); }),
+  bannis: wrap(async () => { needAdmin(); return list(collection(db, "bannis")); }),
+  exclure: wrap(async u => { needAdmin(); await setDoc(doc(db, "bannis", u.id), { nom: u.nom || "", email: u.email || "", quand: serverTimestamp() }); }),
+  reintegrer: wrap(async uid => { needAdmin(); await deleteDoc(doc(db, "bannis", uid)); }),
+  suisExclu: async () => { if (!user || user.admin) return false; try { return (await getDoc(doc(db, "bannis", user.uid))).exists(); } catch (e) { return false; } },
+
+  // Notifications push (même appli fermée) : jeton FCM enregistré dans push/{jeton},
+  // l'envoi est fait par GitHub Actions (notifs/send.mjs).
+  pushPossible: async () => !!(cfg.vapidKey && "serviceWorker" in navigator && "Notification" in window && "PushManager" in window && await messaging()),
+  pushActif: () => !!localStorage.getItem("caie:pushToken") && "Notification" in window && Notification.permission === "granted",
+  activerPush: wrap(async () => {
+    const x = await messaging(); if (!x || !cfg.vapidKey) throw new Error("Ce navigateur ne gère pas les notifications.");
+    let p = Notification.permission; if (p === "default") p = await Notification.requestPermission();
+    if (p !== "granted") throw new Error("Les notifications sont bloquées pour ce site : autorise-les dans les réglages du navigateur.");
+    const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
+    const token = await x.Mm.getToken(x.m, { vapidKey: cfg.vapidKey, serviceWorkerRegistration: reg });
+    if (!token) throw new Error("Impossible d'obtenir l'abonnement aux notifications.");
+    await setDoc(doc(db, "push", token), { token, uid: user ? user.uid : null, cree: serverTimestamp(), ua: navigator.userAgent.slice(0, 200) });
+    localStorage.setItem("caie:pushToken", token);
+  }),
+  desactiverPush: wrap(async () => {
+    const t = localStorage.getItem("caie:pushToken"); localStorage.removeItem("caie:pushToken");
+    if (t) { try { await deleteDoc(doc(db, "push", t)); } catch (e) {} try { const x = await messaging(); if (x) await x.Mm.deleteToken(x.m); } catch (e) {} }
+  }),
+  onPush(f) { messaging().then(x => x && x.Mm.onMessage(x.m, p => f(p.notification || p.data || {}, (p.fcmOptions || {}).link))).catch(() => {}); },
   ms
 };
 function annonceTexte(dm) {
