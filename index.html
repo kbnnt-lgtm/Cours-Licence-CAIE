@@ -104,6 +104,7 @@ h3{text-wrap:balance}
 .link{border:0;background:none;padding:0;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .badge{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--sunken);color:var(--muted)}
 .badge.ok{background:var(--ok-soft);color:var(--ok)} .badge.warn{background:var(--warn-soft);color:var(--warn)} .badge.bad{background:var(--bad-soft);color:var(--bad)}
+.badge.info{background:var(--accent-soft);color:var(--accent)}
 
 /* Boutons */
 .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
@@ -270,6 +271,12 @@ textarea.input{min-height:120px;resize:vertical;font-family:var(--f-body)}
 .dm-acts{display:flex;gap:8px;flex-wrap:wrap}
 .dm p{margin:0;font-family:var(--f-body);white-space:pre-wrap}
 .dm .minis{display:flex;gap:6px;flex-wrap:wrap}
+.fjs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.fj{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px;cursor:pointer;text-align:left}
+.fj .i{width:16px;height:16px;flex:none}
+.fj span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.fj small{color:var(--muted);flex:none}
+.fj .rm{border:0;background:none;color:var(--muted);font-size:14px;padding:0 0 0 4px;cursor:pointer}
 .dm .minis button{padding:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:none}
 .dm .minis img{display:block;width:70px;height:70px;object-fit:cover}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 16px}
@@ -623,6 +630,7 @@ const ICON = {
   edit:'<svg class="i" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
   exam:'<svg class="i" viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h4"/><circle cx="4.5" cy="18" r="0"/></svg>',
   cal:'<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  file:'<svg class="i" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>',
   bell:'<svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/></svg>'
 };
 const fmtDate = d => { if(!d) return ""; const t = new Date(typeof d === "number" ? d : d+"T12:00:00"); return isNaN(t) ? d : t.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"}); };
@@ -746,7 +754,7 @@ function renderChapter(key){
     ${c.resume ? `<p class="summary" style="--c:${esc(m.couleur)}"><b>En bref.</b> ${esc(c.resume)}</p>` : ""}
     ${secs.length>1 ? `<nav class="toc" aria-label="Sections">${secs.map((s,j)=>`<a href="#" data-sec="${j}">${esc(s.titre)}</a>`).join("")}${photos.length?`<a href="#" data-sec="photos">Photos du cours</a>`:""}</nav>` : ""}
     <div class="prose">${secs.map((s,j)=>`<section id="sec-${j}"><h3>${esc(s.titre)}</h3>${wrapTables(s.html)}</section>`).join("")}</div>
-    ${contribs.length ? `<div class="box"><h2>Ajouts validés de la classe</h2>${contribs.map(k => `<div class="contrib"><b>${esc(k.titre||"Ajout")}</b>${k.texte?`<p style="margin:6px 0 0;font-family:var(--f-body);white-space:pre-wrap">${esc(k.texte)}</p>`:""}${k.nbPhotos?`<div class="strip" style="margin-top:8px">${(k.minis||[]).map((mi,j)=>`<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img src="${mi}" alt="Photo ${j+1}"></button>`).join("")}</div>`:""}<div class="who">Proposé par ${esc(k.auteur||"un membre")}</div></div>`).join("")}</div>` : ""}
+    ${contribs.length ? `<div class="box"><h2>Ajouts validés de la classe</h2>${contribs.map(k => `<div class="contrib"><b>${esc(k.titre||"Ajout")}</b>${k.texte?`<p style="margin:6px 0 0;font-family:var(--f-body);white-space:pre-wrap">${esc(k.texte)}</p>`:""}${k.nbPhotos?`<div class="strip" style="margin-top:8px">${(k.minis||[]).map((mi,j)=>`<button class="thumb" data-cphoto="${esc(k.id)}:${j}"><img src="${mi}" alt="Photo ${j+1}"></button>`).join("")}</div>`:""}${fjChips("contributions", k.id, k.fichiers)}<div class="who">Proposé par ${esc(k.auteur||"un membre")}</div></div>`).join("")}</div>` : ""}
     ${(c.pointsCles||[]).length ? `<div class="box"><h2>À retenir</h2><ul class="keypoints">${c.pointsCles.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>` : ""}
     ${(c.definitions||[]).length ? `<div class="box"><h2>Définitions</h2><dl class="defs">${c.definitions.map(d=>`<dt>${esc(d.terme)}</dt><dd>${esc(d.def)}</dd>`).join("")}</dl></div>` : ""}
     ${photos.length ? `<div class="box" id="sec-photos"><h2>Photos du cours</h2><div class="strip">${photos.map(g => thumb(g)).join("")}</div></div>` : ""}
@@ -992,13 +1000,17 @@ function bindAccount(){
   };
   $("#lgReset").onclick = async () => { const e = $("#lgMail").value.trim(); if(!e) return msg("Écris ton e-mail, puis appuie de nouveau sur « Mot de passe oublié »."); try{ await CLOUD.resetPassword(e); msg("Un e-mail pour changer ton mot de passe vient d'être envoyé.", "ok"); }catch(err){ msg(err.message); } };
 }
-const STATUT = {en_attente: ["En attente", "warn"], validee: ["Acceptée et publiée", "ok"], a_integrer: ["Acceptée, intégration par Claude", "ok"], integree: ["Intégrée au cours", "ok"], refusee: ["Refusée", "bad"]};
+const STATUT = {en_attente: ["En attente", "warn"], validee: ["Acceptée et publiée", "ok"], a_integrer: ["Acceptée, intégration par Claude", "ok"], integree: ["Intégrée au cours", "ok"], deja: ["Déjà dans le cours", "info"], ecartee: ["Non intégrée", "warn"], refusee: ["Refusée", "bad"]};
+// Avis laissé par Claude sur une demande à intégrer : COURS.avisClaude[id] = {statut: "integree"|"deja"|"ecartee", texte}
+const AVIS = (window.COURS && COURS.avisClaude) || {};
 // Motifs proposés dans le formulaire (l'ordre compte). « ajout » reste pour les anciennes demandes.
 const MOTIFS = {cours: "Ajouter un cours", erreur: "Signaler une erreur", correction: "Modifier / compléter", photo: "Ajouter une photo", autre: "Autre"};
 const TYPE_LBL = {...MOTIFS, ajout: "Ajout de contenu"};
 const INTEGREES = new Set((window.COURS && COURS.integrees) || []);
 function dmCard(d, admin){
-  const st = STATUT[d.statut === "a_integrer" && INTEGREES.has(d.id) ? "integree" : d.statut] || ["?", ""];
+  DM_CACHE.set(d.id, d);
+  const av = d.statut === "a_integrer" ? AVIS[d.id] : null;
+  const st = STATUT[av && STATUT[av.statut] ? av.statut : d.statut === "a_integrer" && INTEGREES.has(d.id) ? "integree" : d.statut] || ["?", ""];
   const mat = SUBJ.find(m => m.id === d.matiere);
   return `<div class="dm" data-dm="${esc(d.id)}">
     ${admin ? `<div class="dm-who"><span class="av">${esc((d.auteur||d.email||"?").trim().charAt(0).toUpperCase())}</span><div><b>${esc(d.auteur || "Sans nom")}</b><small>${esc(d.email || "")} · ${fmtDate(CLOUD.ms(d.cree))}</small></div></div>` : ""}
@@ -1006,6 +1018,8 @@ function dmCard(d, admin){
     <div class="muted" style="font-size:13px">${esc(mat ? mat.nom : "Nouvelle matière")}${d.chapitreTitre ? " › " + esc(d.chapitreTitre) : ""}${admin ? "" : " · " + fmtDate(CLOUD.ms(d.cree))}</div>
     ${d.texte ? `<p>${esc(d.texte)}</p>` : ""}
     ${(d.minis||[]).length ? `<div class="minis">${d.minis.map((m,i) => `<button data-dphoto="${esc(d.id)}:${i}" aria-label="Agrandir la photo ${i+1}"><img src="${m}" alt=""></button>`).join("")}</div>` : ""}
+    ${fjChips("demandes", d.id, d.fichiers)}
+    ${av && av.texte ? `<div class="msg ${av.statut === "integree" ? "ok" : "info"}"><b>Avis de Claude :</b> ${esc(av.texte)}</div>` : ""}
     ${d.commentaire ? `<div class="msg info"><b>Réponse de l'admin :</b> ${esc(d.commentaire)}</div>` : ""}
     ${admin && d.statut === "en_attente" ? `<div class="field"><label for="cm-${esc(d.id)}">Réponse (facultatif)</label><input class="input" id="cm-${esc(d.id)}" placeholder="Merci, c'est corrigé !"></div>
       <div class="dm-acts"><button class="btn primary" data-claude="${esc(d.id)}">Accepter et faire intégrer par Claude</button><button class="btn" data-ok="${esc(d.id)}">Accepter et publier tel quel</button><button class="btn danger" data-ko="${esc(d.id)}">Refuser</button></div>` : ""}
@@ -1018,16 +1032,38 @@ document.addEventListener("click", async e => {
   $("#lb").hidden = false; $("#lbImg").src = b.querySelector("img").src; $("#lbTitle").textContent = "Photo de la demande"; $("#lbChap").hidden = true; $("#lbPrev").hidden = $("#lbNext").hidden = true; LB = [];
   try{ const d = await CLOUD.demandePhoto(id, i); if(d) $("#lbImg").src = d; }catch(err){}
 });
+/* ---------- Fichiers joints (PDF, Word…) ---------- */
+const DM_CACHE = new Map(), FJ_MAX = 3, FJ_TAILLE = 5 * 1024 * 1024, FJ_PART = 700000;
+const fmtTaille = o => o < 1024 * 1024 ? Math.max(1, Math.round(o / 1024)) + " Ko" : (o / 1024 / 1024).toFixed(1).replace(".", ",") + " Mo";
+const fjChips = (coll, id, fs) => (fs||[]).length ? `<div class="fjs">${fs.map((f,i) => `<button type="button" class="fj" data-fj="${coll}:${esc(id)}:${i}" title="Télécharger ${esc(f.nom)}">${ICON.file}<span>${esc(f.nom)}</span><small>${fmtTaille(f.taille||0)}</small></button>`).join("")}</div>` : "";
+function lireFichier(file){
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => { const b64 = String(r.result).split(",")[1] || ""; const parts = []; for(let k = 0; k < b64.length; k += FJ_PART) parts.push(b64.slice(k, k + FJ_PART)); res({nom: file.name.slice(0, 120), mime: file.type || "application/octet-stream", taille: file.size, parts}); }; r.onerror = () => rej(new Error("lecture")); r.readAsDataURL(file); });
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-fj]"); if(!b || !window.CLOUD) return;
+  const [coll, id, i] = b.dataset.fj.split(":");
+  const it = coll === "demandes" ? DM_CACHE.get(id) : CONTRIBS.find(x => x.id === id), f = it && (it.fichiers||[])[+i];
+  if(!f) return;
+  b.disabled = true; toast("Téléchargement de « " + esc(f.nom) + " »…");
+  try{
+    const b64 = await CLOUD.fichier(coll, id, +i, f); if(!b64) throw new Error("Fichier introuvable.");
+    const bin = atob(b64), u8 = new Uint8Array(bin.length); for(let k = 0; k < bin.length; k++) u8[k] = bin.charCodeAt(k);
+    const url = URL.createObjectURL(new Blob([u8], {type: f.mime || "application/octet-stream"}));
+    const a = document.createElement("a"); a.href = url; a.download = f.nom; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000); $("#toast").hidden = true;
+  }catch(err){ toast("Impossible de télécharger : " + esc(err.message)); }
+  b.disabled = false;
+});
 async function loadMyReqs(){
   try{ const ds = await CLOUD.myDemandes(); const box = $("#myReqs"); if(!box) return; box.innerHTML = ds.length ? `<div style="display:grid;gap:10px">${ds.map(d => dmCard(d, false)).join("")}</div>` : `<p class="muted">Aucune demande pour l'instant.</p>`; }
   catch(err){ $("#myReqs") && ($("#myReqs").innerHTML = `<div class="msg err">${esc(err.message)}</div>`); }
 }
 
 /* ---------- Formulaire de demande ---------- */
-let PH = [];
+let PH = [], FJ = [];
 function openForm(pre){
   closeAll();
-  $("#formOv").hidden = false; PH = [];
+  $("#formOv").hidden = false; PH = []; FJ = [];
   const body = $("#formBody");
   if(!CLOUD_ON || !CLOUD_USER){
     body.innerHTML = `<p>Pour proposer une modification, un ajout ou des photos, il faut être connecté.</p>${CLOUD_ON ? `<button class="btn primary" id="toLogin">Se connecter</button>` : `<p class="muted">${!window.CLOUD_CONFIG || location.protocol === "file:" ? `Les demandes passent par la version en ligne : <a href="${ONLINE_URL}">${ONLINE_URL}</a>` : "Le service des comptes n'est pas joignable pour le moment."}</p>`}`;
@@ -1045,6 +1081,10 @@ function openForm(pre){
       <label class="drop" id="dmDrop" for="dmFiles">${ICON.photo}<span><b>Prendre ou choisir des photos</b><br><small>Elles sont réduites automatiquement avant l'envoi.</small></span></label>
       <input type="file" id="dmFiles" accept="image/*" multiple hidden>
       <div class="previews" id="dmPrev"></div></div>
+    <div class="field"><label>Fichiers (PDF, Word…, jusqu'à 3)</label>
+      <label class="drop" id="dmDropF" for="dmDocs">${ICON.file}<span><b>Joindre un fichier</b><br><small>PDF, Word, Excel, PowerPoint… 5 Mo maximum chacun.</small></span></label>
+      <input type="file" id="dmDocs" multiple hidden>
+      <div class="fjs" id="dmFj"></div></div>
     <div id="dmMsg"></div>
     <button class="btn primary qz-start" id="dmSend" type="submit">Envoyer à l'admin pour validation</button>
   </form>`;
@@ -1063,6 +1103,22 @@ function openForm(pre){
   ["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
   ["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
   drop.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+  const showFj = () => $("#dmFj").innerHTML = FJ.map((f,i) => `<span class="fj">${ICON.file}<span>${esc(f.nom)}</span><small>${fmtTaille(f.taille)}</small><button type="button" class="rm" data-rmf="${i}" aria-label="Retirer ${esc(f.nom)}">✕</button></span>`).join("");
+  const addDocs = async files => {
+    for(const f of [...files]){
+      if(FJ.length >= FJ_MAX){ toast("3 fichiers maximum par demande."); break; }
+      if(f.size > FJ_TAILLE){ toast("« " + esc(f.name) + " » dépasse 5 Mo."); continue; }
+      if(!f.size){ toast("« " + esc(f.name) + " » est vide."); continue; }
+      try{ FJ.push(await lireFichier(f)); }catch(err){ toast("Impossible de lire « " + esc(f.name) + " »."); }
+    }
+    showFj();
+  };
+  $("#dmDocs").onchange = e => { addDocs(e.target.files); e.target.value = ""; };
+  const dropF = $("#dmDropF");
+  ["dragenter","dragover"].forEach(ev => dropF.addEventListener(ev, e => { e.preventDefault(); dropF.classList.add("over"); }));
+  ["dragleave","drop"].forEach(ev => dropF.addEventListener(ev, e => { e.preventDefault(); dropF.classList.remove("over"); }));
+  dropF.addEventListener("drop", e => addDocs(e.dataTransfer.files));
+  $("#dmFj").onclick = e => { const r = e.target.closest("[data-rmf]"); if(r){ FJ.splice(+r.dataset.rmf, 1); showFj(); } };
   $("#dmPrev").onclick = e => { const r = e.target.closest("[data-rm]"); if(r){ PH.splice(+r.dataset.rm, 1); addFiles([]); } };
   $("#dmForm").onsubmit = async e => {
     e.preventDefault();
@@ -1070,9 +1126,9 @@ function openForm(pre){
     const d = {type: t, matiere: m ? m.id : "autre", chapitre: cid, chapitreTitre: x ? x.c.titre : (m ? m.nom + " (nouveau chapitre)" : "Nouvelle matière"), titre: $("#dmTitre").value.trim(), texte: $("#dmTexte").value.trim()};
     const say = (s, k="err") => $("#dmMsg").innerHTML = `<div class="msg ${k}">${esc(s)}</div>`;
     if(!d.titre) return say("Résume ta demande en quelques mots.");
-    if(!d.texte && !PH.length) return say("Écris le détail ou ajoute au moins une photo.");
+    if(!d.texte && !PH.length && !FJ.length) return say("Écris le détail ou ajoute une photo ou un fichier.");
     $("#dmSend").disabled = true; say("Envoi en cours…", "info");
-    try{ await CLOUD.submitDemande(d, PH); PH = []; $("#formBody").innerHTML = `<div class="msg ok"><b>Demande envoyée.</b> L'admin la verra dans son espace. Tu peux suivre sa validation dans « Mon espace ».</div><div class="qz-foot"><button class="btn primary" id="fmOk">Fermer</button></div>`; $("#fmOk").onclick = () => { closeAll(); if(route === "moi") renderMe(); }; }
+    try{ await CLOUD.submitDemande(d, PH, FJ); PH = []; FJ = []; $("#formBody").innerHTML = `<div class="msg ok"><b>Demande envoyée.</b> L'admin la verra dans son espace. Tu peux suivre sa validation dans « Mon espace ».</div><div class="qz-foot"><button class="btn primary" id="fmOk">Fermer</button></div>`; $("#fmOk").onclick = () => { closeAll(); if(route === "moi") renderMe(); }; }
     catch(err){ say(err.message); $("#dmSend").disabled = false; }
   };
 }

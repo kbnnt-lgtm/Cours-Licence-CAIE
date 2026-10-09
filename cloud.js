@@ -31,6 +31,7 @@ const need = () => { if (!user) throw new Error("Connecte-toi d'abord."); };
 const needAdmin = () => { need(); if (!user.admin) throw new Error("Réservé à l'administrateur."); };
 const list = async q => (await getDocs(q)).docs.map(d => ({ id: d.id, ...d.data() }));
 const ms = t => t && t.toMillis ? t.toMillis() : (t || 0);
+const partsIds = d => (d.fichiers || []).flatMap((f, i) => Array.from({ length: f.n || 0 }, (_, k) => i + "-" + k));
 
 function frErr(e) {
   const c = (e && e.code) || "";
@@ -64,19 +65,22 @@ window.CLOUD = {
   saveMine: wrap(async data => { need(); await setDoc(doc(db, "users", user.uid), { ...data, nom: user.nom, email: user.email, maj: serverTimestamp() }, { merge: true }); }),
 
   // Demandes de modification / ajout
-  submitDemande: wrap(async (d, photos) => {
+  submitDemande: wrap(async (d, photos, fichiers = []) => {
     need();
     const ref = await addDoc(collection(db, "demandes"), {
       uid: user.uid, auteur: user.nom, email: user.email, statut: "en_attente",
       type: d.type, matiere: d.matiere || "", chapitre: d.chapitre || "", chapitreTitre: d.chapitreTitre || "",
       titre: d.titre || "", texte: d.texte || "", nbPhotos: photos.length,
-      minis: photos.map(p => p.mini), cree: serverTimestamp()
+      minis: photos.map(p => p.mini), fichiers: fichiers.map(f => ({ nom: f.nom, mime: f.mime, taille: f.taille, n: f.parts.length })), cree: serverTimestamp()
     });
     for (let i = 0; i < photos.length; i++) await setDoc(doc(db, "demandes", ref.id, "photos", String(i)), { data: photos[i].data, w: photos[i].w, h: photos[i].h });
+    for (let i = 0; i < fichiers.length; i++) for (let k = 0; k < fichiers[i].parts.length; k++) await setDoc(doc(db, "demandes", ref.id, "fichiers", i + "-" + k), { data: fichiers[i].parts[k] });
     return ref.id;
   }),
   myDemandes: wrap(async () => { need(); return (await list(query(collection(db, "demandes"), where("uid", "==", user.uid)))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
   allDemandes: wrap(async () => { needAdmin(); return (await list(collection(db, "demandes"))).sort((a, b) => ms(b.cree) - ms(a.cree)); }),
+  // Fichier joint (PDF, Word…) découpé en morceaux base64 : on les recolle pour le télécharger
+  fichier: wrap(async (coll, id, i, f) => { let s = ""; for (let k = 0; k < f.n; k++) { const p = await getDoc(doc(db, coll, id, "fichiers", i + "-" + k)); if (!p.exists()) return null; s += p.data().data; } return s; }),
   demandePhoto: wrap(async (id, i) => { const s = await getDoc(doc(db, "demandes", id, "photos", String(i))); return s.exists() ? s.data().data : null; }),
   // mode : "publier" (affiché tel quel sous le chapitre), "claude" (Claude l'intègre au cours), "refuser"
   decide: wrap(async (dm, mode, commentaire) => {
@@ -86,7 +90,7 @@ window.CLOUD = {
     b.update(doc(db, "demandes", dm.id), { statut: claude ? "a_integrer" : ok ? "validee" : "refusee", commentaire: commentaire || "", decide: serverTimestamp() });
     if (ok) {
       const cref = doc(db, "contributions", dm.id);
-      b.set(cref, { type: dm.type, matiere: dm.matiere, chapitre: dm.chapitre, chapitreTitre: dm.chapitreTitre || "", titre: dm.titre, texte: dm.texte, auteur: dm.auteur, nbPhotos: dm.nbPhotos || 0, minis: dm.minis || [], claude, commentaire: commentaire || "", cree: serverTimestamp() });
+      b.set(cref, { type: dm.type, matiere: dm.matiere, chapitre: dm.chapitre, chapitreTitre: dm.chapitreTitre || "", titre: dm.titre, texte: dm.texte, auteur: dm.auteur, nbPhotos: dm.nbPhotos || 0, minis: dm.minis || [], fichiers: dm.fichiers || [], claude, commentaire: commentaire || "", cree: serverTimestamp() });
       if (!claude) b.set(doc(collection(db, "annonces")), { texte: annonceTexte(dm), lien: dm.matiere && dm.chapitre ? dm.matiere + "." + dm.chapitre : "", cree: serverTimestamp() });
     }
     await b.commit();
@@ -94,9 +98,13 @@ window.CLOUD = {
       const p = await getDoc(doc(db, "demandes", dm.id, "photos", String(i)));
       if (p.exists()) await setDoc(doc(db, "contributions", dm.id, "photos", String(i)), p.data());
     }
+    if (ok) for (const id of partsIds(dm)) {
+      const p = await getDoc(doc(db, "demandes", dm.id, "fichiers", id));
+      if (p.exists()) await setDoc(doc(db, "contributions", dm.id, "fichiers", id), p.data());
+    }
   }),
-  deleteDemande: wrap(async dm => { needAdmin(); for (let i = 0; i < (dm.nbPhotos || 0); i++) await deleteDoc(doc(db, "demandes", dm.id, "photos", String(i))); await deleteDoc(doc(db, "demandes", dm.id)); }),
-  removeContribution: wrap(async c => { needAdmin(); for (let i = 0; i < (c.nbPhotos || 0); i++) await deleteDoc(doc(db, "contributions", c.id, "photos", String(i))); await deleteDoc(doc(db, "contributions", c.id)); }),
+  deleteDemande: wrap(async dm => { needAdmin(); for (const id of partsIds(dm)) await deleteDoc(doc(db, "demandes", dm.id, "fichiers", id)); for (let i = 0; i < (dm.nbPhotos || 0); i++) await deleteDoc(doc(db, "demandes", dm.id, "photos", String(i))); await deleteDoc(doc(db, "demandes", dm.id)); }),
+  removeContribution: wrap(async c => { needAdmin(); for (const id of partsIds(c)) await deleteDoc(doc(db, "contributions", c.id, "fichiers", id)); for (let i = 0; i < (c.nbPhotos || 0); i++) await deleteDoc(doc(db, "contributions", c.id, "photos", String(i))); await deleteDoc(doc(db, "contributions", c.id)); }),
 
   // Contenu validé, visible de tous (même sans compte)
   contributions: wrap(async () => (await list(collection(db, "contributions"))).sort((a, b) => ms(a.cree) - ms(b.cree))),

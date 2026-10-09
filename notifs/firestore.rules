@@ -24,10 +24,17 @@ service cloud.firestore {
       allow create: if signedIn() && !banned() && request.resource.data.uid == request.auth.uid
         && request.resource.data.statut == 'en_attente'
         && request.resource.data.texte.size() <= 5000 && request.resource.data.titre.size() <= 120
-        && request.resource.data.nbPhotos <= 8;
+        && request.resource.data.nbPhotos <= 8
+        && (!('fichiers' in request.resource.data) || request.resource.data.fichiers.size() <= 3);
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
       allow update, delete: if isAdmin();
       match /photos/{p} {
+        allow create: if signedIn() && !banned() && owner(id) && request.resource.data.data.size() < 1000000;
+        allow read: if isAdmin() || (signedIn() && owner(id));
+        allow delete: if isAdmin();
+      }
+      // Fichiers joints (PDF, Word…), découpés en morceaux de moins de 1 Mo
+      match /fichiers/{p} {
         allow create: if signedIn() && !banned() && owner(id) && request.resource.data.data.size() < 1000000;
         allow read: if isAdmin() || (signedIn() && owner(id));
         allow delete: if isAdmin();
@@ -39,6 +46,7 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
       match /photos/{p} { allow read: if true; allow write: if isAdmin(); }
+      match /fichiers/{p} { allow read: if true; allow write: if isAdmin(); }
     }
     match /annonces/{id} {
       allow read: if true;

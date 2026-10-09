@@ -4748,5 +4748,6 @@ window.COURS = {
   ],
   "integrees": [
     "pxgPOCAkPxgmJHEaNEYc"
-  ]
+  ],
+  "avisClaude": {}
 };
