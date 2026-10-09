@@ -527,6 +527,8 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .ia-m.a{align-self:flex-start;background:var(--sunken);border-bottom-left-radius:4px}
 .ia-m.a p{margin:0 0 6px}.ia-m.a p:last-child{margin:0}.ia-m.a ul,.ia-m.a ol{margin:4px 0 6px;padding-left:20px}
 .ia-m.a code{font-family:var(--f-mono);font-size:12.5px;background:var(--surface);padding:1px 4px;border-radius:4px}
+.ia-lire{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink-2,inherit);font:inherit;font-size:12.5px;cursor:pointer}
+.ia-lire:hover{border-color:var(--accent)}.ia-lire.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .ia-m.err{background:transparent;border:1px dashed var(--bad);color:var(--bad)}
 .ia-m.wait::after{content:"…";animation:iaDots 1s steps(3) infinite}
 @keyframes iaDots{0%{opacity:.3}50%{opacity:1}}
@@ -1963,13 +1965,36 @@ function iaMd(t){
   });
   close(); return out;
 }
+// Lecture vocale des réponses (synthèse vocale du navigateur, voix française)
+const IA_VOIX = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+const iaLireBtn = i => IA_VOIX ? `<button type="button" class="ia-lire" data-m="${i}" aria-label="Lire la réponse à voix haute">🔊 Écouter</button>` : "";
+function iaParle(t){
+  return String(t).replace(/```[\s\S]*?```/g, " ").replace(/[*#`_>|]/g, " ")
+    .replace(/²/g, " au carré ").replace(/³/g, " au cube ").replace(/√/g, " racine de ").replace(/[·×]/g, " fois ").replace(/÷/g, " divisé par ")
+    .replace(/≈/g, " environ ").replace(/≠/g, " différent de ").replace(/≤/g, " inférieur ou égal à ").replace(/≥/g, " supérieur ou égal à ").replace(/→/g, ", donc ")
+    .replace(/(\d)\s*Ω/g, "$1 ohms").replace(/Ω/g, " ohm ").replace(/φ/g, " phi ").replace(/ω/g, " oméga ").replace(/π/g, " pi ").replace(/Δ/g, " delta ").replace(/°/g, " degrés ")
+    .replace(/(\d)\s*(k?)W\b/g, (m, d, k) => d + (k ? " kilowatts" : " watts")).replace(/(\d)\s*V\b/g, "$1 volts").replace(/(\d)\s*A\b/g, "$1 ampères").replace(/(\d)\s*Hz\b/g, "$1 hertz")
+    .replace(/\s+/g, " ").trim();
+}
+function iaStop(){ if(IA_VOIX) speechSynthesis.cancel(); document.querySelectorAll(".ia-lire.on").forEach(b => { b.classList.remove("on"); b.textContent = "🔊 Écouter"; }); }
+function iaLire(btn){
+  const on = btn.classList.contains("on"); iaStop(); if(on) return;
+  const m = iaConv().msgs[+btn.dataset.m]; if(!m) return;
+  const u = new SpeechSynthesisUtterance(iaParle(m.t)); u.lang = "fr-FR"; u.rate = 1;
+  const v = speechSynthesis.getVoices().filter(v => /^fr/i.test(v.lang)); if(v.length) u.voice = v.find(v => /fr-FR/i.test(v.lang) && /google|natural|premium|enhanced|amélie|thomas|denise|henri/i.test(v.name)) || v.find(v => /fr-FR/i.test(v.lang)) || v[0];
+  u.onend = u.onerror = () => { btn.classList.remove("on"); btn.textContent = "🔊 Écouter"; };
+  btn.classList.add("on"); btn.textContent = "⏹ Arrêter";
+  speechSynthesis.speak(u);
+}
+if(IA_VOIX) speechSynthesis.getVoices();
 function iaSync(){ const x = current && byKey(current); $("#iaFab").hidden = !IA_OK || !x || !$("#iaPanel").hidden; if(!$("#iaPanel").hidden && x && x.key !== iaKey) iaShow(); if(!$("#iaPanel").hidden && !x) iaClose(); }
 function iaConv(){ if(!IA_CONV.has(iaKey)) IA_CONV.set(iaKey, {msgs: [], chat: null}); return IA_CONV.get(iaKey); }
 function iaShow(){
+  iaStop();
   const x = byKey(current); if(!x) return; iaKey = x.key;
   $("#iaSub").textContent = x.c.titre;
   const cv = iaConv();
-  $("#iaLog").innerHTML = cv.msgs.length ? cv.msgs.map(m => `<div class="ia-m ${m.r}">${m.r === "a" ? iaMd(m.t) : m.r === "err" ? esc(m.t) : esc(m.t)}</div>`).join("")
+  $("#iaLog").innerHTML = cv.msgs.length ? cv.msgs.map((m, i) => `<div class="ia-m ${m.r}">${m.r === "a" ? iaMd(m.t) + iaLireBtn(i) : esc(m.t)}</div>`).join("")
     : `<div class="ia-m a"><p>Salut ! Je connais le chapitre <b>${esc(x.c.titre)}</b>. Pose-moi ta question : une notion pas claire, une formule, un exercice…</p><p>Astuce : sélectionne un passage du cours avant d'ouvrir la bulle, je te l'explique.</p></div>`;
   const sug = typeOf(x.c) === "Exercices" ? ["Donne-moi la méthode", "Un indice pour démarrer", "Explique la correction"] : ["Résume ce chapitre simplement", "Explique avec un exemple", "Pose-moi 3 questions"];
   $("#iaSugg").innerHTML = cv.msgs.length ? "" : sug.map(t => `<button type="button">${esc(t)}</button>`).join("");
@@ -1982,7 +2007,7 @@ function iaOpen(){
   if(sel && sel.length > 3 && sel.length < 1500) $("#iaIn").value = `Peux-tu m'expliquer ce passage : « ${sel} » ?`;
   setTimeout(() => $("#iaIn").focus(), 30);
 }
-function iaClose(){ $("#iaPanel").hidden = true; iaSync(); }
+function iaClose(){ iaStop(); $("#iaPanel").hidden = true; iaSync(); }
 async function iaSend(q){
   q = String(q||"").trim(); if(!q || iaBusy || !iaKey) return;
   const key = iaKey, cv = iaConv(), x = byKey(key);
@@ -1997,7 +2022,7 @@ async function iaSend(q){
     if(!cv.chat) cv.chat = IA.chat(iaContexte(x));
     const rep = await cv.chat.send(q, t => { if(iaKey === key){ box.classList.remove("wait"); box.innerHTML = iaMd(t); log.scrollTop = 1e9; } });
     cv.msgs.push({r: "a", t: rep});
-    if(iaKey === key){ box.classList.remove("wait"); box.innerHTML = iaMd(rep); }
+    if(iaKey === key){ box.classList.remove("wait"); box.innerHTML = iaMd(rep) + iaLireBtn(cv.msgs.length - 1); }
   }catch(e){
     cv.msgs.pop(); // la question pourra être reposée
     if(iaKey === key){ box.className = "ia-m err"; box.textContent = e.message || "Erreur."; $("#iaIn").value = q; }
@@ -2006,7 +2031,8 @@ async function iaSend(q){
 }
 $("#iaFab").addEventListener("click", iaOpen);
 $("#iaClose").addEventListener("click", iaClose);
-$("#iaNew").addEventListener("click", () => { if(iaBusy) return; IA_CONV.delete(iaKey); iaShow(); $("#iaIn").focus(); });
+$("#iaLog").addEventListener("click", e => { const b = e.target.closest(".ia-lire"); if(b) iaLire(b); });
+$("#iaNew").addEventListener("click", () => { if(iaBusy) return; iaStop(); IA_CONV.delete(iaKey); iaShow(); $("#iaIn").focus(); });
 $("#iaSugg").addEventListener("click", e => { const b = e.target.closest("button"); if(b) iaSend(b.textContent); });
 $("#iaForm").addEventListener("submit", e => { e.preventDefault(); iaSend($("#iaIn").value); });
 $("#iaIn").addEventListener("keydown", e => { if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); iaSend($("#iaIn").value); } if(e.key === "Escape"){ e.stopPropagation(); iaClose(); } });
