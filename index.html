@@ -17,6 +17,11 @@
 <body>
 <title>Cours Licence CAIE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Comptes : on télécharge Firebase dès le début, en parallèle des cours (ouverture plus rapide) -->
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js" crossorigin>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js" crossorigin>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js" crossorigin>
+<link rel="modulepreload" href="cloud.js">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 /* Layout : appli de révision. Barre du haut + sommaire à gauche (bureau) ; barre d'onglets en bas (téléphone).
@@ -2147,10 +2152,14 @@ $("#iaIn").addEventListener("input", e => { const t = e.target; t.style.height =
 let CLOUD_ON = false, CLOUD_FAIL = false, CLOUD_USER = null, CONTRIBS = [];
 // Accès au site en ligne : il faut un compte validé par l'admin. (Pas dans l'Artifact ni la version hors ligne.)
 const MUR = !!(window.CLOUD_CONFIG && window.CLOUD_CONFIG.firebase) && (location.href.startsWith(ONLINE_URL) || /^(127\.0\.0\.1|localhost)$/.test(location.hostname));
+let AUTH_PRET = false; // Firebase a dit qui est connecté
 let INSCR = null; // statut de l'inscription : null (déconnecté ou en cours), "attente", "refuse", "valide", "erreur"
 function renderMur(){
   if(!MUR) return;
-  const ouvert = CLOUD_ON && CLOUD_USER && INSCR === "valide";
+  // Ouverture immédiate si ce téléphone a déjà été validé (store "acces" = uid) : la vérification se fait en arrière-plan
+  const memo = store.get("acces", null);
+  const enCours = !CLOUD_ON || !AUTH_PRET || (CLOUD_USER && INSCR === null);
+  const ouvert = (CLOUD_ON && CLOUD_USER && INSCR === "valide") || (memo && (CLOUD_FAIL || (enCours && (!CLOUD_USER || CLOUD_USER.uid === memo))));
   $("#mur").hidden = !!ouvert; document.body.classList.toggle("mur-on", !ouvert);
   if(ouvert) return;
   const tete = `<div class="brand"><span class="logo">CAIE</span><b>Mes cours</b></div>`;
@@ -2197,15 +2206,17 @@ async function startCloud(){
     CLOUD_ON = true;
   }catch(e){ CLOUD_FAIL = true; renderMur(); return; }
   CLOUD.onPush((n, link) => toast(`${ICON.bell}<span>${esc(n.title ? n.title + " : " + (n.body || "") : n.body || "")}</span>${link && link.includes("#") ? (h => `<button ${byKey(h) ? "data-go" : "data-nav"}="${esc(h)}">Voir</button>`)(link.split("#")[1]) : ""}`, 10000));
-  await Promise.all([loadContribs(), loadAnnonces()]);
-  if(route === "" || route === "photos" || byKey(route)) render();
+  Promise.all([loadContribs(), loadAnnonces()]).then(() => { if(route === "" || route === "photos" || byKey(route)) render(); });
   CLOUD.onUser(async u => {
-    CLOUD_USER = u; syncReady = false; INSCR = null; renderMur();
-    if(u && await CLOUD.suisExclu()){
+    CLOUD_USER = u; syncReady = false; INSCR = null; AUTH_PRET = true; if(!u) store.set("acces", null); renderMur();
+    const [exclu, st] = u ? await Promise.all([CLOUD.suisExclu(), CLOUD.monStatut()]) : [false, null];
+    if(CLOUD_USER !== u) return;
+    if(exclu){ store.set("acces", null);
       CLOUD_USER = null; try{ await CLOUD.desactiverPush(); await CLOUD.signOut(); }catch(e){}
       toast("Ton compte a été retiré de la classe par l'administrateur. Contacte-le si c'est une erreur.", 12000); render(); renderMur(); return;
     }
-    if(u){ const st = await CLOUD.monStatut(); if(CLOUD_USER !== u) return; INSCR = st; }
+    INSCR = st;
+    if(u && st === "valide") store.set("acces", u.uid); else if(u && st !== "erreur") store.set("acces", null);
     renderMur();
     if(u && INSCR !== "valide") return;
     if(u){
