@@ -4407,6 +4407,235 @@ window.COURS = {
               ]
             }
           ]
+        },
+        {
+          "id": "dm-circuits-monophases",
+          "titre": "DM : exercices circuits monophasés (pour le lundi 12 octobre)",
+          "type": "Exercices",
+          "date": "2026-10-09",
+          "source": "Feuille « Exercices circuits monophasés » (photos de Kyk's), corrigés rédigés par Claude",
+          "resume": "Devoir maison à rendre le lundi 12 octobre : exercices 1.1, 1.2, 1.3, 1.4 et 1.6. Chaque énoncé est suivi d'un corrigé caché : essaie d'abord, puis appuie sur « Voir la correction ». Tous les résultats ont été recalculés.",
+          "sections": [
+            {
+              "titre": "Avant de commencer : les formules utiles",
+              "html": "<ul><li>ω = 2πf = <b>100π ≈ 314,16 rad/s</b> à 50 Hz.</li><li>Impédances : <code>Z<sub>R</sub> = R</code>, <code>Z<sub>L</sub> = jLω</code>, <code>Z<sub>C</sub> = 1/(jCω) = −j/(Cω)</code>.</li><li>Série : les impédances s'additionnent. Parallèle : les admittances (1/Z) s'additionnent.</li><li>Loi d'Ohm en efficace : <code>I = V / |Z|</code>, avec <code>|a + jb| = √(a² + b²)</code>.</li><li>Puissances : <code>P = Σ R·I²</code> (seules les résistances), <code>Q = Σ X·I²</code> (+ pour une bobine, − pour un condensateur), <code>S = V·I = √(P² + Q²)</code>, <code>cos φ = P / S</code>.</li><li>Puissance complexe : <code>S = V·I* = P + jQ</code>.</li></ul><p class=\"muted\" style=\"font-size:13px\">L'énoncé photographié est dans les photos du chapitre. L'exercice 1.5 n'est pas sur la feuille.</p>"
+            },
+            {
+              "titre": "Exercice 1.1 : charge monophasée",
+              "html": "<p><b>Énoncé.</b> Sous V = 230 V, 50 Hz : R<sub>1</sub> = 20 Ω seule sur une branche, en parallèle avec une branche L = 20 mH en série avec R<sub>2</sub> = 10 Ω (figure 1.18).</p><ol><li>Valeur efficace I<sub>1</sub> du courant dans R<sub>1</sub>.</li><li>Valeur efficace I<sub>2</sub> du courant dans R<sub>2</sub>.</li><li>Valeur efficace I du courant total.</li><li>Puissances P, Q et S.</li><li>Facteur de puissance.</li></ol><details><summary>Voir la correction</summary><ol><li>R<sub>1</sub> est directement sous V : <code>I<sub>1</sub> = 230 / 20 = <b>11,5 A</b></code>.</li><li>Branche 2 : <code>Lω = 0,02 × 314,16 = 6,28 Ω</code>, <code>Z<sub>2</sub> = 10 + j6,28</code>, <code>|Z<sub>2</sub>| = √(10² + 6,28²) = 11,81 Ω</code>, donc <code>I<sub>2</sub> = 230 / 11,81 ≈ <b>19,5 A</b></code>.</li><li>Les courants ne sont pas en phase : on <b>n'additionne pas</b> 11,5 et 19,5. On passe par les puissances (ou les complexes) : <code>I = S / V = 6 865 / 230 ≈ <b>29,8 A</b></code>.</li><li><code>P = R<sub>1</sub>I<sub>1</sub>² + R<sub>2</sub>I<sub>2</sub>² = 20 × 11,5² + 10 × 19,47² ≈ <b>6 438 W</b></code> ; <code>Q = Lω·I<sub>2</sub>² = 6,28 × 19,47² ≈ <b>2 383 var</b></code> ; <code>S = √(P² + Q²) ≈ <b>6 865 VA</b></code>.</li><li><code>cos φ = P / S = 6 438 / 6 865 ≈ <b>0,94</b></code>.</li></ol><div class=\"attention\">Piège : I ≠ I<sub>1</sub> + I<sub>2</sub> (31 A). En alternatif, on additionne les courants en complexe, pas leurs valeurs efficaces.</div></details>"
+            },
+            {
+              "titre": "Exercice 1.2 : représentation vectorielle",
+              "html": "<p><b>Énoncé.</b> V = 100 V, 50 Hz, appliquée à j10 Ω, −j5 Ω et 20 Ω en série (figure 1.19).</p><ol><li>Valeur efficace de I.</li><li>Phase de I (V à l'origine des phases), expressions temporelles de v et i.</li><li>Loi de maille.</li><li>Diagramme de Fresnel.</li></ol><details><summary>Voir la correction</summary><ol><li><code>Z = 20 + j10 − j5 = 20 + j5</code>, <code>|Z| = √(20² + 5²) = 20,6 Ω</code>, <code>I = 100 / 20,6 ≈ <b>4,85 A</b></code>.</li><li><code>arg I = arg V − arg Z = 0 − arctan(5/20) = <b>−14,0°</b></code> (≈ −0,245 rad) : le courant est en retard, le circuit est inductif.<br><code>v(t) = 100√2 sin(100πt) ≈ 141 sin(100πt)</code><br><code>i(t) = 4,85√2 sin(100πt − 0,245) ≈ 6,86 sin(100πt − 0,245)</code></li><li><code>V = j10·I − j5·I + 20·I</code></li><li>On place I sur un axe à −14°, puis on enchaîne les trois vecteurs : <code>20·I</code> (97 V, en phase avec I), <code>j10·I</code> (48,5 V, en avance de 90° sur I), <code>−j5·I</code> (24,3 V, en retard de 90° sur I). Leur somme est V = 100 V sur l'axe horizontal.</li></ol><div class=\"exemple\">Vérification : I = 100 / (20 + j5) = 4,71 − j1,18 A, et 20·I + j5·I redonne bien 100 V.</div></details>"
+            },
+            {
+              "titre": "Exercice 1.3 : diviseur de courant",
+              "html": "<p><b>Énoncé.</b> Courant total I = 2,5 A. Branche 1 : condensateur 1/(j0,002) en série avec 4 Ω. Branche 2 : j40 Ω en série avec 10 Ω. Les deux branches sont en parallèle (figure 1.20).</p><ol><li>Tension efficace V.</li><li>Courants I<sub>1</sub> et I<sub>2</sub>.</li><li>Expressions littérales de P et Q.</li></ol><details><summary>Voir la correction</summary><ol><li><code>Z<sub>1</sub> = 4 + 1/(j0,002) = 4 − j500 Ω</code> ; <code>Z<sub>2</sub> = 10 + j40 Ω</code>.<br><code>Z = Z<sub>1</sub>·Z<sub>2</sub> / (Z<sub>1</sub> + Z<sub>2</sub>) ≈ 11,8 + j43,2 Ω</code>, <code>|Z| ≈ 44,8 Ω</code>.<br><code>V = |Z|·I = 44,8 × 2,5 ≈ <b>112 V</b></code>.</li><li><code>|Z<sub>1</sub>| ≈ 500 Ω</code> → <code>I<sub>1</sub> = 112 / 500 ≈ <b>0,224 A</b></code> ; <code>|Z<sub>2</sub>| = 41,2 Ω</code> → <code>I<sub>2</sub> = 112 / 41,2 ≈ <b>2,72 A</b></code>.</li><li><code>P = 4·I<sub>1</sub>² + 10·I<sub>2</sub>²</code> ≈ <b>74 W</b> ; <code>Q = 40·I<sub>2</sub>² − 500·I<sub>1</sub>²</code> ≈ <b>270 var</b> (bobine +, condensateur −).</li></ol><div class=\"attention\">I<sub>2</sub> (2,72 A) est plus grand que le courant total (2,5 A) : c'est normal, les courants des deux branches sont presque en opposition de phase.</div></details>"
+            },
+            {
+              "titre": "Exercice 1.4 : puissance apparente complexe",
+              "html": "<p><b>Énoncé.</b> Sous 127 V, 50 Hz : C, L = 10 mH et R = 10 Ω en parallèle (figure 1.21).</p><ol><li>Expression de <code>S = V·I*</code> en fonction de V, R, L, C.</li><li>En déduire P et Q.</li><li>Valeur de C qui annule Q.</li><li>Courant I avec cette valeur de C.</li><li>À quoi équivaut alors le circuit ?</li></ol><details><summary>Voir la correction</summary><ol><li><code>I = V·(1/R + jCω + 1/(jLω))</code> donc <code>S = V·I* = V²·(1/R − jCω + j/(Lω))</code>.</li><li><code>P = V²/R = 127²/10 ≈ <b>1 613 W</b></code> ; <code>Q = V²·(1/(Lω) − Cω)</code>.</li><li><code>Q = 0 ⇔ LCω² = 1 ⇔ C = 1/(Lω²) = 1/(0,01 × 314,16²) ≈ <b>1,01 mF</b></code> (1 013 µF).</li><li>Les courants de L et C s'annulent : <code>I = V/R = 127/10 = <b>12,7 A</b></code>.</li><li>Le circuit équivaut à la <b>résistance R seule</b> : L et C sont à la résonance (circuit bouchon), le facteur de puissance vaut 1.</li></ol></details>"
+            },
+            {
+              "titre": "Exercice 1.6 : comparaison continu / alternatif",
+              "html": "<p><b>Énoncé.</b> Radiateur : R = 30 Ω et L = 50 mH. On veut P = 1 500 W.</p><ol><li>Tension continue nécessaire et courant.</li><li>En sinusoïdal 50 Hz : courant efficace pour P = 1 500 W.</li><li>Tension efficace nécessaire, commentaire.</li><li>Mêmes questions à 400 Hz. Pourquoi 400 Hz ? Le radiateur fonctionnerait-il sous 240 V, 400 Hz ?</li><li>Et si on néglige l'inductance ?</li></ol><details><summary>Voir la correction</summary><ol><li>En continu, L ne joue pas : <code>U = √(P·R) = √(1 500 × 30) ≈ <b>212 V</b></code>, <code>I = U/R ≈ <b>7,07 A</b></code>.</li><li>Seule R dissipe : <code>I = √(P/R) = √50 ≈ <b>7,07 A</b></code> (le même courant efficace).</li><li><code>Lω = 15,7 Ω</code>, <code>|Z| = √(30² + 15,7²) ≈ 33,9 Ω</code>, <code>V = |Z|·I ≈ <b>239 V</b></code>. Il faut plus de tension qu'en continu à cause de la bobine ; ça correspond au réseau 230-240 V.</li><li>À 400 Hz : <code>Lω = 125,7 Ω</code>, <code>|Z| ≈ 129 Ω</code>, il faudrait <code>V ≈ <b>914 V</b></code>. Le 400 Hz est la fréquence des réseaux embarqués (avions, navires). Sous 240 V, 400 Hz : <code>I = 240/129 ≈ 1,86 A</code> et <code>P = 30 × 1,86² ≈ <b>104 W</b></code> : le radiateur ne chaufferait presque pas.</li><li>Sans L, l'impédance vaut R quelle que soit la fréquence : il faut <b>212 V</b> en continu comme en efficace alternatif. La valeur efficace est justement définie pour donner la même puissance qu'en continu.</li></ol></details>"
+            }
+          ],
+          "pointsCles": [
+            "ω = 2πf ; Z_L = jLω ; Z_C = 1/(jCω).",
+            "I = V/|Z| ; |a + jb| = √(a² + b²).",
+            "On n'additionne jamais des valeurs efficaces de courants déphasés.",
+            "P = ΣRI² ; Q = ΣXI² (bobine +, condensateur −) ; S = √(P² + Q²) ; cos φ = P/S.",
+            "S = V·I* = P + jQ.",
+            "LCω² = 1 : Q = 0, le circuit LC parallèle se comporte comme ouvert."
+          ],
+          "definitions": [
+            {
+              "terme": "Facteur de puissance",
+              "def": "Rapport P/S, égal à cos φ en sinusoïdal."
+            },
+            {
+              "terme": "Diagramme de Fresnel",
+              "def": "Représentation des tensions et courants complexes par des vecteurs dans le plan complexe."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Combien vaut ω à 50 Hz ?",
+              "r": "100π ≈ 314 rad/s."
+            },
+            {
+              "q": "Impédance d'un condensateur ?",
+              "r": "1/(jCω) = −j/(Cω)."
+            },
+            {
+              "q": "Comment calculer P dans un circuit RLC ?",
+              "r": "P = somme des R·I² (seules les résistances consomment)."
+            },
+            {
+              "q": "Signe de Q pour une bobine et un condensateur ?",
+              "r": "Positif pour une bobine, négatif pour un condensateur."
+            },
+            {
+              "q": "Condition pour annuler Q avec L et C en parallèle ?",
+              "r": "LCω² = 1, soit C = 1/(Lω²)."
+            },
+            {
+              "q": "Peut-on additionner I₁ = 11,5 A et I₂ = 19,5 A pour trouver I ?",
+              "r": "Non : ils sont déphasés, il faut passer par les complexes ou les puissances."
+            },
+            {
+              "q": "Pourquoi étudier le 400 Hz ?",
+              "r": "C'est la fréquence des réseaux embarqués (avions)."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Z = 20 + j5 Ω sous 100 V : le courant vaut environ…",
+              "choix": [
+                "4,85 A",
+                "5 A",
+                "4 A",
+                "20 A"
+              ],
+              "bonne": 0,
+              "explication": "|Z| = √(400 + 25) ≈ 20,6 Ω, I = 100/20,6."
+            },
+            {
+              "q": "Le courant dans Z = 20 + j5 est…",
+              "choix": [
+                "en retard de 14° sur V",
+                "en avance de 14° sur V",
+                "en phase avec V",
+                "en retard de 90°"
+              ],
+              "bonne": 0,
+              "explication": "Circuit inductif : arg I = −arctan(5/20)."
+            },
+            {
+              "q": "Pour annuler Q avec L = 10 mH en parallèle à 50 Hz, C vaut environ…",
+              "choix": [
+                "1 mF",
+                "10 µF",
+                "100 nF",
+                "10 mF"
+              ],
+              "bonne": 0,
+              "explication": "C = 1/(Lω²) ≈ 1,01 mF."
+            },
+            {
+              "q": "Q d'un circuit avec une bobine j40 Ω parcourue par 2 A :",
+              "choix": [
+                "+160 var",
+                "−160 var",
+                "80 var",
+                "40 var"
+              ],
+              "bonne": 0,
+              "explication": "Q = X·I² = 40 × 4."
+            },
+            {
+              "q": "Un radiateur R + L prévu pour 50 Hz, branché en 400 Hz sous la même tension…",
+              "choix": [
+                "chauffe beaucoup moins",
+                "chauffe plus",
+                "chauffe pareil",
+                "grille"
+              ],
+              "bonne": 0,
+              "explication": "Lω augmente, le courant chute, donc P = RI² aussi."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Charge R-L série",
+              "enonce": "<p>Une charge R = 40 Ω en série avec L = 0,1 H est alimentée sous 230 V, 50 Hz.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Réactance Lω",
+                  "reponse": 31.42,
+                  "unite": "Ω",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Lω = 0,1 × 314,16 ≈ 31,4 Ω.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Courant efficace I",
+                  "reponse": 4.52,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>|Z| = √(40² + 31,4²) ≈ 50,9 Ω ; I = 230/50,9 ≈ 4,52 A.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Puissance active P",
+                  "reponse": 818,
+                  "unite": "W",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>P = R·I² = 40 × 4,52² ≈ 818 W.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Puissance réactive Q",
+                  "reponse": 642,
+                  "unite": "var",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>Q = Lω·I² ≈ 31,4 × 20,45 ≈ 642 var.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Facteur de puissance",
+                  "reponse": 0.786,
+                  "unite": "",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>cos φ = R/|Z| = 40/50,9 ≈ 0,79.</p>"
+                }
+              ]
+            },
+            {
+              "titre": "Compensation par condensateur",
+              "enonce": "<p>R = 20 Ω et L = 50 mH sont en parallèle sous 230 V, 50 Hz. On ajoute un condensateur C en parallèle.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Valeur de C qui annule Q",
+                  "reponse": 202.6,
+                  "unite": "µF",
+                  "tol": 0.02,
+                  "points": 2,
+                  "corrige": "<p>C = 1/(Lω²) = 1/(0,05 × 314,16²) ≈ 203 µF.</p>"
+                },
+                {
+                  "type": "num",
+                  "q": "Courant total I avec ce condensateur",
+                  "reponse": 11.5,
+                  "unite": "A",
+                  "tol": 0.02,
+                  "points": 1,
+                  "corrige": "<p>L et C se compensent : I = V/R = 230/20 = 11,5 A.</p>"
+                },
+                {
+                  "type": "qcm",
+                  "q": "Le circuit est alors équivalent à…",
+                  "choix": [
+                    "la résistance R seule",
+                    "un court-circuit",
+                    "la bobine seule",
+                    "un circuit ouvert"
+                  ],
+                  "bonne": 0,
+                  "points": 1,
+                  "corrige": "<p>LC parallèle à la résonance = circuit bouchon : il reste R seule.</p>"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
