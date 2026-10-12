@@ -87,6 +87,7 @@ def prof(org):
 def salle(loc):
     if not loc: return ""
     s = loc.split(" - ", 1)[1] if " - " in loc else loc
+    if s.strip().lower() == "salle en extérieur": return "CNAM centre-ville"
     return s.replace("Amphithéatre", "Amphithéâtre").replace("Salle Comédie - ", "Comédie · ")
 
 # Format de l'agenda Net-YParéo : SUMMARY = « Matière - M. NOM », LOCATION = salle, pas de code UE
