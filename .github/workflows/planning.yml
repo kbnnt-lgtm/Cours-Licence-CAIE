@@ -20,7 +20,6 @@ jobs:
       - run: python3 notifs/planning-ics.py planning.js
         env:
           PLANNING_ICS: ${{ secrets.PLANNING_ICS }}
-          DIAG: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
       - run: |
           if ! git diff --quiet planning.js; then
             git config user.name "planning-auto"

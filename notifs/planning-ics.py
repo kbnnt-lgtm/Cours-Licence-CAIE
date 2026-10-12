@@ -89,36 +89,55 @@ def salle(loc):
     s = loc.split(" - ", 1)[1] if " - " in loc else loc
     return s.replace("Amphithéatre", "Amphithéâtre").replace("Salle Comédie - ", "Comédie · ")
 
-ev = []
+# Format de l'agenda Net-YParéo : SUMMARY = « Matière - M. NOM », LOCATION = salle, pas de code UE
+# ni de demi-journées en entreprise. On fusionne donc avec le planning existant (issu de l'export CSV,
+# plus détaillé) : un créneau déjà connu garde son titre, son UE et sa salle tant que la matière de
+# l'agenda ne change pas ; les créneaux nouveaux viennent de l'agenda ; les créneaux de cours absents
+# de l'agenda sont retirés (annulés ou déplacés). Les jours en entreprise / autonomie sont conservés.
+avant = None
+if sortie.exists():
+    m = re.search(r"window\.PLANNING = (.*);\s*$", sortie.read_text(encoding="utf-8"), re.S)
+    if m: avant = json.loads(m.group(1))
+anciens = {(x["d"], x["h1"], x["h2"]): x for x in (avant or {}).get("evenements", [])}
+
+def prof_ics(nom):
+    m = re.match(r"\s*(M\.?|Mme)\s+(.+)$", nom or "")
+    if not m: return ""
+    return ("M." if m.group(1).startswith("M") and m.group(1) != "Mme" else "Mme") + " " + m.group(2).strip().title()
+
+ev, pris = [], set()
 for e in evts:
     if texte(e, "STATUS").upper() == "CANCELLED": continue
     d1, d2 = quand(e, "DTSTART"), quand(e, "DTEND")
     if not d1: continue
     d2 = d2 or d1
     obj = texte(e, "SUMMARY")
-    code, ue = ue_nom(texte(e, "DESCRIPTION"))
-    org = e.get("ORGANIZER", ("", {}))[1].get("CN", "").strip('"')
-    if obj.startswith("Demi-journée en entreprise"): t, titre = "entreprise", "En entreprise"
-    elif "Travail en autonomie" in obj: t, titre = "autonomie", "Travail en autonomie"
-    elif "Soutenance" in obj: t, titre = "soutenance", f"Soutenance : {ue}" if ue else "Soutenance orale"
-    elif obj == "Demi-journée de cours": t, titre = "cours", "Cours"
-    else:
-        t = "cours"
-        parts = [p.strip() for p in obj.split(" - ")]
-        mid = [p for p in parts[1:] if p not in ("Cours",)]
-        titre = " - ".join(mid) if mid else (ue or obj)
-    titre = titre.replace("Evenementiel", "Événementiel"); titre = titre[:1].upper() + titre[1:]
-    ue = ue.replace("Evenementiel", "Événementiel")
-    ev.append({"d": d1.strftime("%Y-%m-%d"), "h1": d1.strftime("%H:%M"), "h2": d2.strftime("%H:%M"), "t": t, "titre": titre,
-               "code": code, "ue": ue if t != "entreprise" else "", "salle": salle(texte(e, "LOCATION")), "prof": prof(org)})
-ev.sort(key=lambda x: (x["d"], x["h1"]))
+    parts = [p.strip() for p in obj.split(" - ")]
+    profs = [p for p in parts if re.match(r"(M\.?|Mme)\s", p)]
+    matiere = " - ".join(p for p in parts if p not in profs) or obj
+    matiere = matiere.replace("Evenementiel", "Événementiel"); matiere = matiere[:1].upper() + matiere[1:]
+    cle = (d1.strftime("%Y-%m-%d"), d1.strftime("%H:%M"), d2.strftime("%H:%M"))
+    if "entreprise" in obj.lower(): t = "entreprise"
+    elif "autonomie" in obj.lower(): t = "autonomie"
+    elif "soutenance" in obj.lower(): t = "soutenance"
+    else: t = "cours"
+    x = dict(anciens.get(cle) or {})
+    if not x or x.get("s", matiere) != matiere or (x.get("t") != t and t == "cours"):
+        x.update({"t": t, "titre": matiere if t == "cours" else {"entreprise": "En entreprise", "autonomie": "Travail en autonomie"}.get(t, matiere),
+                  "code": "", "ue": "", "salle": salle(texte(e, "LOCATION"))})
+    x.update({"d": cle[0], "h1": cle[1], "h2": cle[2], "s": matiere})
+    if profs: x["prof"] = ", ".join(prof_ics(p) for p in profs)
+    x.setdefault("prof", "")
+    pris.add(cle); ev.append(x)
 if not ev: sys.exit("Agenda vide : planning.js laissé tel quel.")
+debut, fin = min(x["d"] for x in ev), max(x["d"] for x in ev)
+for cle, x in anciens.items():
+    if cle in pris: continue
+    if x.get("t") != "cours" or not (debut <= x["d"] <= fin):
+        if not any(c[0] == cle[0] and c[1] < cle[2] and cle[1] < c[2] for c in pris): ev.append(x)
+ev.sort(key=lambda x: (x["d"], x["h1"]))
 
 # On n'écrit que si les créneaux ont changé (évite un commit par jour pour rien)
-avant = None
-if sortie.exists():
-    m = re.search(r"window\.PLANNING = (.*);\s*$", sortie.read_text(encoding="utf-8"), re.S)
-    if m: avant = json.loads(m.group(1))
 if avant and avant.get("evenements") == ev:
     print(len(ev), "créneaux, inchangé."); sys.exit(0)
 out = {"maj": datetime.date.today().isoformat(), "lieu": (avant or {}).get("lieu", "Cnam Niort, 10 place de la Comédie, 79000 Niort"), "evenements": ev}
