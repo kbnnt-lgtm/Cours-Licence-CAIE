@@ -2,7 +2,7 @@
 # Le lien est secret : il est lu dans la variable d'environnement PLANNING_ICS (secret GitHub),
 # jamais écrit dans le dépôt. Les participants (élèves) ne sont PAS repris : le site est public.
 # Usage : PLANNING_ICS=https://… python3 notifs/planning-ics.py [planning.js]   (ou un fichier .ics en 2e argument)
-import datetime, json, os, pathlib, re, sys, urllib.request
+import datetime, json, os, pathlib, re, sys, urllib.error, urllib.request
 from zoneinfo import ZoneInfo
 
 PARIS = ZoneInfo("Europe/Paris")
@@ -15,8 +15,14 @@ else:
     if not url:
         print("PLANNING_ICS absent : rien à faire."); sys.exit(0)
     url = re.sub(r"^webcals?://", "https://", url)
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (planning Licence CAIE)"})
-    txt = urllib.request.urlopen(req, timeout=60).read()
+    lire = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (planning Licence CAIE)"}), timeout=60).read()
+    try:
+        txt = lire(url)
+    except urllib.error.URLError as e:
+        # Certains serveurs Net-YParéo ont un certificat HTTPS invalide : un lien webcal:// se lit alors en http://
+        if "CERTIFICATE" not in str(e.reason).upper() or not url.startswith("https://"): raise
+        print("Certificat HTTPS invalide côté serveur : lecture en http://")
+        txt = lire("http://" + url[len("https://"):])
 try: txt = txt.decode("utf-8")
 except UnicodeDecodeError: txt = txt.decode("cp1252")
 if "BEGIN:VCALENDAR" not in txt:
