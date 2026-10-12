@@ -9,14 +9,14 @@ importScripts("config.js");
 firebase.initializeApp(self.CLOUD_CONFIG.firebase);
 firebase.messaging();
 
-const CACHE = "caie-appli-v1";
+const CACHE = "caie-appli-v2";
 const COQUILLE = ["./", "cours.js", "planning.js", "galerie/galerie.js", "config.js", "cloud.js", "ia.js", "icone.png", "manifest.json"];
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => Promise.all(COQUILLE.map(u => c.add(u).catch(() => {}))))); });
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("caie-appli-") && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 
 const garde = (req, rep) => { if (rep && rep.ok && (rep.type === "basic" || rep.type === "cors")) { const copie = rep.clone(); caches.open(CACHE).then(c => c.put(req, copie)).catch(() => {}); } return rep; };
 async function reseauDabord(req, cle) {
-  const reseau = fetch(req).then(r => garde(cle, r));
+  const reseau = fetch(req, { cache: "no-cache" }).then(r => garde(cle, r));  // revalide toujours (sinon le cache HTTP de GitHub Pages sert 10 min de vieille version)
   const delai = new Promise(ok => setTimeout(ok, 4000));
   try {
     const r = await Promise.race([reseau, delai.then(() => null)]);
