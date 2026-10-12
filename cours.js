@@ -362,7 +362,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "logique-combinatoire",
@@ -923,7 +924,8 @@ window.COURS = {
               "q": "Théorème de De Morgan pour le NON-ET ?",
               "r": "/(E1 · E2) = /E1 + /E2 : c'est pour ça que deux NC en parallèle donnent un NON-ET."
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "exercices-logique-combinatoire",
@@ -1221,7 +1223,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "tp-modicon-m340",
@@ -1618,7 +1621,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "tp-operations-basiques",
@@ -1943,7 +1947,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "blocs-fonctions-efb",
@@ -2394,7 +2399,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         }
       ]
     },
@@ -2459,7 +2465,8 @@ window.COURS = {
               "explication": "Boucherot : on additionne P et Q séparément."
             }
           ],
-          "examen": []
+          "examen": [],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "cours-courant-continu",
@@ -2744,7 +2751,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "courant-alternatif-monophase",
@@ -3113,7 +3121,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "complexes-monophase",
@@ -3383,7 +3392,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "exercices-regime-continu",
@@ -3762,7 +3772,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "exercices-resistances-equivalentes",
@@ -4105,7 +4116,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "devoirs-lois-kirchhoff",
@@ -4480,7 +4492,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet, avec Maélyss Simon (exercice 2)"
         },
         {
           "id": "dm-circuits-monophases",
@@ -4709,7 +4722,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "exercices-regime-monophase",
@@ -4908,7 +4922,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         }
       ]
     },
@@ -4946,7 +4961,8 @@ window.COURS = {
           "pointsCles": [],
           "definitions": [],
           "flashcards": [],
-          "quiz": []
+          "quiz": [],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "se-presenter",
@@ -5182,7 +5198,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Kylian Bonnet"
         },
         {
           "id": "faire-connaissance",
@@ -5393,7 +5410,8 @@ window.COURS = {
                 }
               ]
             }
-          ]
+          ],
+          "auteurs": "Thomas"
         }
       ]
     },

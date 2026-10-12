@@ -863,6 +863,7 @@ function renderChapter(key){
     ${(c.definitions||[]).length ? `<div class="box"><h2>Définitions</h2><dl class="defs">${c.definitions.map(d=>`<dt>${esc(d.terme)}</dt><dd>${esc(d.def)}</dd>`).join("")}</dl></div>` : ""}
     ${photos.length ? `<div class="box" id="sec-photos"><h2>Photos du cours</h2><div class="strip">${photos.map(g => thumb(g)).join("")}</div></div>` : ""}
     <div class="box" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px" class="muted">Une erreur, un oubli, une photo à ajouter sur ce chapitre ?</span><button class="btn" id="propBtn">${ICON.edit}Proposer une modification</button></div>
+    ${c.auteurs ? `<p class="muted credit" style="margin:18px 0 0;font-size:12px;text-align:center;opacity:.75">Rédigé et envoyé par ${esc(c.auteurs)}</p>` : ""}
     <div class="pager">
       <button ${prev?`data-go="${esc(prev.key)}"`:"disabled"}><small>← Précédent</small><b>${prev?esc(prev.c.titre):""}</b></button>
       <button ${next?`data-go="${esc(next.key)}"`:"disabled"}><small>Suivant →</small><b>${next?esc(next.c.titre):""}</b></button>
