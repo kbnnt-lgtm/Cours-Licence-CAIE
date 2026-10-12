@@ -61,6 +61,15 @@ def quand(e, k):
         except Exception: dt = dt.replace(tzinfo=PARIS)
     return dt.astimezone(PARIS)
 
+if os.environ.get("DIAG"):
+    # Diagnostic : structure de quelques événements (sans participants ni adresses e-mail)
+    for e in [x for x in evts if x.get("DTSTART", ("",))[0][:8] in ("20261005", "20261013", "20261008")][:4]:
+        for k, (v, p) in e.items():
+            if k in ("ORGANIZER",): v = p.get("CN", "")
+            print(k, "=", re.sub(r"\S+@\S+", "<mail>", v)[:160])
+        print("---")
+    print(len(evts), "événements"); sys.exit(0)
+
 # Mêmes règles que outils/planning-csv.py (export CSV)
 def ue_nom(desc):
     m = re.search(r"(?m)^\s*([A-Z]{3,}[A-Z0-9]*)\s*:\s*(.*)$", desc or "")
