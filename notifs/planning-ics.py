@@ -15,14 +15,17 @@ else:
     if not url:
         print("PLANNING_ICS absent : rien à faire."); sys.exit(0)
     url = re.sub(r"^webcals?://", "https://", url)
-    lire = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (planning Licence CAIE)"}), timeout=60).read()
+    lire = lambda u, ctx=None: urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (planning Licence CAIE)"}), timeout=60, context=ctx).read()
     try:
         txt = lire(url)
     except urllib.error.URLError as e:
-        # Certains serveurs Net-YParéo ont un certificat HTTPS invalide : un lien webcal:// se lit alors en http://
-        if "CERTIFICATE" not in str(e.reason).upper() or not url.startswith("https://"): raise
-        print("Certificat HTTPS invalide côté serveur : lecture en http://")
-        txt = lire("http://" + url[len("https://"):])
+        # Le serveur Net-YParéo de l'école présente un certificat valide mais établi pour un autre nom :
+        # on garde la vérification de la chaîne de confiance et on ne saute que la vérification du nom.
+        if "HOSTNAME MISMATCH" not in str(e.reason).upper(): raise
+        import ssl
+        ctx = ssl.create_default_context(); ctx.check_hostname = False
+        print("Certificat du serveur émis pour un autre nom : lecture avec la chaîne vérifiée, sans contrôle du nom.")
+        txt = lire(url, ctx)
 try: txt = txt.decode("utf-8")
 except UnicodeDecodeError: txt = txt.decode("cp1252")
 if "BEGIN:VCALENDAR" not in txt:
