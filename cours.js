@@ -2405,6 +2405,63 @@ window.COURS = {
       "couleur": "#0c8599",
       "chapitres": [
         {
+          "id": "evaluation-reseau-boucherot",
+          "titre": "⚡ Spécial évaluation : calcul d'un réseau (Boucherot)",
+          "type": "Cours",
+          "date": "2026-10-12",
+          "source": "Fiche express rédigée par Claude pour l'évaluation du 12 octobre (d'après l'exercice de Kylian Bonnet)",
+          "resume": "Fiche express pour l'évaluation : toutes les formules de puissance en monophasé, le théorème de Boucherot et la méthode des deux tableaux, avec l'exemple corrigé en un coup d'œil.",
+          "sections": [
+            {
+              "titre": "Formules et méthode",
+              "html": "<div class=\"attention\"><b>Évaluation du 12 octobre :</b> calcul d'un réseau avec le théorème de Boucherot (même type que l'exercice E). Tout est ici, dans l'ordre où on s'en sert.</div>\n<h4>1. Les formules</h4>\n<ul>\n<li><code>P = V·I·cos φ</code> en W (active)</li>\n<li><code>Q = V·I·sin φ = P·tan φ</code> en var (réactive)</li>\n<li><code>S = V·I = √(P² + Q²)</code> en VA (apparente)</li>\n<li><code>cos φ = P / S</code> ; <code>tan φ = Q / P</code> ; <code>φ = arctan(Q / P)</code></li>\n<li><code>I = S / V</code> (si on connaît la tension) ; <code>V = S / I</code> (si on connaît le courant)</li>\n<li>Résistance : <code>P = R·I² = V²/R</code>, Q = 0</li>\n<li>Bobine : <code>Q = Lω·I² = V²/(Lω)</code>, P = 0, avec <code>ω = 2πf = 314,16 rad/s</code></li>\n<li>Condensateur : <code>Q = −V²·Cω</code>, P = 0</li>\n<li>Moteur : <code>P_absorbée = P_utile / η</code></li>\n<li>Relèvement : <code>C = P·(tan φ − tan φ′) / (V²·ω)</code></li>\n</ul>\n<h4>2. Boucherot</h4>\n<p><code>P_total = ΣP</code> et <code>Q_total = ΣQ</code>, puis <code>S_total = √(P_total² + Q_total²)</code>. <b>Jamais</b> on n'additionne les S, les courants ou les tensions.</p>\n<h4>3. La méthode des deux tableaux</h4>\n<ol>\n<li><b>Récepteurs</b> (en parallèle, tension V connue) : P et Q de chacun, puis la somme = installation.</li>\n<li><code>S_inst = √(P² + Q²)</code> puis le courant de ligne <code>J = S_inst / V</code>.</li>\n<li><b>Ligne</b> (en série, courant J connu) : <code>P_R = R·J²</code> et <code>Q_L = Lω·J²</code>.</li>\n<li><b>Total</b> = installation + ligne (P avec P, Q avec Q), puis <code>S_total</code>.</li>\n<li>Tension de départ : <code>U = S_total / J</code>. Chute de tension : <code>ΔU = U − V</code>.</li>\n<li>Pertes en ligne : <code>P_R / P_inst × 100</code> en %.</li>\n<li>Pour chaque ligne du 2ᵉ tableau : <code>S = √(P² + Q²)</code> ; en parallèle I = S/V ; en série tension = S/J ; <code>cos φ = P/S</code>.</li>\n</ol>\n<div class=\"attention\"><b>Pièges :</b> cos φ = 0,6 « AR » (arrière) = inductif, donc Q &gt; 0 ; sin φ = sin(arccos 0,6) = 0,8, pas sin(0,6). Mets tout en W et var (pas de mélange kW / W). µH = 10⁻⁶ H.</div>"
+            },
+            {
+              "titre": "Exemple corrigé en un tableau",
+              "html": "<p>M₁ : 45 A, cos φ = 0,6 AR ; M₂ : 10 kW, 8 kvar ; 50 lampes de 100 W ; ligne R = 0,15 Ω, L = 450 µH ; V = 400 V, 50 Hz.</p>\n<div style=\"overflow-x:auto\"><table><thead><tr><th>Élément</th><th>P (kW)</th><th>Q (kvar)</th><th>S (kVA)</th><th>Tension (V)</th><th>I (A)</th><th>φ (°)</th><th>cos φ</th></tr></thead><tbody>\n<tr><td>M₁</td><td>400×45×0,6 = 10,8</td><td>400×45×0,8 = 14,4</td><td>18</td><td>400</td><td>45</td><td>53,1</td><td>0,60</td></tr>\n<tr><td>M₂</td><td>10</td><td>8</td><td>12,81</td><td>400</td><td>32,0</td><td>38,7</td><td>0,78</td></tr>\n<tr><td>Lampes</td><td>50×100 = 5</td><td>0</td><td>5</td><td>400</td><td>12,5</td><td>0</td><td>1</td></tr>\n<tr><td><b>Installation</b></td><td><b>25,8</b></td><td><b>22,4</b></td><td><b>34,17</b></td><td><b>400</b></td><td><b>J = 85,4</b></td><td><b>41,0</b></td><td><b>0,755</b></td></tr>\n<tr><td>R</td><td>0,15×85,4² = 1,094</td><td>0</td><td>1,094</td><td>12,8</td><td>85,4</td><td>0</td><td>1</td></tr>\n<tr><td>L (Lω = 0,1414 Ω)</td><td>0</td><td>0,1414×85,4² = 1,032</td><td>1,032</td><td>12,1</td><td>85,4</td><td>90</td><td>0</td></tr>\n<tr><td><b>Ligne</b></td><td><b>1,094</b></td><td><b>1,032</b></td><td><b>1,504</b></td><td><b>17,6</b></td><td><b>85,4</b></td><td><b>43,3</b></td><td><b>0,73</b></td></tr>\n<tr><td><b>Total</b></td><td><b>26,89</b></td><td><b>23,43</b></td><td><b>35,67</b></td><td><b>U = 417,6</b></td><td><b>85,4</b></td><td><b>41,1</b></td><td><b>0,754</b></td></tr>\n</tbody></table></div>\n<p>ΔU = 417,6 − 400 = <b>17,6 V</b> ; pertes = 1,094 / 25,8 = <b>4,2 %</b>. Correction détaillée : chapitre « Exercices : régime monophasé », exercice E.</p>"
+            }
+          ],
+          "pointsCles": [
+            "P = VI cos φ ; Q = VI sin φ = P tan φ ; S = VI = √(P² + Q²).",
+            "Boucherot : ΣP et ΣQ, jamais ΣS.",
+            "Récepteurs en parallèle : I = S/V. Ligne en série : P = RJ², Q = LωJ², tension = S/J.",
+            "U = S_total / J ; ΔU = U − V ; pertes = P_R / P_inst."
+          ],
+          "definitions": [],
+          "flashcards": [
+            {
+              "q": "Courant de ligne J ?",
+              "r": "J = S_installation / V."
+            },
+            {
+              "q": "Puissances de la ligne ?",
+              "r": "P_R = R·J² ; Q_L = Lω·J²."
+            },
+            {
+              "q": "Tension de départ U ?",
+              "r": "U = S_total / J."
+            },
+            {
+              "q": "cos φ = 0,6 : sin φ ?",
+              "r": "0,8 (et tan φ = 1,333)."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Pour trouver S total, on fait…",
+              "choix": [
+                "√(ΣP² + ΣQ²)",
+                "ΣS",
+                "ΣP + ΣQ",
+                "V × ΣI"
+              ],
+              "bonne": 0,
+              "explication": "Boucherot : on additionne P et Q séparément."
+            }
+          ],
+          "examen": []
+        },
+        {
           "id": "cours-courant-continu",
           "titre": "Le courant continu : résistance et associations",
           "type": "Cours",
