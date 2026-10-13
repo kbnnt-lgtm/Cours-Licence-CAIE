@@ -1,6 +1,6 @@
 // Planning de la Licence (agenda iCal Net-YParéo), généré par notifs/planning-ics.py
 window.PLANNING = {
-"maj": "2026-10-12",
+"maj": "2026-10-13",
 "lieu": "Cnam Niort, 10 place de la Comédie, 79000 Niort",
 "evenements": [
 {
@@ -2152,48 +2152,52 @@ window.PLANNING = {
 "prof": ""
 },
 {
+"t": "cours",
+"titre": "CACES® Gerbeur R485 Cat 1 et 2",
+"code": "",
+"ue": "",
+"salle": "L EFI CACES",
 "d": "2026-12-09",
-"h1": "09:00",
-"h2": "12:30",
-"t": "entreprise",
-"titre": "En entreprise",
-"code": "",
-"ue": "",
-"salle": "",
+"h1": "08:30",
+"h2": "12:00",
+"s": "CACES® Gerbeur R485 Cat 1 et 2",
 "prof": ""
 },
 {
+"t": "cours",
+"titre": "CACES® Gerbeur R485 Cat 1 et 2",
+"code": "",
+"ue": "",
+"salle": "L EFI CACES",
 "d": "2026-12-09",
-"h1": "13:30",
-"h2": "17:00",
-"t": "entreprise",
-"titre": "En entreprise",
-"code": "",
-"ue": "",
-"salle": "",
+"h1": "13:00",
+"h2": "16:30",
+"s": "CACES® Gerbeur R485 Cat 1 et 2",
 "prof": ""
 },
 {
-"d": "2026-12-10",
-"h1": "09:00",
-"h2": "12:30",
-"t": "entreprise",
-"titre": "En entreprise",
+"t": "cours",
+"titre": "CACES® Gerbeur R485 Cat 1 et 2",
 "code": "",
 "ue": "",
-"salle": "",
-"prof": ""
+"salle": "L EFI CACES",
+"d": "2026-12-10",
+"h1": "08:30",
+"h2": "12:00",
+"s": "CACES® Gerbeur R485 Cat 1 et 2",
+"prof": "M. Senocq"
 },
 {
-"d": "2026-12-10",
-"h1": "13:30",
-"h2": "17:00",
-"t": "entreprise",
-"titre": "En entreprise",
+"t": "cours",
+"titre": "CACES® Gerbeur R485 Cat 1 et 2",
 "code": "",
 "ue": "",
-"salle": "",
-"prof": ""
+"salle": "L EFI CACES",
+"d": "2026-12-10",
+"h1": "13:00",
+"h2": "16:30",
+"s": "CACES® Gerbeur R485 Cat 1 et 2",
+"prof": "M. Senocq"
 },
 {
 "d": "2026-12-11",
