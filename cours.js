@@ -2780,6 +2780,130 @@ window.COURS = {
           ]
         },
         {
+          "id": "tp-porte-garage",
+          "titre": "TD3 : Porte de garage (GRAFCET)",
+          "type": "Exercices",
+          "date": "2026-10-13",
+          "source": "TD3 « Le GRAFCET : Porte de Garage » (UIMM), pages 1 à 3 (photos de Kylian Bonnet, 13 octobre)",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Écrire le GRAFCET d'une porte de garage : monter sur S1 jusqu'à S4, descendre sur S2 jusqu'à S3. Puis aller plus loin avec un capteur d'obstacle S7 (arrêt 2 s, remontée, réarmement S6). Corrigé détaillé à ouvrir après avoir essayé.",
+          "sections": [
+            {
+              "titre": "Le système et ses capteurs",
+              "html": "<p>Une porte de garage à rideau est entraînée par le moteur <b>M1</b> (dans un sens pour monter, dans l'autre pour descendre). Un boîtier à clé porte les boutons.</p>\n<table><thead><tr><th>Repère</th><th>Rôle</th><th>Type</th></tr></thead><tbody>\n<tr><td>S1</td><td>Monter</td><td>bouton poussoir</td></tr>\n<tr><td>S2</td><td>Descendre</td><td>bouton poussoir</td></tr>\n<tr><td>S3</td><td>Fin de course bas (porte fermée)</td><td>capteur</td></tr>\n<tr><td>S4</td><td>Fin de course haut (porte ouverte)</td><td>capteur</td></tr>\n<tr><td>S6</td><td>Réarmement</td><td>bouton poussoir</td></tr>\n<tr><td>S7</td><td>Obstacle (en bas du rideau)</td><td>capteur</td></tr></tbody></table>\n<p><b>Fonctionnement :</b> on appuie sur S1, le rideau monte et s'arrête sur S4. On rentre la voiture, on appuie sur S2, le rideau descend et s'arrête sur S3. <b>Travail demandé :</b> réaliser le GRAFCET de cette situation.</p>"
+            },
+            {
+              "titre": "Partie 1 : GRAFCET de base",
+              "html": "<p>Essaie d'abord de le faire seul, puis ouvre la correction.</p><details><summary>Voir la correction détaillée</summary><div style=\"border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin:8px 0 6px\"><b>Méthode simple, pas à pas</b><ol style=\"margin:6px 0 0;padding-left:20px\"><li>Étape initiale <b>10</b> : la porte est fermée et attend. Pas d'action.</li><li>Une étape par mouvement : <b>11 Monter</b>, <b>13 Descendre</b>. Entre les deux, une étape d'attente <b>12</b> (porte ouverte).</li><li>Chaque mouvement s'arrête sur son fin de course : S4 après la montée, S3 après la descente.</li><li>Après la descente, la transition S3 <b>renvoie directement à 10</b> (liaison qui remonte avec une flèche).</li></ol></div><div style=\"border:2px solid var(--ok);border-radius:var(--r);padding:8px 14px;margin:6px 0;background:var(--ok-soft)\"><b>Réponse :</b> 10 –(S1·S3)→ 11 [Monter] –(S4)→ 12 –(S2)→ 13 [Descendre] –(S3)→ retour à 10.</div><figure style=\"margin:12px 0\"><svg viewBox=\"0 0 340 280\" style=\"width:100%;max-width:400px;height:auto;display:block;margin:auto\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" role=\"img\" aria-label=\"GRAFCET de base de la porte de garage\"><rect x=\"91\" y=\"16\" width=\"38\" height=\"38\"/><rect x=\"95\" y=\"20\" width=\"30\" height=\"30\"/><text x=\"110\" y=\"40\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">10</text><text x=\"136\" y=\"39\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\" fill-opacity=\".7\">← porte fermée, en attente</text><line x1=\"110\" y1=\"54\" x2=\"110\" y2=\"80\" /><line x1=\"101\" y1=\"67\" x2=\"119\" y2=\"67\" stroke-width=\"3\"/><text x=\"124\" y=\"71\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S1 · S3</text><rect x=\"95\" y=\"80\" width=\"30\" height=\"30\"/><text x=\"110\" y=\"100\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">11</text><line x1=\"125\" y1=\"95\" x2=\"140\" y2=\"95\" /><rect x=\"140\" y=\"83\" width=\"70\" height=\"24\" style=\"stroke:var(--accent)\"/><text x=\"175\" y=\"99\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Monter</text><line x1=\"110\" y1=\"110\" x2=\"110\" y2=\"140\" /><line x1=\"101\" y1=\"125\" x2=\"119\" y2=\"125\" stroke-width=\"3\"/><text x=\"124\" y=\"129\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S4</text><rect x=\"95\" y=\"140\" width=\"30\" height=\"30\"/><text x=\"110\" y=\"160\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">12</text><text x=\"136\" y=\"159\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\" fill-opacity=\".7\">← porte ouverte, en attente</text><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"200\" /><line x1=\"101\" y1=\"185\" x2=\"119\" y2=\"185\" stroke-width=\"3\"/><text x=\"124\" y=\"189\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S2</text><rect x=\"95\" y=\"200\" width=\"30\" height=\"30\"/><text x=\"110\" y=\"220\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">13</text><line x1=\"125\" y1=\"215\" x2=\"140\" y2=\"215\" /><rect x=\"140\" y=\"203\" width=\"80\" height=\"24\" style=\"stroke:var(--accent)\"/><text x=\"180\" y=\"219\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Descendre</text><line x1=\"110\" y1=\"230\" x2=\"110\" y2=\"260\" /><line x1=\"101\" y1=\"245\" x2=\"119\" y2=\"245\" stroke-width=\"3\"/><text x=\"124\" y=\"249\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S3</text><path d=\"M110 260 V268 H50 V8 H110 V16\"/><path d=\"M46 146 l4 -8 l4 8\" fill=\"currentColor\"/></svg><figcaption class=\"muted\" style=\"font-size:12.5px;text-align:center\">Partie 1 : monter jusqu'à S4, attendre S2, descendre jusqu'à S3</figcaption></figure><details class=\"detail-q\" style=\"margin:4px 0 14px\"><summary>Voir la méthode complète (explications, schémas)</summary><p style=\"margin:8px 0;padding:8px 12px;border-radius:8px;background:var(--sunken)\"><b>Pourquoi ?</b> On met S1·S3 et pas seulement S1 : on vérifie que la porte est bien fermée avant de lancer le cycle (sinon, après une coupure de courant, la porte pourrait partir d'une position inconnue). Les étapes 11 et 13 ne sont jamais actives en même temps : le moteur ne reçoit jamais « Monter » et « Descendre » ensemble.</p><div class=\"attention\"><b>Sur l'ébauche faite en TD :</b> après la transition S3, une étape 14 a été ajoutée puis on revient à 10 sans transition. Deux étapes à la suite sans transition, ce n'est pas permis. Il suffit de supprimer l'étape 14 : la transition S3 renvoie directement à l'étape 10.</div>\n<div class=\"exemple\"><b>Point de vue partie commande :</b> Monter = <b>KM1</b> (contacteur M1 sens montée), Descendre = <b>KM2</b> (sens descente). Dans le schéma électrique, on ajoute un verrouillage entre KM1 et KM2 pour ne jamais inverser deux phases en même temps (court-circuit).</div></details></details>"
+            },
+            {
+              "titre": "Pour aller plus loin : obstacle et réarmement",
+              "html": "<p><b>Pour aller plus loin :</b></p><ul><li>Pendant la descente, si le capteur <b>S7</b> détecte un obstacle, le rideau s'arrête pendant <b>2 secondes</b> puis remonte jusqu'au capteur fin de course haut <b>S4</b>.</li><li>La remise en marche du rideau se fait par l'appui sur le bouton poussoir <b>S6</b> (réarmement).</li></ul><p><b>Travail demandé :</b> modifier le GRAFCET précédent en fonction de ces conditions.</p><details><summary>Voir la correction détaillée</summary><div style=\"border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin:8px 0 6px\"><b>Méthode simple, pas à pas</b><ol style=\"margin:6px 0 0;padding-left:20px\"><li>L'obstacle ne peut arriver <b>que pendant la descente</b> : c'est sous l'étape 13 qu'on fait un <b>choix</b>, donc une <b>divergence en OU</b> (trait simple, une transition par branche).</li><li>Branche normale : S3, retour à 10. Branche obstacle : S7, vers une nouvelle étape <b>14</b> sans action (le rideau s'arrête).</li><li>Arrêt de 2 secondes : transition <b>2s/X14</b> (vraie 2 s après l'activation de 14).</li><li>Étape <b>15 Monter</b> jusqu'à <b>S4</b>, puis étape <b>16</b> d'attente : on attend le réarmement <b>S6</b>.</li><li>Après S6, on revient à l'étape <b>12</b> (porte ouverte, en attente de S2) : le fonctionnement normal reprend.</li><li>Rends les deux réceptivités du OU <b>exclusives</b> en donnant la priorité à la sécurité : S7 d'un côté, S3·S̄7 de l'autre.</li></ol></div><div style=\"border:2px solid var(--ok);border-radius:var(--r);padding:8px 14px;margin:6px 0;background:var(--ok-soft)\"><b>Réponse :</b> Sous 13 [Descendre], divergence OU : (S3·S̄7) → retour à 10 ; (S7) → 14 (arrêt) –(2s/X14)→ 15 [Monter] –(S4)→ 16 (attente) –(S6)→ retour à 12.</div><figure style=\"margin:12px 0\"><svg viewBox=\"0 0 400 484\" style=\"width:100%;max-width:440px;height:auto;display:block;margin:auto\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" role=\"img\" aria-label=\"GRAFCET de la porte de garage avec obstacle\"><rect x=\"71\" y=\"16\" width=\"38\" height=\"38\"/><rect x=\"75\" y=\"20\" width=\"30\" height=\"30\"/><text x=\"90\" y=\"40\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">10</text><line x1=\"90\" y1=\"54\" x2=\"90\" y2=\"80\" /><line x1=\"81\" y1=\"67\" x2=\"99\" y2=\"67\" stroke-width=\"3\"/><text x=\"104\" y=\"71\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S1 · S3</text><rect x=\"75\" y=\"80\" width=\"30\" height=\"30\"/><text x=\"90\" y=\"100\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">11</text><line x1=\"105\" y1=\"95\" x2=\"120\" y2=\"95\" /><rect x=\"120\" y=\"83\" width=\"70\" height=\"24\" style=\"stroke:var(--accent)\"/><text x=\"155\" y=\"99\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Monter</text><line x1=\"90\" y1=\"110\" x2=\"90\" y2=\"154\" /><line x1=\"81\" y1=\"122\" x2=\"99\" y2=\"122\" stroke-width=\"3\"/><text x=\"104\" y=\"126\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S4</text><rect x=\"75\" y=\"154\" width=\"30\" height=\"30\"/><text x=\"90\" y=\"174\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">12</text><line x1=\"90\" y1=\"184\" x2=\"90\" y2=\"214\" /><line x1=\"81\" y1=\"199\" x2=\"99\" y2=\"199\" stroke-width=\"3\"/><text x=\"104\" y=\"203\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S2</text><rect x=\"75\" y=\"214\" width=\"30\" height=\"30\"/><text x=\"90\" y=\"234\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">13</text><line x1=\"105\" y1=\"229\" x2=\"120\" y2=\"229\" /><rect x=\"120\" y=\"217\" width=\"80\" height=\"24\" style=\"stroke:var(--accent)\"/><text x=\"160\" y=\"233\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Descendre</text><line x1=\"90\" y1=\"244\" x2=\"90\" y2=\"258\" /><line x1=\"90\" y1=\"258\" x2=\"230\" y2=\"258\" /><line x1=\"90\" y1=\"258\" x2=\"90\" y2=\"304\" /><line x1=\"81\" y1=\"276\" x2=\"99\" y2=\"276\" stroke-width=\"3\"/><text x=\"104\" y=\"280\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S3 · S̄7</text><path d=\"M90 304 V312 H40 V8 H90 V16\"/><path d=\"M36 156 l4 -8 l4 8\" fill=\"currentColor\"/><line x1=\"230\" y1=\"258\" x2=\"230\" y2=\"284\" /><line x1=\"221\" y1=\"271\" x2=\"239\" y2=\"271\" stroke-width=\"3\"/><text x=\"244\" y=\"275\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S7</text><rect x=\"215\" y=\"284\" width=\"30\" height=\"30\"/><text x=\"230\" y=\"304\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">14</text><text x=\"252\" y=\"303\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\" fill-opacity=\".7\">arrêt (aucune action)</text><line x1=\"230\" y1=\"314\" x2=\"230\" y2=\"344\" /><line x1=\"221\" y1=\"329\" x2=\"239\" y2=\"329\" stroke-width=\"3\"/><text x=\"244\" y=\"333\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">2s/X14</text><rect x=\"215\" y=\"344\" width=\"30\" height=\"30\"/><text x=\"230\" y=\"364\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">15</text><line x1=\"245\" y1=\"359\" x2=\"260\" y2=\"359\" /><rect x=\"260\" y=\"347\" width=\"70\" height=\"24\" style=\"stroke:var(--accent)\"/><text x=\"295\" y=\"363\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Monter</text><line x1=\"230\" y1=\"374\" x2=\"230\" y2=\"404\" /><line x1=\"221\" y1=\"389\" x2=\"239\" y2=\"389\" stroke-width=\"3\"/><text x=\"244\" y=\"393\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S4</text><rect x=\"215\" y=\"404\" width=\"30\" height=\"30\"/><text x=\"230\" y=\"424\" text-anchor=\"middle\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-weight=\"700\">16</text><text x=\"252\" y=\"423\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\" fill-opacity=\".7\">attente du réarmement</text><line x1=\"230\" y1=\"434\" x2=\"230\" y2=\"464\" /><line x1=\"221\" y1=\"449\" x2=\"239\" y2=\"449\" stroke-width=\"3\"/><text x=\"244\" y=\"453\" text-anchor=\"start\" font-size=\"12\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" style=\"fill:var(--ok)\">S6</text><path d=\"M230 464 V472 H380 V138 H90\"/><path d=\"M376 306 l4 -8 l4 8\" fill=\"currentColor\"/></svg><figcaption class=\"muted\" style=\"font-size:12.5px;text-align:center\">Pour aller plus loin : obstacle S7 pendant la descente → arrêt 2 s → remontée jusqu'à S4 → attente de S6</figcaption></figure><details class=\"detail-q\" style=\"margin:4px 0 14px\"><summary>Voir la méthode complète (explications, schémas)</summary><p style=\"margin:8px 0;padding:8px 12px;border-radius:8px;background:var(--sunken)\"><b>Pourquoi ?</b> Le OU se place sous l'étape 13 parce qu'il faut que la descente soit en cours pour que S7 compte : si quelqu'un passe devant le capteur quand la porte est ouverte (étape 12), rien ne se passe, ce qui est bien le comportement voulu. L'étape 14 n'a pas d'action : quand elle est active, ni Monter ni Descendre ne sont commandés, donc le moteur est arrêté.</p><p><b>Pourquoi revenir à 12 et pas à 10 ?</b> Après la remontée, la porte est en haut (S4). L'étape 12 correspond justement à « porte ouverte, en attente de S2 ». Revenir à 10 serait faux : 10 attend S1·S3, or S3 n'est pas actionné quand la porte est en haut, le système serait bloqué.</p>\n<p><b>Pourquoi l'étape 16 ?</b> L'énoncé demande que la remise en marche se fasse par S6. Sans l'étape 16, on reviendrait directement à 12 et un appui sur S2 relancerait la descente sans que personne n'ait vérifié que l'obstacle est parti.</p><div class=\"exemple\"><b>Déroulé avec un obstacle :</b> 10 → S1 → 11 (monte) → S4 → 12 → S2 → 13 (descend) → S7 → 14 (arrêt 2 s) → 15 (remonte) → S4 → 16 → S6 → 12 → S2 → 13 (descend) → S3 → 10.</div>\n<div class=\"attention\">Si on écrivait simplement S3 et S7 sans priorité, et que les deux arrivaient ensemble (objet posé au sol tout en bas), les deux branches seraient franchies en même temps. Avec S3·S̄7, la branche obstacle gagne toujours : c'est la sécurité qui l'emporte.</div></details></details>"
+            }
+          ],
+          "pointsCles": [
+            "Une étape par mouvement (Monter, Descendre), arrêtée par son fin de course (S4, S3).",
+            "Condition de départ S1·S3 : on vérifie que la porte est fermée avant de lancer le cycle.",
+            "Jamais deux étapes à la suite sans transition : la transition S3 renvoie directement à 10.",
+            "Obstacle pendant la descente = divergence OU sous l'étape 13 (S7 ou S3·S̄7).",
+            "Arrêt de 2 s : étape sans action + transition 2s/X14.",
+            "Après la remontée et le réarmement S6, on revient à 12 (porte ouverte), pas à 10."
+          ],
+          "definitions": [
+            {
+              "terme": "Fin de course",
+              "def": "Capteur qui signale qu'un mouvement est arrivé au bout (S3 bas, S4 haut)."
+            },
+            {
+              "terme": "Réarmement",
+              "def": "Action volontaire de l'opérateur (S6) pour autoriser la reprise après un défaut ou un obstacle."
+            },
+            {
+              "terme": "Priorité de sécurité",
+              "def": "Dans un OU, on rend la branche sécurité prioritaire : S7 d'un côté, S3·S̄7 de l'autre."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Quelle transition fait monter la porte ?",
+              "r": "S1·S3 (bouton Monter et porte bien fermée)."
+            },
+            {
+              "q": "Où place-t-on le choix « obstacle ou fin de descente » ?",
+              "r": "Sous l'étape 13 (Descendre), en divergence OU."
+            },
+            {
+              "q": "Comment écrire « attendre 2 s » à l'étape 14 ?",
+              "r": "Transition 2s/X14 sous une étape sans action."
+            },
+            {
+              "q": "Après S6, on revient où ?",
+              "r": "À l'étape 12 : la porte est en haut et attend S2."
+            },
+            {
+              "q": "Quelle erreur dans l'ébauche avec l'étape 14 en fin de cycle ?",
+              "r": "Retour de 14 à 10 sans transition : deux étapes à la suite. On supprime 14."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Le capteur S7 doit être pris en compte…",
+              "choix": [
+                "seulement pendant la descente",
+                "tout le temps",
+                "seulement porte ouverte",
+                "seulement pendant la montée"
+              ],
+              "bonne": 0,
+              "explication": "Le OU est placé sous l'étape 13 (Descendre)."
+            },
+            {
+              "q": "L'étape 14 (arrêt) a pour action…",
+              "choix": [
+                "aucune",
+                "Monter",
+                "Descendre",
+                "S6"
+              ],
+              "bonne": 0,
+              "explication": "Aucune action = moteur arrêté."
+            },
+            {
+              "q": "2s/X14 devient vraie…",
+              "choix": [
+                "2 s après l'activation de 14",
+                "toutes les 2 s",
+                "quand S7 dure 2 s",
+                "quand 14 est inactive depuis 2 s"
+              ],
+              "bonne": 0,
+              "explication": "Temporisation lancée par l'étape 14."
+            },
+            {
+              "q": "Après la remontée sur obstacle et S6, on revient à…",
+              "choix": [
+                "12",
+                "10",
+                "11",
+                "13"
+              ],
+              "bonne": 0,
+              "explication": "La porte est en haut : c'est la situation de l'étape 12."
+            },
+            {
+              "q": "Pourquoi S3·S̄7 plutôt que S3 ?",
+              "choix": [
+                "pour donner la priorité à l'obstacle",
+                "pour aller plus vite",
+                "parce que S3 est un bouton",
+                "c'est obligatoire en ET"
+              ],
+              "bonne": 0,
+              "explication": "Les réceptivités d'un OU doivent être exclusives ; la sécurité l'emporte."
+            }
+          ]
+        },
+        {
           "id": "langage-ladder",
           "titre": "Le langage Ladder (LD) : symboles et barre d'outils",
           "type": "Cours",
