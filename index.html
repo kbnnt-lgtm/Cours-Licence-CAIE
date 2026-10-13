@@ -517,7 +517,8 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .sm-weeks .pill{flex:none;white-space:nowrap}
 .jour-card{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);background:var(--card);padding:12px 14px;margin:14px 0}
 .jour-card h2{margin:0 0 4px;font-size:17px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.jour-card .chap-row{grid-template-columns:84px 1fr;gap:8px}
+.jour-card .chap-row{grid-template-columns:96px 1fr;gap:8px}
+.jour-card .sm-t{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .jour-pl{list-style:none;padding:0;margin:4px 0 14px}.jour-pl li{padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
 .sm-acts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
 .sm-mat{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);background:var(--card);padding:12px 14px;margin-bottom:12px}
@@ -632,7 +633,7 @@ table.data td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
       <span><kbd>E</kbd></span><span>Examen blanc (sur la matière du chapitre ouvert)</span>
       <span><kbd>P</kbd></span><span>Photos des cours</span>
       <span><kbd>A</kbd></span><span>Assistant : poser une question sur le chapitre ouvert</span>
-      <span><kbd>S</kbd></span><span>Réviser une semaine (tous les cours vus cette semaine-là)</span>
+      <span><kbd>S</kbd></span><span>Cours de la semaine (tous les cours vus cette semaine-là)</span>
 <span><kbd>J</kbd></span><span>Cours du jour (tous les cours travaillés dans la journée)</span>
       <span><kbd>1</kbd> … <kbd>4</kbd> / <kbd>Entrée</kbd></span><span>Répondre / question suivante (en quiz)</span>
       <span><kbd>M</kbd></span><span>Marquer le chapitre comme révisé</span>
@@ -768,7 +769,7 @@ function renderSide(){
     <button class="chap-link" data-nav="quiz">${ICON.quiz}<span>Quiz</span></button>
     <button class="chap-link" data-nav="examen">${ICON.exam}<span>Examen blanc</span></button>
     <button class="chap-link" data-nav="jour">${ICON.cal}<span>Cours du jour</span></button>
-    <button class="chap-link" data-nav="semaine">${ICON.cards}<span>Réviser une semaine</span></button>
+    <button class="chap-link" data-nav="semaine">${ICON.cards}<span>Cours de la semaine</span></button>
     <button class="chap-link" data-nav="planning">${ICON.cal}<span>Planning</span></button>
     <button class="chap-link" data-nav="moi">${ICON.stats}<span>Mon espace et mes stats</span></button>
   </div>`;
@@ -818,12 +819,13 @@ function renderHome(){
     ${EX && !EX.rendu ? `<button class="resume-card ex-resume" data-nav="examen" style="--c:var(--accent)"><span class="dot"></span><span><small>Examen blanc en cours</small><b>${esc(EX.titre.replace(/^Examen blanc · /,""))}</b></span><span class="muted">Reprendre →</span></button>` : ""}
     <div id="pushInvite"></div>
     ${jourHomeHtml()}
+    ${semaineHomeHtml()}
     ${regulariteHtml()}
     ${nextCoursHtml()}
     ${EX && !EX.rendu ? "" : `<button class="ex-promo" data-nav="examen">${ICON.exam}<span><b>Examen blanc</b><small>Un vrai sujet de contrôle, chronométré et noté sur 20${(stats().ex||[]).length ? ` · dernière note ${fmtN(stats().ex.slice(-1)[0].note)}/20` : ""}</small></span><span class="go">Essayer →</span></button>`}
     <div class="quick">
       <button data-nav="jour">${ICON.cal}<b>Cours du jour</b><small>Tout ce qu'on a travaillé dans la journée</small></button>
-      <button data-nav="semaine">${ICON.cal}<b>Ma semaine</b><small>Tout ce qu'on a vu une semaine donnée</small></button>
+      <button data-nav="semaine">${ICON.cal}<b>Cours de la semaine</b><small>Tout ce qu'on a vu dans la semaine</small></button>
       <button data-nav="quiz">${ICON.quiz}<b>Quiz</b><small>Par matière, par chapitre ou général</small></button>
       <button id="qCards">${ICON.cards}<b>Cartes du jour</b><small>${(n => n ? `${n} carte${n>1?"s":""} à revoir aujourd'hui` : "Tout est à jour pour aujourd'hui")(cartesDuJour().length)}</small></button>
       <button data-nav="photos">${ICON.photo}<b>Photos</b><small>${GAL.length} photos de cours classées</small></button>
@@ -841,6 +843,7 @@ function renderHome(){
     <div class="keys"><span><kbd>/</kbd> rechercher</span><span><kbd>←</kbd><kbd>→</kbd> chapitres</span><span><kbd>Q</kbd> quiz</span><span><kbd>E</kbd> examen blanc</span><span><kbd>S</kbd> semaine</span><span><kbd>P</kbd> photos</span><span><kbd>?</kbd> tous les raccourcis</span></div>`;
   $("#qCards").onclick = () => { const c = cartesDuJour(); if(c.length) startReview(c, "Cartes du jour"); else toast("Aucune carte à revoir aujourd'hui. Reviens demain, ou révise un chapitre avec « Réviser ».", 6000); };
   pushInvite();
+  $("[data-sem-home]")?.addEventListener("click", () => { smWeek = null; nav("semaine"); });
   const annMax = Math.max(0, ...ANNONCES.map(a => a.t)); if(annMax) store.set("annSeen", annMax);
 }
 
@@ -2030,6 +2033,14 @@ function jourHomeHtml(){
     <div class="chap-rows">${xs.slice(0, 6).map(x => `<button class="chap-row" data-go="${esc(x.key)}"><span class="sm-t">${esc(x.m.nom)}</span><span>${esc(x.c.titre)}</span></button>`).join("")}</div>
     <button class="btn" data-nav="jour" style="margin-top:8px">Voir le cours du jour${xs.length > 6 ? ` (${xs.length})` : ""} →</button></div>`;
 }
+function semaineHomeHtml(){
+  const w = lundi(new Date()), xs = chapsSemaine(w); if(!xs.length) return "";
+  const mats = SUBJ.map(m => ({m, n: xs.filter(x => x.m === m).length})).filter(o => o.n);
+  return `<div class="jour-card" style="border-left-color:var(--ok)"><h2>Cours de la semaine <span class="muted" style="font-size:13px;font-weight:400">${esc(semLabel(w, true))}</span></h2>
+    <p class="muted" style="margin:0 0 6px;font-size:14px">${xs.length} cours : ${mats.map(o => `${esc(o.m.nom)} (${o.n})`).join(", ")}</p>
+    <div class="chap-rows">${xs.slice().sort((a, b) => b.c.date.localeCompare(a.c.date)).slice(0, 8).map(x => `<button class="chap-row" data-go="${esc(x.key)}"><span class="sm-t">${esc(fmtJour(x.c.date, {weekday:"short"}))}</span><span>${esc(x.c.titre)}</span></button>`).join("")}</div>
+    <button class="btn" data-sem-home style="margin-top:8px">Voir les cours de la semaine${xs.length > 8 ? ` (${xs.length})` : ""} →</button></div>`;
+}
 function renderJour(){
   current = null;
   const js = joursCours();
@@ -2050,7 +2061,7 @@ function renderJour(){
     <div class="sm-acts">${items.length ? `<button class="btn primary" id="jrQuiz">${ICON.quiz}Quiz du jour <small>(${Math.min(15, items.length)} questions)</small></button>` : ""}${cards.length ? `<button class="btn" id="jrCards">${ICON.cards}Cartes de ces cours <small>(${cards.length})</small></button>` : ""}</div>
     ${mats.map(o => `<div class="sm-mat" style="--c:${esc(o.m.couleur || "#2346c8")}"><h3><span class="dot" style="width:10px;height:10px;border-radius:50%;background:var(--c)"></span>${esc(o.m.nom)}</h3>
       <div class="chap-rows">${o.xs.map(x => `<button class="chap-row" data-go="${esc(x.key)}"><span class="sm-t">${esc(typeOf(x.c))}</span><span>${esc(x.c.titre)}</span></button>`).join("")}</div></div>`).join("")}
-    <p class="muted" style="font-size:12.5px;margin-top:20px">Chaque cours est rangé au jour où il a été vu. Pour toute la semaine : <button class="btn" data-nav="semaine" style="padding:2px 10px;font-size:12.5px">Ma semaine</button></p>`;
+    <p class="muted" style="font-size:12.5px;margin-top:20px">Chaque cours est rangé au jour où il a été vu. Pour toute la semaine : <button class="btn" data-nav="semaine" style="padding:2px 10px;font-size:12.5px">Cours de la semaine</button></p>`;
   const goD = x => { jrDay = x; renderJour(); scrollTo(0,0); };
   $$("[data-jr]").forEach(b => b.onclick = () => goD(b.dataset.jr));
   $("#jrPrev").onclick = () => js[i + 1] && goD(js[i + 1]);
@@ -2062,7 +2073,7 @@ function renderJour(){
 function renderSemaine(){
   current = null;
   const weeks = [...new Set(FLAT.filter(x => x.c.date && x.m.id !== "guide").map(x => isoD(lundi(plDate(x.c.date)))))].sort().reverse();
-  if(!weeks.length){ $("#view").innerHTML = `<div class="eyebrow">Réviser</div><h1>Ma semaine</h1><p class="msg info">Aucun cours daté pour l'instant.</p>`; return; }
+  if(!weeks.length){ $("#view").innerHTML = `<div class="eyebrow">Réviser</div><h1>Cours de la semaine</h1><p class="msg info">Aucun cours daté pour l'instant.</p>`; return; }
   if(!smWeek){ const cur = isoD(lundi(new Date())); smWeek = plDate(weeks.find(w => w <= cur) || weeks[weeks.length - 1]); }
   const wk = isoD(smWeek), xs = chapsSemaine(smWeek);
   const mats = SUBJ.map(m => ({m, xs: xs.filter(x => x.m === m)})).filter(o => o.xs.length);
@@ -2072,7 +2083,7 @@ function renderSemaine(){
   const plMat = [...new Set(pl.map(e => e.titre))];
   const i = weeks.indexOf(wk);
   $("#view").innerHTML = `
-    <div class="eyebrow">Réviser une semaine</div>
+    <div class="eyebrow">Cours de la semaine</div>
     <h1>${esc(semLabel(smWeek))}</h1>
     <div class="sm-weeks" role="tablist" aria-label="Choisir la semaine">${weeks.map(w => `<button class="pill" data-smw="${w}" aria-pressed="${w === wk}">${esc(semLabel(plDate(w), true))}</button>`).join("")}</div>
     <div class="pl-nav"><button class="btn" id="smPrev" ${i < 0 || i >= weeks.length - 1 ? "disabled" : ""} aria-label="Semaine précédente">← Avant</button><button class="btn" id="smNext" ${i <= 0 ? "disabled" : ""} aria-label="Semaine suivante">Après →</button></div>
