@@ -2401,6 +2401,279 @@ window.COURS = {
             }
           ],
           "auteurs": "Kylian Bonnet"
+        },
+        {
+          "id": "langage-ladder",
+          "titre": "Le langage Ladder (LD) : symboles et barre d'outils",
+          "type": "Cours",
+          "date": "2026-10-13",
+          "source": "Poly « Le langage Ladder ou LD », page 1 et barre d'outils (photos de Kylian Bonnet, 13 octobre)",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Le Ladder (LD) se lit comme un schéma électrique : des contacts à gauche qui testent des bits, des bobines à droite qui écrivent des bits, et des blocs (tempos, opérations, comparaisons) au milieu. Ce chapitre explique l'exemple du poly et le rôle de chaque bouton de la barre d'outils de Control Expert.",
+          "sections": [
+            {
+              "titre": "Le principe du Ladder",
+              "html": "<p>Le <b>Ladder</b> (« échelle », abrégé <b>LD</b>) est un langage graphique : chaque <b>réseau</b> (barreau de l'échelle) se lit comme un circuit électrique entre deux barres verticales.</p>\n<ul><li><b>À gauche</b> : des <b>contacts</b> qui <b>testent</b> des bits (entrées <code>%I</code>, bits internes <code>%M</code>, sorties de blocs comme <code>TP_1.Q</code>).</li>\n<li><b>Au milieu</b> : des <b>blocs</b> (TON, TP, CTU…), des <b>comparaisons</b> (COMPARE) et des <b>opérations</b> (OPERATE).</li>\n<li><b>À droite</b> : des <b>bobines</b> qui <b>écrivent</b> des bits (sorties <code>%Q</code>, <code>%M</code>).</li>\n<li>En série = <b>ET</b>, en parallèle = <b>OU</b>. L'automate lit les réseaux de haut en bas, de gauche à droite (voir la scrutation dans le TP opérations basiques).</li></ul>"
+            },
+            {
+              "titre": "Lire l'exemple du poly",
+              "html": "<p>Le poly montre un programme qui lit la <b>date et l'heure</b> de l'automate. Ce qu'il faut savoir lire :</p>\n<table><thead><tr><th>Élément</th><th>Ce qu'il fait</th></tr></thead><tbody>\n<tr><td><code>COMPARE tp_acq&gt;=5</code> → <code>-(R)- acq_5s</code></td><td>Si <code>tp_acq</code> vaut 5 ou plus, la bobine <b>R</b> remet le bit <code>acq_5s</code> à 0.</td></tr>\n<tr><td><code>OPERATE tp_acq:=0;</code></td><td>Sur le même réseau : remet la variable <code>tp_acq</code> à 0 (affectation <code>:=</code>).</td></tr>\n<tr><td><code>OPERATE RRTC_DT(date_heure);</code></td><td>Lit l'horloge temps réel de l'automate dans la variable <code>date_heure</code>. Le rectangle jaune est un <b>commentaire</b>.</td></tr>\n<tr><td><code>Secondes:=BCD_TO_INT(SHR(%SW50,8));</code> etc.</td><td>Extrait secondes, minutes, heures, jour, mois, année des <b>mots système</b> <code>%SW50</code> à <code>%SW53</code>.</td></tr>\n<tr><td>Bloc <code>TP1</code> de type <b>TON</b>, IN = <code>arret</code>, PT = <code>T#5s</code></td><td>Exemple de bloc tempo placé dans un réseau (voir le chapitre EFB).</td></tr></tbody></table>\n<div class=\"exemple\"><b>Décoder <code>%SW50</code> à <code>%SW53</code> :</b> chaque mot de 16 bits contient deux valeurs codées en <b>BCD</b> (un octet chacune).<br>• <code>SHR(mot, 8)</code> décale de 8 bits vers la droite : on garde l'<b>octet de poids fort</b> (ex. les heures dans <code>%SW51</code>).<br>• <code>SHR(SHL(mot, 8), 8)</code> pousse d'abord à gauche puis revient : on garde l'<b>octet de poids faible</b> (ex. les minutes).<br>• <code>BCD_TO_INT</code> convertit ensuite le BCD en entier normal.</div>"
+            },
+            {
+              "titre": "Les contacts (tests)",
+              "html": "<table><thead><tr><th>Symbole</th><th>Nom</th><th>Passe le courant si…</th></tr></thead><tbody>\n<tr><td><code>-| |-</code></td><td>Contact ouvert (NO)</td><td>le bit est à <b>1</b></td></tr>\n<tr><td><code>-|/|-</code></td><td>Contact fermé (NC)</td><td>le bit est à <b>0</b></td></tr>\n<tr><td><code>-|P|-</code></td><td>Front montant</td><td>le bit vient de passer de 0 à 1 (un seul cycle)</td></tr>\n<tr><td><code>-|N|-</code></td><td>Front descendant</td><td>le bit vient de passer de 1 à 0 (un seul cycle)</td></tr></tbody></table>"
+            },
+            {
+              "titre": "Les bobines (actions)",
+              "html": "<table><thead><tr><th>Symbole</th><th>Rôle</th></tr></thead><tbody>\n<tr><td><code>-( )-</code></td><td>Affecte le <b>résultat</b> du réseau au bit (1 si le courant arrive, sinon 0).</td></tr>\n<tr><td><code>-(/)-</code></td><td>Affecte le <b>complément</b> (l'inverse) du résultat.</td></tr>\n<tr><td><code>-(S)-</code></td><td><b>Mise à 1</b> (Set) : le bit reste à 1 même quand le réseau retombe.</td></tr>\n<tr><td><code>-(R)-</code></td><td><b>Mise à 0</b> (Reset).</td></tr>\n<tr><td><code>-(P)-</code></td><td>Crée un <b>front montant</b> : le bit vaut 1 pendant un seul cycle quand le réseau passe à 1.</td></tr>\n<tr><td><code>-(N)-</code></td><td>Crée un <b>front descendant</b>.</td></tr>\n<tr><td><code>-(C)-</code></td><td><b>Appelle un sous-programme</b> (SR).</td></tr>\n<tr><td><code>-(H)-</code></td><td><b>Arrête</b> le programme (Halt).</td></tr></tbody></table>\n<div class=\"attention\"><b>Piège :</b> un bit mis à 1 par <code>-(S)-</code> ne retombe jamais tout seul. Il faut un <code>-(R)-</code> ailleurs dans le programme.</div>"
+            },
+            {
+              "titre": "Les autres boutons de la barre d'outils",
+              "html": "<table><thead><tr><th>Bouton</th><th>Rôle</th></tr></thead><tbody>\n<tr><td><b>OPER</b></td><td>Bloc <b>OPERATE</b> : fait une opération (calcul, affectation <code>:=</code>).</td></tr>\n<tr><td><b>COMP</b></td><td>Bloc <b>COMPARE</b> : fait une comparaison (<code>&gt;=</code>, <code>=</code>, <code>&lt;</code>…). Il laisse passer le courant si elle est vraie.</td></tr>\n<tr><td><code>&gt;&gt;</code></td><td><b>Saut</b> à une étiquette (JUMP).</td></tr>\n<tr><td><b>JL:</b></td><td><b>Définit une étiquette</b> (destination d'un saut).</td></tr>\n<tr><td><code>&lt;&lt;RETURN&gt;&gt;</code></td><td><b>Retour</b> d'un sous-programme (SR).</td></tr>\n<tr><td>Icônes de blocs</td><td><b>Appel d'une fonction</b> ou d'un bloc (FFB : TON, TP, CTU…).</td></tr>\n<tr><td>Lien</td><td>Trace une liaison ; la variante inversée <b>inverse une liaison</b> (négation).</td></tr>\n<tr><td>Texte</td><td><b>Fait un commentaire</b> (le rectangle jaune de l'exemple).</td></tr></tbody></table>"
+            }
+          ],
+          "pointsCles": [
+            "Ladder : contacts à gauche (tests), blocs au milieu, bobines à droite (actions).",
+            "Série = ET ; parallèle = OU.",
+            "-| |- passe si le bit vaut 1 ; -|/|- passe si le bit vaut 0 ; P / N = fronts montant / descendant.",
+            "-(S)- met à 1 et le bit y reste ; -(R)- le remet à 0.",
+            "COMPARE teste une condition ; OPERATE fait un calcul ou une affectation (:=).",
+            "Saut >> vers une étiquette JL: ; -(C)- appelle un sous-programme ; -(H)- arrête le programme."
+          ],
+          "definitions": [
+            {
+              "terme": "Réseau (Ladder)",
+              "def": "Une ligne de l'échelle : des conditions à gauche qui commandent une ou plusieurs actions à droite."
+            },
+            {
+              "terme": "Bobine Set / Reset",
+              "def": "Bobine qui met un bit à 1 (S) ou à 0 (R) et le laisse dans cet état jusqu'à l'ordre contraire."
+            },
+            {
+              "terme": "Front montant",
+              "def": "Passage d'un bit de 0 à 1 ; le contact P ne le voit que pendant un cycle automate."
+            },
+            {
+              "terme": "BCD",
+              "def": "Codage où chaque chiffre décimal occupe 4 bits ; les mots système de date et heure (%SW50 à %SW53) sont en BCD."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Quel contact passe quand le bit vaut 0 ?",
+              "r": "Le contact fermé (NC) -|/|-."
+            },
+            {
+              "q": "Différence entre -( )- et -(S)- ?",
+              "r": "-( )- recopie le résultat à chaque cycle ; -(S)- met le bit à 1 et il y reste jusqu'à un -(R)-."
+            },
+            {
+              "q": "À quoi sert le bloc COMPARE ?",
+              "r": "Il teste une condition (ex. tp_acq >= 5) et laisse passer le courant si elle est vraie."
+            },
+            {
+              "q": "À quoi sert le bloc OPERATE ?",
+              "r": "Il fait un calcul ou une affectation, ex. tp_acq := 0."
+            },
+            {
+              "q": "Que fait SHR(%SW51, 8) ?",
+              "r": "Il décale de 8 bits vers la droite : il garde l'octet de poids fort (les heures, en BCD)."
+            },
+            {
+              "q": "Que fait une bobine -(C)- ?",
+              "r": "Elle appelle un sous-programme (SR)."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Deux contacts en série dans un réseau réalisent…",
+              "choix": [
+                "un ET",
+                "un OU",
+                "un NON",
+                "une mémoire"
+              ],
+              "bonne": 0,
+              "explication": "Le courant ne passe que si les deux contacts sont passants."
+            },
+            {
+              "q": "Quelle bobine garde le bit à 1 quand le réseau retombe ?",
+              "choix": [
+                "-(S)-",
+                "-( )-",
+                "-(/)-",
+                "-(P)-"
+              ],
+              "bonne": 0,
+              "explication": "Set mémorise ; il faut un Reset pour revenir à 0."
+            },
+            {
+              "q": "Le contact -|P|- est passant…",
+              "choix": [
+                "pendant un cycle, au passage de 0 à 1",
+                "tant que le bit vaut 1",
+                "tant que le bit vaut 0",
+                "au passage de 1 à 0"
+              ],
+              "bonne": 0,
+              "explication": "P = front montant : une seule scrutation."
+            },
+            {
+              "q": "Quel bouton sert à faire tp_acq := 0 ?",
+              "choix": [
+                "OPER",
+                "COMP",
+                "JL:",
+                ">>"
+              ],
+              "bonne": 0,
+              "explication": "OPERATE fait les affectations et les calculs."
+            }
+          ]
+        },
+        {
+          "id": "td-chariot-nettoyage",
+          "titre": "TD : chariot de nettoyage de pièces",
+          "type": "Exercices",
+          "date": "2026-10-13",
+          "source": "TD « Étude des systèmes : chariot de nettoyage de pièces » (UIMM), pages 1 et 2 (photos de Kylian Bonnet, 13 octobre) ; correction rédigée par Claude",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Un chariot sur rail trempe un panier de pièces dans un bain de dégraissage puis va le décharger. On demande la chaîne fonctionnelle, le SADT A-0 et le temps de cycle complet (90 s). Essaie d'abord, puis ouvre la correction.",
+          "sections": [
+            {
+              "titre": "Énoncé",
+              "html": "<p><b>Fonctionnement :</b> un chariot se déplace sur un rail et nettoie des pièces contenues dans un panier en les trempant dans un bac de dégraissage.</p>\n<ul><li>Capteurs de position du chariot : <b>c1</b> (gauche, chargement), <b>c2</b> (au-dessus du bain), <b>c3</b> (droite, déchargement). Mouvements <b>C+</b> (vers la droite) et <b>C−</b> (vers la gauche).</li>\n<li>Moteur de levage : <b>M+</b> descend, <b>M−</b> monte. Capteurs <b>h</b> (panier en haut) et <b>b</b> (panier en bas).</li></ul>\n<p><b>Cycle :</b></p><ol><li>Chariot en haut à gauche + appui sur <b>dcy</b> : il va au-dessus du bain.</li><li>Le panier descend et reste <b>30 s</b> dans le bain.</li><li>Le panier remonte.</li><li>Le chariot va à l'extrême droite, où il est déchargé.</li><li>Déchargement terminé : retour en position de départ.</li></ol>\n<p><b>Données :</b> automate Siemens <b>S7-1200</b> ; déplacement géré par un <b>variateur</b> ; alimentation <b>triphasée 400 V</b> ; <b>3 s</b> entre deux capteurs ; M+ et M− : <b>4 s</b> chacun au bain ; déchargement : <b>40 s</b> ; voyant <b>H1</b> = cycle en cours, <b>H2</b> = fin de cycle.</p>\n<p><b>Travail demandé :</b> 1) chaîne fonctionnelle ; 2) SADT niveau A-0 ; 3) temps de cycle complet.</p>"
+            },
+            {
+              "titre": "Question 1 : la chaîne fonctionnelle",
+              "html": "<details><summary>Voir la correction</summary><div style=\"border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin:8px 0 6px\"><b>Méthode simple, pas à pas</b><ol style=\"margin:6px 0 0;padding-left:20px\"><li>Chaîne d'<b>information</b> : Acquérir → Traiter → Communiquer.</li><li>Chaîne d'<b>énergie</b> : Alimenter → Distribuer → Convertir → Transmettre → Agir.</li><li>Place chaque composant de l'énoncé dans sa case. Ici il y a <b>deux</b> chaînes d'énergie : la translation et le levage.</li></ol></div><table><thead><tr><th>Fonction</th><th>Composant</th></tr></thead><tbody>\n<tr><td>Acquérir</td><td>Capteurs c1, c2, c3 (position chariot), h, b (position panier), bouton dcy</td></tr>\n<tr><td>Traiter</td><td>Automate Siemens S7-1200</td></tr>\n<tr><td>Communiquer</td><td>Voyants H1 (cycle en cours) et H2 (fin de cycle)</td></tr>\n<tr><td>Alimenter</td><td>Réseau triphasé 400 V</td></tr>\n<tr><td>Distribuer</td><td>Translation : <b>variateur</b>. Levage : préactionneur non précisé (en général des contacteurs inverseurs)</td></tr>\n<tr><td>Convertir</td><td>Moteur de translation (C+ / C−) et moteur de levage (M+ / M−)</td></tr>\n<tr><td>Transmettre</td><td>Roues sur le rail ; treuil et câble du panier</td></tr>\n<tr><td>Agir</td><td>Déplacer le chariot ; monter / descendre le panier dans le bain</td></tr></tbody></table><div style=\"border:2px solid var(--ok);border-radius:var(--r);padding:8px 14px;margin:6px 0;background:var(--ok-soft)\"><b>Réponse :</b> information = capteurs + dcy → S7-1200 → H1/H2 ; énergie = 400 V → variateur (et préactionneur du levage) → 2 moteurs → roues / treuil → chariot et panier.</div><details class=\"detail-q\" style=\"margin:4px 0 14px\"><summary>Voir la méthode complète (explications, schémas)</summary><p style=\"margin:8px 0;padding:8px 12px;border-radius:8px;background:var(--sunken)\"><b>Pourquoi ?</b> La chaîne d'information décide, la chaîne d'énergie agit. L'automate (Traiter) envoie ses ordres aux préactionneurs (Distribuer) : c'est le lien entre les deux chaînes. Les capteurs sont dans la partie opérative mais remplissent la fonction Acquérir.</p></details></details>"
+            },
+            {
+              "titre": "Question 2 : le SADT niveau A-0",
+              "html": "<details><summary>Voir la correction</summary><div style=\"border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin:8px 0 6px\"><b>Méthode simple, pas à pas</b><ol style=\"margin:6px 0 0;padding-left:20px\"><li>Au centre, la <b>fonction globale</b> avec un verbe à l'infinitif : « Nettoyer des pièces ».</li><li>À gauche la <b>matière d'œuvre entrante</b>, à droite la matière d'œuvre <b>sortante</b> (avec la valeur ajoutée) et les sorties secondaires.</li><li>En haut les <b>données de contrôle</b> W, C, R, E ; en bas le <b>support</b> (le système).</li></ol></div><figure style=\"margin:12px 0\"><svg viewBox=\"0 0 560 250\" style=\"width:100%;max-width:600px;height:auto;display:block;margin:auto\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" role=\"img\" aria-label=\"SADT A-0 du chariot de nettoyage\"><defs><marker id=\"sa\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0 L10 5 L0 10 z\" fill=\"currentColor\" stroke=\"none\"/></marker></defs>\n<rect x=\"190\" y=\"90\" width=\"180\" height=\"70\" style=\"stroke:var(--accent)\"/><text x=\"280\" y=\"120\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" ><tspan font-weight=\"700\">Nettoyer (dégraisser)</tspan></text><text x=\"280\" y=\"140\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >des pièces</text><text x=\"360\" y=\"154\" text-anchor=\"end\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\">A-0</text>\n<line x1=\"40\" y1=\"125\" x2=\"188\" y2=\"125\" marker-end=\"url(#sa)\"/><text x=\"40\" y=\"112\" text-anchor=\"start\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Pièces sales</text><text x=\"40\" y=\"145\" text-anchor=\"start\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\">(dans le panier)</text>\n<line x1=\"372\" y1=\"115\" x2=\"520\" y2=\"115\" marker-end=\"url(#sa)\"/><text x=\"520\" y=\"104\" text-anchor=\"end\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >Pièces propres</text>\n<line x1=\"372\" y1=\"140\" x2=\"520\" y2=\"140\" marker-end=\"url(#sa)\"/><text x=\"520\" y=\"158\" text-anchor=\"end\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\">Voyants H1 / H2, pertes</text>\n<line x1=\"215\" y1=\"30\" x2=\"215\" y2=\"88\" marker-end=\"url(#sa)\"/><text x=\"215\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >W : 400 V tri</text>\n<line x1=\"265\" y1=\"45\" x2=\"265\" y2=\"88\" marker-end=\"url(#sa)\"/><text x=\"265\" y=\"40\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >E : dcy</text>\n<line x1=\"315\" y1=\"30\" x2=\"315\" y2=\"88\" marker-end=\"url(#sa)\"/><text x=\"315\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" >C : programme</text>\n<line x1=\"355\" y1=\"45\" x2=\"355\" y2=\"88\" marker-end=\"url(#sa)\"/><text x=\"380\" y=\"40\" text-anchor=\"middle\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\">R : 30 s, 40 s</text>\n<line x1=\"280\" y1=\"235\" x2=\"280\" y2=\"162\" marker-end=\"url(#sa)\"/><text x=\"290\" y=\"230\" text-anchor=\"start\" font-size=\"13\" fill=\"currentColor\" stroke=\"none\" font-family=\"inherit\" font-size=\"11\">Support : le chariot de nettoyage</text>\n</svg><figcaption class=\"muted\" style=\"font-size:12.5px;text-align:center\">SADT niveau A-0 : données de contrôle en haut, support en bas</figcaption></figure><div style=\"border:2px solid var(--ok);border-radius:var(--r);padding:8px 14px;margin:6px 0;background:var(--ok-soft)\"><b>Réponse :</b> Fonction « Nettoyer des pièces » ; entrée : pièces sales ; sortie : pièces propres (+ comptes rendus H1/H2, pertes) ; contrôle : W énergie 400 V, C programme, R temps de 30 s et 40 s, E bouton dcy ; support : le chariot de nettoyage.</div><details class=\"detail-q\" style=\"margin:4px 0 14px\"><summary>Voir la méthode complète (explications, schémas)</summary><ul><li><b>W</b> (énergie) : sans elle rien ne bouge.</li><li><b>C</b> (configuration) : le programme de l'automate.</li><li><b>R</b> (réglages) : les durées 30 s et 40 s.</li><li><b>E</b> (exploitation) : l'ordre de l'opérateur, ici dcy.</li></ul><p style=\"margin:8px 0;padding:8px 12px;border-radius:8px;background:var(--sunken)\"><b>Pourquoi ?</b> La valeur ajoutée se lit entre l'entrée et la sortie : la pièce est la même, mais dégraissée. Les voyants sont des informations de sortie, pas de la matière d'œuvre.</p></details></details>"
+            },
+            {
+              "titre": "Question 3 : le temps de cycle",
+              "html": "<details><summary>Voir la correction</summary><div style=\"border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r);padding:10px 14px;margin:8px 0 6px\"><b>Méthode simple, pas à pas</b><ol style=\"margin:6px 0 0;padding-left:20px\"><li>Liste chaque étape du cycle dans l'ordre avec sa durée.</li><li>Pour le retour de c3 à c1, compte <b>deux</b> intervalles de capteurs (c3 → c2 → c1).</li><li>Additionne.</li></ol></div><table><thead><tr><th>Étape</th><th>Durée</th></tr></thead><tbody><tr><td>dcy : c1 → c2 (au-dessus du bain)</td><td>3 s</td></tr><tr><td>Descente M+ dans le bain</td><td>4 s</td></tr><tr><td>Trempage</td><td>30 s</td></tr><tr><td>Remontée M−</td><td>4 s</td></tr><tr><td>c2 → c3 (déchargement)</td><td>3 s</td></tr><tr><td>Déchargement</td><td>40 s</td></tr><tr><td>Retour c3 → c1 (2 intervalles)</td><td>6 s</td></tr><tr><td><b>Total</b></td><td><b>90 s</b></td></tr></tbody></table><div style=\"border:2px solid var(--ok);border-radius:var(--r);padding:8px 14px;margin:6px 0;background:var(--ok-soft)\"><b>Réponse :</b> t<sub>cycle</sub> = 3 + 4 + 30 + 4 + 3 + 40 + 6 = <b>90 s</b>, soit 1 min 30 s.</div><details class=\"detail-q\" style=\"margin:4px 0 14px\"><summary>Voir la méthode complète (explications, schémas)</summary><p style=\"margin:8px 0;padding:8px 12px;border-radius:8px;background:var(--sunken)\"><b>Pourquoi ?</b> On suppose que les 40 s de déchargement comprennent tout ce qui se passe au poste de droite (le sujet ne donne pas de temps de descente à cet endroit). Si ton prof compte en plus une descente et une remontée au déchargement (2 × 4 s), le total passe à 98 s : vérifie l'hypothèse retenue en cours.</p></details></details>"
+            }
+          ],
+          "pointsCles": [
+            "Chaîne d'information : Acquérir (capteurs) → Traiter (automate) → Communiquer (voyants, IHM).",
+            "Chaîne d'énergie : Alimenter → Distribuer (préactionneur) → Convertir (moteur) → Transmettre → Agir.",
+            "SADT A-0 : fonction globale au centre, matière d'œuvre à gauche et à droite, W C R E en haut, support en bas.",
+            "Temps de cycle = somme de toutes les étapes, retour en position initiale compris.",
+            "Chariot : 3 + 4 + 30 + 4 + 3 + 40 + 6 = 90 s."
+          ],
+          "definitions": [
+            {
+              "terme": "Chaîne fonctionnelle",
+              "def": "Association d'une chaîne d'information (qui décide) et d'une chaîne d'énergie (qui agit) pour réaliser une fonction du système."
+            },
+            {
+              "terme": "SADT niveau A-0",
+              "def": "Diagramme qui résume le système en une seule boîte : la fonction globale, la matière d'œuvre entrante et sortante, les données de contrôle et le support."
+            },
+            {
+              "terme": "W, C, R, E",
+              "def": "Données de contrôle du SADT : énergie (W), configuration (C), réglages (R), exploitation (E)."
+            },
+            {
+              "terme": "Temps de cycle",
+              "def": "Durée totale pour revenir à l'état initial après un départ cycle."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Les 3 fonctions de la chaîne d'information ?",
+              "r": "Acquérir, Traiter, Communiquer."
+            },
+            {
+              "q": "Les 5 fonctions de la chaîne d'énergie ?",
+              "r": "Alimenter, Distribuer, Convertir, Transmettre, Agir."
+            },
+            {
+              "q": "Dans le chariot, qui « Distribue » l'énergie au moteur de translation ?",
+              "r": "Le variateur."
+            },
+            {
+              "q": "Que met-on en haut d'un SADT A-0 ?",
+              "r": "Les données de contrôle : W (énergie), C (configuration), R (réglages), E (exploitation)."
+            },
+            {
+              "q": "Temps de cycle du chariot ?",
+              "r": "90 s : 3 + 4 + 30 + 4 + 3 + 40 + 6."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Dans la chaîne fonctionnelle, l'automate S7-1200 réalise…",
+              "choix": [
+                "Traiter",
+                "Distribuer",
+                "Acquérir",
+                "Convertir"
+              ],
+              "bonne": 0,
+              "explication": "Il reçoit les informations des capteurs et décide des ordres."
+            },
+            {
+              "q": "Le moteur de levage réalise la fonction…",
+              "choix": [
+                "Convertir",
+                "Distribuer",
+                "Transmettre",
+                "Alimenter"
+              ],
+              "bonne": 0,
+              "explication": "Il convertit l'énergie électrique en énergie mécanique."
+            },
+            {
+              "q": "Dans le SADT A-0, le bouton dcy est une donnée…",
+              "choix": [
+                "E (exploitation)",
+                "W (énergie)",
+                "C (configuration)",
+                "de sortie"
+              ],
+              "bonne": 0,
+              "explication": "C'est l'ordre donné par l'opérateur."
+            },
+            {
+              "q": "Combien de temps dure le retour de c3 à c1 ?",
+              "choix": [
+                "6 s",
+                "3 s",
+                "4 s",
+                "9 s"
+              ],
+              "bonne": 0,
+              "explication": "Deux intervalles de capteurs (c3 → c2 → c1), 3 s chacun."
+            }
+          ],
+          "examen": [
+            {
+              "titre": "Chariot de nettoyage",
+              "enonce": "<p>Reprends le TD du chariot : 3 s entre deux capteurs, 4 s pour M+ et M− au bain, 30 s de trempage, 40 s de déchargement, retour en position initiale.</p>",
+              "questions": [
+                {
+                  "type": "num",
+                  "q": "Temps de cycle complet",
+                  "reponse": 90,
+                  "unite": "s",
+                  "tol": 0.01,
+                  "points": 2,
+                  "corrige": "<p>3 + 4 + 30 + 4 + 3 + 40 + 6 = 90 s.</p>"
+                },
+                {
+                  "type": "libre",
+                  "q": "Donner les 5 fonctions de la chaîne d'énergie avec le composant du chariot pour chacune (translation).",
+                  "points": 3,
+                  "attendu": "Alimenter : réseau 400 V ; Distribuer : variateur ; Convertir : moteur de translation ; Transmettre : roues / rail ; Agir : déplacer le chariot.",
+                  "corrige": "<p>Alimenter (400 V tri) → Distribuer (variateur) → Convertir (moteur) → Transmettre (roues sur le rail) → Agir (déplacer le chariot).</p>"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -5481,7 +5754,8 @@ window.COURS = {
     "pxgPOCAkPxgmJHEaNEYc",
     "9h2PCcISxfYhpLBkVre7",
     "2hopT6m6FQmweOp0l65h",
-    "XsRxpn4GLCNLtSwSiEXP"
+    "XsRxpn4GLCNLtSwSiEXP",
+    "4Dlov9DpccuzV3yAertA"
   ],
   "avisClaude": {
     "9h2PCcISxfYhpLBkVre7": {
@@ -5495,6 +5769,10 @@ window.COURS = {
     "XsRxpn4GLCNLtSwSiEXP": {
       "statut": "integree",
       "texte": "Merci Kylian ! Ajouté comme « Exercice E : calcul d'un réseau avec Boucherot (ligne R-L) » dans « Exercices : régime monophasé ». Il contient le schéma, les deux tableaux remplis et corrigés pas à pas (J = 85,4 A, U = 417,6 V), plus la chute de tension (17,6 V) et les pertes en ligne (4,2 %)."
+    },
+    "4Dlov9DpccuzV3yAertA": {
+      "statut": "integree",
+      "texte": "Trié en trois : 1) l'écran du clignotant était déjà dans le cours (Blocs fonctions EFB › Exercice : clignotant, encadré « Version faite en TP ») ; 2) le poly Ladder devient le chapitre « Le langage Ladder (LD) : symboles et barre d'outils » ; 3) le TD devient « TD : chariot de nettoyage de pièces » avec la correction (chaîne fonctionnelle, SADT A-0, temps de cycle = 90 s). Photos ajoutées aux deux chapitres."
     }
   }
 };
