@@ -21,6 +21,217 @@ window.COURS = {
       "couleur": "#d9480f",
       "chapitres": [
         {
+          "id": "evaluation-automatisme",
+          "titre": "⚡ Spécial évaluation : Automatisme (théorie)",
+          "type": "Cours",
+          "date": "2026-10-14",
+          "source": "Fiche express rédigée par Claude pour l'évaluation théorique du 14 octobre, d'après tous les chapitres d'Automatisme",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Fiche express pour l'évaluation théorique : SAP et chaînes, portes logiques, automate M340 et Ladder, tempos, GRAFCET (symboles, 5 règles, OU/ET, tempos, fronts, situations fugaces), méthodes et pièges.",
+          "sections": [
+            {
+              "titre": "Systèmes, logique, automate",
+              "html": "<div class=\"attention\"><b>Évaluation théorique du 14 octobre :</b> tout l'essentiel d'Automatisme sur une page, dans l'ordre des chapitres. Les détails et exercices corrigés sont dans chaque chapitre.</div>\n<h4>1. Système automatisé (SAP)</h4>\n<ul>\n<li><b>SAP</b> : gère seul un cycle de travail découpé en étapes. Avantages : sécurité, production, moins de tâches pénibles. Inconvénients : coût, maintenance, emplois.</li>\n<li><b>3 parties</b> : <b>PO</b> (opérative, agit sur la matière d'œuvre, partie visible), <b>PC</b> (commande, l'automate qui décide), <b>PR</b> (relation : pupitre, IHM, boutons, voyants).</li>\n<li><b>Préactionneur</b> (contacteur KM, distributeur) : ordre en faible énergie → distribue l'énergie forte. <b>Actionneur</b> (moteur, vérin) : convertit en énergie mécanique.</li>\n<li><b>Capteur</b> : grandeur physique → signal électrique. <b>TOR</b> (0/1), <b>analogique</b> (valeur continue), <b>numérique</b> (valeur codée).</li>\n<li><b>Chaîne d'information</b> : Acquérir → Traiter → Communiquer. <b>Chaîne d'énergie</b> : Alimenter → Distribuer → Convertir → Transmettre → Agir.</li>\n<li><b>SADT A-0</b> : verbe à l'infinitif au centre, matière d'œuvre entrée/sortie à gauche/droite, <b>W C R E</b> en haut (énergie, configuration, réglage, exploitation), support en bas.</li>\n</ul>\n<h4>2. Logique combinatoire</h4>\n<table><thead><tr><th>Fonction</th><th>Équation</th><th>Contacts</th><th>Circuit</th></tr></thead><tbody>\n<tr><td>OUI</td><td>S = a</td><td>1 NO</td><td></td></tr>\n<tr><td>NON</td><td>S = ā</td><td>1 NC</td><td>7404</td></tr>\n<tr><td>ET</td><td>S = a · b</td><td>NO en <b>série</b></td><td>7408</td></tr>\n<tr><td>OU (≥1)</td><td>S = a + b</td><td>NO en <b>parallèle</b></td><td>7432</td></tr>\n<tr><td>NON-ET</td><td>S = <span style=\"text-decoration:overline\">a · b</span></td><td>NC en parallèle</td><td>7400</td></tr>\n<tr><td>NON-OU</td><td>S = <span style=\"text-decoration:overline\">a + b</span></td><td>NC en série</td><td>7402</td></tr>\n<tr><td>OU exclusif (=1)</td><td>S = a ⊕ b = a·b̄ + ā·b</td><td></td><td>7486</td></tr></tbody></table>\n<ul>\n<li><b>Combinatoire</b> : la sortie ne dépend que des entrées actuelles. <b>Séquentiel</b> : mémoire et temps (→ GRAFCET).</li>\n<li>Table de vérité : lignes dans l'ordre 00, 01, 10, 11. <b>Table → équation</b> : chaque ligne à 1 = un ET (barre sur les entrées à 0), puis on relie les ET par des OU.</li>\n<li>Circuits 74xx : VCC broche 14, GND broche 7.</li>\n</ul>\n<h4>3. Automate M340 et Ladder</h4>\n<ul>\n<li>Adresses : <code>%I0.1.0</code> = entrée, rack 0, emplacement 1, voie 0 ; <code>%Q</code> = sortie ; <code>%M</code> = bit interne (mémoire, jamais câblé).</li>\n<li><b>Scrutation</b> : lire les entrées → traiter les réseaux (haut → bas, gauche → droite) → écrire les sorties.</li>\n<li>Ladder : contacts à gauche, bobines à droite. <code>-| |-</code> passe si 1, <code>-|/|-</code> passe si 0, <code>P</code>/<code>N</code> fronts, <code>-(S)-</code> met à 1 et garde, <code>-(R)-</code> remet à 0.</li>\n<li><b>Auto-maintien</b> : contact de la sortie en parallèle du BP marche, BP arrêt en série. Un BP arrêt câblé NF se programme avec un contact <b>NO</b>.</li>\n<li>Unity Pro : configuration matérielle → vues fonctionnelles → variables ; GENERE = projet sans erreur.</li>\n<li><b>Tempos</b> : <b>TON</b> retard à la montée, <b>TOF</b> retard à la retombée, <b>TP</b> impulsion de durée PT. PT en <code>T#5s</code>. <b>CTUD</b> : CU +1, CD −1, R → 0, LD → PV ; QU = CV ≥ PV, QD = CV ≤ 0.</li>\n</ul>"
+            },
+            {
+              "titre": "GRAFCET : tout ce qu'il faut savoir",
+              "html": "<h4>4. GRAFCET : symboles</h4>\n<ul>\n<li><b>Étape</b> = carré numéroté ; <b>étape initiale</b> = double carré ; <b>transition</b> = petit trait ; <b>réceptivité</b> = condition à droite du trait ; <b>action</b> = rectangle à droite de l'étape.</li>\n<li>Liaisons lues de haut en bas ; une liaison qui <b>remonte</b> porte une flèche.</li>\n<li><b>Toujours alterner</b> étape → transition → étape. Deux étapes ou deux transitions à la suite = faux.</li>\n</ul>\n<h4>5. Les 5 règles d'évolution</h4>\n<ol>\n<li>Situation initiale : les étapes initiales sont actives à la mise en route.</li>\n<li>Transition <b>validée</b> = toutes les étapes juste au-dessus actives ; <b>franchissable</b> = validée <b>et</b> réceptivité vraie → franchie tout de suite.</li>\n<li>Franchir = activer les étapes en dessous <b>et</b> désactiver celles au-dessus, en même temps.</li>\n<li>Plusieurs transitions franchissables sont franchies en même temps.</li>\n<li>Une étape à la fois activée et désactivée <b>reste active</b>.</li>\n</ol>\n<h4>6. OU / ET</h4>\n<table><thead><tr><th></th><th>Dessin</th><th>Transitions</th><th>Sens</th></tr></thead><tbody>\n<tr><td><b>OU</b></td><td>trait simple</td><td>une <b>par branche</b>, sous le trait (divergence) / au-dessus (convergence)</td><td>une seule branche (choix)</td></tr>\n<tr><td><b>ET</b></td><td>double trait</td><td><b>une seule</b>, au-dessus de la divergence / en dessous de la convergence</td><td>toutes les branches en parallèle</td></tr></tbody></table>\n<ul>\n<li>Convergence ET : attend que <b>toutes</b> les branches soient finies → étapes d'<b>attente</b> (ATT) sans action.</li>\n<li><b>Saut d'étapes</b> (descend) et <b>reprise de séquence</b> (remonte) : ce sont des OU.</li>\n<li>Réceptivités d'un OU <b>exclusives</b>. Priorités A > B > D : <code>a</code> ; <code>b·ā</code> ; <code>d·ā·b̄</code>.</li>\n</ul>\n<h4>7. Réceptivités et actions spéciales</h4>\n<ul>\n<li><code>10s/X6</code> : vraie <b>10 s après l'activation</b> de l'étape 6 (t/Xn).</li>\n<li><code>↑a</code> front montant (a passe de 0 à 1), <code>↓a</code> front descendant. <code>↓(b+c)</code> : b et c tous deux revenus à 0. Un front dure un instant et ne franchit <b>qu'une</b> transition.</li>\n<li><code>X12</code> = 1 si l'étape 12 est active (utilisable dans une réceptivité).</li>\n<li>Action <b>continue</b> : dure tant que l'étape est active (T = X6). Action <b>conditionnelle</b> : condition sur le trait, D = X10 · d.</li>\n<li><b>Situation fugace</b> : deux réceptivités vraies à la suite (a puis a) → l'étape du milieu est traversée sans que ses actions soient faites.</li>\n<li><b>Macro-étape</b> M10 : détaillée ailleurs, de E10 (entrée) à S10 (sortie).</li>\n<li><b>3 points de vue</b> : système (verbes, états), partie commande (KM1, EV1, capteurs), automate (%Q, %I).</li>\n</ul>"
+            },
+            {
+              "titre": "Méthodes et pièges",
+              "html": "<h4>8. Méthode : écrire un GRAFCET</h4>\n<ol>\n<li>Étape initiale = machine au repos, sans action.</li>\n<li>Départ : bouton <b>ET</b> conditions de position initiale (ex. <code>S1·S3</code>, <code>dcy·c1·h</code>).</li>\n<li>Une étape par mouvement, terminée par le capteur de fin (S4, pb, ph…).</li>\n<li>Une attente → étape sans action + tempo <code>t/Xn</code> ou bouton.</li>\n<li>Un choix → OU (réceptivités exclusives). Du parallèle → ET (une transition, double trait).</li>\n<li>Fermer la boucle vers l'étape initiale (flèche), en vérifiant l'alternance.</li>\n</ol>\n<h4>9. Méthode : chronogramme d'étapes</h4>\n<ol>\n<li>Repère quand l'étape du dessus devient active.</li>\n<li>Une réceptivité ne compte que si la transition est <b>validée</b>.</li>\n<li>Au franchissement, au même instant : étape du dessus → 0, celle(s) du dessous → 1.</li>\n</ol>\n<h4>10. Les pièges classiques</h4>\n<div class=\"attention\"><ul style=\"margin:0;padding-left:18px\">\n<li>Transitions sous un double trait de divergence (faux : une seule, au-dessus).</li>\n<li>Saut qui arrive sans étape avant une transition → deux transitions à la suite.</li>\n<li>Retour vers l'étape initiale depuis une étape, sans transition.</li>\n<li>Oublier la condition de position initiale au départ du cycle.</li>\n<li>Oublier que <code>10s/X6</code> compte depuis l'<b>activation</b> de l'étape 6, et se remet à zéro quand elle se désactive.</li>\n<li>Réceptivités d'un OU pas exclusives → deux branches franchies en même temps.</li>\n<li>NON-OU (7402) : brochage différent des autres portes.</li>\n<li>BP arrêt NF → contact NO dans le programme.</li>\n</ul></div>\n<div class=\"exemple\"><b>Exemple express (porte de garage)</b> : 10 –S1·S3→ 11 Monter –S4→ 12 –S2→ 13 Descendre –S3·S̄7→ 10 ; obstacle : 13 –S7→ 14 –2s/X14→ 15 Monter –S4→ 16 –S6→ 12.</div>"
+            }
+          ],
+          "pointsCles": [
+            "PO agit, PC décide, PR dialogue. Préactionneur distribue, actionneur convertit, capteur informe.",
+            "Série = ET, parallèle = OU, NC = NON. Table → équation : ET par ligne à 1, OU entre les lignes.",
+            "Scrutation : entrées → programme → sorties. %I entrée, %Q sortie, %M bit interne.",
+            "TON retard montée, TOF retard retombée, TP impulsion.",
+            "Alternance étape / transition obligatoire.",
+            "Validée = étapes au-dessus actives ; franchie si en plus réceptivité vraie.",
+            "OU : une transition par branche. ET : une seule transition autour du double trait.",
+            "t/Xn = t secondes après activation de l'étape n. Un front ne franchit qu'une transition.",
+            "Étape activée et désactivée en même temps : reste active."
+          ],
+          "definitions": [
+            {
+              "terme": "Transition validée",
+              "def": "Toutes les étapes juste au-dessus sont actives."
+            },
+            {
+              "terme": "Transition franchissable",
+              "def": "Validée et réceptivité vraie : elle est franchie immédiatement."
+            },
+            {
+              "terme": "Situation fugace",
+              "def": "Étape traversée sans être stable, ses actions ne sont pas exécutées."
+            },
+            {
+              "terme": "Action conditionnelle",
+              "def": "Action exécutée seulement si l'étape est active ET la condition vraie."
+            },
+            {
+              "terme": "Auto-maintien",
+              "def": "Contact de la sortie en parallèle du BP marche pour garder la sortie à 1."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Les 3 parties d'un SAP ?",
+              "r": "Partie opérative, partie commande, partie relation."
+            },
+            {
+              "q": "NON-ET en contacts ?",
+              "r": "Deux contacts NC en parallèle."
+            },
+            {
+              "q": "NON-OU en contacts ?",
+              "r": "Deux contacts NC en série."
+            },
+            {
+              "q": "Que veut dire %I0.1.0 ?",
+              "r": "Entrée, rack 0, emplacement 1, voie 0."
+            },
+            {
+              "q": "Différence TON / TOF ?",
+              "r": "TON retarde la montée de Q ; TOF retarde sa retombée."
+            },
+            {
+              "q": "Les 5 règles du GRAFCET ?",
+              "r": "Situation initiale, franchissement, évolution, évolutions simultanées, activation prioritaire."
+            },
+            {
+              "q": "Où est la transition d'une divergence ET ?",
+              "r": "Une seule, au-dessus du double trait."
+            },
+            {
+              "q": "20s/X7 ?",
+              "r": "Vraie 20 s après l'activation de l'étape 7."
+            },
+            {
+              "q": "Priorités A > B > D dans un OU ?",
+              "r": "a ; b·ā ; d·ā·b̄"
+            },
+            {
+              "q": "Chaîne d'énergie ?",
+              "r": "Alimenter, Distribuer, Convertir, Transmettre, Agir."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Le contacteur KM1 est…",
+              "choix": [
+                "un préactionneur",
+                "un actionneur",
+                "un capteur",
+                "la partie commande"
+              ],
+              "bonne": 0,
+              "explication": "Il distribue l'énergie au moteur."
+            },
+            {
+              "q": "Deux contacts NO en série réalisent…",
+              "choix": [
+                "un ET",
+                "un OU",
+                "un NON-ET",
+                "un OU exclusif"
+              ],
+              "bonne": 0,
+              "explication": "Il faut les deux fermés."
+            },
+            {
+              "q": "S = 1 quand une seule entrée est à 1 :",
+              "choix": [
+                "OU exclusif",
+                "OU",
+                "ET",
+                "NON-OU"
+              ],
+              "bonne": 0,
+              "explication": "a·b̄ + ā·b."
+            },
+            {
+              "q": "Ordre de la scrutation :",
+              "choix": [
+                "entrées, programme, sorties",
+                "sorties, entrées, programme",
+                "programme, entrées, sorties",
+                "au hasard"
+              ],
+              "bonne": 0,
+              "explication": "Cycle automate."
+            },
+            {
+              "q": "Une transition est franchie quand…",
+              "choix": [
+                "elle est validée et sa réceptivité est vraie",
+                "sa réceptivité est vraie",
+                "l'étape du dessous est active",
+                "le bouton dcy est appuyé"
+              ],
+              "bonne": 0,
+              "explication": "Règle 2."
+            },
+            {
+              "q": "Sous un double trait de divergence on trouve…",
+              "choix": [
+                "des étapes",
+                "des transitions",
+                "des actions",
+                "rien"
+              ],
+              "bonne": 0,
+              "explication": "La transition unique est au-dessus."
+            },
+            {
+              "q": "↑a est vraie…",
+              "choix": [
+                "quand a passe de 0 à 1",
+                "tant que a = 1",
+                "quand a passe de 1 à 0",
+                "tant que a = 0"
+              ],
+              "bonne": 0,
+              "explication": "Front montant."
+            },
+            {
+              "q": "12 –a→ 13 –a→ 14, a monte :",
+              "choix": [
+                "13 est fugace, on arrive en 14",
+                "on reste en 13",
+                "on reste en 12",
+                "erreur"
+              ],
+              "bonne": 0,
+              "explication": "Situation fugace."
+            },
+            {
+              "q": "Étape à la fois activée et désactivée :",
+              "choix": [
+                "reste active",
+                "devient inactive",
+                "clignote",
+                "erreur"
+              ],
+              "bonne": 0,
+              "explication": "Règle 5."
+            },
+            {
+              "q": "Un BP arrêt câblé NF se programme avec…",
+              "choix": [
+                "un contact NO",
+                "un contact NC",
+                "une bobine S",
+                "un front N"
+              ],
+              "bonne": 0,
+              "explication": "Au repos l'entrée vaut déjà 1."
+            }
+          ],
+          "examen": []
+        },
+        {
           "id": "systemes-automatises",
           "titre": "Les systèmes automatisés",
           "date": "2026-10-08",
