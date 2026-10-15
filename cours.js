@@ -6569,6 +6569,437 @@ window.COURS = {
       ]
     },
     {
+      "id": "normes",
+      "nom": "Réglementation et normes",
+      "semestre": "Compétences réglementaires et normatives",
+      "couleur": "#2f9e44",
+      "chapitres": [
+        {
+          "id": "normes-reglementations",
+          "titre": "Normes et règlementations des installations électriques",
+          "type": "Cours",
+          "date": "2026-10-15",
+          "source": "Diaporama « Normes et règlementations en lien avec les installations électriques » V6, Dorian Poirrier (74 diapos)",
+          "auteurs": "Kylian Bonnet",
+          "resume": "D'où vient une exigence (loi, décret/arrêté, norme, CCTP), les 6 familles de normes, le branchement BT, la série NF C15-100:2024, les protections et le DDR, les Euroclasses des câbles, la construction, l'efficacité énergétique, la sécurité des travailleurs et les responsabilités.",
+          "sections": [
+            {
+              "titre": "Histoire : de la pile au réseau unifié",
+              "html": "<ul>\n<li><b>Volta</b> invente la pile (1800) · <b>Ohm</b> publie sa loi (1827) · <b>Ampère</b> travaille sur l'électromagnétisme (1820-1830).</li>\n<li><b>Guerre des courants (USA, 1880-1895)</b> : <b>Edison</b> défend le continu (lampe à incandescence) ; <b>Tesla</b> développe l'alternatif ; <b>Westinghouse</b> rachète ses brevets et monte un réseau alternatif.</li>\n<li><b>France au début</b> : production localisée, tensions variables, pas d'harmonisation, peu de cadre.</li>\n<li><b>Bazar de la Charité (4 mai 1897)</b> : 126 morts, projection avec lampe à arc + éther. Le 1er sept. 1897, première ordonnance de police, ancêtre de la réglementation <b>ERP</b>.</li>\n<li>1880-1910 débuts · 1910-1930 développement, premiers contrôles · <b>1946 EDF</b> : distribution généralisée, unification, standardisation, normalisation. Plan Messmer : 58 réacteurs (1970-1999).</li></ul>"
+            },
+            {
+              "titre": "Les 4 cadres d'une exigence",
+              "html": "<table><tr><th>Cadre</th><th>Exemples</th><th>Portée</th></tr>\n<tr><td>Réglementaire (lois, décrets, arrêtés)</td><td>Arrêté du 3 août 2016, Code du travail, arrêté du 17 mai 2024</td><td>Objectifs de sécurité</td></tr>\n<tr><td>Normatif</td><td>NF C14-100, NF C15-100:2024</td><td>Application <b>obligatoire de fait</b></td></tr>\n<tr><td>Sécurité des opérations</td><td>NF C18-510</td><td>Formation, habilitation, prévention du risque électrique</td></tr>\n<tr><td>Contractuel</td><td>CCTP</td><td>Prescriptions complémentaires, à respecter <b>avec</b> les normes</td></tr></table>\n<ul><li>Normes françaises : <b>AFNOR</b> (UTE) ; européennes : <b>CEN</b> (RPC) et <b>CENELEC</b> (câbles RPC, EN 50575).</li>\n<li>Extrait CCTP (local associatif BELZ) : « Dans le cas de superposition, le document <b>le plus contraignant</b> sera retenu comme document de référence. »</li></ul>"
+            },
+            {
+              "titre": "Les 6 familles de normes",
+              "html": "<table><tr><th>Famille</th><th>Textes</th></tr>\n<tr><td>Réseau de distribution</td><td>NF C11-201 (réseaux publics BT et HTA)</td></tr>\n<tr><td>Livraison client</td><td>NF C14-100 (branchement BT) ; NF C13-100/101/102/103 (postes de livraison HTA/BT)</td></tr>\n<tr><td>Installations électriques</td><td>NF C15-100 (BT intérieures) ; NF C13-200/201 (HTA privées) ; NF C17-200 (BT extérieures : éclairage public, IRVE…)</td></tr>\n<tr><td>Incendie</td><td>ERP : arrêté du 25 juin 1980 modifié par l'arrêté du 17 mai 2024 ; NF EN 50575 (Euroclasses câbles)</td></tr>\n<tr><td>Construction</td><td>RT 2012 / RE 2020 ; CCH R.162-1 à R.162-5 (accessibilité) ; arrêté du 3 août 2016 (habitations)</td></tr>\n<tr><td>Sécurité des travailleurs</td><td>NF C18-505 (TST) ; NF C18-510 ; Code du travail R.4544-1 à 11 (habilitations), L.4121-1 à 5 (prévention)</td></tr></table>"
+            },
+            {
+              "titre": "Réseau, livraison et branchement BT",
+              "html": "<ul>\n<li>Acteurs : <b>GRD</b>, maître d'œuvre, sous-traitants, collectivités / client.</li>\n<li><b>NF C14-100</b> : branchement entre le réseau public et l'origine de l'installation intérieure. Volontaire mais <b>imposée de fait par le GRD</b> ; s'appuie sur la NF C15-100 ; le CCTP peut être plus contraignant.</li>\n<li>Branchement <b>individuel</b> : un utilisateur, PDL à localiser sur le dossier. <b>Collectif</b> : infrastructure commune + dérivations individuelles, un PDL par utilisateur.</li></ul>\n<p>Branchement BT à puissance limitée <b>≤ 36 kVA</b> :</p>\n<table><tr><th></th><th>Type 1</th><th>Type 2</th></tr>\n<tr><td>Compteur et AGCP</td><td>Dans les locaux de l'utilisateur</td><td>En coffret extérieur, près du CCPI</td></tr>\n<tr><td>Point de livraison</td><td colspan=\"2\">Bornes aval de l'AGCP</td></tr>\n<tr><td>Liaison jusqu'au tableau</td><td>Distinguer branchement et aval du PDL</td><td>Aval du PDL = installation du client</td></tr></table>\n<div class=\"attention\">À demander au GRD : implantation, longueur réelle, limites de prestation.</div>"
+            },
+            {
+              "titre": "Exemple : réseau d'un lotissement",
+              "html": "<p><b>Méthode :</b> 1. sections génériques · 2. puissances par tronçon · 3. pondérer · 4. chutes de tension par tronçon · 5. facteurs de correction (pose, nombre de conducteurs) · 6. vérification.</p>\n<table><tr><th>Élément</th><th>Valeur</th></tr>\n<tr><td>Parcelle &lt; 1000 m²</td><td>12 kVA, liaison alu 35 mm² (50 si nécessaire)</td></tr>\n<tr><td>Parcelle 1000 à 2000 m²</td><td>18 kVA, liaison alu 35 mm² (50 si nécessaire)</td></tr>\n<tr><td>Parcelle &gt; 2000 m²</td><td>18 kVA + étude avec le gestionnaire de réseau</td></tr>\n<tr><td>Antenne non évolutive</td><td>&lt; 60 kVA → 95 mm² ; &gt; 60 kVA → 150 mm²</td></tr>\n<tr><td>Réseau, section par défaut</td><td>150 mm²</td></tr>\n<tr><td>Départ de poste 120 à 180 kVA (pondérée)</td><td>240 mm²</td></tr></table>\n<div class=\"exemple\">Exemple du cours : 8 parcelles (1, 2, 7, 8 ≈ 900 m² ; 3 à 6 ≈ 1500 m²), poste P puis tronçons A à F de 30 à 100 m.</div>"
+            },
+            {
+              "titre": "La série NF C15-100:2024",
+              "html": "<ul>\n<li>Historique : 1976 → révision 1991 → <b>révision 2002</b> + amendements A1 à A5 (2008-2015) + 23 fiches d'interprétation (cités par arrêté) → <b>série 2024</b>.</li>\n<li><b>21 normes</b> révisables indépendamment, <b>référence professionnelle depuis septembre 2025</b>, à appliquer aux projets concernés.</li></ul>\n<table><tr><th>Partie</th><th>Sujet</th></tr>\n<tr><td>-1 (titres 1 à 6)</td><td>Dimensionnement, référence pour les autres parties</td></tr>\n<tr><td>-7-701</td><td>Salle d'eau (baignoire, douche)</td></tr>\n<tr><td>-7-702 / -7-703</td><td>Piscines / saunas</td></tr>\n<tr><td>-7-704</td><td>Installations de chantier</td></tr>\n<tr><td>-7-722</td><td>Alimentation d'une borne de recharge</td></tr>\n<tr><td>-7-756</td><td>Parc de stationnement</td></tr>\n<tr><td>-8-1</td><td>Efficacité énergétique</td></tr>\n<tr><td>-10</td><td>Installations dans les habitations</td></tr>\n<tr><td>-11</td><td>Réseaux de communication dans les habitations</td></tr></table>\n<p>Dates : 2002 édition citée · 2016 arrêté habitation (présomption de conformité) · 2024 publication · sept. 2025 nouvelle référence.</p>"
+            },
+            {
+              "titre": "Protections et DDR",
+              "html": "<table><tr><th>Appareil</th><th>Phénomène</th><th>Données à obtenir</th></tr>\n<tr><td>Disjoncteur</td><td>Surcharge et court-circuit</td><td>Courant d'emploi, câble, courant de court-circuit</td></tr>\n<tr><td>DDR</td><td>Courant différentiel résiduel</td><td>Schéma de terre, circuit, nature du courant de défaut</td></tr>\n<tr><td>Parafoudre</td><td>Surtensions transitoires</td><td>Exposition, alimentation, matériels à protéger</td></tr></table>\n<ul><li><b>Interrupteur différentiel</b> : toujours associé à une protection contre les surintensités.</li>\n<li>Défaut = courant de fuite par la masse et le <b>PE</b>, détecté par le DDR.</li>\n<li><b>Logement neuf : DDR ≤ 30 mA sur tous les circuits terminaux</b>, protection complémentaire contre les contacts directs (arrêté du 3 août 2016, art. 2).</li></ul>"
+            },
+            {
+              "titre": "Incendie : Euroclasses des câbles",
+              "html": "<ul>\n<li>RPC (règlement produits de construction) : Commission européenne, CEN/CENELEC (EN 50575), organismes notifiés (essais feu), États, fabricants (DoP, marquage CE).</li>\n<li><b>Arrêté du 17 mai 2024</b> (JORF 23 mai 2024) : ERP et IGH, <b>obligatoire au 23 mai 2025</b> (projets déposés un an après publication).</li></ul>\n<table><tr><th>Classe</th><th>Ininfl.</th><th>Non propag. flamme</th><th>Non propag. incendie</th><th>Chaleur</th></tr>\n<tr><td>Aca</td><td>Oui</td><td>Oui</td><td>Oui</td><td>Non</td></tr>\n<tr><td>B1ca</td><td>Non</td><td>Oui</td><td>Oui</td><td>Très faible</td></tr>\n<tr><td>B2ca</td><td>Non</td><td>Oui</td><td>Oui</td><td>Faible</td></tr>\n<tr><td>Cca</td><td>Non</td><td>Oui</td><td>Oui</td><td>Limité</td></tr>\n<tr><td>Dca</td><td>Non</td><td>Oui</td><td>Non</td><td>Modéré</td></tr>\n<tr><td>Eca</td><td>Non</td><td>Oui</td><td>Non</td><td>Oui</td></tr>\n<tr><td>Fca</td><td>Non</td><td>Non classé</td><td>Non</td><td>Oui</td></tr></table>\n<ul><li><b>s</b> (smoke, fumée) : s1a &gt; 80 % transmittance, s1b &gt; 60 %, s2 moyenne, s3 non classée.</li>\n<li><b>d</b> (droplets) : d0 aucune, d1 ≤ 10 s, d2 non classée.</li>\n<li><b>a</b> (acidité) : a1 faible corrosivité et acidité (LSZH), a2 forte corrosivité faible acidité, a3 non classée.</li>\n<li><b>« C2 » = Cca-s2,d2,a2</b> : ERP zones public (EL10) et particulières (GA34), IGH commande/signalisation (GH 45). <b>« C1 » = B2ca-s1a,d1,a1</b>.</li>\n<li>NF C15-100-1 art. 421.9 : câbles non propagateurs de la flamme, <b>Fca interdit</b> ; en pro, niveau minimal par analyse de risques du maître d'ouvrage. Communication (C15-100-11) : Cca-s1,d1,a1 recommandé.</li>\n<li>U1000 <b>R2V = Eca</b> ; FR-N1X1G1 = Cca-s1,d1,a1 (selon fabricants).</li></ul>"
+            },
+            {
+              "titre": "Construction, accessibilité, énergie",
+              "html": "<ul>\n<li>Textes : <b>RE 2020</b> (performance énergétique), <b>CCH R.162-1 à R.162-5</b> (accessibilité handicap), <b>arrêté du 3 août 2016</b> (sécurité électrique des habitations), <b>NF C15-100-8-1</b> (efficacité énergétique). Acteurs : maître d'ouvrage, architecte, BE, entreprise.</li>\n<li>Accessibilité : maison neuve <b>en location</b> → section maisons individuelles ; maison pour <b>usage propre</b> du propriétaire → exclue ; <b>collectif neuf</b> → règles du collectif. À obtenir : bâtiment, opération, usage prévu, date.</li>\n<li>Efficacité : <b>concevoir</b> (implantation du TGBT, distribution adaptée), <b>mesurer</b> (consommations par usage, profils d'occupation), <b>agir</b> (horaires et détection, réglages puis suivi).</li>\n<li><b>E (kWh) = P (kW) × t (h)</b> : 100 W pendant 2 000 h = 200 kWh ; 1 200 h = 120 kWh → 80 kWh/an d'écart. La classe EE se juge à part avec la grille normative.</li>\n<li><b>Méthode du barycentre</b> : placer le TGBT selon la consommation annuelle et la distance des zones → moins de chute de tension, pas besoin d'augmenter la section.</li></ul>"
+            },
+            {
+              "titre": "Sécurité des travailleurs et responsabilités",
+              "html": "<ul>\n<li>Code du travail : R.4544-1 à R.4544-11 (formation, habilitation), L.4121-1 à L.4121-5 (prévention). NF C18-505 : travaux sous tension ; <b>NF C18-510</b> : norme de référence.</li>\n<li><b>Travaux hors tension en principe.</b> Un motif économique seul ne permet aucune exception (R.4544-4).</li></ul>\n<table><tr><th>Responsabilité</th><th>Fondement</th><th>Quand</th><th>Conséquence</th></tr>\n<tr><td>Civile</td><td>Code civil</td><td>Faute → dommage → lien de causalité</td><td>Dommages et intérêts</td></tr>\n<tr><td>Pénale</td><td>Code pénal / du travail</td><td>Infraction à une obligation légale</td><td>Amende, voire peine (personnelle)</td></tr>\n<tr><td>Contractuelle</td><td>Contrat / CCTP</td><td>Engagement non respecté</td><td>Pénalités, résiliation, contentieux</td></tr></table>\n<div class=\"exemple\"><b>Méthode du chargé d'affaires :</b> <b>vérifier</b> (clause, périmètre, donnée technique) · <b>demander</b> (interlocuteur, question précise) · <b>tracer</b> (réponse, décision, document).</div>"
+            }
+          ],
+          "pointsCles": [
+            "Une exigence se justifie par sa source : réglementaire, normative ou contractuelle (CCTP), et ces cadres se cumulent.",
+            "En cas de superposition de documents, le plus contraignant fait référence (clause du CCTP BELZ).",
+            "NF C14-100 = branchement BT, volontaire mais imposée de fait par le GRD ; NF C15-100 = installations BT intérieures.",
+            "Branchement ≤ 36 kVA : le point de livraison est aux bornes aval de l'AGCP (types 1 et 2).",
+            "NF C15-100:2024 = 21 normes, référence professionnelle depuis septembre 2025.",
+            "Logement neuf : DDR ≤ 30 mA sur tous les circuits terminaux.",
+            "Arrêté du 17 mai 2024 (applicable au 23 mai 2025) : câbles Cca-s2,d2,a2 en ERP ; le R2V courant (Eca) ne convient pas.",
+            "Travaux hors tension en principe ; le seul motif économique ne justifie pas un travail sous tension.",
+            "Vérifier, demander, tracer."
+          ],
+          "definitions": [
+            {
+              "terme": "CCTP",
+              "def": "Cahier des clauses techniques particulières : décrit les prestations du marché, complète les exigences applicables."
+            },
+            {
+              "terme": "GRD",
+              "def": "Gestionnaire du réseau de distribution ; impose de fait la NF C14-100 et fournit implantation, longueurs et limites de prestation."
+            },
+            {
+              "terme": "PDL",
+              "def": "Point de livraison : bornes aval de l'AGCP ; à l'aval commence l'installation du client."
+            },
+            {
+              "terme": "Euroclasse",
+              "def": "Classement de réaction au feu des câbles (Aca à Fca) selon NF EN 50575, avec critères s, d, a."
+            },
+            {
+              "terme": "LSZH",
+              "def": "Low Smoke Zero Halogen : câble à faible fumée sans halogène (classe a1)."
+            },
+            {
+              "terme": "DoP",
+              "def": "Déclaration de performance du fabricant (RPC), qui donne l'Euroclasse du câble."
+            },
+            {
+              "terme": "Méthode du barycentre",
+              "def": "Placement du TGBT selon consommation annuelle et distance des zones pour réduire chute de tension et section."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Qui invente la pile, et quand ?",
+              "r": "Alessandro Volta, en 1800."
+            },
+            {
+              "q": "Qui défendait le courant continu dans la guerre des courants ?",
+              "r": "Thomas Edison (Tesla et Westinghouse : l'alternatif)."
+            },
+            {
+              "q": "Quel incendie de 1897 est à l'origine de la réglementation ERP ?",
+              "r": "Le Bazar de la Charité (4 mai 1897, 126 morts)."
+            },
+            {
+              "q": "Norme des réseaux de distribution publique BT et HTA ?",
+              "r": "NF C11-201."
+            },
+            {
+              "q": "Norme du branchement BT ?",
+              "r": "NF C14-100."
+            },
+            {
+              "q": "Norme des installations BT extérieures (éclairage public, IRVE) ?",
+              "r": "NF C17-200."
+            },
+            {
+              "q": "Norme des installations HTA privées ?",
+              "r": "NF C13-200 / 201."
+            },
+            {
+              "q": "Norme de référence pour les opérations en environnement électrique ?",
+              "r": "NF C18-510 (NF C18-505 pour les TST)."
+            },
+            {
+              "q": "Puissance limite d'un branchement BT à puissance limitée ?",
+              "r": "≤ 36 kVA."
+            },
+            {
+              "q": "Où est le point de livraison d'un branchement type 1 ou 2 ?",
+              "r": "Aux bornes aval de l'AGCP."
+            },
+            {
+              "q": "Type 2 : où sont compteur et AGCP ?",
+              "r": "En coffret extérieur, près du CCPI."
+            },
+            {
+              "q": "Puissance mini d'une parcelle de 1000 à 2000 m² ?",
+              "r": "18 kVA (12 kVA sous 1000 m²)."
+            },
+            {
+              "q": "Section réseau par défaut dans le lotissement ?",
+              "r": "150 mm² (240 mm² pour un départ de poste de 120 à 180 kVA)."
+            },
+            {
+              "q": "Combien de normes dans la série NF C15-100:2024 ?",
+              "r": "21, révisables séparément."
+            },
+            {
+              "q": "Depuis quand la série 2024 est-elle la référence professionnelle ?",
+              "r": "Septembre 2025."
+            },
+            {
+              "q": "NF C15-100-7-701 ?",
+              "r": "Salle d'eau (baignoire ou douche)."
+            },
+            {
+              "q": "NF C15-100-7-722 ?",
+              "r": "Alimentation d'une borne de recharge."
+            },
+            {
+              "q": "DDR exigé dans un logement neuf ?",
+              "r": "≤ 30 mA sur tous les circuits terminaux."
+            },
+            {
+              "q": "Que faut-il associer à un interrupteur différentiel ?",
+              "r": "Une protection contre les surintensités."
+            },
+            {
+              "q": "Classement « C2 » ?",
+              "r": "Cca-s2,d2,a2."
+            },
+            {
+              "q": "Classement « C1 » ?",
+              "r": "B2ca-s1a,d1,a1."
+            },
+            {
+              "q": "Que signifient s, d et a ?",
+              "r": "Smoke (fumée), droplets (gouttelettes enflammées), acidity (acidité/corrosivité)."
+            },
+            {
+              "q": "Euroclasse d'un U1000 R2V ?",
+              "r": "Eca : il ne convient pas en ERP où Cca-s2,d2,a2 est requis."
+            },
+            {
+              "q": "Date d'application de l'arrêté du 17 mai 2024 ?",
+              "r": "23 mai 2025."
+            },
+            {
+              "q": "E = ? pour 100 W pendant 2 000 h",
+              "r": "0,1 kW × 2 000 h = 200 kWh."
+            },
+            {
+              "q": "Les 3 types de responsabilité ?",
+              "r": "Civile, pénale, contractuelle (la contractuelle relève du champ civil)."
+            },
+            {
+              "q": "La méthode du chargé d'affaires en 3 verbes ?",
+              "r": "Vérifier, demander, tracer."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "La NF C14-100 est…",
+              "choix": [
+                "volontaire mais imposée de fait par le GRD",
+                "rendue obligatoire par le Code du travail",
+                "une simple recommandation sans effet",
+                "réservée aux installations HTA"
+              ],
+              "bonne": 0,
+              "explication": "Diapo 32 : norme d'application volontaire mais imposée de fait par le GRD."
+            },
+            {
+              "q": "En cas de contradiction entre documents du marché BELZ, quel document fait référence ?",
+              "choix": [
+                "Le plus contraignant",
+                "Le plus récent",
+                "La norme NF C15-100",
+                "Le devis de l'entreprise"
+              ],
+              "bonne": 0,
+              "explication": "Clause du CCTP : dans le cas de superposition, le document le plus contraignant est retenu."
+            },
+            {
+              "q": "Dans un branchement type 1, le compteur et l'AGCP sont…",
+              "choix": [
+                "dans les locaux de l'utilisateur",
+                "en coffret extérieur près du CCPI",
+                "dans le poste HTA",
+                "sur le réseau en voirie"
+              ],
+              "bonne": 0,
+              "explication": "Type 2 = coffret extérieur ; type 1 = locaux de l'utilisateur."
+            },
+            {
+              "q": "Quelle partie de la NF C15-100 traite des installations de chantier ?",
+              "choix": [
+                "7-704",
+                "7-701",
+                "7-722",
+                "7-756"
+              ],
+              "bonne": 0,
+              "explication": "701 salle d'eau, 722 borne de recharge, 756 parc de stationnement."
+            },
+            {
+              "q": "Quelle norme traite des installations BT extérieures comme l'éclairage public ?",
+              "choix": [
+                "NF C17-200",
+                "NF C15-100",
+                "NF C11-201",
+                "NF C13-200"
+              ],
+              "bonne": 0,
+              "explication": "NF C17-200 : éclairage public et extérieur, IRVE, signalisation…"
+            },
+            {
+              "q": "Dans un logement neuf, les DDR doivent être…",
+              "choix": [
+                "≤ 30 mA sur tous les circuits terminaux",
+                "≤ 300 mA en tête d'installation seulement",
+                "≤ 500 mA",
+                "facultatifs"
+              ],
+              "bonne": 0,
+              "explication": "Arrêté du 3 août 2016, art. 2."
+            },
+            {
+              "q": "Le parafoudre protège contre…",
+              "choix": [
+                "les surtensions transitoires",
+                "les surcharges",
+                "les courants de fuite",
+                "les courts-circuits"
+              ],
+              "bonne": 0,
+              "explication": "Disjoncteur : surcharge/court-circuit ; DDR : courant différentiel ; parafoudre : surtensions transitoires."
+            },
+            {
+              "q": "Le classement exigé en ERP par l'arrêté du 17 mai 2024 (zones public) est…",
+              "choix": [
+                "Cca-s2,d2,a2",
+                "Eca",
+                "Fca",
+                "Dca-s3,d2,a3"
+              ],
+              "bonne": 0,
+              "explication": "« C2 » = Cca-s2,d2,a2 (EL10)."
+            },
+            {
+              "q": "Un U1000 R2V courant est classé…",
+              "choix": [
+                "Eca",
+                "Cca-s1,d1,a1",
+                "B2ca",
+                "Aca"
+              ],
+              "bonne": 0,
+              "explication": "Eca selon sa DoP : il ne convient pas là où C2 est exigé."
+            },
+            {
+              "q": "Que mesure le critère « d » ?",
+              "choix": [
+                "Les gouttelettes et particules enflammées",
+                "La densité des fumées",
+                "La durée de résistance au feu",
+                "Le diamètre du câble"
+              ],
+              "bonne": 0,
+              "explication": "d comme droplets : d0 aucune, d1 ≤ 10 s, d2 non classée."
+            },
+            {
+              "q": "Combien de normes compte la série NF C15-100:2024 ?",
+              "choix": [
+                "21",
+                "7",
+                "17",
+                "74"
+              ],
+              "bonne": 0,
+              "explication": "21 normes révisables indépendamment (dont 17 parties 7)."
+            },
+            {
+              "q": "Section de réseau par défaut dans l'étude de lotissement ?",
+              "choix": [
+                "150 mm²",
+                "35 mm²",
+                "95 mm²",
+                "240 mm²"
+              ],
+              "bonne": 0,
+              "explication": "35 mm² liaison parcelle, 95/150 antennes, 150 réseau par défaut, 240 départ 120-180 kVA."
+            },
+            {
+              "q": "100 W allumés 1 200 h par an consomment…",
+              "choix": [
+                "120 kWh",
+                "1 200 kWh",
+                "12 kWh",
+                "200 kWh"
+              ],
+              "bonne": 0,
+              "explication": "E = 0,1 kW × 1 200 h = 120 kWh."
+            },
+            {
+              "q": "Un client demande un raccordement sans coupure pour ne pas arrêter la production. Le motif économique seul…",
+              "choix": [
+                "ne permet aucune exception (R.4544-4)",
+                "autorise le travail sous tension",
+                "suffit si le client signe",
+                "relève seulement du CCTP"
+              ],
+              "bonne": 0,
+              "explication": "Travaux hors tension en principe : organiser une coupure, une autre solution ou préparer l'intervention."
+            },
+            {
+              "q": "Une maison neuve construite pour l'usage propre du propriétaire, côté accessibilité :",
+              "choix": [
+                "est exclue de la section maisons individuelles",
+                "suit les règles du collectif",
+                "suit la section maisons individuelles",
+                "relève de la RE 2020"
+              ],
+              "bonne": 0,
+              "explication": "Diapo 64 : exclusion, à confirmer : qui entreprend la construction."
+            },
+            {
+              "q": "La responsabilité pénale entraîne…",
+              "choix": [
+                "amende, voire peine personnelle",
+                "uniquement des dommages et intérêts",
+                "des pénalités contractuelles",
+                "la résiliation du marché"
+              ],
+              "bonne": 0,
+              "explication": "Civile : dommages et intérêts ; contractuelle : pénalités, résiliation, contentieux."
+            }
+          ]
+        },
+        {
+          "id": "exercices-situations-normes",
+          "titre": "Les 7 situations, le CCTP BELZ et le carnet rempli",
+          "type": "Exercices",
+          "date": "2026-10-15",
+          "source": "Diaporama « Normes et règlementations en lien avec les installations électriques » V6, Dorian Poirrier (74 diapos) ; carnet stagiaire V6 rempli avec le diaporama",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Pour chaque situation du cours, le cadre (réglementaire, normatif, contractuel) et la correction du diaporama, plus l'exercice CCTP et le classement en familles. Le carnet stagiaire rempli est téléchargeable.",
+          "sections": [
+            {
+              "titre": "Le carnet rempli",
+              "html": "<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/normes-carnet-rempli.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Carnet stagiaire V6 rempli (PDF, 23 pages)</b></a></p>\n<p>Rempli uniquement avec le diaporama. Les cases personnelles (anecdote, schéma, « après l'échange »…) sont restées vides.</p>"
+            },
+            {
+              "titre": "Exercice CCTP : avant la commande",
+              "html": "<div class=\"exemple\">« 1 tiroir optique 19'' 6 brins équipé de connecteurs LC (type connectique à confirmer) pour fibre optique multimode. » (BELZ 2022, § 3.11, p. 19/23)</div>\n<ul><li>À confirmer : le <b>type de connectique</b>.</li><li>Question au maître d'œuvre avant commande, puis tracer la réponse, la décision et le document.</li>\n<li>Ordre de priorité : « en cas de superposition, le document le plus contraignant est retenu ».</li></ul>"
+            },
+            {
+              "titre": "Classer dans les familles",
+              "html": "<table><tr><th>Situation</th><th>Famille (d'après la diapo 17)</th></tr>\n<tr><td>Câble dans une école</td><td>Installations électriques</td></tr><tr><td>Lotissement de 8 parcelles</td><td>Réseau + livraison (NF C11-201, NF C14-100)</td></tr>\n<tr><td>Borne IRVE en parking privé</td><td>Installations électriques</td></tr><tr><td>TST sur un TGBT</td><td>Sécurité des travailleurs (NF C18-505)</td></tr>\n<tr><td>Collectif et accessibilité</td><td>Construction</td></tr><tr><td>Poste HTA/BT d'usine</td><td>Livraison (NF C13-100) + installations (NF C13-200)</td></tr>\n<tr><td>Classement feu en IGH</td><td>Incendie</td></tr><tr><td>Réseau BT en voirie</td><td>Réseau de distribution</td></tr>\n<tr><td>Habilitation B2V</td><td>Sécurité des travailleurs</td></tr><tr><td>Tableau et règles PMR</td><td>Construction (+ installations)</td></tr></table>"
+            },
+            {
+              "titre": "Les 7 situations corrigées",
+              "html": "<ol>\n<li><b>NF C14-100 pour un branchement individuel</b> : normatif (imposée de fait par le GRD), réglementaire (conforme à l'arrêté du 17 mai 2001), contractuel (le CCTP peut être plus contraignant).</li>\n<li><b>Logement neuf, permis en octobre 2026</b> : objectifs de sécurité de l'arrêté de 2016 + série NF C15-100:2024 + exigences du marché à relever.</li>\n<li><b>Deux prises de plus par bureau (CCTP)</b> : réglementaire → vérifier le champ ; normatif → parties concernées de la série 2024 ; contractuel → prévoir la prestation au marché (Code civil 1103).</li>\n<li><b>DDR 30 mA en logement neuf</b> : arrêté du 3 août 2016, art. 2 → DDR ≤ 30 mA sur tous les circuits terminaux.</li>\n<li><b>« R2V habituel partout »</b> : en ERP l'arrêté du 17 mai 2024 exige Cca-s2,d2,a2, le R2V est Eca → <b>ne convient pas</b>.</li>\n<li><b>Accessibilité écartée dans un logement</b> : CCH R.162-1 à R.162-7, dépend de la destination (location, usage propre, collectif). À obtenir : bâtiment, opération, usage, date.</li>\n<li><b>Départ ajouté sans coupure</b> : travaux hors tension en principe ; organiser une coupure (éviter le risque, planifier), autre solution matérielle, ou préparer l'intervention. Le seul motif économique n'est pas une exception (R.4544-4).</li></ol>"
+            }
+          ],
+          "pointsCles": [
+            "Chaque situation se justifie par une source précise et une information à obtenir.",
+            "Les cadres réglementaire, normatif et contractuel peuvent s'appliquer ensemble."
+          ],
+          "definitions": [],
+          "flashcards": [
+            {
+              "q": "Situation : « J'utilise le R2V habituel dans tous les bâtiments. » Réponse ?",
+              "r": "Non : en ERP l'arrêté du 17 mai 2024 exige Cca-s2,d2,a2, le R2V est Eca."
+            },
+            {
+              "q": "Situation : raccordement sans coupure pour ne pas arrêter la production ?",
+              "r": "Hors tension en principe ; le motif économique seul n'est pas une exception (R.4544-4)."
+            }
+          ],
+          "quiz": []
+        }
+      ]
+    },
+    {
       "id": "guide",
       "nom": "Mode d'emploi",
       "semestre": "Exemple",
