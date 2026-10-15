@@ -6569,65 +6569,6 @@ window.COURS = {
       ]
     },
     {
-      "id": "normes",
-      "nom": "Réglementation et normes",
-      "semestre": "Compétences réglementaires et normatives",
-      "couleur": "#2f9e44",
-      "chapitres": [
-        {
-          "id": "carnet-formation",
-          "titre": "Carnet de formation : déroulé et repères",
-          "type": "Infos",
-          "date": "2026-10-15",
-          "source": "Support stagiaire « Normes et réglementations des installations électriques », carnet V6 (M. Poirrier), 23 pages remplissables",
-          "auteurs": "Kylian Bonnet",
-          "resume": "Le carnet à remplir pendant les 3 journées du module (15 oct., 16 et 17 nov.) : son déroulé, les repères qu'il donne déjà et la méthode d'analyse du CCTP pour l'évaluation.",
-          "sections": [
-            {
-              "titre": "Le module et le carnet",
-              "html": "<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/normes-carnet-stagiaire-v6.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Télécharger le carnet vierge (PDF remplissable, 23 pages)</b></a></p>\n<ul><li><b>Prof :</b> M. Poirrier · UE « Compétences réglementaires et normatives » (USEE4A).</li>\n<li><b>3 journées :</b> 15 octobre, 16 et 17 novembre 2026.</li>\n<li><b>Mode d'emploi :</b> télécharge le PDF, clique dans les zones pour écrire, puis enregistre. Les cases se cochent directement.</li>\n<li><b>Objectif :</b> identifier le périmètre d'une affaire, retrouver une source, poser une question utile et justifier une décision.</li></ul>\n<table><tr><th>Parcours</th><th>Pages</th></tr>\n<tr><td>Histoire, textes et lecture du CCTP</td><td>2 à 5</td></tr>\n<tr><td>Familles de textes, réseaux et branchements</td><td>6 à 9</td></tr>\n<tr><td>NF C15-100, protections et câbles</td><td>10 à 16</td></tr>\n<tr><td>Construction, énergie et décisions de chantier</td><td>17 à 21</td></tr>\n<tr><td>Préparation CCTP et références</td><td>22 et 23</td></tr></table>"
-            },
-            {
-              "titre": "Origine d'une exigence",
-              "html": "<ul><li>Pour une exigence, cherche d'abord <b>ce qui la fonde</b>. Plusieurs cadres peuvent se cumuler.</li>\n<li>4 familles : <b>loi et code</b> · <b>décret et arrêté</b> · <b>norme</b> · <b>contrat et CCTP</b>.</li>\n<li>Une norme peut être : volontaire, rendue obligatoire par un texte réglementaire, imposée de fait par la pratique, ou une exigence contractuelle.</li>\n<li>Le <b>CCTP</b> décrit les prestations du marché. Une mention se lit avec le périmètre et les autres pièces.</li></ul>\n<div class=\"exemple\"><b>Activité dossier BELZ (2022, § 3.11, p. 19/23)</b><br>Tiroir optique 19 pouces, 6 brins, connecteurs LC, fibre multimode, connectique « à confirmer » → rédiger une question précise au maître d'œuvre <b>avant la commande</b>. Repérer aussi la clause de superposition : quelle pièce donne l'ordre de priorité en cas de contradiction ?</div>\n<div class=\"attention\">Le dossier date de 2022 : une reprise en 2026 demande de requalifier l'opération et ses dates.</div>"
-            },
-            {
-              "titre": "Familles de textes",
-              "html": "<p>A Réseau de distribution · B Livraison client · C Installations électriques · D Incendie · E Construction · F Sécurité des travailleurs. On peut cumuler deux familles si on le justifie.</p>\n<p>Situations à classer : câble dans une école, lotissement de 8 parcelles, borne IRVE en parking privé, travaux sous tension sur TGBT, immeuble collectif et accessibilité, poste HTA/BT d'usine, classement feu des câbles en IGH, réseau BT en voirie, habilitation B2V, implantation d'un tableau et accessibilité.</p>"
-            },
-            {
-              "titre": "Réseau et branchement",
-              "html": "<ul><li>Repères à noter : <b>GRD</b>, <b>AGCP</b> et <b>CCPI</b>, branchement individuel/collectif, type 1/type 2.</li>\n<li>Branchement BT à puissance limitée : <b>≤ 36 kVA</b>.</li>\n<li>Localiser le <b>PDL</b> sur les documents du GRD : la limite de propriété ne suffit pas.</li>\n<li><b>NF C14-100</b> : branchement individuel.</li>\n<li>Lotissement : une section générique ne remplace pas les vérifications. Garder les conditions associées aux valeurs (puissance, pondération, pose, longueurs, chutes de tension).</li></ul>"
-            },
-            {
-              "titre": "NF C15-100, protections et câbles",
-              "html": "<ul><li>Série <b>NF C15-100 de 2024 : 21 normes</b>, les parties évoluent séparément (‑1, ‑7‑701, ‑7‑704, ‑7‑722, ‑7‑756, ‑8‑1, ‑10, ‑11 à compléter).</li>\n<li>Dates à distinguer : édition 2002 et amendements, arrêté habitation du 3 août 2016, publication de la série 2024, septembre 2025.</li>\n<li>La référence pro 2024 et l'édition citée par la réglementation sont deux questions à examiner ensemble, avec les exigences du marché.</li>\n<li>Protections : surcharge/court-circuit, courant différentiel résiduel, surtension transitoire ↔ disjoncteur, DDR, parafoudre.</li>\n<li>Un <b>interrupteur différentiel</b> s'associe à une protection contre les surintensités.</li>\n<li>Réaction au feu des câbles : 7 classes principales + critères <b>s</b>, <b>d</b>, <b>a</b> (exemple à décoder : <b>Cca-s2,d2,a2</b>).</li></ul>"
-            },
-            {
-              "titre": "Construction, énergie, responsabilités",
-              "html": "<ul><li>À qualifier : <b>RE 2020</b>, Code de la construction et de l'habitation, arrêté du 3 août 2016, NF C15-100-8-1. Situations : maison neuve en location, maison pour usage propre, immeuble collectif neuf. Pour l'existant, le champ des travaux se cherche dans les textes propres à l'opération.</li>\n<li>Efficacité énergétique : concevoir, mesurer, agir puis vérifier.</li>\n<li><b>E (kWh) = P (kW) × t (h)</b>. Exercice : 100 W constant, 2 000 h/an puis 1 200 h/an. Ce calcul seul ne permet pas d'attribuer une classe EE.</li>\n<li>Responsabilités civile, pénale, contractuelle : la contractuelle appartient au champ civil. Elles peuvent se cumuler.</li></ul>"
-            },
-            {
-              "titre": "Les 7 situations",
-              "html": "<p>Pour chacune, cocher le cadre : réglementaire, normatif, contractuel.</p><ol>\n<li>NF C14-100 pour un branchement individuel.</li><li>Logement neuf, permis déposé en octobre 2026, NF C15-100.</li>\n<li>CCTP : 2 prises supplémentaires par bureau.</li><li>DDR 30 mA dans un logement neuf.</li>\n<li>« Câble R2V habituel dans tous les types de bâtiments ».</li><li>Chargé d'affaires qui écarte l'accessibilité dans un logement.</li>\n<li>Ajout d'un départ sur un tableau BT en service, client qui demande un raccordement sans coupure.</li></ol>"
-            },
-            {
-              "titre": "Méthode CCTP (évaluation)",
-              "html": "<p>Dernière demi-journée : dossier CCTP et évaluation. Même démarche pour chaque point :</p>\n<table><tr><th>Étape</th><th>Question</th></tr>\n<tr><td>Périmètre</td><td>Quel bâtiment, quelle opération, quelle date ?</td></tr>\n<tr><td>Exigence</td><td>Que demande précisément le dossier ?</td></tr>\n<tr><td>Source</td><td>Quel texte, quelle édition ou quelle clause le prouve ?</td></tr>\n<tr><td>Information manquante</td><td>Qui peut confirmer ce point ?</td></tr>\n<tr><td>Action et trace</td><td>Que faire et que conserver avant de poursuivre ?</td></tr></table>"
-            },
-            {
-              "titre": "Ressources",
-              "html": "<ul><li><b>AFNOR :</b> série NF C15-100 et son application, catalogue des parties, NF C15-100-8-1.</li>\n<li><b>Enedis :</b> référentiel technique des branchements BT, documentation de raccordement.</li>\n<li><b>Légifrance :</b> arrêté habitation du 3 août 2016 (art. 2 et 4), CCH R162-5, ERP art. EL10, arrêté du 17 mai 2024, Code du travail R4544-4 et L4121-2, Code civil art. 1103.</li>\n<li><b>INRS :</b> ED6345 Le risque électrique.</li></ul>\n<div class=\"attention\">Pour une affaire réelle, vérifie la version, le champ et les dates applicables.</div>"
-            }
-          ],
-          "pointsCles": [],
-          "definitions": [],
-          "flashcards": [],
-          "quiz": []
-        }
-      ]
-    },
-    {
       "id": "guide",
       "nom": "Mode d'emploi",
       "semestre": "Exemple",
