@@ -1,6 +1,6 @@
 // Planning de la Licence (agenda iCal Net-YParéo), généré par notifs/planning-ics.py
 window.PLANNING = {
-"maj": "2026-10-13",
+"maj": "2026-10-16",
 "lieu": "Cnam Niort, 10 place de la Comédie, 79000 Niort",
 "evenements": [
 {
@@ -2161,7 +2161,7 @@ window.PLANNING = {
 "h1": "08:30",
 "h2": "12:00",
 "s": "CACES® Gerbeur R485 Cat 1 et 2",
-"prof": ""
+"prof": "M. Bardin"
 },
 {
 "t": "cours",
@@ -2173,7 +2173,7 @@ window.PLANNING = {
 "h1": "13:00",
 "h2": "16:30",
 "s": "CACES® Gerbeur R485 Cat 1 et 2",
-"prof": ""
+"prof": "M. Bardin"
 },
 {
 "t": "cours",
