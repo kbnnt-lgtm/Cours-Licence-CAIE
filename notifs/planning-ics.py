@@ -16,16 +16,28 @@ else:
         print("PLANNING_ICS absent : rien à faire."); sys.exit(0)
     url = re.sub(r"^webcals?://", "https://", url)
     lire = lambda u, ctx=None: urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (planning Licence CAIE)"}), timeout=60, context=ctx).read()
-    try:
-        txt = lire(url)
-    except urllib.error.URLError as e:
-        # Le serveur Net-YParéo de l'école présente un certificat valide mais établi pour un autre nom :
-        # on garde la vérification de la chaîne de confiance et on ne saute que la vérification du nom.
-        if "HOSTNAME MISMATCH" not in str(e.reason).upper(): raise
-        import ssl
-        ctx = ssl.create_default_context(); ctx.check_hostname = False
-        print("Certificat du serveur émis pour un autre nom : lecture avec la chaîne vérifiée, sans contrôle du nom.")
-        txt = lire(url, ctx)
+    import ssl, time
+    ctx = None
+    for essai in range(1, 4):
+        try:
+            txt = lire(url, ctx); break
+        except urllib.error.HTTPError:
+            raise
+        except urllib.error.URLError as e:
+            # Le serveur Net-YParéo de l'école présente un certificat valide mais établi pour un autre nom :
+            # on garde la vérification de la chaîne de confiance et on ne saute que la vérification du nom.
+            if ctx is None and "HOSTNAME MISMATCH" in str(e.reason).upper():
+                ctx = ssl.create_default_context(); ctx.check_hostname = False
+                print("Certificat du serveur émis pour un autre nom : lecture avec la chaîne vérifiée, sans contrôle du nom.")
+                try: txt = lire(url, ctx); break
+                except urllib.error.URLError as e2: e = e2
+            if essai < 3:
+                print(f"Serveur de l'agenda injoignable ({e.reason}), nouvel essai dans 30 s…"); time.sleep(30)
+                continue
+            # Serveur de l'école en panne ou injoignable : ce n'est pas une erreur du dépôt. On garde le
+            # planning actuel et on signale seulement un avertissement (pas d'échec ni de mail d'alerte).
+            print(f"::warning::Serveur de l'agenda injoignable après 3 essais ({e.reason}) : planning inchangé.")
+            sys.exit(0)
 try: txt = txt.decode("utf-8")
 except UnicodeDecodeError: txt = txt.decode("cp1252")
 if "BEGIN:VCALENDAR" not in txt:
