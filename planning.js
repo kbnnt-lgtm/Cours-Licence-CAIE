@@ -1,6 +1,6 @@
 // Planning de la Licence (agenda iCal Net-YParéo), généré par notifs/planning-ics.py
 window.PLANNING = {
-"maj": "2026-10-30",
+"maj": "2026-11-06",
 "lieu": "Cnam Niort, 10 place de la Comédie, 79000 Niort",
 "evenements": [
 {
@@ -1972,7 +1972,7 @@ window.PLANNING = {
 "code": "USEE4A",
 "ue": "Compétences réglementaires et normatives",
 "salle": "Salle UIMM",
-"prof": "M. Pinaudeau, M. Valençon",
+"prof": "M. Pinaudeau, M. Lebreton",
 "s": "Habilitation électrique"
 },
 {
@@ -1984,7 +1984,7 @@ window.PLANNING = {
 "code": "USEE4A",
 "ue": "Compétences réglementaires et normatives",
 "salle": "Salle UIMM",
-"prof": "M. Pinaudeau, M. Valençon",
+"prof": "M. Pinaudeau, M. Lebreton",
 "s": "Habilitation électrique"
 },
 {
