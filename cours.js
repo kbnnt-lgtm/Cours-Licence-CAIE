@@ -6965,7 +6965,7 @@ window.COURS = {
           "sections": [
             {
               "titre": "Le carnet rempli",
-              "html": "<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/normes-carnet-rempli.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Carnet stagiaire V6 rempli (PDF, 23 pages)</b></a></p>\n<p>Rempli uniquement avec le diaporama. Les cases personnelles (anecdote, schéma, « après l'échange »…) sont restées vides.</p>"
+              "html": "<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/normes-carnet-rempli.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Carnet stagiaire V6 rempli (PDF, 23 pages)</b></a></p>\n<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/normes-carnet-stagiaire-v6.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Carnet vierge à remplir soi-même (PDF remplissable)</b></a></p>\n<p>Rempli uniquement avec le diaporama. Les cases personnelles (anecdote, schéma, « après l'échange »…) sont restées vides.</p>\n<ul><li><b>3 journées :</b> 15 octobre, 16 et 17 novembre 2026 (M. Poirrier).</li>\n<li><b>Objectif :</b> identifier le périmètre d'une affaire, retrouver une source, poser une question utile et justifier une décision.</li></ul>"
             },
             {
               "titre": "Exercice CCTP : avant la commande",
@@ -6978,6 +6978,14 @@ window.COURS = {
             {
               "titre": "Les 7 situations corrigées",
               "html": "<ol>\n<li><b>NF C14-100 pour un branchement individuel</b> : normatif (imposée de fait par le GRD), réglementaire (conforme à l'arrêté du 17 mai 2001), contractuel (le CCTP peut être plus contraignant).</li>\n<li><b>Logement neuf, permis en octobre 2026</b> : objectifs de sécurité de l'arrêté de 2016 + série NF C15-100:2024 + exigences du marché à relever.</li>\n<li><b>Deux prises de plus par bureau (CCTP)</b> : réglementaire → vérifier le champ ; normatif → parties concernées de la série 2024 ; contractuel → prévoir la prestation au marché (Code civil 1103).</li>\n<li><b>DDR 30 mA en logement neuf</b> : arrêté du 3 août 2016, art. 2 → DDR ≤ 30 mA sur tous les circuits terminaux.</li>\n<li><b>« R2V habituel partout »</b> : en ERP l'arrêté du 17 mai 2024 exige Cca-s2,d2,a2, le R2V est Eca → <b>ne convient pas</b>.</li>\n<li><b>Accessibilité écartée dans un logement</b> : CCH R.162-1 à R.162-7, dépend de la destination (location, usage propre, collectif). À obtenir : bâtiment, opération, usage, date.</li>\n<li><b>Départ ajouté sans coupure</b> : travaux hors tension en principe ; organiser une coupure (éviter le risque, planifier), autre solution matérielle, ou préparer l'intervention. Le seul motif économique n'est pas une exception (R.4544-4).</li></ol>"
+            },
+            {
+              "titre": "Méthode CCTP pour l'évaluation",
+              "html": "<p>La dernière demi-journée est consacrée au dossier CCTP et à l'évaluation. Même démarche sur chaque point du dossier :</p>\n<table><tr><th>Étape</th><th>Question</th></tr>\n<tr><td>Périmètre</td><td>Quel bâtiment, quelle opération et quelle date ?</td></tr>\n<tr><td>Exigence</td><td>Que demande précisément le dossier ?</td></tr>\n<tr><td>Source</td><td>Quel texte, quelle édition ou quelle clause le prouve ?</td></tr>\n<tr><td>Information manquante</td><td>Qui peut confirmer ce point ?</td></tr>\n<tr><td>Action et trace</td><td>Que faire et que conserver avant de poursuivre ?</td></tr></table>\n<div class=\"attention\">Dossier BELZ : 2022. Une hypothèse de projet repris en 2026 doit être annoncée et analysée séparément.</div>"
+            },
+            {
+              "titre": "Ressources",
+              "html": "<ul><li><b>Normes et branchements :</b> AFNOR (série NF C15-100 et son application, catalogue des parties, NF C15-100-8-1 Efficacité énergétique) · Enedis (référentiel technique des branchements BT, documentation de raccordement).</li>\n<li><b>Logement et accessibilité :</b> arrêté habitation du 3 août 2016 (art. 2 et 4) · CCH R162-5 maisons individuelles.</li>\n<li><b>Incendie et prévention :</b> ERP art. EL10 canalisations · arrêté du 17 mai 2024 · Code du travail R4544-4 et L4121-2 · INRS ED6345 Le risque électrique.</li>\n<li><b>Marché :</b> Code civil art. 1103 · dossier BELZ, CCTP Électricité CFO CFA 2022, § 3.11, p. 19/23.</li></ul>\n<div class=\"attention\">Pour une affaire réelle, vérifie la version, le champ et les dates applicables.</div>"
             }
           ],
           "pointsCles": [
@@ -6993,6 +7001,14 @@ window.COURS = {
             {
               "q": "Situation : raccordement sans coupure pour ne pas arrêter la production ?",
               "r": "Hors tension en principe ; le motif économique seul n'est pas une exception (R.4544-4)."
+            },
+            {
+              "q": "Les 5 étapes pour analyser un point du CCTP ?",
+              "r": "Périmètre, exigence, source, information manquante, action et trace."
+            },
+            {
+              "q": "Dossier BELZ daté de 2022 repris en 2026 : que faire ?",
+              "r": "Annoncer l'hypothèse de reprise en 2026 et l'analyser séparément."
             }
           ],
           "quiz": []
