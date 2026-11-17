@@ -7083,7 +7083,8 @@ window.COURS = {
     "2hopT6m6FQmweOp0l65h",
     "XsRxpn4GLCNLtSwSiEXP",
     "4Dlov9DpccuzV3yAertA",
-    "3L8YdDeYzLp5mKAhGqa5"
+    "3L8YdDeYzLp5mKAhGqa5",
+    "NfSAHpyJ5ENcdP8FI5Sf"
   ],
   "avisClaude": {
     "9h2PCcISxfYhpLBkVre7": {
@@ -7105,6 +7106,10 @@ window.COURS = {
     "3L8YdDeYzLp5mKAhGqa5": {
       "statut": "integree",
       "texte": "Nouveau chapitre « Lecture de GRAFCET » (Automatisme, cours du 13 octobre) : symboles, divergences OU / ET, les 5 règles d'évolution, les 3 points de vue avec l'exemple de l'étiqueteuse, réceptivités et actions spécifiques, macro-étapes. Avec schémas, fiches et quiz ; tes 6 photos sont dans les photos du chapitre."
+    },
+    "NfSAHpyJ5ENcdP8FI5Sf": {
+      "statut": "deja",
+      "texte": "Déjà dans le cours : Normes et règlementations, sections « Les 4 cadres d'une exigence », « La série NF C15-100:2024 » et « Protections et DDR ». Ta fiche complétée reprend le diaporama, déjà intégré : rien de nouveau à ajouter au cours."
     }
   }
 };
