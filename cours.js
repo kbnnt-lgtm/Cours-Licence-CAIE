@@ -7012,6 +7012,81 @@ window.COURS = {
             }
           ],
           "quiz": []
+        },
+        {
+          "id": "exercices-ateliers-17-11",
+          "titre": "Ateliers du 17 novembre : du réseau au logement",
+          "type": "Exercices",
+          "date": "2026-11-17",
+          "source": "Document « Ateliers CAIE — 17 novembre 2026 » (« Du réseau au logement »), M. Poirrier",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Une matinée d'ateliers sur un immeuble fictif (A-12) : placer le point de livraison, calculer la puissance d'une colonne, vérifier une chute de tension, implanter l'ETEL, les prises et les circuits, puis évaluer une économie d'énergie.",
+          "sections": [
+            {
+              "titre": "Le réseau et le point de livraison",
+              "html": "<ul><li>Immeuble A-12 : 12 logements (R+3 à RDC, trois par niveau, 9 kVA chacun) et des services généraux de 12 kVA. Une seule colonne : cas <b>ECP-2D</b> (une arrivée, un départ).</li>\n<li>Dans le distributeur de chaque niveau, un <b>CCPI</b> protège une <b>DI</b> (dérivation individuelle) par logement.</li>\n<li>Le <b>PDL</b> (point de livraison) se situe aux <b>bornes aval de l'AGCP</b>. Ici, comptage et AGCP sont dans le logement : la frontière est donc à l'intérieur du logement.</li>\n<li>En amont du PDL : <b>NF C 14-100</b> (branchement). En aval : <b>NF C 15-100</b> (installation).</li></ul>"
+            },
+            {
+              "titre": "Puissances : coefficient de foisonnement",
+              "html": "<p>Pour la tête de colonne, les logements sont pondérés par un coefficient <b>k</b> (NF C 14-100, juillet 2021, tableau 9). Les services généraux s'ajoutent après pondération.</p>\n<table><tr><th>Logements aval</th><th>1 à 4</th><th>5 à 9</th><th>10 à 14</th><th>15 à 19</th><th>20 à 24</th><th>25 à 29</th><th>30 à 34</th><th>35 à 39</th><th>40 à 49</th><th>50 et +</th></tr>\n<tr><td>k</td><td>1,00</td><td>0,78</td><td>0,63</td><td>0,53</td><td>0,49</td><td>0,46</td><td>0,44</td><td>0,42</td><td>0,41</td><td>0,38</td></tr></table>\n<div class=\"exemple\"><b>Calcul :</b> 12 × 9 = 108 kVA ; 108 × 0,63 = 68,04 kVA ; 68,04 + 12 = <b>80,04 kVA</b> en tête de colonne.</div>\n<details class=\"detail-q\" style=\"margin:6px 0 12px\"><summary>Voir la correction détaillée</summary><p>Le coefficient 0,63 correspond aux 10 à 14 logements. Il traduit la non-simultanéité des usages : les logements ne consomment pas tous leur puissance en même temps.</p></details>"
+            },
+            {
+              "titre": "Avec chauffage électrique : deux calculs distincts",
+              "html": "<ul><li><b>Courants admissibles :</b> P = 5 × √N + ΣPi + ΣPnd, avec N = nombre de logements, Pi = chauffage par logement, Pnd = services généraux. Ici : 5 × √12 + 72 + 12 ≈ <b>101,32 kVA</b>.</li>\n<li><b>Chute de tension (ΔU) :</b> on divise <b>uniquement</b> le chauffage par 1,3 : 5 × √12 + 72 / 1,3 + 12 ≈ <b>84,71 kVA</b>.</li>\n<li>Ces deux valeurs servent à deux vérifications différentes. Ne pas les confondre.</li></ul>\n<div class=\"attention\">Un plan et un calcul peuvent se contredire (12 logements sur le plan, 10 dans le calcul ; DI de 15 m ou de 8 m). Avant de conclure, il faut confirmer la donnée auprès de l'interlocuteur concerné et reprendre la pièce.</div>"
+            },
+            {
+              "titre": "Le logement : ETEL, prises, circuits, éclairage",
+              "html": "<ul><li><b>ETEL</b> : emplacement réservé, accessible en permanence, du sol au plafond, 60 cm de large et 25 cm de profondeur, avec 70 cm libres devant les tableaux. On l'écarte de la salle d'eau.</li>\n<li><b>Prises de cuisine (10 m²) :</b> au moins 6 prises, dont 4 au-dessus du plan de travail ; hors évier et plaques ; circuit dédié en cuivre 2,5 mm², disjoncteur 20 A maxi.</li>\n<li><b>Appareils spécialisés :</b> plaques de cuisson 6 mm² / 32 A ; four, lave-vaisselle et lave-linge en 2,5 mm² / 20 A, chacun sur son circuit. Protection différentielle 30 mA.</li>\n<li><b>Éclairage du T3 :</b> au moins 2 circuits, 8 points maxi par circuit, conducteurs 1,5 mm², disjoncteur 16 A maxi, un point par pièce.</li></ul>\n<details class=\"detail-q\" style=\"margin:6px 0 12px\"><summary>Voir les corrections des exercices</summary><ol><li><b>Emplacement de l'ETEL :</b> l'entrée est retenue, car elle est accessible et la réservation se vérifie sur le plan coté.</li><li><b>Prises :</b> 4 prises au-dessus du plan de travail, 6 au total au minimum, hors évier et plaques.</li><li><b>Circuits :</b> plaques 6 mm² / 32 A ; four, lave-vaisselle, lave-linge 2,5 mm² / 20 A.</li><li><b>Éclairage :</b> trois points sur E1 et trois sur E2, en répartissant les pièces entre les deux circuits.</li></ol></details>"
+            },
+            {
+              "titre": "Énergie : le réglage se vérifie sur place",
+              "html": "<ul><li>10 luminaires de 10 W, soit 100 W = 0,1 kW.</li>\n<li>Avant réglage : 0,1 × 2 000 = <b>200 kWh/an</b>. Après : 0,1 × 1 200 = <b>120 kWh/an</b>.</li>\n<li>Écart : <b>80 kWh/an</b>, soit une réduction de 40 % pour cet éclairage, sous ces hypothèses.</li>\n<li>Pour un réglage (temporisation, détection de présence, seuil de lumière du jour) : adapter la temporisation au parcours réel, vérifier la détection à l'entrée et dans l'escalier, puis comparer les kWh et les retours des habitants.</li></ul>"
+            },
+            {
+              "titre": "Repères à retenir",
+              "html": "<ul><li>La colonne distribue ; chaque DI dessert un seul utilisateur.</li><li>La puissance dépend des usages et du calcul à faire (k, chauffage, ΔU).</li><li>Le logement demande des circuits et des implantations adaptés.</li><li>L'économie d'énergie se vérifie avec le service rendu.</li></ul>"
+            }
+          ],
+          "pointsCles": [
+            "Le PDL est aux bornes aval de l'AGCP : en collectif, comptage et AGCP sont souvent dans le logement.",
+            "Coefficient k : 0,63 pour 10 à 14 logements. Les services généraux s'ajoutent après pondération.",
+            "Courants admissibles : 101,32 kVA avec chauffage. Chute de tension : chauffage divisé par 1,3, soit 84,71 kVA.",
+            "Prises de cuisine : 6 minimum, dont 4 au-dessus du plan de travail, sur circuit 2,5 mm² / 20 A.",
+            "Plaques : 6 mm² / 32 A. Four, lave-vaisselle, lave-linge : 2,5 mm² / 20 A, chacun sur son circuit.",
+            "Réglage de l'éclairage : 100 W, 2 000 h → 1 200 h = 80 kWh/an d'économie."
+          ],
+          "definitions": [],
+          "flashcards": [
+            {
+              "q": "Quel coefficient k pour 12 logements aval ?",
+              "r": "0,63 (tranche 10 à 14 logements, NF C 14-100 tableau 9)."
+            },
+            {
+              "q": "Combien de kVA en tête de colonne pour 12 logements de 9 kVA et 12 kVA de services généraux ?",
+              "r": "80,04 kVA : 108 × 0,63 = 68,04, puis + 12."
+            },
+            {
+              "q": "Quelle est la formule des courants admissibles avec chauffage ?",
+              "r": "P = 5 × √N + ΣPi + ΣPnd (ici 101,32 kVA)."
+            },
+            {
+              "q": "Pour la chute de tension, que divise-t-on par 1,3 ?",
+              "r": "Uniquement le chauffage : P = 5 × √N + ΣPi/1,3 + ΣPnd (84,71 kVA)."
+            },
+            {
+              "q": "Où se situe le PDL dans ce collectif ?",
+              "r": "Aux bornes aval de l'AGCP, donc dans le logement."
+            },
+            {
+              "q": "Section et calibre des plaques de cuisson ?",
+              "r": "6 mm² / 32 A maxi."
+            },
+            {
+              "q": "Économie annuelle : 100 W, de 2 000 h à 1 200 h ?",
+              "r": "80 kWh/an (200 − 120), soit 40 %."
+            }
+          ],
+          "quiz": []
         }
       ]
     },
