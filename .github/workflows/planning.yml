@@ -14,7 +14,7 @@ concurrency:
 jobs:
   maj:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
       - run: python3 notifs/planning-ics.py planning.js
