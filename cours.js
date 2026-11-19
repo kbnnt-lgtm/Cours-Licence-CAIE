@@ -7087,6 +7087,162 @@ window.COURS = {
             }
           ],
           "quiz": []
+        },
+        {
+          "id": "securite-chantier-18-11",
+          "titre": "Sécurité sur les chantiers : GTC / GTB",
+          "type": "Cours",
+          "date": "2026-11-18",
+          "auteurs": "Kylian Bonnet",
+          "resume": "La sécurité en 4 notions (danger, risque, accident, dommage), les 9 principes de prévention, la démarche en 5 étapes sur chantier, la coactivité, les repères historiques, les chiffres, la responsabilité, les sanctions et les 4 indicateurs (TF, TG, IF, IG).",
+          "sections": [
+            {
+              "titre": "Les 4 notions et les 9 principes de prévention",
+              "html": "<ul><li><b>Danger</b> : source potentielle de dommage (ex. pièce nue sous tension).</li><li><b>Risque</b> : probabilité qu'un dommage survienne (ex. possibilité d'un contact direct ou indirect).</li><li><b>Accident</b> : événement ayant subi un dommage (ex. contact accidentel avec une pièce nue sous tension).</li><li><b>Dommage</b> : conséquence négative pour une personne ou l'environnement (ex. électrocution, décès).</li></ul><p>La sécurité regroupe les mesures pour prévenir les risques, protéger les personnes, les biens et l'environnement, et limiter les conséquences d'un événement dangereux.</p><p>L'article L. 4121-2 du code du travail fixe 9 principes : éviter les risques, évaluer les risques, combattre les risques à la source, adapter le travail à l'homme, tenir compte de l'évolution de la technique, remplacer ce qui est dangereux, planifier la prévention, privilégier les protections collectives, donner les instructions appropriées.</p>"
+            },
+            {
+              "titre": "La démarche sur chantier en 5 étapes",
+              "html": "<ol><li><b>Analyser</b> : où, dans quel environnement, quels travaux, quels dangers, quels risques générés par les autres entreprises et pour les autres, quels moyens.</li><li><b>Sensibiliser et transmettre</b> : plan de prévention, PPSPS, causerie, réunion de chantier, accueil sécurité, consignes écrites, briefing. Vérifier que chacun a compris les dangers, les mesures, les interdictions, les procédures d'urgence et ses responsabilités.</li><li><b>Protéger</b> : supprimer le danger et mettre en place les protections collectives en priorité, puis les équipements de protection individuelle, et s'assurer que tous savent les utiliser.</li><li><b>Vérifier</b> avant le démarrage : habilitations électriques, autorisations de conduite, échafaudages et accès, équipements de travail, EPI, protections collectives, connaissance des consignes.</li><li><b>Contrôler</b> pendant toute la durée des travaux : visites sécurité, contrôles inopinés, réunions, état des installations, balisage, suivi des situations dangereuses.</li></ol><div class=\"attention\">L'analyse ne sert à rien si elle reste sur le bureau du chargé d'affaires : elle doit être transmise à tous les intervenants. Un changement d'environnement ou de coactivité impose de réévaluer les risques.</div>"
+            },
+            {
+              "titre": "Coactivité et repères historiques",
+              "html": "<p>Sur un chantier, les interventions peuvent être simultanées, les activités se superposer, et les risques changent avec l'avancée des travaux. Le danger peut venir d'une autre entreprise : c'est la <b>coactivité</b>.</p><ul><li><b>1893</b> : première loi sur l'hygiène et la sécurité des travailleurs dans l'industrie.</li><li><b>1898</b> : l'employeur indemnise les victimes d'accidents du travail, sans que la faute ait à être prouvée.</li><li><b>1956</b> : première version de la NF C 15-100.</li><li><b>1988</b> : décret n° 88-1056, travaux électriques confiés à des personnes habilitées.</li><li><b>1991</b> : transposition de la directive européenne 89/391 (santé et sécurité au travail).</li><li><b>1992</b> : plan de prévention entre entreprise utilisatrice et entreprise extérieure.</li><li><b>1993-1994</b> : coordination sécurité sur les chantiers du bâtiment et du génie civil ; décret du 26 décembre 1994 qui crée le PPSPS.</li><li><b>2001</b> : document unique d'évaluation des risques obligatoire (décret n° 2001-1016).</li></ul>"
+            },
+            {
+              "titre": "Enjeux : chiffres, coûts et indicateurs",
+              "html": "<ul><li><b>Régime général</b> (20 millions de salariés, 2024) : 549 000 accidents du travail (1 salarié sur 36), 764 décès.</li><li><b>BTP</b> (2 millions de salariés) : 72 000 accidents du travail (1 salarié sur 27), 146 décès (191 en 2000).</li><li>25 % des décès surviennent dans la première année passée dans une entreprise.</li><li>Coûts directs : cotisations, indemnisation, malus. Coûts indirects : remplacement, désorganisation, pénalités de retard, image. Les coûts indirects valent 2 à 5 fois les coûts directs.</li></ul><p><b>Causes principales (BTP)</b> : manutention manuelle 48 %, chutes de hauteur 31 %, outillage à main 16 %. Chez les électriciens : manutention 42,5 %, chutes de hauteur 20,3 %, outillage 15 %, chutes de plain-pied 13 %, risque électrique 4 %.</p><table><tr><th>Indicateur</th><th>Formule</th><th>Lecture</th></tr><tr><td>Taux de fréquence (TF)</td><td>(accidents avec arrêt × 1 000 000) / heures travaillées</td><td>Accidents pour 1 million d'heures</td></tr><tr><td>Taux de gravité (TG)</td><td>(journées perdues × 1 000) / heures travaillées</td><td>Journées perdues pour 1 000 heures</td></tr><tr><td>Indice de fréquence (IF)</td><td>(arrêts de travail × 1 000) / effectif</td><td>Accidents pour 1 000 salariés</td></tr><tr><td>Indice de gravité (IG)</td><td>(taux d'incapacité permanente × 1 000 000) / heures</td><td>Gravité des séquelles permanentes</td></tr></table><div class=\"exemple\"><b>Exemple</b> : 200 salariés, 400 000 heures, 8 accidents avec arrêt, 240 journées perdues. TF = 8 × 1 000 000 / 400 000 = <b>20</b>. TG = 240 × 1 000 / 400 000 = <b>0,60</b>.</div><p>Indicateurs <b>réactifs</b> (ce qui s'est passé : accidents, jours d'arrêt, décès) et <b>proactifs</b> (ce qu'on fait pour éviter les accidents : visites, causeries, formations, presque-accidents signalés, actions correctives).</p>"
+            },
+            {
+              "titre": "Responsabilité et sanctions",
+              "html": "<p>L'employeur doit assurer la santé physique et mentale du travailleur (art. L. 4121-1) : actions de prévention, information et formation, organisation et moyens adaptés.</p><p>Le chargé d'affaires n'est pas automatiquement pénalement responsable de chaque accident. Sa responsabilité dépend de ses missions réelles, de son niveau d'autorité, de ses délégations, des moyens dont il dispose, des décisions prises ou non prises, et du lien entre une éventuelle faute et l'accident.</p><p>Pour comprendre un accident, on se pose 5 questions : qui a organisé l'intervention ? qui connaissait le risque ? qui pouvait arrêter le chantier ? les habilitations étaient-elles adaptées ? l'employeur avait-il fourni les moyens ?</p><div class=\"attention\"><b>Sanctions pénales (atteinte involontaire)</b> : blessures avec ITT ≤ 3 mois, 1 500 € d'amende hors circonstances aggravantes, 1 an et 15 000 € en cas de violation manifestement délibérée. Blessures avec ITT &gt; 3 mois : 2 ans et 30 000 €, ou 3 ans et 45 000 € en violation délibérée. Homicide involontaire : 3 ans et 45 000 €, ou 5 ans et 75 000 € en violation délibérée.</div>"
+            }
+          ],
+          "pointsCles": [
+            "Danger = source de dommage ; risque = probabilité qu'il survienne ; accident = événement qui cause un dommage ; dommage = conséquence négative.",
+            "Priorité de prévention : supprimer le danger, puis protections collectives, puis équipements individuels (EPI).",
+            "Démarche en 5 étapes : analyser, sensibiliser et transmettre, protéger, vérifier avant démarrage, contrôler pendant les travaux.",
+            "La coactivité (plusieurs entreprises sur le même chantier) est une source de risque : plan de prévention et PPSPS.",
+            "Le document unique (DUER) est obligatoire depuis 2001 et doit être mis à jour régulièrement.",
+            "TF = accidents avec arrêt × 1 000 000 / heures ; TG = journées perdues × 1 000 / heures.",
+            "Coûts indirects = 2 à 5 fois les coûts directs."
+          ],
+          "definitions": [
+            {
+              "terme": "Danger",
+              "def": "Source potentielle de dommage (ex. pièce nue sous tension)."
+            },
+            {
+              "terme": "Risque",
+              "def": "Probabilité qu'un dommage survienne (possibilité d'un contact direct ou indirect)."
+            },
+            {
+              "terme": "Accident",
+              "def": "Événement ayant subi un dommage (contact accidentel avec une pièce nue sous tension)."
+            },
+            {
+              "terme": "Coactivité",
+              "def": "Plusieurs entreprises intervenant en même temps sur un même chantier."
+            },
+            {
+              "terme": "Plan de prévention",
+              "def": "Document d'organisation de la prévention entre l'entreprise utilisatrice et l'entreprise extérieure (décret de 1992)."
+            },
+            {
+              "terme": "PPSPS",
+              "def": "Plan particulier de sécurité et de protection de la santé, créé par le décret du 26 décembre 1994 (bâtiment et génie civil)."
+            },
+            {
+              "terme": "DUER",
+              "def": "Document unique d'évaluation des risques professionnels, obligatoire depuis 2001."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Danger ou risque : quelle est la différence ?",
+              "r": "Le danger est la source de dommage ; le risque est la probabilité qu'il cause un dommage."
+            },
+            {
+              "q": "Quels sont les 5 étapes de la démarche sur chantier ?",
+              "r": "Analyser, sensibiliser et transmettre, protéger, vérifier, contrôler."
+            },
+            {
+              "q": "Quelle protection est prioritaire ?",
+              "r": "Supprimer le danger, puis les protections collectives, avant les EPI."
+            },
+            {
+              "q": "Qu'est-ce que la coactivité ?",
+              "r": "Plusieurs entreprises intervenant simultanément sur un même chantier, source de risques supplémentaires."
+            },
+            {
+              "q": "Quand le DUER devient-il obligatoire ?",
+              "r": "En 2001 (décret n° 2001-1016), dans toutes les entreprises."
+            },
+            {
+              "q": "Calculer le TF : 8 accidents avec arrêt, 400 000 heures.",
+              "r": "TF = 8 × 1 000 000 / 400 000 = 20 accidents pour 1 million d'heures."
+            },
+            {
+              "q": "Quels sont les indicateurs proactifs ?",
+              "r": "Ceux qui mesurent ce qu'on fait pour éviter les accidents : visites sécurité, causeries, formations, presque-accidents signalés, actions correctives."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Un câble sous tension non isolé accessible est…",
+              "choix": [
+                "un risque",
+                "un danger",
+                "un accident",
+                "un dommage"
+              ],
+              "bonne": 1,
+              "explication": "C'est la source potentielle de dommage : le danger."
+            },
+            {
+              "q": "Quelle est la priorité de la prévention ?",
+              "choix": [
+                "Équipements individuels",
+                "Supprimer le danger",
+                "Consignation seule",
+                "Formation seule"
+              ],
+              "bonne": 1,
+              "explication": "La suppression du danger passe avant les protections collectives et individuelles."
+            },
+            {
+              "q": "Le chargé d'affaires est-il automatiquement pénalement responsable de chaque accident ?",
+              "choix": [
+                "Oui, toujours",
+                "Non, cela dépend de ses missions, de son autorité, de ses délégations et du lien avec la faute",
+                "Oui, seulement en cas de mort",
+                "Non, jamais"
+              ],
+              "bonne": 1,
+              "explication": "La responsabilité dépend de plusieurs éléments, pas d'une règle automatique."
+            },
+            {
+              "q": "Le taux de gravité TG pour 240 journées perdues et 400 000 heures est…",
+              "choix": [
+                "20",
+                "0,60",
+                "6",
+                "0,06"
+              ],
+              "bonne": 1,
+              "explication": "TG = 240 × 1 000 / 400 000 = 0,60."
+            },
+            {
+              "q": "La coactivité désigne…",
+              "choix": [
+                "Un contrat de travail",
+                "Plusieurs entreprises intervenant ensemble sur un chantier",
+                "Une habilitation électrique",
+                "Un indicateur de gravité"
+              ],
+              "bonne": 1,
+              "explication": "C'est la présence simultanée de plusieurs entreprises, qui crée un risque supplémentaire."
+            }
+          ]
         }
       ]
     },
