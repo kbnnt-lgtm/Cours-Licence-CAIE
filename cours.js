@@ -12,7 +12,7 @@
   définitions et des éventuels « quiz » écrits à la main.
 */
 window.COURS = {
-  "maj": "2026-10-12",
+  "maj": "2026-11-26",
   "matieres": [
     {
       "id": "automatisme",
@@ -7241,6 +7241,301 @@ window.COURS = {
               ],
               "bonne": 1,
               "explication": "C'est la présence simultanée de plusieurs entreprises, qui crée un risque supplémentaire."
+            }
+          ]
+        },
+        {
+          "id": "securite-incendie",
+          "titre": "Sécurité incendie : le feu, l'extinction et la prévention",
+          "type": "Cours",
+          "date": "2026-11-26",
+          "source": "Support de révision « Sécurité des biens et des personnes » (Licence CAIE, A. Dolso), rédigé à partir des diapositives",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Le triangle du feu, les phases et la chronologie d'un incendie, les classes de feu, les moyens d'extinction, les 4 fonctions de la sécurité incendie, la classification des bâtiments (ERP, IGH, ICPE) et la maintenance réglementaire.",
+          "sections": [
+            {
+              "titre": "Le feu : triangle, phases et chronologie",
+              "html": "<p>Le feu est une <b>combustion exothermique</b> : elle produit de la chaleur, qui entretient et accélère le feu.</p>\n<table><tr><th>Élément du triangle</th><th>Rôle</th><th>Exemples</th></tr>\n<tr><td><b>Combustible</b></td><td>Ce qui brûle</td><td>Bois, papier, essence, plastique</td></tr>\n<tr><td><b>Comburant</b></td><td>Ce qui alimente le feu</td><td>Air, oxygène</td></tr>\n<tr><td><b>Chaleur</b> (énergie d'activation)</td><td>Ce qui amorce la réaction</td><td>Étincelle, flamme, frottement</td></tr></table>\n<div class=\"attention\">On retire <b>un seul</b> élément du triangle, le feu s'éteint. 4<sup>e</sup> façon : casser la réaction chimique en chaîne (inhibition, inertage, poudre BC ou ABC).</div>\n<ul><li><b>Incubation</b> : début lent, peu de fumée, feu difficile à détecter (câble qui chauffe, surcharge, cigarette).</li>\n<li><b>Croissance</b> : flammes visibles, fumées toxiques, rayonnement thermique ; la combustion devient <b>auto-entretenue</b>.</li></ul>\n<table><tr><th>Temps</th><th>Ce qui se passe</th><th>Eau nécessaire</th></tr>\n<tr><td>1<sup>re</sup> min</td><td>Apparition de la fumée</td><td>1 L</td></tr>\n<tr><td>2<sup>e</sup> min</td><td>250 °C au plafond</td><td>10 L</td></tr>\n<tr><td>3<sup>e</sup> min</td><td>500 °C au plafond</td><td>1 000 L</td></tr>\n<tr><td>4<sup>e</sup> min</td><td>Embrasement par rayonnement</td><td>—</td></tr>\n<tr><td>5<sup>e</sup> min</td><td><b>Flashover</b> (embrasement généralisé éclair, EGE) : 600 à 1 500 °C, 6 MW</td><td>Lance de 500 L/min</td></tr></table>"
+            },
+            {
+              "titre": "Classes de feu et moyens d'extinction",
+              "html": "<table><tr><th>Classe</th><th>Combustibles</th><th>À retenir</th></tr>\n<tr><td><b>A</b> solides</td><td>Bois, tissus, papier, carton, plastiques</td><td>Feux secs, font des braises</td></tr>\n<tr><td><b>B</b> liquides</td><td>Hydrocarbures, solvants, alcools, graisses, peintures</td><td>Feux gras, pas de braise</td></tr>\n<tr><td><b>C</b> gaz</td><td colspan=\"2\">(diapositive non photographiée)</td></tr>\n<tr><td><b>D</b> métaux</td><td>Aluminium, magnésium, sodium, titane, phosphore</td><td>Jamais d'eau : hydrogène, explosion. Pompiers habilités</td></tr>\n<tr><td><b>F</b> huiles de cuisson</td><td colspan=\"2\">(diapositive non photographiée)</td></tr>\n<tr><td>Électrique (ex-E, non officielle)</td><td>Équipement électrique</td><td>Coupure et consignation avant toute intervention</td></tr>\n<tr><td>Lithium-ion (non officielle)</td><td>Batteries Li-ion</td><td>Moyens classiques inefficaces ; véhicule : isoler, périmètre, attendre</td></tr></table>\n<p>La norme <b>EN 2</b> ne définit officiellement que 5 classes (A, B, C, D, F) ; le cours en présente 7.</p>\n<table><tr><th>Moyen</th><th>Usage</th><th>Point clé</th></tr>\n<tr><td><b>Extincteur</b></td><td>Tout début de feu, localisé</td><td>Manuel, personne formée</td></tr>\n<tr><td><b>RIA</b> (robinet d'incendie armé)</td><td>Intervention rapide</td><td>Grande autonomie et portée</td></tr>\n<tr><td><b>PIA</b> (poste d'incendie additivé)</td><td>Parkings, stations-service</td><td>Eau + émulseur = mousse, hydrocarbures</td></tr>\n<tr><td><b>Sprinkler</b></td><td>Entrepôts, IGH, hôtels</td><td><b>Automatique</b>, chaque tête s'ouvre à 68 °C</td></tr>\n<tr><td><b>Gaz inerte</b> (azote, argon)</td><td>Salles serveurs, archives</td><td>O₂ de 21 % à 12 % ; risque d'asphyxie, évacuer avant</td></tr>\n<tr><td><b>Lance à incendie</b></td><td>Gros incendies</td><td>Équipes formées, gros débit</td></tr></table>"
+            },
+            {
+              "titre": "Prévention, détection et principes des bâtiments",
+              "html": "<p>4 fonctions : <b>prévention</b> (empêcher le feu, c'est la première et la plus importante), <b>détection</b>, <b>alerte</b>, <b>évacuation</b>.</p>\n<ul><li><b>Mesures techniques</b> : installations électriques conformes, protections adaptées, compartimentage, matériaux résistants au feu, désenfumage, maintenance préventive voire prédictive.</li>\n<li><b>Mesures organisationnelles</b> : consignes incendie, plan de prévention pour les entreprises extérieures, <b>permis feu</b> pour tout travail par point chaud.</li>\n<li><b>Textes</b> : NF C 15-100, règles APSAD, arrêté du 25 juin 1980 (ERP), règlement IGH, Code de la construction et de l'habitation, Code du travail.</li></ul>\n<p><b>Détection</b> : manuelle (rondes, vidéo : présence humaine mais faillible) ou automatique (5 catégories ; détecteurs linéaires de fumée, câble thermique, aspiration ASD).</p>\n<p><b>Objectif des bâtiments : limiter la propagation.</b> Le <b>désenfumage</b> extrait fumées et gaz chauds, améliore la visibilité pour évacuer et baisse la température.</p>\n<div class=\"attention\"><b>Réaction au feu</b> = le matériau brûle-t-il et nourrit-il le feu ? <b>Résistance au feu</b> = l'ouvrage (mur, porte) tient-il : stabilité, étanchéité, isolation pendant 30 min, 1 h ou 2 h.</div>"
+            },
+            {
+              "titre": "Classification des bâtiments et maintenance",
+              "html": "<p>Le <b>type</b> d'un ERP ou d'un IGH dépend de son activité.</p>\n<table><tr><th>ERP</th><th>Activité</th><th>IGH</th><th>Activité</th></tr>\n<tr><td>J</td><td>Personnes âgées, handicapées</td><td>GHA</td><td>Habitation</td></tr>\n<tr><td>L</td><td>Spectacles, réunions</td><td>GHO</td><td>Hôtels</td></tr>\n<tr><td>M</td><td>Magasins</td><td>GHW</td><td>Bureaux</td></tr>\n<tr><td>N</td><td>Restaurants, bars</td><td>GHU</td><td>Santé</td></tr>\n<tr><td>O</td><td>Hôtels</td><td>GHS</td><td>Archives</td></tr>\n<tr><td>P</td><td>Danse, jeux</td><td>GHZ</td><td>Usage mixte</td></tr></table>\n<p><b>ICPE</b> : installations pouvant polluer ou présenter des dangers (incendie, explosion) ; Code de l'environnement.</p>\n<p><b>Maintenance réglementaire</b> : contrôles, essais, vérifications périodiques, <b>traçabilité documentaire</b>. La <b>prédictive</b> repose sur la mesure et l'analyse des dérives (ex. thermographie infrarouge d'un tableau). Le <b>SSI</b> a une maintenance obligatoire : CMSI, détecteurs, déclencheurs manuels, diffuseurs sonores, DAS (portes coupe-feu, clapets, volets). Sprinklers et gaz : entreprise agréée.</p>\n<p><a href=\"https://kbnnt-lgtm.github.io/Cours-Licence-CAIE/galerie/securite-incendie-cours.pdf\" target=\"_blank\" rel=\"noopener\"><b>📄 Support de révision complet (PDF, 12 pages)</b></a></p>"
+            }
+          ],
+          "pointsCles": [
+            "Triangle du feu : combustible + comburant + chaleur. Retirer un élément éteint le feu ; 4e voie : casser la réaction en chaîne (poudre).",
+            "1 min = 1 L d'eau, 2 min = 10 L, 3 min = 1 000 L ; flashover vers la 5e minute (600 à 1 500 °C).",
+            "Classe A solides (braises), B liquides, D métaux (jamais d'eau). Feu électrique : couper et consigner d'abord.",
+            "Sprinkler = extinction automatique (68 °C) ; gaz inerte = O₂ de 21 % à 12 %, risque d'asphyxie.",
+            "Prévention, détection, alerte, évacuation : la prévention est la première étape. Permis feu pour les points chauds.",
+            "Type d'ERP/IGH = activité. Maintenance réglementaire : contrôles, essais, vérifications, traçabilité ; SSI obligatoire."
+          ],
+          "definitions": [
+            {
+              "terme": "Flashover (EGE)",
+              "def": "Embrasement généralisé éclair d'un local, vers la 5e minute : 600 à 1 500 °C au plafond."
+            },
+            {
+              "terme": "RIA",
+              "def": "Robinet d'incendie armé : grande autonomie, intervention rapide, demande une formation minimale."
+            },
+            {
+              "terme": "PIA",
+              "def": "Poste d'incendie additivé : RIA à eau + émulseur (mousse), pour les hydrocarbures."
+            },
+            {
+              "terme": "Sprinkler",
+              "def": "Extinction automatique à eau, têtes thermosensibles qui s'ouvrent à 68 °C."
+            },
+            {
+              "terme": "Permis feu",
+              "def": "Autorisation obligatoire pour tout travail par point chaud."
+            },
+            {
+              "terme": "SSI / CMSI",
+              "def": "Système de sécurité incendie ; le CMSI est le centralisateur qui pilote la mise en sécurité."
+            },
+            {
+              "terme": "DAS",
+              "def": "Dispositifs actionnés de sécurité : portes coupe-feu, clapets, volets de désenfumage."
+            },
+            {
+              "terme": "ICPE",
+              "def": "Installation classée pour la protection de l'environnement (Code de l'environnement)."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Les 3 éléments du triangle du feu ?",
+              "r": "Combustible, comburant, chaleur (énergie d'activation)."
+            },
+            {
+              "q": "Combien d'eau faut-il à la 1re, 2e et 3e minute ?",
+              "r": "1 L, 10 L, puis 1 000 L : ×1 000 en deux minutes."
+            },
+            {
+              "q": "Pourquoi jamais d'eau sur un feu de classe D ?",
+              "r": "Les métaux dégagent de l'hydrogène au contact de l'eau : risque d'explosion."
+            },
+            {
+              "q": "Quel moyen d'extinction est automatique ?",
+              "r": "Le sprinkler (et l'extinction par gaz) : chaque tête s'ouvre à 68 °C."
+            },
+            {
+              "q": "Les 4 fonctions de la sécurité incendie ?",
+              "r": "Prévention, détection, alerte, évacuation."
+            },
+            {
+              "q": "Réaction au feu ou résistance au feu ?",
+              "r": "Réaction : le matériau brûle-t-il ? Résistance : l'ouvrage tient-il (30 min, 1 h, 2 h) ?"
+            },
+            {
+              "q": "De quoi dépend le type d'un ERP ?",
+              "r": "De son activité (J, L, M, N, O, P…). La catégorie (1 à 5) dépend de l'effectif."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "Que se passe-t-il vers la 5e minute d'un incendie ?",
+              "choix": [
+                "Apparition de la fumée",
+                "Flashover",
+                "Phase d'incubation",
+                "Extinction naturelle"
+              ],
+              "bonne": 1,
+              "explication": "Embrasement généralisé éclair : 600 à 1 500 °C au plafond."
+            },
+            {
+              "q": "Un feu de poudre de magnésium est de classe…",
+              "choix": [
+                "A",
+                "B",
+                "D",
+                "F"
+              ],
+              "bonne": 2,
+              "explication": "Classe D : métaux, jamais d'eau."
+            },
+            {
+              "q": "L'extinction par gaz inerte agit sur…",
+              "choix": [
+                "Le combustible",
+                "Le comburant (oxygène)",
+                "La chaleur",
+                "Les fumées"
+              ],
+              "bonne": 1,
+              "explication": "Elle fait passer l'oxygène de 21 % à 12 %."
+            },
+            {
+              "q": "La première étape de la sécurité incendie est…",
+              "choix": [
+                "L'alerte",
+                "L'évacuation",
+                "La prévention",
+                "L'extinction"
+              ],
+              "bonne": 2,
+              "explication": "La prévention reste la meilleure protection."
+            },
+            {
+              "q": "La résistance au feu concerne…",
+              "choix": [
+                "Le matériau qui brûle",
+                "L'ouvrage qui tient pendant un temps donné",
+                "La couleur des fumées",
+                "Le type d'ERP"
+              ],
+              "bonne": 1,
+              "explication": "Stabilité, étanchéité, isolation pendant 30 min, 1 h ou 2 h."
+            }
+          ]
+        },
+        {
+          "id": "exercices-questionnaires-securite",
+          "titre": "Questionnaires sécurité : 2e et 3e partie (corrigés)",
+          "type": "Exercices",
+          "date": "2026-11-26",
+          "source": "Questionnaires « Sécurité des biens et des personnes » 2e et 3e partie, LPRO CAIE, A. Dolso",
+          "auteurs": "Kylian Bonnet",
+          "resume": "Les 40 questions des deux questionnaires (plusieurs réponses possibles), avec la correction à dévoiler sous chaque question.",
+          "sections": [
+            {
+              "titre": "Mode d'emploi",
+              "html": "<p>Plusieurs cases peuvent être justes. Réponds d'abord, puis ouvre « Voir la correction ». Les réponses marquées ⚠️ ne sont pas traitées dans le support de cours : à confirmer avec le professeur.</p>"
+            },
+            {
+              "titre": "Questionnaire 2e partie : sécurité, réglementation, responsabilités",
+              "html": "<p><b>Q1.</b> La sécurité correspond à :</p><ul><li>☐ la protection contre le vol uniquement</li><li>☐ l'ensemble des mesures destinées à prévenir les risques</li><li>☐ la surveillance vidéo uniquement</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : l'ensemble des mesures destinées à prévenir les risques</b></p><p>C'est la définition vue en cours (mesures pour prévenir les risques, protéger personnes, biens et environnement).</p></details><p><b>Q2.</b> La sûreté concerne principalement :</p><ul><li>☐ Les risques naturels</li><li>☐ Les risques électriques</li><li>☐ Les risques climatiques</li><li>☐ Les actes volontaires (intrusion, sabotage, vol)</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Les actes volontaires (intrusion, sabotage, vol)</b></p><p>La sûreté protège contre la malveillance ; la sécurité contre les accidents.</p></details><p><b>Q3.</b> Un risque dépend généralement de :</p><ul><li>☐ La présence d'un danger</li><li>☐ L'exposition à ce danger</li><li>☐ La gravité du danger</li><li>☐ Les conséquences du danger</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : La présence d'un danger ; L'exposition à ce danger</b></p><p>Pas de risque sans danger ET sans exposition à ce danger. La gravité et les conséquences servent ensuite à évaluer le risque : réponse à confirmer avec le professeur.</p><p><i>⚠️ Point non traité dans le support de cours.</i></p></details><p><b>Q4.</b> Quelle est la différence entre un danger et un risque :</p><ul><li>☐ Ils signifient exactement la même chose</li><li>☐ Le danger est la conséquence du risque</li><li>☐ Le danger est la cause potentielle, le risque est la probabilité du dommage</li><li>☐ Le risque supprime le danger</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Le danger est la cause potentielle, le risque est la probabilité du dommage</b></p><p>Danger = source potentielle de dommage ; risque = probabilité qu'un dommage survienne.</p></details><p><b>Q5.</b> Quel est l'objectif principal des premières réglementations électriques :</p><ul><li>☐ Limiter les accidents liés à l'électricité</li><li>☐ Réduire le coût des installations</li><li>☐ Augmenter la consommation électrique</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Limiter les accidents liés à l'électricité</b></p><p>Protéger les personnes et les biens contre les dangers de l'électricité.</p></details><p><b>Q6.</b> Les premières réglementations ERP ont principalement été créées pour :</p><ul><li>☐ Réduire les coûts de construction</li><li>☐ Faciliter l'évacuation et protéger les occupants</li><li>☐ Développer et généraliser l'éclairage électrique</li><li>☐ Contrôler les accès des personnes</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Faciliter l'évacuation et protéger les occupants</b></p><p>Les ERP accueillent du public : la priorité est la sécurité des occupants.</p></details><p><b>Q7.</b> La norme NF C 15-100 définit principalement :</p><ul><li>☐ Les règles des installations basse tension</li><li>☐ Les règles des installations haute tension</li><li>☐ Les règles sur les SSI</li><li>☐ Les règles de vidéosurveillance</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Les règles des installations basse tension</b></p><p>NF C 15-100 = installations électriques basse tension (en aval du point de livraison).</p></details><p><b>Q8.</b> À la suite du drame du collège Pailleron, quelles mesures ont été renforcées dans les établissements scolaires :</p><ul><li>☐ Les horaires d'ouverture et de fermeture</li><li>☐ Les clôtures extérieures</li><li>☐ Les alarmes incendie et les exercices d'évacuation</li><li>☐ Le compartimentage pour ralentir la propagation du feu et protéger les structures métalliques</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Le compartimentage pour ralentir la propagation du feu et protéger les structures métalliques</b></p><p>Le collège avait une structure métallique et le feu s'est propagé très vite. Les alarmes et exercices d'évacuation peuvent aussi être acceptés : à confirmer avec le professeur.</p><p><i>⚠️ Point non traité dans le support de cours.</i></p></details><p><b>Q9.</b> La réglementation IGH de 1977 impose :</p><ul><li>☐ Le renforcement du compartimentage</li><li>☐ Le désenfumage mécanique</li><li>☐ D'utiliser les ascenseurs plutôt que les escaliers de secours en cas d'incendie</li><li>☐ La protection des gaines techniques</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Le renforcement du compartimentage ; Le désenfumage mécanique ; La protection des gaines techniques</b></p><p>Tout sauf les ascenseurs : en cas d'incendie on prend les escaliers.</p></details><p><b>Q10.</b> Les objectifs principaux de la sécurité incendie sont :</p><ul><li>☐ Sauvegarder les vies humaines</li><li>☐ Limiter les pertes matérielles</li><li>☐ Augmenter l'impact économique et environnemental</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Sauvegarder les vies humaines ; Limiter les pertes matérielles</b></p><p>Protéger les vies et les biens (le cours parle de « responsabilité collective pour protéger les vies humaines et les biens »).</p></details><p><b>Q11.</b> 70 à 80 % des décès lors d'un incendie sont liés :</p><ul><li>☐ Aux explosions</li><li>☐ Aux brûlures</li><li>☐ Aux fumées toxiques</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Aux fumées toxiques</b></p><p>Les fumées tuent plus que les flammes (notamment le monoxyde de carbone).</p></details><p><b>Q12.</b> Les coûts annuels des incendies en France sont estimés :</p><ul><li>☐ Entre 5 et 10 millions d'euros</li><li>☐ Entre 50 et 100 millions d'euros</li><li>☐ Entre 5 et 10 milliards d'euros</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Entre 5 et 10 milliards d'euros</b></p><p>Ordre de grandeur : plusieurs milliards d'euros par an.</p></details><p><b>Q13.</b> La responsabilité civile consiste principalement à :</p><ul><li>☐ Punir la faute, même si aucun incendie majeur n'a eu lieu</li><li>☐ Réparer les dommages causés à autrui</li><li>☐ Fermer un ERP</li><li>☐ Sanctionner pénalement par des peines de prison</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Réparer les dommages causés à autrui</b></p><p>Civile = réparer (indemniser) ; pénale = punir.</p></details><p><b>Q14.</b> La responsabilité pénale sanctionne :</p><ul><li>☐ Une infraction</li><li>☐ Une négligence</li><li>☐ Une faute grave</li><li>☐ Un non-respect de la réglementation</li><li>☐ Un dommage matériel</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Une infraction ; Une négligence ; Une faute grave ; Un non-respect de la réglementation</b></p><p>Le pénal punit un comportement fautif ; le dommage matériel relève de la réparation civile.</p></details><p><b>Q15.</b> Qui peut prononcer une sanction administrative :</p><ul><li>☐ Le juge</li><li>☐ Le maire</li><li>☐ Le préfet</li><li>☐ La commission de sécurité</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Le maire ; Le préfet</b></p><p>Le maire et le préfet (ex. fermeture d'un ERP). La commission de sécurité ne donne qu'un avis ; le juge prononce des sanctions pénales.</p></details><p><b>Q16.</b> Selon l'article 121-3 du Code pénal :</p><ul><li>☐ Seul l'auteur d'un incendie volontaire peut être condamné</li><li>☐ Une personne peut être condamnée sans avoir provoqué directement le sinistre</li><li>☐ Une entreprise ne peut pas être condamnée au pénal</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Une personne peut être condamnée sans avoir provoqué directement le sinistre</b></p><p>C'est la causalité indirecte : avoir créé la situation ou ne pas avoir pris les mesures suffit (lien avec la responsabilité du chargé d'affaires).</p></details><p><b>Q17.</b> Quelle est la première famille de risques dans un bâtiment :</p><ul><li>☐ Électriques</li><li>☐ Incendies</li><li>☐ Naturels</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Incendies</b></p><p>Réponse la plus probable : l'incendie (thème central du cours). Le cours rappelle aussi que l'électricité est une des principales causes d'incendie : à confirmer avec le professeur.</p><p><i>⚠️ Point non traité dans le support de cours.</i></p></details><p><b>Q18.</b> Les risques électriques peuvent provoquer :</p><ul><li>☐ Un départ d'incendie</li><li>☐ Un court-circuit</li><li>☐ Une électrisation</li><li>☐ Une électrocution</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Un départ d'incendie ; Un court-circuit ; Une électrisation ; Une électrocution</b></p><p>Les quatre.</p></details><p><b>Q19.</b> Les risques incendies sont toujours causés par :</p><ul><li>☐ Une négligence humaine</li><li>☐ Des fortes températures</li><li>☐ Un départ de feu</li><li>☐ Une explosion</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Un départ de feu</b></p><p>« Toujours » : seul le départ de feu est systématique ; les autres causes sont possibles mais pas obligatoires.</p></details><p><b>Q20.</b> Les risques naturels comprennent :</p><ul><li>☐ Les inondations</li><li>☐ Les tempêtes</li><li>☐ La foudre</li><li>☐ Les séismes</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Les inondations ; Les tempêtes ; La foudre ; Les séismes</b></p><p>Les quatre.</p></details>"
+            },
+            {
+              "titre": "Questionnaire 3e partie : feu, extinction, bâtiments, maintenance",
+              "html": "<p><b>Q1.</b> Quels sont les éléments du triangle du feu ?</p><ul><li>☐ Combustible</li><li>☐ Comburant</li><li>☐ Électricité</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Combustible ; Comburant</b></p><p>Le 3e élément est la chaleur (énergie d'activation), pas l'électricité.</p></details><p><b>Q2.</b> Quel est l'objectif principal du compartimentage ?</p><ul><li>☐ Décorer le bâtiment</li><li>☐ Limiter la propagation du feu</li><li>☐ Faciliter l'évacuation</li><li>☐ Diminuer la température</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Limiter la propagation du feu</b></p><p>Objectif des principes de sécurité des bâtiments : limiter la propagation.</p></details><p><b>Q3.</b> Quel gaz est particulièrement dangereux dans les fumées d'incendie ?</p><ul><li>☐ Oxygène</li><li>☐ Azote</li><li>☐ Monoxyde de carbone</li><li>☐ Hélium</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Monoxyde de carbone</b></p><p>Le CO est toxique et inodore.</p></details><p><b>Q4.</b> Quel moyen d'extinction fonctionne automatiquement ?</p><ul><li>☐ RIA</li><li>☐ PIA</li><li>☐ Sprinkler</li><li>☐ Extincteur portatif</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Sprinkler</b></p><p>Chaque tête s'ouvre seule à 68 °C. RIA, PIA et extincteur sont manuels.</p></details><p><b>Q5.</b> Quels équipements participent au désenfumage d'un bâtiment ?</p><ul><li>☐ Volets de désenfumage</li><li>☐ Ventilateurs d'extraction</li><li>☐ Détecteurs de fumée</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Volets de désenfumage ; Ventilateurs d'extraction</b></p><p>Volets et ventilateurs évacuent les fumées. Le détecteur peut déclencher le désenfumage mais il n'évacue rien.</p></details><p><b>Q6.</b> Quel phénomène correspond à l'embrasement généralisé d'un local ?</p><ul><li>☐ Backdraft</li><li>☐ Flashover</li><li>☐ Combustion</li><li>☐ Ionisation</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Flashover</b></p><p>EGE = embrasement généralisé éclair = flashover, vers la 5e minute.</p></details><p><b>Q7.</b> Quel équipement permet de détecter automatiquement un départ d'incendie ?</p><ul><li>☐ Détecteur de fumée</li><li>☐ BAES</li><li>☐ Déclencheur manuel</li><li>☐ Détecteur thermique</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Détecteur de fumée ; Détecteur thermique</b></p><p>Le déclencheur manuel est actionné par une personne ; le BAES est un éclairage.</p></details><p><b>Q8.</b> Quel équipement permet l'éclairage d'évacuation en cas de coupure électrique ?</p><ul><li>☐ RIA</li><li>☐ BAES</li><li>☐ Sprinkler</li><li>☐ Hydrant</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : BAES</b></p><p>BAES = bloc autonome d'éclairage de sécurité.</p></details><p><b>Q9.</b> Quel est le principal objectif du désenfumage ?</p><ul><li>☐ Compartimenter</li><li>☐ Alimenter en eau les étages</li><li>☐ Évacuer les fumées</li><li>☐ Couper l'électricité</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Évacuer les fumées</b></p><p>Extraire fumées et gaz chauds pour voir, évacuer et baisser la température.</p></details><p><b>Q10.</b> Quels sont les types de maintenance ?</p><ul><li>☐ Préventive</li><li>☐ Corrective</li><li>☐ Réglementaire</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Préventive ; Corrective ; Réglementaire</b></p><p>Les trois (le cours cite aussi la prédictive, forme avancée de la préventive).</p></details><p><b>Q11.</b> Quels éléments doivent être vérifiés sur un extincteur ?</p><ul><li>☐ Pression</li><li>☐ Niveau d'eau</li><li>☐ Plombage</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Pression ; Plombage</b></p><p>Pression (manomètre) et plombage (scellé intact = jamais utilisé).</p></details><p><b>Q12.</b> Quels sont les modes de propagation thermique ?</p><ul><li>☐ Conduction</li><li>☐ Convection</li><li>☐ Rayonnement</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Conduction ; Convection ; Rayonnement</b></p><p>Les trois. Le cours insiste sur le rayonnement qui mène à l'embrasement.</p></details><p><b>Q13.</b> À partir de quelle hauteur un immeuble d'habitation devient-il IGH ?</p><ul><li>☐ 18 m</li><li>☐ 28 m</li><li>☐ 50 m</li><li>☐ 100 m</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : 50 m</b></p><p>Plus de 50 m pour l'habitation (28 m pour les autres usages).</p></details><p><b>Q14.</b> Quel document est obligatoire dans un ERP pour tracer la sécurité incendie ?</p><ul><li>☐ Registre de sécurité</li><li>☐ Registre de santé</li><li>☐ Registre de notes</li><li>☐ Contrat d'assurance</li><li>☐ Le permis de construire</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Registre de sécurité</b></p><p>Lien avec la traçabilité documentaire de la maintenance réglementaire.</p></details><p><b>Q15.</b> Les ERP sont classés par ?</p><ul><li>☐ Type</li><li>☐ Catégorie</li><li>☐ Famille</li><li>☐ Hauteur</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Type ; Catégorie</b></p><p>Type = activité (J, L, M…) ; catégorie = effectif (1 à 5). Famille et hauteur concernent les habitations et les IGH.</p></details><p><b>Q16.</b> Quels risques peuvent être liés à une installation électrique défectueuse ?</p><ul><li>☐ Aucun risque</li><li>☐ Incendie</li><li>☐ Inondation</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : Incendie</b></p><p>L'électricité est une des principales causes d'incendie.</p></details><p><b>Q17.</b> Quel moyen d'extinction est adapté aux feux électriques ?</p><ul><li>☐ Eau</li><li>☐ CO₂</li><li>☐ Poudre</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : CO₂ ; Poudre</b></p><p>Agents non conducteurs ; et toujours couper et consigner avant d'intervenir.</p></details><p><b>Q18.</b> Quels sont les objectifs de la maintenance réglementaire ?</p><ul><li>☐ Garantir le fonctionnement des équipements</li><li>☐ Assurer la conformité réglementaire</li><li>☐ Limiter les responsabilités</li><li>☐ Augmenter les primes d'assurance</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Garantir le fonctionnement des équipements ; Assurer la conformité réglementaire</b></p><p>Contrôles, essais, vérifications et traçabilité pour que tout marche et soit conforme.</p></details><p><b>Q19.</b> Quel texte réglementaire encadre principalement les ERP ?</p><ul><li>☐ Code de la construction</li><li>☐ Code de la route</li><li>☐ Code du travail</li><li>☐ Arrêté du 25 juin 1980</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponses : Code de la construction ; Arrêté du 25 juin 1980</b></p><p>Code de la construction et de l'habitation + arrêté du 25 juin 1980 (règlement de sécurité ERP). Le Code du travail concerne les lieux de travail.</p></details><p><b>Q20.</b> Quelle est la première étape de la sécurité incendie ?</p><ul><li>☐ L'alerte</li><li>☐ L'évacuation</li><li>☐ La prévention</li><li>☐ L'extinction</li></ul><details class=\"detail-q\" style=\"margin:4px 0 12px\"><summary>Voir la correction</summary><p><b>Réponse : La prévention</b></p><p>Prévention, puis détection, alerte, évacuation.</p></details>"
+            }
+          ],
+          "pointsCles": [
+            "Sécurité = prévenir les accidents ; sûreté = se protéger des actes volontaires.",
+            "Responsabilité civile = réparer ; pénale = punir ; sanction administrative = maire ou préfet.",
+            "70 à 80 % des décès viennent des fumées toxiques (CO).",
+            "IGH habitation au-delà de 50 m ; ERP classés par type et catégorie ; registre de sécurité obligatoire.",
+            "Feu électrique : CO₂ ou poudre, jamais d'eau. Extincteur : pression et plombage.",
+            "Détection automatique = détecteurs de fumée et thermiques ; BAES = éclairage de secours."
+          ],
+          "definitions": [
+            {
+              "terme": "Sûreté",
+              "def": "Protection contre les actes volontaires : intrusion, sabotage, vol."
+            },
+            {
+              "terme": "Responsabilité civile",
+              "def": "Obligation de réparer les dommages causés à autrui."
+            },
+            {
+              "terme": "Responsabilité pénale",
+              "def": "Sanction d'une infraction, négligence, faute grave ou non-respect de la réglementation."
+            },
+            {
+              "terme": "BAES",
+              "def": "Bloc autonome d'éclairage de sécurité, qui balise l'évacuation en cas de coupure."
+            },
+            {
+              "terme": "Registre de sécurité",
+              "def": "Document obligatoire d'un ERP qui trace contrôles, vérifications et exercices."
+            }
+          ],
+          "flashcards": [
+            {
+              "q": "Sécurité ou sûreté : la différence ?",
+              "r": "Sécurité : prévenir les risques accidentels. Sûreté : actes volontaires (intrusion, sabotage, vol)."
+            },
+            {
+              "q": "Que dit l'article 121-3 du Code pénal ?",
+              "r": "On peut être condamné sans avoir provoqué directement le sinistre (causalité indirecte)."
+            },
+            {
+              "q": "Qui prononce une sanction administrative ?",
+              "r": "Le maire ou le préfet. La commission de sécurité ne donne qu'un avis."
+            },
+            {
+              "q": "Que mesure la responsabilité civile ?",
+              "r": "Elle oblige à réparer les dommages causés à autrui."
+            },
+            {
+              "q": "À partir de quelle hauteur un immeuble d'habitation est-il IGH ?",
+              "r": "50 m."
+            },
+            {
+              "q": "Qu'impose la réglementation IGH de 1977 ?",
+              "r": "Compartimentage renforcé, désenfumage mécanique, protection des gaines techniques."
+            },
+            {
+              "q": "Quels extincteurs sur un feu électrique ?",
+              "r": "CO₂ ou poudre, après coupure et consignation."
+            }
+          ],
+          "quiz": [
+            {
+              "q": "La sûreté concerne principalement…",
+              "choix": [
+                "Les risques naturels",
+                "Les risques électriques",
+                "Les actes volontaires (intrusion, sabotage, vol)",
+                "Les risques climatiques"
+              ],
+              "bonne": 2,
+              "explication": "La sûreté protège contre la malveillance."
+            },
+            {
+              "q": "70 à 80 % des décès lors d'un incendie sont liés…",
+              "choix": [
+                "Aux explosions",
+                "Aux brûlures",
+                "Aux fumées toxiques"
+              ],
+              "bonne": 2,
+              "explication": "Les fumées (CO) tuent plus que les flammes."
+            },
+            {
+              "q": "La responsabilité civile consiste à…",
+              "choix": [
+                "Punir par la prison",
+                "Réparer les dommages causés à autrui",
+                "Fermer un ERP",
+                "Donner un avis"
+              ],
+              "bonne": 1,
+              "explication": "Civil = réparer, pénal = punir."
+            },
+            {
+              "q": "Quel équipement éclaire l'évacuation en cas de coupure ?",
+              "choix": [
+                "RIA",
+                "BAES",
+                "Sprinkler",
+                "Hydrant"
+              ],
+              "bonne": 1,
+              "explication": "Bloc autonome d'éclairage de sécurité."
+            },
+            {
+              "q": "Un immeuble d'habitation devient IGH à partir de…",
+              "choix": [
+                "18 m",
+                "28 m",
+                "50 m",
+                "100 m"
+              ],
+              "bonne": 2,
+              "explication": "50 m pour l'habitation, 28 m pour les autres usages."
             }
           ]
         }
